@@ -105,6 +105,7 @@
       if (sub) { sub.textContent = it.dataset.sub; }
       if (num) { contar(num, +it.dataset.vistas); }
       $$('.vc-dots button').forEach(function (b, i) { b.classList.toggle('on', i === act); });
+      $$('.vc-pilares button').forEach(function (b) { b.classList.toggle('on', b.dataset.pilar === it.dataset.pilar); });
       reiniciarBarra();
     }
     function contar(el, fin) {
@@ -123,6 +124,7 @@
     });
     $('.vc-prev') && $('.vc-prev').addEventListener('click', function () { ir(act - 1); });
     $('.vc-next') && $('.vc-next').addEventListener('click', function () { ir(act + 1); });
+    $$('.vc-pilares button').forEach(function (b) { b.addEventListener('click', function () { var k = items.findIndex(function (x) { return x.dataset.pilar === b.dataset.pilar; }); if (k >= 0) ir(k); }); });
     var dots = $('.vc-dots');
     if (dots) items.forEach(function (_, i) { var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Video ' + (i + 1)); b.addEventListener('click', function () { ir(i); }); dots.appendChild(b); });
     // deslizar en móvil
@@ -154,10 +156,21 @@
   })();
 
 
+  /* ---------- Portada: el punto completa el isotipo ---------- */
+  var hv = $('.hero-vis'); if (hv) setTimeout(function () { hv.classList.add('listo'); }, 300);
+
   /* ---------- Franja acordeón de deportistas ---------- */
   $$('.atl-strip').forEach(function (st) {
-    var cs = $$('.atl-c', st), tocado = false, k = 0, hover = matchMedia('(hover:hover)').matches;
-    function abrir(c) { cs.forEach(function (x) { x.classList.toggle('on', x === c); }); k = cs.indexOf(c); }
+    var cs = $$('.atl-c', st), tocado = false, visto = false, k = 0, hover = matchMedia('(hover:hover)').matches;
+    function abrir(c) {
+      cs.forEach(function (x) {
+        var on = x === c, v = $('video', x); x.classList.toggle('on', on);
+        if (!v) return;
+        if (on && visto) { if (!v.src) v.src = v.dataset.src; v.play().then(function () { v.classList.add('vivo'); }).catch(function () {}); }
+        else { v.pause(); v.classList.remove('vivo'); }
+      });
+      k = cs.indexOf(c);
+    }
     cs.forEach(function (c) {
       if (hover) {
         c.addEventListener('mouseenter', function () { tocado = true; st.classList.add('activo'); abrir(c); });
@@ -169,6 +182,7 @@
       c.addEventListener('keydown', function (e) { if (e.key === 'Enter') location.href = c.dataset.href; });
     });
     st.addEventListener('mouseleave', function () { st.classList.remove('activo'); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visto = es[0].isIntersecting; var c = cs[k] || cs[0]; if (visto) abrir(c); else cs.forEach(function (x) { var v = $('video', x); if (v) v.pause(); }); }, { threshold: .35 }).observe(st);
     // ciclo automático hasta que la persona interactúe
     var t = setInterval(function () { if (tocado) { clearInterval(t); return; } var r = st.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; abrir(cs[(k + 1) % cs.length]); }, 3800);
   });
@@ -224,6 +238,39 @@
       abrirWA('Hola Daniel, quiero unirme a la lista de ProMatch como ' + (m ? 'marca' : 'deportista') + '.\nNombre: ' + f.nombre.value + '\n' + (m ? 'Empresa: ' : 'Disciplina: ') + f.disciplina.value + (f.ciudad.value ? '\nCiudad: ' + f.ciudad.value : '') + (f.ig.value ? '\n' + (m ? 'Web/Instagram: ' : 'Instagram: ') + f.ig.value : ''));
     });
   })();
+
+
+  /* ---------- Caso GT: pestañas por fecha y fases ---------- */
+  $$('.gt-identidad').forEach(function (g) {
+    var tabs = $$('.gt-tabs button', g), panels = $$('.gt-panel', g);
+    function ver(k) {
+      tabs.forEach(function (t) { var on = t.dataset.t === k; t.classList.toggle('on', on); t.setAttribute('aria-selected', on); });
+      panels.forEach(function (p) { var on = p.dataset.p === k; p.hidden = !on; if (on) { p.classList.remove('visto'); void p.offsetWidth; setTimeout(function () { p.classList.add('visto'); }, 60); $$('.rv', p).forEach(function (e) { e.classList.add('in'); }); } });
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { ver(t.dataset.t); }); });
+    panels.forEach(function (p) {
+      var fs = $$('.fase', p), tx = $('.fase-txt', p);
+      fs.forEach(function (f) { f.addEventListener('click', function () { fs.forEach(function (x) { x.classList.toggle('on', x === f); }); tx.textContent = f.dataset.txt; }); });
+    });
+    if ('IntersectionObserver' in window) { var o = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { o.disconnect(); var p = panels.filter(function (x) { return !x.hidden; })[0]; if (p) p.classList.add('visto'); } }, { threshold: .2 }); o.observe(g); } else panels.forEach(function (p) { p.classList.add('visto'); });
+  });
+
+
+  /* ---------- Pestañas genéricas ---------- */
+  $$('[data-tabs]').forEach(function (g) {
+    var tb = $$('[role=tablist] button', g), ps = $$('[data-p]', g);
+    tb.forEach(function (t) { t.addEventListener('click', function () {
+      tb.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', x === t); });
+      ps.forEach(function (p) { p.hidden = p.dataset.p !== t.dataset.t; });
+    }); });
+  });
+
+
+  /* ---------- Galería horizontal con flechas ---------- */
+  $$('.gh-nav').forEach(function (n) {
+    var g = n.previousElementSibling;
+    $$('button', n).forEach(function (b) { b.addEventListener('click', function () { g.scrollBy({ left: (+b.dataset.dir) * g.clientWidth * .8, behavior: 'smooth' }); }); });
+  });
 
   /* ---------- Metodología: escalera ---------- */
   var esc_ = $('.escalera');
