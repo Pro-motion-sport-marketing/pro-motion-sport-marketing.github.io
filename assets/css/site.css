@@ -553,3 +553,59 @@ h1,h2,h3,.epic{overflow-wrap:normal}
 .nota-rangos b{color:var(--rojo)}
 .oscuro .nota-rangos{border-color:rgba(255,231,201,.35)}
 .r-in{font-style:normal;font-weight:600;color:var(--rojo);white-space:nowrap}
+
+/* ====================== DEPORTISTAS: TARJETAS Y FICHAS ====================== */
+.atl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
+.atl{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#000;color:#fff;text-decoration:none;border:3px solid var(--negro)}
+.atl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--golpe),filter .4s}
+.atl:hover img,.atl:focus-visible img{transform:scale(1.07);filter:brightness(.55) saturate(1.1)}
+.atl::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.85));pointer-events:none}
+.atl-score{position:absolute;top:12px;right:12px;z-index:2;width:62px;height:62px;border-radius:50%;background:var(--rojo);display:grid;place-items:center;text-align:center;line-height:1;transform:rotate(-8deg);transition:transform .3s var(--rebote)}
+.atl:hover .atl-score{transform:rotate(0) scale(1.12)}
+.atl-score b{font-family:var(--epic);font-size:24px;display:block}
+.atl-score small{font-size:8px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.atl-info{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px}
+.atl-info .kicker{color:var(--crema);opacity:.9}
+.atl-info .epic{font-size:clamp(26px,2.6vw,34px);margin-top:4px}
+.atl-mas{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--golpe),opacity .3s}
+.atl:hover .atl-mas,.atl:focus-visible .atl-mas{max-height:200px;opacity:1}
+.atl-mas p{font-size:14px;margin-top:6px;line-height:1.3}
+.atl-mas b{font-family:var(--epic);font-size:18px;color:var(--crema)}
+.atl-mas .ir{display:inline-block;margin-top:10px;font-family:var(--epic);text-transform:uppercase;font-size:14px;border-bottom:3px solid var(--rojo)}
+@media (hover:none){.atl-mas{max-height:200px;opacity:1}}
+
+.ficha-hero{padding:50px 0 40px;overflow:hidden}
+.ficha-hero .wrap{display:grid;gap:30px;align-items:center}
+.ficha-hero h1{font-size:clamp(46px,8vw,110px);margin-top:12px}
+.ficha-hero .lead{margin-top:16px}
+.fh-vis{position:relative;max-width:440px;width:100%;margin:0 auto}
+.recorte.grande{position:relative;padding:12px 12px 12px}
+.recorte.grande img{aspect-ratio:4/5}
+.mini-score{position:absolute;left:-14px;bottom:-24px;width:min(42%,170px);z-index:3}
+.mini-score .val b{font-size:clamp(40px,5vw,58px)}
+.mini-score .val span{font-size:10px}
+.ficha-stats{grid-template-columns:1fr 1fr}
+.tray{list-style:none;display:grid;gap:0;margin-top:16px}
+.tray li{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,231,201,.2);font-size:17px}
+.tray .an{font-family:var(--epic);color:var(--rojo-vivo);font-size:18px}
+.marca{display:inline-block;margin:0 8px 8px 0;padding:8px 14px 6px;border:2px solid var(--crema);font-family:var(--epic);text-transform:uppercase;font-size:14px}
+.sectores{display:flex;flex-wrap:wrap;gap:10px}
+.sector{display:grid;gap:2px;text-align:left;padding:12px 16px 10px;background:var(--crema);border:2px solid var(--negro);cursor:pointer;font-family:var(--epic);text-transform:uppercase;font-size:16px;transition:transform .2s var(--rebote),background .2s}
+.sector small{font-family:var(--clash);text-transform:none;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--rojo)}
+.sector.indirecto{border-style:dashed}
+.sector.complementario{border-style:dotted}
+.sector:hover{transform:translateY(-3px)}
+.sector.on{background:var(--negro);color:var(--crema)}
+.sector.on small{color:var(--rojo-vivo)}
+.idea{margin-top:18px}
+.idea p{font-size:18px}
+.galeria{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.galeria .recorte{position:relative}
+.galeria .recorte img{aspect-ratio:4/5}
+.otros{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
+.otros a{font-family:var(--epic);text-transform:uppercase;font-size:16px;text-decoration:none;border-bottom:3px solid var(--crema)}
+.aud-barras .barra i{transition:width 1.2s var(--golpe)}
+.crema-sec .var-f .barra{background:rgba(28,28,28,.1)}
+@media (min-width:700px){.ficha-stats{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:980px){.ficha-hero .wrap{grid-template-columns:1.15fr .85fr}}
+@media (max-width:600px){.galeria{grid-template-columns:1fr 1fr}.galeria .recorte:last-child{display:none}}

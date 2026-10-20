@@ -223,6 +223,24 @@
     $('button', box).onclick = function () { abrirWA('Hola Daniel, hice el test de coberturas de Pro Motion y me recomendó: ' + r[0] + '. Quiero cotizarla para mi evento.'); };
   });
 
+  /* ---------- Fichas: sectores compatibles ---------- */
+  $$('.sectores').forEach(function (g) {
+    var idea = g.parentElement.querySelector('.idea p');
+    $$('.sector', g).forEach(function (b, i) {
+      b.addEventListener('click', function () {
+        $$('.sector', g).forEach(function (x) { x.classList.toggle('on', x === b); });
+        idea.textContent = b.dataset.idea;
+      });
+      if (i === 0) b.click();
+    });
+  });
+  /* ---------- Barras que se llenan al verse ---------- */
+  var barras = $$('.barra i');
+  if (barras.length && 'IntersectionObserver' in window) {
+    var ob = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.style.width = e.target.dataset.w + '%'; ob.unobserve(e.target); } }); }, { threshold: .3 });
+    barras.forEach(function (b) { ob.observe(b); });
+  }
+
   /* =================== HERRAMIENTAS =================== */
 
   /* ---------- Configurador (deportistas) ---------- */
