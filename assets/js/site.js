@@ -153,6 +153,78 @@
     });
   })();
 
+
+  /* ---------- Franja acordeón de deportistas ---------- */
+  $$('.atl-strip').forEach(function (st) {
+    var cs = $$('.atl-c', st), tocado = false, k = 0, hover = matchMedia('(hover:hover)').matches;
+    function abrir(c) { cs.forEach(function (x) { x.classList.toggle('on', x === c); }); k = cs.indexOf(c); }
+    cs.forEach(function (c) {
+      if (hover) {
+        c.addEventListener('mouseenter', function () { tocado = true; st.classList.add('activo'); abrir(c); });
+        c.addEventListener('click', function (e) { if (!e.target.closest('a')) location.href = c.dataset.href; });
+      } else {
+        c.addEventListener('click', function (e) { if (e.target.closest('a')) return; tocado = true; if (!c.classList.contains('on')) { abrir(c); } else { location.href = c.dataset.href; } });
+      }
+      c.addEventListener('focus', function () { tocado = true; abrir(c); });
+      c.addEventListener('keydown', function (e) { if (e.key === 'Enter') location.href = c.dataset.href; });
+    });
+    st.addEventListener('mouseleave', function () { st.classList.remove('activo'); });
+    // ciclo automático hasta que la persona interactúe
+    var t = setInterval(function () { if (tocado) { clearInterval(t); return; } var r = st.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; abrir(cs[(k + 1) % cs.length]); }, 3800);
+  });
+
+
+  /* ---------- ProMatch: simulador de puntaje ---------- */
+  var sim = $('#pm-sim');
+  if (sim) (function () {
+    var ins = $$('input[type=range]', sim), c = $('circle.prog', sim), b = $('.val b', sim), rp = $('.reco p', sim), L = 2 * Math.PI * 90;
+    c.style.strokeDasharray = L; c.style.transition = 'stroke-dashoffset .5s cubic-bezier(.16,1,.3,1)';
+    var nombres = { valores: 'la afinidad de valores', audiencia: 'la compatibilidad de audiencia', territorio: 'el territorio y calendario', contenido: 'las capacidades de contenido', experiencia: 'la experiencia comercial' };
+    function calc() {
+      var t = 0, min = null;
+      ins.forEach(function (i) { var v = +i.value; t += v * (+i.dataset.peso) / 100; i.parentNode.querySelector('output').textContent = v; i.style.setProperty('--p', v + '%'); if (!min || v < +min.value) min = i; });
+      t = Math.round(t); b.textContent = t; c.style.strokeDashoffset = L * (1 - t / 100);
+      var debil = nombres[min.id.replace('sim-', '')];
+      rp.textContent = t >= 80 ? 'Alta compatibilidad. Se recomienda avanzar a propuesta; antes, reforzar ' + debil + ' con una activación piloto.'
+        : t >= 65 ? 'Compatibilidad media. Hay base para conversar, pero ' + debil + ' debe trabajarse antes de presentar una propuesta.'
+        : 'Compatibilidad baja. No se recomienda la alianza todavía: el punto más débil es ' + debil + '.';
+    }
+    ins.forEach(function (i) { i.addEventListener('input', calc); }); calc();
+  })();
+
+  /* ---------- ProMatch: comparar perfiles ---------- */
+  var comp = $('#pm-comp');
+  if (comp) (function () {
+    var filas = $$('.cmp-fila', comp), tabs = $$('.cmp-tabs button');
+    function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+    function ver(k) {
+      tabs.forEach(function (t) { t.classList.toggle('on', t.dataset.k === k); t.setAttribute('aria-selected', t.dataset.k === k); });
+      var mx = Math.max.apply(null, filas.map(function (f) { return +f.dataset[k]; }));
+      filas.slice().sort(function (a, b) { return b.dataset[k] - a.dataset[k]; }).forEach(function (f, i) {
+        f.style.order = i; var v = +f.dataset[k];
+        $('.cmp-barra i', f).style.width = (k === 'score' ? v : v / mx * 100) + '%';
+        $('.cmp-v', f).textContent = fmt(v);
+      });
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { ver(t.dataset.k); }); });
+    setTimeout(function () { ver('score'); }, 300);
+  })();
+
+  /* ---------- ProMatch: registro ---------- */
+  var reg = $('#pm-reg');
+  if (reg) (function () {
+    function rotulos() { var m = reg.quien.value === 'marca'; $$('label[data-dep]', reg).forEach(function (l) { l.textContent = m ? l.dataset.mar : l.dataset.dep; }); }
+    $$('input[name=quien]', reg).forEach(function (r) { r.addEventListener('change', rotulos); });
+    reg.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = reg, av = $('.aviso', reg);
+      if (!f.nombre.value.trim() || !f.disciplina.value.trim()) { av.textContent = 'Completa al menos tu nombre y ' + (f.quien.value === 'marca' ? 'tu empresa.' : 'tu disciplina.'); return; }
+      av.textContent = '';
+      var m = f.quien.value === 'marca';
+      abrirWA('Hola Daniel, quiero unirme a la lista de ProMatch como ' + (m ? 'marca' : 'deportista') + '.\nNombre: ' + f.nombre.value + '\n' + (m ? 'Empresa: ' : 'Disciplina: ') + f.disciplina.value + (f.ciudad.value ? '\nCiudad: ' + f.ciudad.value : '') + (f.ig.value ? '\n' + (m ? 'Web/Instagram: ' : 'Instagram: ') + f.ig.value : ''));
+    });
+  })();
+
   /* ---------- Metodología: escalera ---------- */
   var esc_ = $('.escalera');
   if (esc_) (function () {
@@ -162,6 +234,7 @@
       var p = pel[i], r = p.getBoundingClientRect(), rr = esc_.getBoundingClientRect();
       fig.style.left = (r.left - rr.left + r.width / 2 - fig.offsetWidth / 2) + 'px';
       fig.style.bottom = r.height + 'px';
+      if (p.dataset.fig) { var u = 'url(' + p.dataset.fig + ')'; fig.style.webkitMaskImage = u; fig.style.maskImage = u; fig.style.setProperty('--ar', p.dataset.ar); }
       var d = D[i];
       txt.innerHTML = '<div class="num">0' + (i + 1) + '</div><div class="epic t">' + d[0] + '</div><p class="lead" style="margin-top:8px;font-size:18px">' + d[1] + '</p><dl><div><dt>Entregables</dt><dd>' + d[2] + '</dd></div><div><dt>Tu parte</dt><dd>' + d[3] + '</dd></div></dl>';
     }
@@ -173,7 +246,7 @@
   })();
 
   /* ---------- ProMatch: anillo y barras ---------- */
-  var score = $('.score');
+  var score = $('.score:not(.sim-score)');
   if (score && 'IntersectionObserver' in window) {
     var oo = new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting) return; oo.disconnect();
