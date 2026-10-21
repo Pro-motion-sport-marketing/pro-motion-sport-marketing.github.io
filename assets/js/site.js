@@ -159,6 +159,56 @@
     });
   });
 
+  /* ---------- Versus: la bolita rebota de frase en frase ---------- */
+  var vt = $('.versus-tabla'), bola = vt && $('.vs-bola', vt);
+  if (bola && bola.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) (function () {
+    var corriendo = false, visible = false;
+    function puntos() {
+      var base = vt.getBoundingClientRect();
+      return $$('.vs-fila', vt).map(function (f) {
+        var pm = $('.pm', f), tx = pm.lastChild, r = document.createRange(); r.selectNodeContents(tx);
+        var b = r.getBoundingClientRect();
+        return { f: f, x: b.right - base.left - 18, y: b.top - base.top - 15 };
+      });
+    }
+    function ciclo() {
+      if (!visible) { corriendo = false; return; }
+      corriendo = true;
+      var p = puntos(), k = [], t = 0, T = 0, seg = 620, n = p.length;
+      T = seg * (n + 1);
+      function at(ms, x, y, o, sc) { k.push({ offset: ms / T, transform: 'translate(' + x + 'px,' + y + 'px) scale(' + (sc || '1,1') + ')', opacity: o }); }
+      at(0, p[0].x - 70, p[0].y - 90, 0);
+      for (var i = 0; i < n; i++) {
+        var a = i ? p[i - 1] : { x: p[0].x - 70, y: p[0].y - 90 }, c = p[i];
+        var mx = (a.x + c.x) / 2, my = Math.min(a.y, c.y) - 46;
+        at(t + seg * .5, mx, my, 1); t += seg;
+        at(t - 40, c.x, c.y - 4, 1, '0.92,1.1'); at(t, c.x, c.y + 3, 1, '1.3,0.7');
+        (function (f, ms) { setTimeout(function () { f.classList.add('tocada'); setTimeout(function () { f.classList.remove('tocada'); }, 900); }, ms); })(c.f, t);
+      }
+      var u = p[n - 1]; at(t + seg * .5, u.x + 60, u.y - 30, 1); at(T, u.x + 120, u.y + 40, 0);
+      var an = bola.animate(k, { duration: T, easing: 'linear' });
+      an.onfinish = function () { setTimeout(ciclo, 1400); };
+    }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
+  })();
+
+  /* ---------- ProMatch: el aro entra y la rata se sienta ---------- */
+  var pmEsc = $('.pm-escena');
+  if (pmEsc) {
+    var sc = pmEsc.closest('.score');
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { sc.classList.add('visto'); o.disconnect(); } }, { threshold: 0.4 }).observe(sc);
+    else sc.classList.add('visto');
+  }
+
+  /* ---------- Guía: viñetas del cómic en secuencia ---------- */
+  var comic = $('.comic');
+  if (comic) (function () {
+    var paso = 0, t = null;
+    function sig() { paso = paso % 4 + 1; comic.className = 'comic' + (paso <= 3 ? ' v-' + paso : ' v-3'); t = setTimeout(sig, paso === 3 ? 3600 : paso === 4 ? 600 : 1800); if (paso === 4) paso = 0; }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { clearTimeout(t); if (es[0].isIntersecting) { paso = 0; sig(); } }, { threshold: 0.3 }).observe(comic);
+    else comic.classList.add('v-3');
+  })();
+
   /* ---------- Portada: el punto completa el isotipo ---------- */
   var hv = $('.hero-vis'); if (hv) setTimeout(function () { hv.classList.add('listo'); }, 300);
 
