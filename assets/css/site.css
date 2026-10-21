@@ -999,3 +999,4 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .vc-cap .vc-ig{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--crema);pointer-events:auto;text-decoration:underline}
 .vc-item[data-d="0"] .vc-cap.abajo{pointer-events:auto}
 .pt-txt .kicker{display:inline-block;background:rgba(14,14,14,.72);padding:4px 10px;line-height:1.4}
+.vc-item.horiz video,.vc-item.horiz img.poster{object-fit:contain;background:transparent}
