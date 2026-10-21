@@ -987,3 +987,15 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .pt-video.h{width:min(100%,560px)}
 .pt-txt h1,.pt-txt .lead,.pt-txt .kicker{text-shadow:0 2px 18px rgba(0,0,0,.6)}
 @media (max-width:899px){.pt-foto{width:100%}.pt-foto::after{background:linear-gradient(0deg,#0e0e0e 0%,rgba(14,14,14,.15) 55%,rgba(14,14,14,.3) 100%)}}
+
+/* ---------- Carrusel de fichas: piezas gráficas ---------- */
+.ficha-reels{padding-top:clamp(60px,8vw,100px)}
+.vc-item.arte{background:#0d0d0d}
+.arte-bg{position:absolute;inset:-20px;background-size:cover;background-position:center;filter:blur(18px) brightness(.45);transform:scale(1.1)}
+.arte-sl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.arte-sl img{position:absolute;width:100%;height:auto;max-height:100%;object-fit:contain;opacity:0;animation:arteFade calc(var(--n) * 3s) infinite;animation-delay:calc(var(--k) * 3s)}
+.vc-item.arte[style*="--n:1"] .arte-sl img{opacity:1;animation:none}
+@keyframes arteFade{0%{opacity:0;transform:scale(1.02)}6%{opacity:1}30%{opacity:1}36%{opacity:0;transform:scale(1)}100%{opacity:0}}
+.vc-cap .vc-ig{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--crema);pointer-events:auto;text-decoration:underline}
+.vc-item[data-d="0"] .vc-cap.abajo{pointer-events:auto}
+.pt-txt .kicker{display:inline-block;background:rgba(14,14,14,.72);padding:4px 10px;line-height:1.4}
