@@ -1171,8 +1171,8 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ea-pm .c1{background:var(--rojo);margin-left:-100px;animation:pmIzq 7s var(--golpe) infinite}
 .ea-pm .c2{border:9px solid var(--negro);margin-left:-18px;animation:pmDer 7s var(--golpe) infinite}
 .ea-pm .suelo{position:absolute;left:12%;right:12%;bottom:12px;height:2px;background:var(--negro)}
-@keyframes pmIzq{0%{transform:translateX(-190px)}18%,86%{transform:none}96%,100%{transform:translateX(-190px)}}
-@keyframes pmDer{0%{transform:translateX(190px)}18%,86%{transform:none}96%,100%{transform:translateX(190px)}}
+
+
 .ea-pm .pa,.ea-pm .pb{height:62px;width:auto;bottom:42px;opacity:0}
 .ea-pm .pa{left:calc(50% - 26px);animation:pmA 7s var(--golpe) infinite}
 .ea-pm .pb{left:calc(50% - 1px);animation:pmB 7s var(--golpe) infinite}
@@ -1252,9 +1252,9 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ta-plan .run{animation:salta 9s linear infinite}
 .ta-plan .sit{height:30px;left:102px;top:44px;animation:sientaP 9s linear infinite}
 .ta-plan .walk{animation:vuelve 9s linear infinite}
-@keyframes salta{0%{opacity:1;transform:translate(-40px,60px)}6%{transform:translate(0,48px)}9%{transform:translate(2px,46px)}13%{transform:translate(14px,30px)}17%{transform:translate(26px,40px)}20%{transform:translate(27px,40px)}25%{transform:translate(42px,22px)}29%{transform:translate(58px,32px)}32%{transform:translate(59px,32px)}38%{transform:translate(82px,10px)}43%{opacity:1;transform:translate(102px,22px)}44%,100%{opacity:0;transform:translate(102px,22px)}}
-@keyframes sientaP{0%,43%{opacity:0}44%,68%{opacity:1}69%,100%{opacity:0}}
-@keyframes vuelve{0%,68%{opacity:0;transform:translate(104px,22px) scaleX(-1)}69%{opacity:1;transform:translate(104px,22px) scaleX(-1)}74%{transform:translate(120px,54px) scaleX(-1)}76%{transform:translate(118px,82px) scaleX(-1)}98%{opacity:1;transform:translate(-40px,82px) scaleX(-1)}100%{opacity:0;transform:translate(-40px,82px) scaleX(-1)}}
+
+
+
 @media (max-width:440px){.tool{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.ea *,.ta *{animation:none!important}}
 /* Guía: cómic en tres viñetas */
@@ -1306,3 +1306,36 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:600px){.vin figcaption span{display:none}.vin figcaption b{font-size:11px}.comic{gap:6px}}
 @media (max-width:700px){.cta-btn{max-width:none;margin-right:96px}.recostado{height:180px;top:-64px;left:calc(100% - 8px)}.cta-zona .btn.lg{font-size:16px}}
 .hero-vis .giro-txt text{font-size:12.4px;letter-spacing:0}
+/* VS: la rata sentada sigue la bolita (boceto de Alejo) */
+.vs-rata{left:23%;bottom:1px;height:clamp(150px,15vw,190px);transform-origin:50% 100%;transition:transform .35s var(--rebote);z-index:3}
+.vs-rata.mira{transform:rotate(4deg) translateY(-4px)}
+@media (max-width:899px){.vs-rata{display:block;position:relative;left:auto;bottom:auto;height:120px;width:auto;margin:14px 0 0 6px}}
+@media (max-width:899px){.vs-rata{order:99}}
+/* Siluetas sobre formas: contorno crema para que no se fundan con el negro */
+.ea img,.ta img{filter:drop-shadow(1.6px 0 0 var(--crema)) drop-shadow(-1.6px 0 0 var(--crema)) drop-shadow(0 1.6px 0 var(--crema)) drop-shadow(0 -1.6px 0 var(--crema))}
+/* ProMatch: figuras de pie sobre la línea, dentro del cruce */
+.ea-pm .pa,.ea-pm .pb{height:74px;bottom:12px}
+.ea-pm .pa{left:calc(50% - 31px)}
+.ea-pm .pb{left:calc(50% - 1px)}
+.vs-rata{height:clamp(110px,11vw,150px)}
+@media (max-width:899px){.vs-rata{height:100px}}
+.ea-ac .hoja{display:none}
+/* Plan editorial: aterriza exacto sobre cada bola */
+@keyframes salta{0%{opacity:1;transform:translate(-40px,84px)}5%{transform:translate(-12px,84px)}9%{transform:translate(2px,60px)}12%{transform:translate(2px,60px)}16%{transform:translate(14px,34px)}20%{transform:translate(27px,54px)}23%{transform:translate(27px,54px)}28%{transform:translate(43px,24px)}32%{transform:translate(59px,46px)}35%{transform:translate(59px,46px)}40%{transform:translate(81px,10px)}44%{opacity:1;transform:translate(103px,34px)}45%,100%{opacity:0;transform:translate(103px,34px)}}
+.ta-plan .sit{left:0;top:0;transform:translate(101px,33px);animation:sientaP 9s linear infinite}
+@keyframes sientaP{0%,44%{opacity:0}45%,68%{opacity:1}69%,100%{opacity:0}}
+@keyframes vuelve{0%,68%{opacity:0;transform:translate(104px,34px) scaleX(-1)}69%{opacity:1;transform:translate(104px,34px) scaleX(-1)}72%{transform:translate(122px,50px) scaleX(-1)}75%{transform:translate(126px,84px) scaleX(-1)}97%{opacity:1;transform:translate(-40px,84px) scaleX(-1)}100%{opacity:0;transform:translate(-40px,84px) scaleX(-1)}}
+/* ProMatch eco: sin pantalla vacía entre ciclos */
+@keyframes pmIzq{0%{transform:translateX(-120px)}16%,88%{transform:none}100%{transform:translateX(-120px)}}
+@keyframes pmDer{0%{transform:translateX(120px)}16%,88%{transform:none}100%{transform:translateX(120px)}}
+/* Academy: el lector piensa en su casco */
+.ea-ac .casco{display:none}
+.ea-ac .lect{width:78px;margin-left:-39px;bottom:84px}
+.ea-ac .piensa{position:absolute;left:calc(50% + 30px);bottom:118px;width:90px;height:62px}
+.ea-ac .piensa i{position:absolute;border-radius:50%;background:#fff;border:2px solid var(--negro);opacity:0;transform:scale(.3)}
+.ea-ac .p1{left:0;bottom:0;width:8px;height:8px;animation:pienso 6s infinite}
+.ea-ac .p2{left:10px;bottom:10px;width:13px;height:13px;animation:pienso 6s .3s infinite}
+.ea-ac .nube{position:absolute;left:22px;bottom:18px;width:64px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--negro);display:grid;place-items:center;opacity:0;transform:scale(.3);transform-origin:0 100%;animation:pienso 6s .6s infinite}
+.ea-ac .nube img{position:static;width:34px;filter:none}
+@keyframes pienso{0%,12%{opacity:0;transform:scale(.3)}20%,78%{opacity:1;transform:none}86%,100%{opacity:0;transform:scale(.3)}}
+@media (prefers-reduced-motion:reduce){.ea-ac .piensa i,.ea-ac .nube{opacity:1;transform:none}}
