@@ -116,7 +116,7 @@
     function ir(i) { act = (i + n) % n; pintar(); }
     items.forEach(function (it, i) {
       var v = $('video', it);
-      it.addEventListener('click', function () { if (i !== act) ir(i); });
+      it.addEventListener('click', function () { if (i !== act) ir(i); else if (it.dataset.ig) window.open(it.dataset.ig, '_blank', 'noopener'); });
       if (v) {
         v.addEventListener('timeupdate', function () { if (i === act && barra && v.duration) { barra.style.transition = 'width .25s linear'; barra.style.width = (v.currentTime / v.duration * 100) + '%'; } });
         v.addEventListener('ended', function () { if (i === act) ir(act + 1); });
@@ -142,19 +142,22 @@
     pintar();
   })();
 
-  /* ---------- Problema: la cuadrícula de solicitudes ---------- */
+  /* ---------- Problema: burbujas sobre los puntos (toque en móvil) ---------- */
   var grid = $('.puntos-grid');
-  if (grid) (function () {
-    var msg = $('.puntos-msg'), frases = ['“Necesito apoyo para mi temporada.”', '“Te envío mi currículum deportivo.”', '“Tengo muchos seguidores, ¿me auspicias?”', '“Soy campeón nacional, ¿me ayudas?”', '“Busco patrocinio para mi sueño.”'];
-    $$('.pt', grid).forEach(function (p, i) {
-      p.addEventListener('click', function () {
-        if (p.classList.contains('tu')) msg.innerHTML = '<b>Esta es la tuya:</b> una propuesta con narrativa, calendario, activaciones y cómo se mide. La marca no tiene que adivinar qué gana.';
-        else msg.innerHTML = 'Solicitud ' + (i + 1) + ': ' + frases[i % frases.length] + ' <b>Igual a las demás.</b>';
-      });
-      p.addEventListener('mouseenter', function () { p.click(); });
+  if (grid) $$('.pt', grid).forEach(function (p) {
+    p.addEventListener('click', function () {
+      $$('.pt', grid).forEach(function (x) { if (x !== p && !x.classList.contains('tu')) x.classList.remove('on'); });
+      if (!p.classList.contains('tu')) p.classList.toggle('on');
     });
-  })();
+  });
 
+  /* ---------- Otras estrategias: leer más ---------- */
+  $$('.estr-mas').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var a = b.closest('.estr-it'), on = a.classList.toggle('abierto');
+      b.setAttribute('aria-expanded', on); b.textContent = on ? 'Leer menos' : 'Leer más';
+    });
+  });
 
   /* ---------- Portada: el punto completa el isotipo ---------- */
   var hv = $('.hero-vis'); if (hv) setTimeout(function () { hv.classList.add('listo'); }, 300);

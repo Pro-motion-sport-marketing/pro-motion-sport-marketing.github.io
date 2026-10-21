@@ -1040,3 +1040,114 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .inf-tabla th small{display:block;opacity:.6;font-weight:400}
 .niv{display:flex;height:10px;border-radius:6px;overflow:hidden;min-width:120px}.niv i:nth-child(1){background:rgba(255,231,201,.35)}.niv i:nth-child(2){background:#f08a3c}.niv i:nth-child(3){background:var(--rojo)}
 .ph .vis .pj.colgado{height:clamp(320px,40vw,540px)}
+
+/* ================= Ajustes de Alejo · ronda 1 (oct 2026) ================= */
+@font-face{font-family:"Clash Display";src:url(../fonts/ClashDisplay-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+/* Menú legible: solo el CTA va en mayúsculas */
+.nav a{font-family:var(--clash);font-weight:500;text-transform:none;font-size:16px;letter-spacing:0}
+/* Botones y enlaces de acción: Clash Display Bold */
+.btn,.link,.aud .ir,.cat .ir,.etapa .ir,.ir{font-family:var(--clash);font-weight:700;letter-spacing:.02em}
+.btn{font-size:16px}.btn.lg{font-size:clamp(17px,1.8vw,20px)}
+/* Antetítulos: regular y con más aire */
+.kicker{font-weight:400;letter-spacing:.24em}
+/* Franja: misma letra, en regular */
+.franja-in{font-family:var(--clash);font-weight:400;letter-spacing:.06em}
+/* Portada */
+.hero h1 .si{white-space:nowrap}
+.chips{flex-wrap:nowrap}
+.chip{font-family:var(--clash);font-weight:500;font-size:15px;white-space:nowrap;padding:11px 14px 10px}
+@media (max-width:700px){.chips{flex-wrap:wrap}.hero h1 .si{font-size:.84em}}
+.hero-vis .empuje{animation:empujeBucle 9s cubic-bezier(.3,.1,.2,1) .5s infinite}
+@keyframes empujeBucle{0%{transform:translateX(-16%);opacity:0}6%{opacity:1}30%{transform:translateX(1.5%)}36%,82%{transform:none;opacity:1}90%,100%{transform:none;opacity:0}}
+.hero-vis .giro-txt{position:absolute;inset:6%;width:88%;height:88%;animation:gira 16s linear infinite;overflow:visible}
+.hero-vis .giro-txt text{font-family:var(--clash);font-weight:600;font-size:15px;letter-spacing:3.2px;text-transform:uppercase;fill:var(--crema)}
+@media (prefers-reduced-motion:reduce){.hero-vis .empuje{animation:none;transform:none;opacity:1}.hero-vis .giro-txt{animation:none}}
+/* Carrusel de videos: etiqueta arriba, título y vistas abajo, clic abre Instagram */
+.vc-cap.arriba{background:none;text-shadow:none}
+.vc-cap .tg{display:inline-block;background:var(--rojo);color:#fff;font-family:var(--clash);font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px 5px;border-radius:999px;opacity:1}
+.vc-cap .tt{font-family:var(--clash);font-weight:600;font-size:clamp(18px,1.7vw,22px);line-height:1.1;margin:0}
+.vc-cap .vis{display:flex;align-items:center;gap:8px;margin-top:10px}
+.vc-cap .vis svg{width:22px;height:22px;flex:none;color:var(--crema)}
+.vc-cap .vis b{font-size:clamp(22px,2vw,28px)}
+.vc-cap .ver-ig{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.vc-item[data-d="0"]{cursor:pointer}
+.vc-pilares button,.vc-pilares button.on{font-weight:600}
+/* Problema */
+.h2.t3,.h2.t2{font-size:clamp(32px,4.6vw,62px)}
+.problema .h2.t3{font-size:clamp(32px,4.2vw,58px)}
+@media (max-width:560px){.h2.t3 br,.h2.t2 br{display:none}}
+.solic{margin-top:64px}
+.solic-cab h3{font-family:var(--clash);font-weight:600;text-transform:uppercase;font-size:clamp(22px,2.4vw,30px);line-height:1.1;color:var(--negro)}
+.solic-cab span{display:block;margin-top:6px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo)}
+.solic .puntos-grid{grid-template-columns:repeat(7,1fr);max-width:none;gap:clamp(8px,1.8vw,22px);margin-top:70px}
+.pt .burbuja{position:absolute;bottom:calc(100% + 12px);left:50%;width:max-content;max-width:190px;transform:translate(-50%,8px) scale(.9);opacity:0;pointer-events:none;background:#5f5b58;color:var(--crema);font-size:13px;line-height:1.3;font-weight:500;padding:9px 13px;border-radius:16px;transition:opacity .2s,transform .25s var(--rebote);z-index:5;text-align:left}
+.pt .burbuja::after{content:"";position:absolute;top:100%;left:24px;border:8px solid transparent;border-top:11px solid #5f5b58;transform:skewX(-14deg)}
+.pt:hover .burbuja,.pt:focus-visible .burbuja,.pt.on .burbuja{opacity:1;transform:translate(-50%,0) scale(1)}
+.pt.tu .burbuja{background:var(--crema);color:var(--negro);max-width:220px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.pt.tu .burbuja::after{border-top-color:var(--crema)}
+.pt.tu .burbuja b{display:block;color:var(--rojo);text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin-bottom:3px}
+.pt:nth-child(7n+1) .burbuja,.pt:nth-child(7n+2) .burbuja{left:0;transform:translate(0,8px) scale(.9)}
+.pt:nth-child(7n+1):hover .burbuja,.pt:nth-child(7n+2):hover .burbuja,.pt:nth-child(7n+1).on .burbuja,.pt:nth-child(7n+2).on .burbuja{transform:none}
+.pt:nth-child(7n) .burbuja,.pt:nth-child(7n+6) .burbuja{left:auto;right:0;transform:translate(0,8px) scale(.9)}
+.pt:nth-child(7n):hover .burbuja,.pt:nth-child(7n+6):hover .burbuja,.pt:nth-child(7n).on .burbuja,.pt:nth-child(7n+6).on .burbuja{transform:none}
+.pt:nth-child(7n) .burbuja::after,.pt:nth-child(7n+6) .burbuja::after{left:auto;right:24px}
+.puntos-grid:hover .pt.tu:not(:hover) .burbuja{opacity:.25}
+.valor3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.valor3 div{display:flex;flex-direction:column;justify-content:flex-start}
+.valor3 .epic{font-family:var(--clash);font-weight:700;font-size:clamp(18px,1.8vw,22px);white-space:nowrap}
+@media (max-width:700px){.valor3{grid-template-columns:1fr}}
+/* Lo de siempre vs. Pro Motion */
+.vs-tit{font-size:clamp(26px,4vw,54px);line-height:1;text-transform:uppercase;color:var(--negro);margin-top:8px}
+.vs-tit .reg{font-family:var(--clash);font-weight:400;letter-spacing:-.01em}
+.vs-tit .epic{font-weight:800}
+@media (min-width:900px){.vs-tit{white-space:nowrap}}
+.versus-tabla{position:relative}
+.vs-fila{border-bottom:1px solid rgba(28,28,28,.12)}
+.vs-fila .otro{font-family:var(--clash);font-weight:400;text-transform:uppercase;letter-spacing:.04em;color:#9b948e;font-size:clamp(14px,1.4vw,17px)}
+.vs-fila .otro i{display:none}
+.vs-fila .pm{font-family:var(--clash);font-weight:700;font-size:clamp(15px,1.6vw,19px);letter-spacing:.01em}
+.vs-fila .pm svg{width:22px;height:22px;flex:none;color:var(--rojo)}
+.vs-fila .pm i{display:none}
+.vs-bola{position:absolute;right:-4px;top:0;width:14px;height:14px;border-radius:50%;background:var(--rojo);animation:vsBaja 6s cubic-bezier(.5,0,.5,1) infinite;z-index:2}
+@keyframes vsBaja{0%{top:0;opacity:0}5%{opacity:1}16%{top:8.3%}30%{top:25%}44%{top:41.6%}58%{top:58.3%}72%{top:75%}86%{top:91.6%;opacity:1}96%,100%{top:100%;opacity:0}}
+@media (prefers-reduced-motion:reduce){.vs-bola{display:none}}
+/* Ecosistema */
+.eco-card .sub{color:rgba(255,231,201,.5)}
+.eco-card .link{color:var(--rojo-vivo)}
+/* Metodología */
+.metodo-txt .epic.t{font-family:var(--clash);font-weight:700;letter-spacing:-.01em}
+/* Caso GT */
+.tel{width:min(100%,350px)}
+.tel figcaption{font-family:var(--clash);font-weight:500;text-transform:none;letter-spacing:.01em;background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:12px}
+/* Otras estrategias: video a sangre con texto encima */
+.estr-it{position:relative;aspect-ratio:9/16;display:block;border-radius:18px;background:#000}
+.estr-v{position:absolute;inset:0;aspect-ratio:auto}
+.estr-v::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 66%,rgba(0,0,0,.92) 100%);pointer-events:none;transition:background .3s}
+.estr-it.abierto .estr-v::after{background:linear-gradient(180deg,rgba(0,0,0,.1) 10%,rgba(0,0,0,.8) 45%,rgba(0,0,0,.95) 100%)}
+.estr-tx{position:absolute;left:0;right:0;bottom:0;padding:16px 16px 18px;gap:4px;pointer-events:none}
+.estr-tx em{display:flex;align-items:center;gap:6px;font-style:normal;font-family:var(--epic);font-size:16px;color:var(--crema);margin:0 0 4px}
+.estr-tx em svg{width:18px;height:18px}
+.estr-tx b{font-family:var(--clash);font-weight:600;font-size:clamp(16px,1.5vw,19px);line-height:1.1;text-transform:uppercase}
+.estr-tx .nm{font-family:var(--clash);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--rojo-vivo)}
+.estr-d{font-size:13px;line-height:1.4;opacity:.85;margin-top:4px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.estr-it.abierto .estr-d{-webkit-line-clamp:unset;display:block}
+.estr-mas{align-self:flex-start;background:none;border:0;padding:0;color:var(--crema);font-size:12px;font-weight:600;text-decoration:underline;cursor:pointer;pointer-events:auto}
+/* Guía */
+.guia-p{margin-top:14px;color:var(--crema);font-family:var(--clash);font-weight:400;letter-spacing:.01em;line-height:1.6}
+.guia-vis{position:relative;background:var(--negro);aspect-ratio:4/5;width:min(100%,300px);margin:0 auto;overflow:hidden}
+.guia-sol{position:absolute;left:50%;bottom:-62%;width:120%;aspect-ratio:1;border-radius:50%;background:var(--rojo);transform:translateX(-50%)}
+.guia-vis .pj{position:absolute;left:50%;bottom:30%;width:58%;transform:translateX(-50%);filter:var(--pegado)}
+/* Valores */
+.cita-g{color:var(--negro);font-size:clamp(24px,3.4vw,44px);line-height:1.04}
+.cita-g em{color:var(--crema)}
+.val-it .epic{font-family:var(--clash);font-weight:700;letter-spacing:.01em}
+
+.problema .wrap.solo{display:block}
+#deportistas .h2.t2{font-size:clamp(32px,4.2vw,56px)}
+.gt .h2.t3{font-size:clamp(32px,3.9vw,54px)}
+#promatch .h2.t3{font-size:clamp(30px,3vw,42px)}
+.cta-zona .btn{white-space:nowrap}
+.solic .puntos-grid{max-width:780px}
+.guia-vis .pj{width:46%;bottom:0;left:50%}
+#promatch .h2.t3{font-size:clamp(30px,2.7vw,38px)}
+@media (max-width:700px){.vc-cap .ver-ig{display:none}}
