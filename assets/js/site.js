@@ -272,6 +272,12 @@
     $$('button', n).forEach(function (b) { b.addEventListener('click', function () { g.scrollBy({ left: (+b.dataset.dir) * g.clientWidth * .8, behavior: 'smooth' }); }); });
   });
 
+
+  /* ---------- Estrategias: videos que se reproducen al verse ---------- */
+  if ('IntersectionObserver' in window) $$('.estr-v video').forEach(function (v) {
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(function () {}); } else v.pause(); }, { threshold: .4 }).observe(v);
+  });
+
   /* ---------- Metodología: escalera ---------- */
   var esc_ = $('.escalera');
   if (esc_) (function () {
