@@ -1039,3 +1039,4 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .inf-tabla th,.inf-tabla td{text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,231,201,.14);font-size:15px}
 .inf-tabla th small{display:block;opacity:.6;font-weight:400}
 .niv{display:flex;height:10px;border-radius:6px;overflow:hidden;min-width:120px}.niv i:nth-child(1){background:rgba(255,231,201,.35)}.niv i:nth-child(2){background:#f08a3c}.niv i:nth-child(3){background:var(--rojo)}
+.ph .vis .pj.colgado{height:clamp(320px,40vw,540px)}
