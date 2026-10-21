@@ -1305,3 +1305,4 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:899px){.pm-escena{left:-30%;width:34%}.score{width:min(64%,320px);margin-right:4%}}
 @media (max-width:600px){.vin figcaption span{display:none}.vin figcaption b{font-size:11px}.comic{gap:6px}}
 @media (max-width:700px){.cta-btn{max-width:none;margin-right:96px}.recostado{height:180px;top:-64px;left:calc(100% - 8px)}.cta-zona .btn.lg{font-size:16px}}
+.hero-vis .giro-txt text{font-size:12.4px;letter-spacing:0}
