@@ -1999,3 +1999,4 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .kpi-vis{align-items:stretch!important}.kpi-f{width:100%}
 .pe-main img{object-position:50% 25%}
 .pe-slide{flex:0 0 min(86%,560px)!important;border-radius:8px}.pe-slide img{aspect-ratio:16/9!important}.pe-slides{margin-top:14px}
+.pe-slide{background:transparent;box-shadow:none}.pe-slide img{border-radius:8px}.pe-slide figcaption{position:static;background:none;padding:10px 2px 0;color:var(--crema)}
