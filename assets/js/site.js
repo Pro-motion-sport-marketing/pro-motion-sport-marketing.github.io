@@ -208,6 +208,7 @@
     });
   });
   /* ---------- Servicios: KPIs animados ---------- */
+  $$('.kpi-vis').forEach(function (k) { if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { k.classList.add('ve'); o.disconnect(); } }).observe(k); else k.classList.add('ve'); });
   $$('[data-kpi]').forEach(function (b) {
     var fin = +b.dataset.kpi, hecho = false;
     function go() { if (hecho) return; hecho = true; var t0 = null; (function paso(ts) { if (!t0) t0 = ts; var k = Math.min(1, (ts - t0) / 1200); b.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(paso); })(performance.now()); }

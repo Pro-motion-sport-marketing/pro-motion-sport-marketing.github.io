@@ -1985,3 +1985,17 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .an-mesa-in{width:min(72cqw,290px);height:min(72cqw,290px)}
 .an-mesa-in .fig{width:100%!important;height:100%!important}
 .etapa .an{height:190px}
+/* Catálogo · Informe: mini gráfico de barras */
+.kpi-vis{display:flex!important;flex-direction:column;justify-content:center;gap:9px;height:150px;padding:10px 14px;grid-template-columns:none}
+.kpi-t{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--negro);opacity:.7;align-items:flex-start!important}
+.kpi-f{display:grid!important;grid-template-columns:52px 1fr 36px;align-items:center!important;gap:6px;text-align:left!important}
+.kpi-f em{font-style:normal;font-size:12px;font-weight:600}
+.kpi-b{height:12px;background:rgba(28,28,28,.1);display:block!important;overflow:hidden}
+.kpi-b i{display:block;height:100%;width:var(--w);background:var(--rojo);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.2s var(--golpe)}
+.kpi-vis.ve .kpi-b i{transform:none}
+.kpi-f:nth-child(3) .kpi-b i{transition-delay:.15s}.kpi-f:nth-child(4) .kpi-b i{transition-delay:.3s}
+.kpi-f b{font-family:var(--epic);font-size:16px!important;color:var(--negro)!important;text-align:right}
+.kpi-f b::after{content:"%"}
+.kpi-vis{align-items:stretch!important}.kpi-f{width:100%}
+.pe-main img{object-position:50% 25%}
+.pe-slide{flex:0 0 min(86%,560px)!important;border-radius:8px}.pe-slide img{aspect-ratio:16/9!important}.pe-slides{margin-top:14px}
