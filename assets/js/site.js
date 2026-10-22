@@ -192,6 +192,49 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
   })();
 
+  /* ---------- Artículo: interacciones ---------- */
+  var blog = $('.blog');
+  if (blog) (function () {
+    var cb = $('[data-cambio]');
+    if (cb) $$('.cambio-tabs button', cb).forEach(function (b) { b.addEventListener('click', function () {
+      $$('.cambio-tabs button', cb).forEach(function (x) { x.classList.toggle('on', x === b); });
+      $$('.cambio-panel', cb).forEach(function (p) { p.hidden = p.dataset.p !== b.dataset.v; });
+    }); });
+    var qs = $$('.q-chip'), qr = $('.quiere-res');
+    qs.forEach(function (b) { b.addEventListener('click', function () {
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+      var n = qs.filter(function (x) { return x.getAttribute('aria-pressed') === 'true'; }).length;
+      qr.textContent = n === 0 ? 'Todavía no has elegido ninguno. Así se ve una propuesta que solo informa.'
+        : n < 3 ? n + ' objetivo' + (n > 1 ? 's' : '') + ': ya empiezas a hablar el idioma de la marca. ¿Puedes demostrarlo con datos?'
+        : n + ' objetivos: esto ya no es un pedido, es una propuesta. Ahora conviértelo en entregables medibles.';
+    }); });
+    var pn = $('[data-pn]');
+    if (pn) $$('.pn-switch button', pn).forEach(function (b) { b.addEventListener('click', function () {
+      $$('.pn-switch button', pn).forEach(function (x) { x.classList.toggle('on', x === b); });
+      $('.pn-switch', pn).classList.toggle('neg', b.dataset.m === 'negociar');
+      $$('.pn-lado', pn).forEach(function (l) { l.hidden = l.dataset.m !== b.dataset.m; });
+    }); });
+    var qd = $('[data-queda]');
+    if (qd) (function () {
+      var cks = $$('input', qd), barra = $('.queda-barra i', qd), tx = $('.queda-tx', qd);
+      function pintar() {
+        var n = cks.filter(function (c) { return c.checked; }).length;
+        barra.style.width = (n / cks.length * 100) + '%';
+        var m = n <= 3 ? 'Sin incentivo, hoy tu propuesta se sostiene sobre muy poco.' : n <= 7 ? 'Tienes base. Falta ordenarla y demostrarla con evidencias.' : 'Tienes valor propio. El incentivo sería un acelerador, no tu único argumento.';
+        tx.innerHTML = '<b>' + n + ' de ' + cks.length + '</b><span>' + m + '</span>';
+      }
+      cks.forEach(function (c) { c.addEventListener('change', pintar); });
+    })();
+    var links = $$('.blog-indice a'), barraL = $('.blog-progreso i'), secs = links.map(function (a) { return $(a.getAttribute('href')); });
+    function onScroll() {
+      var tx = $('.blog'), r = tx.getBoundingClientRect(), p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+      if (barraL) barraL.style.width = (p * 100) + '%';
+      var k = -1; secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < innerHeight * .35) k = i; });
+      links.forEach(function (a, i) { a.classList.toggle('on', i === k); });
+    }
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  })();
+
   /* ---------- ProMatch: vistazo de la calculadora ---------- */
   var cvn = $('#cv-n');
   if (cvn) (function () {
