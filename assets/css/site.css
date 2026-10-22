@@ -1648,3 +1648,41 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:899px){.ten-piensa{right:auto;left:-10%;bottom:96%}.ten-nube{right:auto;left:0;width:190px;font-size:13px}.ten-piensa i{display:none}}
 @media (prefers-reduced-motion:reduce){.ten-piensa i,.ten-nube{opacity:1;animation:none}}
 @media (max-width:899px){.ten-w{margin-top:110px}.ten-piensa{left:0;bottom:100%}}
+/* ===== Artículo en fondo oscuro plano (legibilidad) ===== */
+.blog{background:#161616;color:#EDE3D6}
+.blog-hero{padding-bottom:60px;border-bottom:1px solid rgba(255,231,201,.1)}
+.blog-hero h1{color:var(--crema)}
+.blog-hero h1 span{color:var(--rojo-vivo)}
+.blog .migas,.blog .migas a{color:rgba(255,231,201,.7)}
+.blog-hero .lead{color:#EDE3D6}
+.blog-autor{opacity:.7}
+.blog-cuerpo{padding-top:50px}
+.blog-tx{font-size:19px;line-height:1.75;font-weight:400;color:#E6DCCF;letter-spacing:0}
+.blog-tx b{color:#fff;font-weight:600}
+.blog-tx h2{color:var(--crema)}
+.blog-indice a{color:var(--crema);opacity:.6}
+.blog-indice a.on,.blog-indice a:hover{opacity:1}
+.blog-indice b{color:var(--rojo-vivo)}
+.blog-progreso{background:rgba(255,231,201,.12)}
+.capitular::first-letter{color:var(--rojo-vivo)}
+.culpables span{background:rgba(255,231,201,.08);color:#EDE3D6;border:1px solid rgba(255,231,201,.18);text-decoration-color:var(--rojo-vivo)}
+.blog-cita{color:var(--crema);border-left-color:var(--rojo-vivo)}
+.blog-cita.grande{background:rgba(255,231,201,.07);color:var(--crema)}
+.cambio,.queda{background:#222;border:1px solid rgba(255,231,201,.12)}
+.quiere{background:#222;border:1px solid rgba(255,231,201,.14);color:#EDE3D6}
+.quiere-cab b{color:var(--crema)}
+.q-chip{background:#1a1a1a;color:#EDE3D6;border-color:rgba(255,231,201,.2)}
+.q-chip b{color:var(--crema)}
+.pn{background:var(--crema);color:var(--negro)}
+.pn .pn-frase,.pn b{color:inherit}.pn .pn-frase b{color:var(--rojo)}
+.fig-ahora{color:var(--rojo-vivo)}
+.blog-ancha figcaption{color:#EDE3D6}
+.motor-pieza{background:#222;border-color:rgba(255,231,201,.2);color:#EDE3D6}
+.motor-pieza b{color:var(--crema)}
+.motor-pieza.m1{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.motor-flecha{color:var(--rojo-vivo)}
+.necesita li{background:rgba(255,231,201,.06);border-left-color:var(--rojo-vivo);color:#EDE3D6}
+.remate{border-color:rgba(255,231,201,.25);color:var(--crema)}
+.remate b{color:var(--rojo-vivo)}
+.blog .pj{filter:none}
+.blog-tx a{color:var(--crema)}
