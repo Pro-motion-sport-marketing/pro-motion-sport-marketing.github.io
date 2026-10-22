@@ -2027,3 +2027,16 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .an-msg{position:absolute;left:30%;top:6px;width:30px;height:24px;border-radius:12px;background:var(--negro);color:var(--crema);font-size:13px;display:grid;place-items:center;animation:msg 3s ease-in-out infinite}
 .an-msg::after{content:"";position:absolute;left:6px;bottom:-6px;border:5px solid transparent;border-top:7px solid var(--negro)}
 @keyframes msg{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+/* Por qué Pro Motion: foto integrada al fondo */
+.porque-sec{position:relative;overflow:hidden}
+.porque-sec .wrap{position:relative;z-index:1}
+.porque{grid-template-columns:1fr!important}
+.porque>div{max-width:760px}
+.porque-bg{position:absolute;top:0;right:0;bottom:0;width:48%;margin:0;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%),linear-gradient(0deg,transparent 0%,#000 22%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0%,#000 38%),linear-gradient(0deg,transparent 0%,#000 22%);mask-composite:intersect}
+.porque-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:brightness(1.45) contrast(1.05);animation:kenBurns 20s ease-in-out infinite alternate}
+@media (max-width:979px){
+  .porque-bg{position:relative;width:100%;height:340px;-webkit-mask-image:linear-gradient(0deg,transparent 0%,#000 40%);mask-image:linear-gradient(0deg,transparent 0%,#000 40%)}
+  .porque-sec{padding-top:0}
+  .porque-sec .wrap{margin-top:-90px}
+}
+@media (min-width:980px) and (max-width:1200px){.porque>div{max-width:58%}}
