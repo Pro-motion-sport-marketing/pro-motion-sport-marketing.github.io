@@ -192,6 +192,28 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
   })();
 
+  /* ---------- Servicios: protagonista intercambiable ---------- */
+  var pe = $('.perfil-ej');
+  if (pe) $$('.pe-mini a', pe).forEach(function (m) {
+    m.addEventListener('click', function (e) {
+      e.preventDefault();
+      var main = $('.pe-main', pe), mi = $('img', main), si = $('img', m);
+      var t = [mi.src, mi.alt, main.href, main.dataset.nombre, main.dataset.score];
+      mi.src = si.src; mi.alt = si.alt; main.href = m.href; main.dataset.nombre = m.dataset.nombre; main.dataset.score = m.dataset.score;
+      si.src = t[0]; si.alt = t[1]; m.href = t[2]; m.dataset.nombre = t[3]; m.dataset.score = t[4];
+      var b = $('.pe-score b', main); if (b) b.textContent = main.dataset.score;
+      var tag = $('.pe-tag', main); if (tag) tag.textContent = 'Ejemplo real · ' + main.dataset.nombre;
+      $('span', m).textContent = m.dataset.nombre.split(' ')[0] + ' · ' + m.dataset.score;
+      pe.classList.remove('cambia'); void pe.offsetWidth; pe.classList.add('cambia');
+    });
+  });
+  /* ---------- Servicios: KPIs animados ---------- */
+  $$('[data-kpi]').forEach(function (b) {
+    var fin = +b.dataset.kpi, hecho = false;
+    function go() { if (hecho) return; hecho = true; var t0 = null; (function paso(ts) { if (!t0) t0 = ts; var k = Math.min(1, (ts - t0) / 1200); b.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(paso); })(performance.now()); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { go(); o.disconnect(); } }).observe(b); else go();
+  });
+
   /* ---------- Tarjetas de foto: leer más ---------- */
   $$('.foto-card .fc-btn').forEach(function (b) { b.addEventListener('click', function () {
     var c = b.closest('.foto-card'), on = c.classList.toggle('abierto'); b.textContent = on ? 'Leer menos' : 'Leer más';
