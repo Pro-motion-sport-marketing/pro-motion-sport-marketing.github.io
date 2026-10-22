@@ -1515,3 +1515,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .nos-foto:hover img{transform:scale(1.02)}
 @media (prefers-reduced-motion:reduce){.puente .globo{opacity:1;transform:none;animation:none!important}.puente .medio-pj{opacity:1;transform:none;animation:none!important}.puente .lado-pj,.hace-vis img,.hace-vis i::before,.dual img,.mueve-fotos img{animation:none!important}}
 @media (min-width:900px){.puente .tabla{bottom:auto;top:calc(92px + clamp(240px,24vw,320px) - 12px)}}
+/* Cierre: solo una pose visible a la vez (evita el "tercer brazo") */
+.recostado .fa{animation:gafasA 6s steps(1) infinite}
+@keyframes gafasA{0%,44%{opacity:1}45%,74%{opacity:0}75%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.recostado .fa{animation:none;opacity:1}}
