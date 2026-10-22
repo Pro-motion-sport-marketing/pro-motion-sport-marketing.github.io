@@ -2004,3 +2004,6 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .an-et{position:absolute;top:calc(100% + 10px);transform:translateX(-50%);white-space:nowrap;font-family:var(--clash);font-weight:600;font-size:clamp(11px,1.1vw,14px);text-transform:uppercase;letter-spacing:.06em;color:var(--negro)}
 .an-et:last-child{color:var(--rojo)}
 @media (max-width:560px){.an-et{font-size:9.5px;letter-spacing:.02em}}
+.an-dron .fig{animation:none}
+.an-dron{animation:vuelaDron 3.4s ease-in-out infinite}
+@keyframes vuelaDron{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
