@@ -1470,3 +1470,48 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .hero-conoce{display:inline-block;margin-top:18px;font-size:15px;color:var(--tinta);text-decoration:none;opacity:.85}
 .hero-conoce b{border-bottom:2px solid var(--rojo);padding-bottom:1px;transition:color .2s}
 .hero-conoce:hover b{color:var(--rojo)}
+/* ===== Conócenos: animaciones y burbujas sin choque ===== */
+.puente .lado{padding-top:92px}
+.puente .globo{top:0;font-size:14px;white-space:nowrap;opacity:0;transform:scale(.4) translateY(10px)}
+.puente .globo.b1{left:52%;right:auto;transform-origin:0 100%}
+.puente .globo.b1::after{left:14%}
+.puente .globo.b2{left:auto;right:52%;transform-origin:100% 100%}
+.puente .globo.b2::after{left:auto;right:14%;transform:skewX(18deg)}
+.puente .lado.in .globo.b1{animation:globoIn .6s var(--rebote) .5s forwards,globoFlota 4s ease-in-out 1.2s infinite}
+.puente .lado.in .globo.b2{animation:globoIn .6s var(--rebote) 1.6s forwards,globoFlota 4s ease-in-out 2.3s infinite}
+@keyframes globoIn{to{opacity:1;transform:none}}
+@keyframes globoFlota{0%,100%{opacity:1;transform:none}50%{opacity:1;transform:translateY(-6px)}}
+.puente .lado-pj,.puente .medio-pj{transform-origin:50% 100%;animation:respira 4.2s ease-in-out infinite}
+.puente .lado:last-child .lado-pj{animation-duration:5s;animation-delay:-1.4s}
+@keyframes respira{0%,100%{transform:none}50%{transform:scaleY(1.018) translateY(-1px)}}
+@media (min-width:900px){
+  .puente .medio{padding-top:92px}
+  .puente .medio-pj{opacity:0;transform:translateY(24px)}
+  .puente .medio.in .medio-pj{animation:rataSube .7s var(--rebote) 1.4s forwards,respira 4.6s ease-in-out 2.2s infinite}
+}
+@keyframes rataSube{0%{opacity:0;transform:translateY(24px)}70%{opacity:1;transform:translateY(-10px)}100%{opacity:1;transform:none}}
+@media (max-width:899px){.puente .globo.b1{left:50%}.puente .globo.b2{right:50%}}
+/* Qué hacemos: figuras animadas */
+.hace-vis i::before{content:"";position:absolute;inset:12px;border-radius:50%;border:2px dashed rgba(255,231,201,.55);animation:gira 9s linear infinite}
+.hace-vis img{animation:fig1 3s ease-in-out infinite}
+.hace-1 .hace-vis img{transform-origin:30% 100%;animation-name:figMira}
+.hace-2 .hace-vis img{animation-name:figSube;animation-duration:3.4s}
+.hace-3 .hace-vis img{animation-name:figGraba;animation-duration:3.8s}
+.hace-4 .hace-vis img{animation-name:figTrato;animation-duration:3s}
+@keyframes figMira{0%,100%{transform:translateX(-50%) rotate(0)}40%{transform:translateX(-50%) rotate(-5deg)}70%{transform:translateX(-50%) rotate(3deg)}}
+@keyframes figSube{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-12px)}}
+@keyframes figGraba{0%,100%{transform:translateX(-62%)}50%{transform:translateX(-38%)}}
+@keyframes figTrato{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.07)}}
+.hace:hover .hace-vis img{animation-play-state:paused}
+/* Fotos con acercamiento lento */
+.dual img{animation:kenBurns 14s ease-in-out infinite alternate}
+.dual:nth-child(2) img{animation-delay:-4s}.dual:nth-child(3) img{animation-delay:-8s}.dual:nth-child(4) img{animation-delay:-11s}
+@keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.08)}}
+.mueve-fotos{overflow:hidden}
+.mueve-fotos img{animation:kenBurns 16s ease-in-out infinite alternate}
+.mueve-fotos .m2{animation:none}
+.mueve-fotos .m3{animation-delay:-6s}
+.nos-foto img{transition:transform .8s var(--golpe)}
+.nos-foto:hover img{transform:scale(1.02)}
+@media (prefers-reduced-motion:reduce){.puente .globo{opacity:1;transform:none;animation:none!important}.puente .medio-pj{opacity:1;transform:none;animation:none!important}.puente .lado-pj,.hace-vis img,.hace-vis i::before,.dual img,.mueve-fotos img{animation:none!important}}
+@media (min-width:900px){.puente .tabla{bottom:auto;top:calc(92px + clamp(240px,24vw,320px) - 12px)}}
