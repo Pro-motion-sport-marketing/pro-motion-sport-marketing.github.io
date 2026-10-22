@@ -1892,3 +1892,96 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .esc-sube{position:absolute;left:30px;top:40px}
 .esc-sube .fig{animation:paso .7s ease-in-out infinite alternate}
 @keyframes paso{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+/* ===== Ilustraciones animadas (minimalistas) ===== */
+.an{position:relative;display:block;width:100%;height:150px;overflow:hidden;color:var(--negro)}
+.an i{display:block}
+.an-p{position:absolute;transform:translateX(-50%);display:flex;align-items:flex-end;line-height:0}
+.an-p .fig{display:block}
+.an-bola{position:absolute;aspect-ratio:1;border-radius:50%;background:var(--rojo)}
+/* perfil: documento que se despliega */
+.an-doc{position:absolute;left:28%;top:12px;width:70px;height:100px;background:var(--negro);transform-origin:50% 0;animation:despliega 4s var(--golpe) infinite}
+.an-doc::before{content:"";position:absolute;left:50%;top:14px;width:34px;height:34px;margin-left:-17px;border-radius:50%;background:var(--rojo)}
+.an-doc i{position:absolute;left:10px;right:10px;height:5px;background:var(--rojo)}
+.an-doc i:nth-child(1){top:60px}.an-doc i:nth-child(2){top:72px}.an-doc i:nth-child(3){top:84px;right:26px}
+@keyframes despliega{0%{transform:scaleY(.12) scaleX(.6)}25%{transform:scaleY(.5) scaleX(.6)}45%,85%{transform:none}100%{transform:scaleY(.12) scaleX(.6)}}
+.an-sway{animation:sway 3s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:translateX(-50%) rotate(0)}50%{transform:translateX(-50%) rotate(-3deg)}}
+/* estrategia: corre hasta la bola */
+.an-corre{animation:corre 3.6s ease-in infinite}
+@keyframes corre{0%{left:-10%;opacity:0}8%{opacity:1}75%{left:66%;opacity:1}85%,100%{left:66%;opacity:0}}
+/* eventos: circuito con bola que gira */
+.an-circuito{position:absolute;left:12%;bottom:12px;width:66%;height:70px;border:16px solid var(--negro);border-radius:50%}
+.an-orbita{position:absolute;inset:-16px;animation:gira 3s linear infinite}
+.an-orbita i{position:absolute;left:50%;top:-2px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--rojo)}
+.an-agita .fig{transform-origin:40% 100%;animation:agita .9s ease-in-out infinite}
+/* gestión: teléfono con deportista que saluda */
+.an-tel{position:absolute;left:60%;bottom:6px;width:72px;height:128px;margin-left:-36px;background:var(--rojo);border-radius:14px}
+.an-saluda .fig{transform-origin:50% 100%;animation:saluda 1.8s ease-in-out infinite}
+@keyframes saluda{0%,100%{transform:rotate(0)}25%{transform:rotate(2deg)}75%{transform:rotate(-2deg)}}
+.an-dirige .fig{animation:dirige 2.2s ease-in-out infinite}
+@keyframes dirige{0%,100%{transform:none}50%{transform:translateX(4px) rotate(2deg)}}
+/* identidad: pinta el casco */
+.an-casco{position:absolute;right:6%;bottom:8px;width:120px;height:100px;background:var(--rojo);border-radius:60px 60px 18px 60px;overflow:hidden}
+.an-casco i{position:absolute;right:0;top:34px;width:62px;height:30px;background:var(--negro);border-radius:14px 0 0 14px;transform-origin:100% 50%;animation:pintaVisor 3s ease-in-out infinite}
+@keyframes pintaVisor{0%{transform:scaleX(0)}55%,85%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+.an-pinta .fig{transform-origin:40% 100%;animation:rodillo 1.1s ease-in-out infinite}
+@keyframes rodillo{0%,100%{transform:rotate(0)}50%{transform:rotate(-4deg) translateY(-3px)}}
+/* cobertura: medio círculo negro que gira con rampa, dron */
+.an-media{position:absolute;left:50%;bottom:-60px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:var(--negro);animation:gira 8s linear infinite}
+.an-rampa{position:absolute;left:50%;top:-12px;width:0;height:0;border-left:16px solid transparent;border-bottom:14px solid var(--negro);margin-left:-8px}
+.an-salta .fig{animation:saltaMoto 2s ease-in-out infinite}
+@keyframes saltaMoto{0%,60%,100%{transform:none}75%{transform:translateY(-14px) rotate(-10deg)}}
+.an-dron .fig{animation:vuela 3.4s ease-in-out infinite}
+/* eventual: rueda roja que gira por el pedaleo */
+.an-rueda{position:absolute;left:45%;bottom:6px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:var(--rojo);animation:gira 5s linear infinite}
+.an-rueda::after{content:"";position:absolute;inset:12px;border-radius:50%;border:2px dashed rgba(255,231,201,.7)}
+.an-pedalea .fig{animation:pedal .5s ease-in-out infinite alternate}
+@keyframes pedal{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+/* presentación: la luz parpadea y se enciende */
+.an-luz{position:absolute;left:50%;top:0;width:170px;height:150px;margin-left:-85px;background:var(--rojo);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);animation:enciende 4s steps(1) infinite}
+@keyframes enciende{0%{opacity:.15}8%{opacity:.8}12%{opacity:.15}18%{opacity:.8}22%{opacity:.15}30%,95%{opacity:1}100%{opacity:.15}}
+/* formación: sube la escalera hacia el círculo */
+.an-escala{animation:escala 3.2s ease-in-out infinite}
+@keyframes escala{0%{transform:translateX(-50%) translateY(10px)}60%,80%{transform:translateX(-50%) translateY(-24px)}100%{transform:translateX(-50%) translateY(10px)}}
+/* portada de servicios */
+.an-hero{height:auto;aspect-ratio:2.3/1;container-type:size;overflow:visible}
+.an-base{position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--negro)}
+.an-gatea .fig{animation:gatea 1.2s ease-in-out infinite}
+@keyframes gatea{0%,100%{transform:none}50%{transform:translate(3px,-2px)}}
+.an-camina .fig{animation:camina .9s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes camina{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg) translateY(-2px)}}
+.an-trota .fig{animation:trota .55s ease-in-out infinite alternate}
+@keyframes trota{from{transform:none}to{transform:translateY(-6px)}}
+.an-trato{display:flex;gap:0}
+.an-trato .fig:first-child{animation:trato 1.6s ease-in-out infinite}
+.an-trato .fig:last-child{animation:trato 1.6s ease-in-out infinite reverse}
+@keyframes trato{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
+.srv-hero-vis .an-hero{max-width:640px;margin:0 auto}
+/* etapas de deportistas */
+.an-etapa-1 .an-amarra .fig{animation:mira 4s ease-in-out infinite;transform-origin:30% 100%}
+@keyframes mira{0%,45%,100%{transform:none}55%,85%{transform:rotate(-12deg) translateY(-6px)}}
+.an-cams{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around}
+.an-cams i{width:22px;height:14px;background:var(--negro);border-radius:3px;position:relative;opacity:0;animation:cams 3s ease-in-out infinite}
+.an-cams i::after{content:"";position:absolute;left:6px;top:3px;width:8px;height:8px;border-radius:50%;background:#fff}
+.an-cams i:nth-child(2){animation-delay:.3s}.an-cams i:nth-child(3){animation-delay:.6s}
+@keyframes cams{0%,10%{opacity:0;transform:translateY(16px)}25%,80%{opacity:1;transform:none}90%,100%{opacity:0}}
+.an-monte{position:absolute;left:0;bottom:0;width:72%;height:62%;background:var(--negro);clip-path:polygon(0 100%,50% 0,100% 100%)}
+.an-pin{position:absolute;right:10%;bottom:10px;width:26px;height:26px;background:var(--rojo);border-radius:50% 50% 50% 0;transform:rotate(-45deg);animation:pin 1.8s ease-in-out infinite}
+@keyframes pin{0%,100%{transform:rotate(-45deg) translate(0,0)}50%{transform:rotate(-45deg) translate(6px,-6px)}}
+/* mesa redonda vista desde arriba */
+.an-mesa-in{position:absolute;left:50%;top:50%;width:min(92%,190px);aspect-ratio:1;transform:translate(-50%,-50%);animation:mesa 6s ease-in-out infinite}
+.an-mesa-in .fig{height:100%!important;width:100%}
+@keyframes mesa{0%,100%{transform:translate(-50%,-50%) rotate(-2deg)}50%{transform:translate(-50%,-50%) rotate(2deg)}}
+.an-formacion-g{height:min(70vw,360px)}
+@media (prefers-reduced-motion:reduce){.an *{animation:none!important}}
+.an{container-type:inline-size}
+.an-mesa-w,.an-formacion-g .an{height:100%}
+
+.an-mesa-bola,.an-mesa .an-bola{width:auto}
+.an-mesa~.an-bola,.an-formacion-g .an-bola{width:min(56cqw,215px)!important}
+.srv-hero-vis{width:100%}
+.srv-hero-vis .an-hero{max-width:none;width:100%}
+.an-formacion-g{height:min(92vw,360px)!important}
+.an-mesa-in{width:min(72cqw,290px);height:min(72cqw,290px)}
+.an-mesa-in .fig{width:100%!important;height:100%!important}
+.etapa .an{height:190px}
