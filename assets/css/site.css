@@ -1339,3 +1339,22 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ea-ac .nube img{position:static;width:34px;filter:none}
 @keyframes pienso{0%,12%{opacity:0;transform:scale(.3)}20%,78%{opacity:1;transform:none}86%,100%{opacity:0;transform:scale(.3)}}
 @media (prefers-reduced-motion:reduce){.ea-ac .piensa i,.ea-ac .nube{opacity:1;transform:none}}
+/* ProMatch: vistazo de la calculadora de visibilidad */
+.calc-v{display:grid;gap:28px;margin-top:56px;padding:clamp(22px,3vw,38px);background:var(--negro);color:var(--crema);clip-path:polygon(0 1.5%,100% 0,99.5% 100%,.5% 98.5%)}
+@media (min-width:900px){.calc-v{grid-template-columns:1fr 1fr;align-items:center}}
+.calc-v h3{font-family:var(--clash);font-weight:600;text-transform:uppercase;font-size:clamp(22px,2.4vw,30px);line-height:1.1;margin:8px 0 10px}
+.calc-v-tx p{font-size:16px;opacity:.82}
+.calc-v-l{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px;font-weight:600;font-size:15px}
+.calc-v-l output{font-family:var(--epic);font-size:30px;color:var(--rojo-vivo)}
+.calc-v input[type=range]{width:100%;accent-color:var(--rojo);margin-top:8px}
+.calc-v small{opacity:.6;font-size:13px}
+.calc-v-res{background:rgba(255,231,201,.06);border:1px solid rgba(255,231,201,.14);padding:22px}
+.calc-v-res .lbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo-vivo)}
+.calc-v-res>b{display:block;font-family:var(--epic);font-size:clamp(30px,3.6vw,46px);line-height:1.05;margin:6px 0 16px}
+.calc-v-lock{list-style:none;display:grid;gap:8px;margin-bottom:16px}
+.calc-v-lock li{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px;padding:8px 0;border-top:1px solid rgba(255,231,201,.12)}
+.calc-v-lock li span::before{content:"🔒";margin-right:8px;font-size:12px}
+.calc-v-lock i{font-style:normal;font-family:var(--epic);filter:blur(5px);user-select:none}
+.calc-v-nota{font-size:13px;opacity:.75;margin-bottom:16px}
+.calc-v-nota a{color:var(--crema)}
+.calc-v-lock i{white-space:nowrap}

@@ -192,6 +192,15 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
   })();
 
+  /* ---------- ProMatch: vistazo de la calculadora ---------- */
+  var cvn = $('#cv-n');
+  if (cvn) (function () {
+    var o = $('#cv-o'), r = $('#cv-r');
+    function k(v) { return (Math.round(v / 1000) * 1000).toLocaleString('es-EC'); }
+    function pintar() { var n = +cvn.value; o.textContent = n; r.textContent = k(n * 6084) + ' – ' + k(n * 6978); }
+    cvn.addEventListener('input', pintar); pintar();
+  })();
+
   /* ---------- ProMatch: el aro entra y la rata se sienta ---------- */
   var pmEsc = $('.pm-escena');
   if (pmEsc) {
