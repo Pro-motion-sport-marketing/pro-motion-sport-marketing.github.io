@@ -183,7 +183,7 @@
         var mx = (a.x + c.x) / 2, my = Math.min(a.y, c.y) - 46;
         at(t + seg * .5, mx, my, 1); t += seg;
         at(t - 40, c.x, c.y - 4, 1, '0.92,1.1'); at(t, c.x, c.y + 3, 1, '1.3,0.7');
-        (function (f, ms) { setTimeout(function () { f.classList.add('tocada'); if (rata) { rata.classList.add('mira'); setTimeout(function () { rata.classList.remove('mira'); }, 380); } setTimeout(function () { f.classList.remove('tocada'); }, 900); }, ms); })(c.f, t);
+        (function (f, ms) { setTimeout(function () { f.classList.add('tocada'); setTimeout(function () { f.classList.remove('tocada'); }, 900); }, ms); })(c.f, t);
       }
       var u = p[n - 1]; at(t + seg * .5, u.x + 60, u.y - 30, 1); at(T, u.x + 120, u.y + 40, 0);
       var an = bola.animate(k, { duration: T, easing: 'linear' });
