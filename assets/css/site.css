@@ -2007,3 +2007,4 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .an-dron .fig{animation:none}
 .an-dron{animation:vuelaDron 3.4s ease-in-out infinite}
 @keyframes vuelaDron{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
+.cob-nota{max-width:420px;margin-top:8px}
