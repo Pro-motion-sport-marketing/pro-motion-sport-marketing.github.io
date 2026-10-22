@@ -1686,3 +1686,16 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .remate b{color:var(--rojo-vivo)}
 .blog .pj{filter:none}
 .blog-tx a{color:var(--crema)}
+/* Menú: con "Conócenos" ya no cabe por debajo de 1120 px */
+@media (max-width:1120px){.nav,.top .cta-top{display:none}.burger{display:block}}
+/* Artículo: portada sin superposición en celular y tablet */
+@media (max-width:899px){
+  .blog-hero{padding-top:100px}
+  .blog-hero-vis{height:auto;margin-top:10px}
+  .blog-hero-vis .sol{width:min(80%,340px)}
+  .blog-hero-vis .muleta{height:auto;width:min(62%,280px);max-height:none}
+}
+/* Pie: columnas sin choque en tablet */
+.pie .wrap>*{min-width:0}
+.pie nav a{overflow-wrap:anywhere}
+@media (min-width:700px) and (max-width:1100px){.pie .wrap{grid-template-columns:1fr 1fr}.pie .wrap>small{grid-column:1/-1}}
