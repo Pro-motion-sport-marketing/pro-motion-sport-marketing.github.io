@@ -192,6 +192,18 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
   })();
 
+  /* ---------- Tarjetas de foto: leer más ---------- */
+  $$('.foto-card .fc-btn').forEach(function (b) { b.addEventListener('click', function () {
+    var c = b.closest('.foto-card'), on = c.classList.toggle('abierto'); b.textContent = on ? 'Leer menos' : 'Leer más';
+  }); });
+  /* ---------- Conócenos: el puente sigue al cursor ---------- */
+  var pu = $('[data-puente]');
+  if (pu) [['.lado-dep', 'h-izq'], ['.medio', 'h-med'], ['.lado-emp', 'h-der']].forEach(function (p) {
+    var el = $(p[0], pu); if (!el) return;
+    el.addEventListener('mouseenter', function () { pu.classList.remove('h-izq', 'h-med', 'h-der'); pu.classList.add(p[1]); });
+  });
+  if (pu) pu.addEventListener('mouseleave', function () { pu.classList.remove('h-izq', 'h-med', 'h-der'); });
+
   /* ---------- Artículo: interacciones ---------- */
   var blog = $('.blog');
   if (blog) (function () {
