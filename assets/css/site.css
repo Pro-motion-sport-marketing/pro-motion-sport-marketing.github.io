@@ -1711,3 +1711,8 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .mm-espid{overflow:visible;width:auto;padding-left:200px}
 .mm-espid img{left:auto;right:0}
 @media (max-height:700px){.mm-espid{display:none}}
+/* Menú móvil: Espid abajo a la izquierda, globo sobre su mano */
+.mm-espid{align-self:flex-start;padding-left:0;margin-right:0;margin-left:-6px;width:150px}
+.mm-espid img{right:auto;left:0}
+.mm-globo{right:auto;left:118px;top:auto;bottom:138px;transform-origin:0 100%}
+.mm-globo::after{right:auto;left:14px;bottom:-12px;border:7px solid transparent;border-top:12px solid var(--crema);border-left-color:transparent}
