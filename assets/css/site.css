@@ -2000,3 +2000,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .pe-main img{object-position:50% 25%}
 .pe-slide{flex:0 0 min(86%,560px)!important;border-radius:8px}.pe-slide img{aspect-ratio:16/9!important}.pe-slides{margin-top:14px}
 .pe-slide{background:transparent;box-shadow:none}.pe-slide img{border-radius:8px}.pe-slide figcaption{position:static;background:none;padding:10px 2px 0;color:var(--crema)}
+.an-hero{aspect-ratio:1.55/1;margin-bottom:34px}
+.an-et{position:absolute;top:calc(100% + 10px);transform:translateX(-50%);white-space:nowrap;font-family:var(--clash);font-weight:600;font-size:clamp(11px,1.1vw,14px);text-transform:uppercase;letter-spacing:.06em;color:var(--negro)}
+.an-et:last-child{color:var(--rojo)}
+@media (max-width:560px){.an-et{font-size:9.5px;letter-spacing:.02em}}
