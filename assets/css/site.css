@@ -2008,3 +2008,22 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .an-dron{animation:vuelaDron 3.4s ease-in-out infinite}
 @keyframes vuelaDron{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
 .cob-nota{max-width:420px;margin-top:8px}
+/* Por qué Pro Motion: con foto */
+.porque{display:grid;gap:40px;align-items:center}
+@media (min-width:980px){.porque{grid-template-columns:1.35fr .65fr}}
+.porque>div{min-width:0}
+.porque .valores{grid-template-columns:1fr 1fr}
+@media (max-width:700px){.porque .valores{grid-template-columns:1fr}}
+.porque-foto{margin:0;border-radius:6px;overflow:hidden;max-height:640px}
+.porque-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;animation:kenBurns 18s ease-in-out infinite alternate}
+@media (max-width:979px){.porque-foto{max-height:460px;aspect-ratio:4/5;max-width:420px}}
+.porque-foto img{filter:brightness(1.35) contrast(1.05)}
+/* Estrategia: calendario de contenido */
+.an-cal{position:absolute;left:38%;right:8%;top:26px;bottom:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px;border:3px solid var(--negro);border-top-width:12px}
+.an-cal i{background:rgba(28,28,28,.12);border-radius:2px;animation:celda 6s infinite}
+.an-cal i:nth-child(2){animation-delay:.4s}.an-cal i:nth-child(5){animation-delay:.9s}.an-cal i:nth-child(7){animation-delay:1.4s}.an-cal i:nth-child(10){animation-delay:1.9s}.an-cal i:nth-child(12){animation-delay:2.4s}
+.an-cal i:nth-child(1),.an-cal i:nth-child(3),.an-cal i:nth-child(4),.an-cal i:nth-child(6),.an-cal i:nth-child(8),.an-cal i:nth-child(9),.an-cal i:nth-child(11){animation:none}
+@keyframes celda{0%,8%{background:rgba(28,28,28,.12)}12%,85%{background:var(--rojo)}95%,100%{background:rgba(28,28,28,.12)}}
+.an-msg{position:absolute;left:30%;top:6px;width:30px;height:24px;border-radius:12px;background:var(--negro);color:var(--crema);font-size:13px;display:grid;place-items:center;animation:msg 3s ease-in-out infinite}
+.an-msg::after{content:"";position:absolute;left:6px;bottom:-6px;border:5px solid transparent;border-top:7px solid var(--negro)}
+@keyframes msg{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
