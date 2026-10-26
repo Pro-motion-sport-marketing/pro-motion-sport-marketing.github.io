@@ -192,6 +192,20 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !corriendo) ciclo(); }, { threshold: 0.3 }).observe(vt);
   })();
 
+  /* ---------- Servicios: calculadora de beneficios por plan ---------- */
+  var icp = $('#ic-pz');
+  if (icp) (function () {
+    var icm = $('#ic-ms');
+    function f(n) { return Math.round(n).toLocaleString('es-EC'); }
+    function pintar() {
+      var p = +icp.value, m = +icm.value, n = p * m;
+      $('#ic-p').textContent = p; $('#ic-m').textContent = m + (m === 1 ? ' mes' : ' meses');
+      $('#ic-v').textContent = f(n * 6500 / 1000) + ' mil'; $('#ic-a').textContent = f(n * 2900 / 1000) + ' mil';
+      $('#ic-i').textContent = f(n * 235); $('#ic-s').textContent = Math.min(Math.round(m * 4.33), Math.round(n)) + ' de ' + Math.round(m * 4.33);
+    }
+    icp.addEventListener('input', pintar); icm.addEventListener('input', pintar); pintar();
+  })();
+
   /* ---------- Servicios: protagonista intercambiable ---------- */
   var pe = $('.perfil-ej');
   if (pe) $$('.pe-mini a', pe).forEach(function (m) {
