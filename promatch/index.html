@@ -14,7 +14,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=26">
+<link rel="stylesheet" href="../assets/css/site.css?v=27">
 
 </head>
 <body>
@@ -163,10 +163,34 @@
         <label class="chk"><span>Soy deportista</span><input type="radio" name="quien" value="deportista" checked></label>
         <label class="chk"><span>Soy marca</span><input type="radio" name="quien" value="marca"></label>
       </div>
-      <div class="campo"><label for="r-nom">Nombre *</label><input id="r-nom" name="nombre" autocomplete="name" required></div>
-      <div class="campo"><label for="r-dis" data-dep="Disciplina *" data-mar="Empresa *">Disciplina *</label><input id="r-dis" name="disciplina" required></div>
-      <div class="campo"><label for="r-ciu">Ciudad</label><input id="r-ciu" name="ciudad" autocomplete="address-level2"></div>
-      <div class="campo"><label for="r-ig" data-dep="Instagram" data-mar="Sitio web o Instagram">Instagram</label><input id="r-ig" name="ig" placeholder="@usuario"></div>
+      <fieldset class="pm-campos" data-para="deportista">
+        <div class="campo"><label for="d-nom">Nombre completo *</label><input id="d-nom" name="d_nombre" autocomplete="name"></div>
+        <div class="fila2">
+          <div class="campo"><label for="d-dis">Disciplina *</label><input id="d-dis" name="d_disciplina" placeholder="Ej.: rally"></div>
+          <div class="campo"><label for="d-edad">Edad</label><input id="d-edad" name="d_edad" type="number" min="6" max="80" inputmode="numeric"></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><label for="d-ciu">Ciudad y país</label><input id="d-ciu" name="d_ciudad" autocomplete="address-level2"></div>
+          <div class="campo"><label for="d-niv">Nivel competitivo</label><select id="d-niv" name="d_nivel"><option value="">Elige uno</option><option>Local o provincial</option><option>Nacional</option><option>Internacional</option></select></div>
+        </div>
+        <div class="campo"><label for="d-ig">Instagram</label><input id="d-ig" name="d_ig" placeholder="@usuario"></div>
+        <div class="campo"><label for="d-obj">¿Qué buscas hoy?</label><select id="d-obj" name="d_obj"><option value="">Elige una opción</option><option>Conseguir mi primer auspicio</option><option>Profesionalizar mi oferta para marcas</option><option>Crecer o renovar con mis auspiciantes actuales</option><option>Todavía no lo tengo claro</option></select></div>
+      </fieldset>
+      <fieldset class="pm-campos" data-para="marca" hidden>
+        <div class="fila2">
+          <div class="campo"><label for="m-rep">Nombre del representante *</label><input id="m-rep" name="m_rep" autocomplete="name"></div>
+          <div class="campo"><label for="m-car">Cargo</label><input id="m-car" name="m_cargo" placeholder="Ej.: marketing"></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><label for="m-emp">Nombre de la empresa *</label><input id="m-emp" name="m_empresa" autocomplete="organization"></div>
+          <div class="campo"><label for="m-sec">Sector</label><input id="m-sec" name="m_sector" placeholder="Ej.: automotriz"></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><label for="m-ciu">Ciudad</label><input id="m-ciu" name="m_ciudad" autocomplete="address-level2"></div>
+          <div class="campo"><label for="m-web">Sitio web o Instagram</label><input id="m-web" name="m_web" placeholder="@empresa"></div>
+        </div>
+        <div class="campo"><label for="m-obj">¿Qué busca su marca?</label><select id="m-obj" name="m_obj"><option value="">Elige una opción</option><option>Visibilidad y recordación</option><option>Contenido con deportistas</option><option>Activaciones y experiencias</option><option>Responsabilidad social y comunidad</option><option>Todavía lo estamos definiendo</option></select></div>
+      </fieldset>
       <div class="btns"><button class="btn rojo" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Enviar por WhatsApp</button></div>
       <p class="aviso" aria-live="polite"></p>
     </form>
@@ -190,6 +214,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=11" defer></script>
+<script src="../assets/js/site.js?v=12" defer></script>
 </body>
 </html>

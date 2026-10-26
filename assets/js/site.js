@@ -367,15 +367,19 @@
   /* ---------- ProMatch: registro ---------- */
   var reg = $('#pm-reg');
   if (reg) (function () {
-    function rotulos() { var m = reg.quien.value === 'marca'; $$('label[data-dep]', reg).forEach(function (l) { l.textContent = m ? l.dataset.mar : l.dataset.dep; }); }
-    $$('input[name=quien]', reg).forEach(function (r) { r.addEventListener('change', rotulos); });
+    function rol() { return reg.querySelector('input[name=quien]:checked').value; }
+    function mostrar() { var r = rol(); $$('.pm-campos', reg).forEach(function (f) { f.hidden = f.dataset.para !== r; }); $('.aviso', reg).textContent = ''; }
+    $$('input[name=quien]', reg).forEach(function (r) { r.addEventListener('change', mostrar); });
+    function v(n) { var e = reg.elements[n]; return e ? e.value.trim() : ''; }
+    function linea(k, x) { return x ? '\n' + k + ': ' + x : ''; }
     reg.addEventListener('submit', function (e) {
       e.preventDefault();
-      var f = reg, av = $('.aviso', reg);
-      if (!f.nombre.value.trim() || !f.disciplina.value.trim()) { av.textContent = 'Completa al menos tu nombre y ' + (f.quien.value === 'marca' ? 'tu empresa.' : 'tu disciplina.'); return; }
+      var av = $('.aviso', reg), m = rol() === 'marca';
+      if (m ? !(v('m_rep') && v('m_empresa')) : !(v('d_nombre') && v('d_disciplina'))) { av.textContent = m ? 'Completa el nombre del representante y de la empresa.' : 'Completa tu nombre y tu disciplina.'; return; }
       av.textContent = '';
-      var m = f.quien.value === 'marca';
-      abrirWA('Hola Daniel, quiero unirme a la lista de ProMatch como ' + (m ? 'marca' : 'deportista') + '.\nNombre: ' + f.nombre.value + '\n' + (m ? 'Empresa: ' : 'Disciplina: ') + f.disciplina.value + (f.ciudad.value ? '\nCiudad: ' + f.ciudad.value : '') + (f.ig.value ? '\n' + (m ? 'Web/Instagram: ' : 'Instagram: ') + f.ig.value : ''));
+      abrirWA(m
+        ? 'Hola Daniel, quiero unirme a la lista de ProMatch como marca.' + linea('Representante', v('m_rep')) + linea('Cargo', v('m_cargo')) + linea('Empresa', v('m_empresa')) + linea('Sector', v('m_sector')) + linea('Ciudad', v('m_ciudad')) + linea('Web/Instagram', v('m_web')) + linea('Busca', v('m_obj'))
+        : 'Hola Daniel, quiero unirme a la lista de ProMatch como deportista.' + linea('Nombre', v('d_nombre')) + linea('Disciplina', v('d_disciplina')) + linea('Edad', v('d_edad')) + linea('Ciudad', v('d_ciudad')) + linea('Nivel', v('d_nivel')) + linea('Instagram', v('d_ig')) + linea('Busca', v('d_obj')));
     });
   })();
 
