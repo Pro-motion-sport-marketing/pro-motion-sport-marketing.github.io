@@ -2106,3 +2106,18 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ic-res b{display:block;font-family:var(--epic);font-size:clamp(24px,2.6vw,34px);color:var(--rojo);line-height:1.05}
 .ic-res span{font-size:13px}
 .ic-res .nota-p{grid-column:1/-1;opacity:.75;margin:0;font-size:12.5px}
+/* Academy: cursos */
+.cursos{display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1000px){.cursos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.cursos{grid-template-columns:1fr}}
+.curso{position:relative;display:flex;flex-direction:column;gap:8px;background:var(--crema);border:2px solid var(--negro);padding:20px;transition:transform .2s var(--rebote),box-shadow .2s}
+.curso:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--negro)}
+.curso-n{font-family:var(--epic);font-size:30px;color:var(--rojo);line-height:1}
+.curso-vis{position:relative;height:110px;display:flex;justify-content:center;align-items:flex-end}
+.curso-vis::before{content:"";position:absolute;left:50%;bottom:0;width:90px;height:90px;margin-left:-45px;border-radius:50%;background:var(--rojo)}
+.curso-vis .fig{position:relative;margin-bottom:46px}
+.curso h3{font-family:var(--clash);font-weight:700;text-transform:uppercase;font-size:18px;line-height:1.15}
+.curso p{font-size:14.5px}
+.curso ul{list-style:none;display:grid;gap:4px;font-size:13.5px;margin:2px 0 8px}
+.curso li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--rojo);margin-right:8px;vertical-align:middle}
+.curso .link{margin-top:auto;align-self:flex-start}
