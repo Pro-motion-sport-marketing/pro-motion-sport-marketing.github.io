@@ -2647,3 +2647,6 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .gt-e .kicker{font-family:var(--clash);font-weight:700;letter-spacing:.08em}
 .gt-e p,.gt-e small{color:#bdb5ac;opacity:1}
 .gt-tabs button{font-family:var(--clash);font-weight:600;font-size:16px;letter-spacing:.06em}
+.ph .vis .pico-loop .pico-globo{position:absolute;z-index:5;top:10%;left:-10%;right:auto;background:var(--negro);color:var(--crema);font-size:16px;padding:10px 16px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.ph .vis .pico-loop .pico-globo::after{border-top-color:var(--negro);left:auto;right:22%}
+@media (max-width:760px){.ph .vis .pico-loop .pico-globo{top:-4px;left:-2%;font-size:14px;padding:8px 13px}}
