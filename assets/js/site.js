@@ -58,6 +58,8 @@
           if (w > mayor) mayor = w;
         }
       }
+      // grupos que deben quedar en una sola línea (.nw)
+      h.querySelectorAll('.nw').forEach(function (g) { var w = g.getBoundingClientRect().width; if (w > mayor) mayor = w; });
       if (mayor > ancho) {
         var fs = parseFloat(getComputedStyle(h).fontSize);
         h.style.fontSize = Math.max(16, Math.floor(fs * (ancho / mayor) * 0.97)) + 'px';
