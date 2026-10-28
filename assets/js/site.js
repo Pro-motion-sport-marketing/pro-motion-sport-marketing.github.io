@@ -302,9 +302,15 @@
   /* ---------- ProMatch: vistazo de la calculadora ---------- */
   var cvn = $('#cv-n');
   if (cvn) (function () {
-    var o = $('#cv-o'), r = $('#cv-r');
+    var o = $('#cv-o'), r = $('#cv-r'), mx = $('#cv-mx'), reel = 0.5;
+    // Vistas por pieza de Diego Serrano en 2026: reels mediana 5.253 / media 6.084; carruseles mediana 6.915 / media 7.872
     function k(v) { return (Math.round(v / 1000) * 1000).toLocaleString('es-EC'); }
-    function pintar() { var n = +cvn.value; o.textContent = n; r.textContent = k(n * 6084) + ' – ' + k(n * 6978); }
+    function pintar() {
+      var n = +cvn.value; o.textContent = n;
+      r.textContent = k(n * (reel * 5253 + (1 - reel) * 6915)) + ' – ' + k(n * (reel * 6084 + (1 - reel) * 7872));
+      if (mx) mx.textContent = reel === 0.5 ? 'Mitad reels, mitad carruseles.' : reel > 0.5 ? 'Tres de cada cuatro piezas son reels.' : 'Tres de cada cuatro piezas son carruseles.';
+    }
+    $$('.cv-mix button').forEach(function (b) { b.addEventListener('click', function () { reel = +b.dataset.m; $$('.cv-mix button').forEach(function (x) { x.classList.toggle('on', x === b); }); pintar(); }); });
     cvn.addEventListener('input', pintar); pintar();
   })();
 

@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=42">
+<link rel="stylesheet" href="../assets/css/site.css?v=43">
 
 </head>
 <body>
@@ -34,10 +34,9 @@
 <section class="ph">
   <div class="wrap">
     <div>
-      <div class="migas rv"><a href="../index.html">Inicio</a> / ProMatch</div>
       <div class="kicker rv" style="margin-top:6px">ProMatch <span class="pill-beta">Beta · Acceso anticipado</span></div>
-      <h1 class="epic rv d1">Deportistas y marcas que <span class="box">sí encajan</span></h1>
-      <p class="lead rv d2">ProMatch ordena lo que hoy vive en conversaciones sueltas (identidad, audiencia, calendario, capacidad de activación y restricciones) para que tu propuesta llegue mejor preparada a las marcas afines. Las recomendaciones son explicables y las revisa un estratega; la decisión de auspiciar siempre es de la marca.</p>
+      <h1 class="epic rv d1 h1-ac"><span class="nw">Deportistas y marcas</span> <span class="nw">que <span class="box">sí encajan</span></span></h1>
+      <p class="lead rv d2">ProMatch ordena tu identidad, audiencia, calendario y capacidad de activación para que tu propuesta llegue mejor preparada a las marcas afines. Un estratega revisa cada recomendación; la decisión de auspiciar siempre es de la marca.</p>
       <p class="estado rv d2">Estado actual: registro y recomendación asistida. El match automático llega por fases.</p>
       <div class="btns rv d3" style="margin-top:22px"><a class="btn rojo" href="#registro">Unirme a la lista »</a><a class="btn crema" href="../marcas/#brief">Soy marca: quiero un briefing</a></div>
     </div>
@@ -62,23 +61,23 @@
 
 <section class="sec oscuro" id="puntaje">
   <div class="wrap">
-    <div class="cab"><div class="kicker rv">Simulador</div><h2 class="epic h2 rv">El puntaje se explica, no se adivina</h2>
-      <p class="lead rv">Cada porcentaje corresponde a una variable declarada por ambas partes. Si algo no se puede sustentar, no suma. Mueve las barras y mira cómo cambia la recomendación.</p></div>
+    <div class="cab"><div class="kicker rv">Simulador</div><h2 class="epic h2 rv h1-ac"><span class="nw">El puntaje se explica,</span> <span class="nw">no se adivina</span></h2>
+      <p class="lead rv">Cada porcentaje sale de una variable declarada por ambas partes; si no se sustenta, no suma. Mueve las barras y mira la recomendación.</p></div>
     <div class="sim rv" id="pm-sim">
       <div class="sim-vars"><div class="sim-f">
-        <label for="sim-valores"><b>Afinidad de valores y causas</b> <small>pesa 30 %</small></label><output for="sim-valores">92</output>
+        <label for="sim-valores"><b>Afinidad de valores y causas</b> <small>(pesa 30 %)</small></label><output for="sim-valores">92</output>
         <input type="range" id="sim-valores" min="0" max="100" value="92" data-peso="30">
         <p>Lo que el deportista defiende coincide con lo que la marca quiere decir.</p></div><div class="sim-f">
-        <label for="sim-audiencia"><b>Compatibilidad de audiencia</b> <small>pesa 25 %</small></label><output for="sim-audiencia">78</output>
+        <label for="sim-audiencia"><b>Compatibilidad de audiencia</b> <small>(pesa 25 %)</small></label><output for="sim-audiencia">78</output>
         <input type="range" id="sim-audiencia" min="0" max="100" value="78" data-peso="25">
         <p>Edad, territorio e intereses de quien lo sigue frente al cliente de la marca.</p></div><div class="sim-f">
-        <label for="sim-territorio"><b>Territorio y calendario</b> <small>pesa 20 %</small></label><output for="sim-territorio">88</output>
+        <label for="sim-territorio"><b>Territorio y calendario</b> <small>(pesa 20 %)</small></label><output for="sim-territorio">88</output>
         <input type="range" id="sim-territorio" min="0" max="100" value="88" data-peso="20">
         <p>Dónde y cuándo compite: fechas que la marca puede aprovechar.</p></div><div class="sim-f">
-        <label for="sim-contenido"><b>Capacidades de contenido</b> <small>pesa 15 %</small></label><output for="sim-contenido">70</output>
+        <label for="sim-contenido"><b>Capacidades de contenido</b> <small>(pesa 15 %)</small></label><output for="sim-contenido">70</output>
         <input type="range" id="sim-contenido" min="0" max="100" value="70" data-peso="15">
         <p>Si habla a cámara, si produce con constancia, si integra marcas con naturalidad.</p></div><div class="sim-f">
-        <label for="sim-experiencia"><b>Experiencia comercial previa</b> <small>pesa 10 %</small></label><output for="sim-experiencia">55</output>
+        <label for="sim-experiencia"><b>Experiencia comercial previa</b> <small>(pesa 10 %)</small></label><output for="sim-experiencia">55</output>
         <input type="range" id="sim-experiencia" min="0" max="100" value="55" data-peso="10">
         <p>Auspicios anteriores cumplidos, con entregables y evidencias.</p></div></div>
       <div class="sim-res">
@@ -95,7 +94,7 @@
 
 <section class="sec crema-sec" id="comparar">
   <div class="wrap">
-    <div class="cab"><div class="kicker rv">Comparar perfiles</div><h2 class="epic h2 rv">Perfiles auditados con ProMatch</h2>
+    <div class="cab"><div class="kicker rv">Comparar perfiles</div><h2 class="epic h2 rv h1-ac"><span class="nw">Perfiles auditados con ProMatch</span></h2>
       <p class="lead rv">Elige qué quieres comparar. Toca un perfil para ver su ficha completa.</p></div>
     <div class="cmp-tabs rv" role="tablist">
       <button type="button" class="on" data-k="score">Puntaje ProMatch</button>
@@ -121,10 +120,10 @@
       <div class="calc-v-tx">
         <div class="kicker">Vistazo · Calculadora de visibilidad</div>
         <h3>¿Cuánta visibilidad gana una marca con un deportista?</h3>
-        <p>Con los datos reales de cada temporada estimamos cuántas vistas orgánicas recibiría un auspiciante según el número de piezas. Ejemplo con Diego Serrano, piloto de rally (35 publicaciones medidas en 2026).</p>
+        <p>Con datos reales de la temporada estimamos las vistas orgánicas de un auspiciante según el número y el tipo de piezas. Ejemplo: Diego Serrano, piloto de rally (35 publicaciones medidas en 2026).</p>
         <label class="calc-v-l" for="cv-n">Piezas en la campaña <output id="cv-o">10</output></label>
         <input type="range" id="cv-n" min="2" max="20" step="2" value="10">
-        <small>Mitad videos, mitad carruseles.</small>
+        <div class="cv-mix" role="radiogroup" aria-label="Qué piezas priorizas"><button type="button" class="on" data-m="0.5">Balanceado</button><button type="button" data-m="0.75">Más reels</button><button type="button" data-m="0.25">Más carruseles</button></div><small id="cv-mx">Mitad reels, mitad carruseles.</small>
       </div>
       <div class="calc-v-res" aria-live="polite">
         <span class="lbl">Vistas orgánicas estimadas</span>
@@ -151,13 +150,12 @@
   </div>
 </section>
 
-<section class="sec rojo-sec" id="registro">
+<section class="sec oscuro" id="registro">
   <div class="wrap pm-reg">
     <div>
       <div class="kicker rv">Acceso anticipado</div>
       <h2 class="epic h2 rv">Únete a la lista de ProMatch</h2>
       <p class="lead rv" style="margin-top:14px">Tu información estratégica es confidencial: se comparte solo cuando existe un interés validado y con tu autorización expresa.</p>
-      <i class="fig negro" aria-hidden="true" style="-webkit-mask-image:url(../assets/mini/escalera.webp);mask-image:url(../assets/mini/escalera.webp);--ar:297/637;--h:170px;margin-top:24px"></i>
     </div>
     <form class="panel rv" id="pm-reg" novalidate>
       <div class="pm-quien" role="radiogroup" aria-label="¿Quién eres?">
@@ -165,30 +163,30 @@
         <label class="chk"><span>Soy marca</span><input type="radio" name="quien" value="marca"></label>
       </div>
       <fieldset class="pm-campos" data-para="deportista">
-        <div class="campo"><label for="d-nom">Nombre completo *</label><input id="d-nom" name="d_nombre" autocomplete="name"></div>
+        <div class="campo"><label for="d-nom">Nombre completo *</label><input id="d-nom" name="d_nombre" autocomplete="name" placeholder="Ej.: Ana Pérez"></div>
         <div class="fila2">
           <div class="campo"><label for="d-dis">Disciplina *</label><input id="d-dis" name="d_disciplina" placeholder="Ej.: rally"></div>
-          <div class="campo"><label for="d-edad">Edad</label><input id="d-edad" name="d_edad" type="number" min="6" max="80" inputmode="numeric"></div>
+          <div class="campo"><label for="d-edad">Edad</label><input id="d-edad" name="d_edad" type="number" min="6" max="80" inputmode="numeric" placeholder="Ej.: 24"></div>
         </div>
         <div class="fila2">
-          <div class="campo"><label for="d-ciu">Ciudad y país</label><input id="d-ciu" name="d_ciudad" autocomplete="address-level2"></div>
+          <div class="campo"><label for="d-ciu">Ciudad y país</label><input id="d-ciu" name="d_ciudad" autocomplete="address-level2" placeholder="Ej.: Cuenca, Ecuador"></div>
           <div class="campo"><label for="d-niv">Nivel competitivo</label><select id="d-niv" name="d_nivel"><option value="">Elige uno</option><option>Local o provincial</option><option>Nacional</option><option>Internacional</option></select></div>
         </div>
-        <div class="campo"><label for="d-ig">Instagram</label><input id="d-ig" name="d_ig" placeholder="@usuario"></div>
+        <div class="campo"><label for="d-ig">Instagram</label><input id="d-ig" name="d_ig" placeholder="Ej.: @usuario"></div>
         <div class="campo"><label for="d-obj">¿Qué buscas hoy?</label><select id="d-obj" name="d_obj"><option value="">Elige una opción</option><option>Conseguir mi primer auspicio</option><option>Profesionalizar mi oferta para marcas</option><option>Crecer o renovar con mis auspiciantes actuales</option><option>Todavía no lo tengo claro</option></select></div>
       </fieldset>
       <fieldset class="pm-campos" data-para="marca" hidden>
         <div class="fila2">
-          <div class="campo"><label for="m-rep">Nombre del representante *</label><input id="m-rep" name="m_rep" autocomplete="name"></div>
+          <div class="campo"><label for="m-rep">Nombre del representante *</label><input id="m-rep" name="m_rep" autocomplete="name" placeholder="Ej.: Carlos Andrade"></div>
           <div class="campo"><label for="m-car">Cargo</label><input id="m-car" name="m_cargo" placeholder="Ej.: marketing"></div>
         </div>
         <div class="fila2">
-          <div class="campo"><label for="m-emp">Nombre de la empresa *</label><input id="m-emp" name="m_empresa" autocomplete="organization"></div>
+          <div class="campo"><label for="m-emp">Nombre de la empresa *</label><input id="m-emp" name="m_empresa" autocomplete="organization" placeholder="Ej.: Lubricantes del Austro"></div>
           <div class="campo"><label for="m-sec">Sector</label><input id="m-sec" name="m_sector" placeholder="Ej.: automotriz"></div>
         </div>
         <div class="fila2">
-          <div class="campo"><label for="m-ciu">Ciudad</label><input id="m-ciu" name="m_ciudad" autocomplete="address-level2"></div>
-          <div class="campo"><label for="m-web">Sitio web o Instagram</label><input id="m-web" name="m_web" placeholder="@empresa"></div>
+          <div class="campo"><label for="m-ciu">Ciudad</label><input id="m-ciu" name="m_ciudad" autocomplete="address-level2" placeholder="Ej.: Quito"></div>
+          <div class="campo"><label for="m-web">Sitio web o Instagram</label><input id="m-web" name="m_web" placeholder="Ej.: @empresa o empresa.com"></div>
         </div>
         <div class="campo"><label for="m-obj">¿Qué busca su marca?</label><select id="m-obj" name="m_obj"><option value="">Elige una opción</option><option>Visibilidad y recordación</option><option>Contenido con deportistas</option><option>Activaciones y experiencias</option><option>Responsabilidad social y comunidad</option><option>Todavía lo estamos definiendo</option></select></div>
       </fieldset>
@@ -215,6 +213,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=23" defer></script>
+<script src="../assets/js/site.js?v=24" defer></script>
 </body>
 </html>
