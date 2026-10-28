@@ -2121,3 +2121,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .curso ul{list-style:none;display:grid;gap:4px;font-size:13.5px;margin:2px 0 8px}
 .curso li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--rojo);margin-right:8px;vertical-align:middle}
 .curso .link{margin-top:auto;align-self:flex-start}
+/* Carrusel: botón de play cuando el teléfono bloquea el autoplay */
+.vc-play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(229,35,34,.92);box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:3;pointer-events:none}
+.vc-play::after{content:"";position:absolute;left:27px;top:21px;border-left:20px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent}
+.vc-item.bloq[data-d="0"] .vc-play{display:block;animation:latido 1.6s ease-out infinite}

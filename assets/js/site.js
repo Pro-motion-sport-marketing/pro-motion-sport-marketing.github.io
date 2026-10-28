@@ -87,6 +87,12 @@
   if (vc) (function () {
     var items = $$('.vc-item', vc), n = items.length, act = 0, timer = null, visible = false;
     var tit = $('.vc-tit'), sub = $('.vc-sub'), num = $('.vc-num'), barra = $('.vc-barra i');
+    // Si el teléfono bloquea la reproducción automática (p. ej. modo de bajo consumo), mostrar un botón de play
+    function intentar(it, v) {
+      var p = v.play();
+      if (p && p.then) p.then(function () { it.classList.remove('bloq'); }).catch(function () { it.classList.add('bloq'); });
+    }
+    items.forEach(function (it) { if ($('video', it)) { var b = document.createElement('span'); b.className = 'vc-play'; b.setAttribute('aria-hidden', 'true'); it.appendChild(b); } });
     function pos(i) { var d = (i - act + n) % n; if (d > n / 2) d -= n; return d; }
     function pintar() {
       items.forEach(function (it, i) {
@@ -97,7 +103,7 @@
         it.style.opacity = ad > 2 ? 0 : 1;
         it.setAttribute('aria-hidden', d !== 0);
         if (ad <= 1 && v && !v.src) v.src = v.dataset.src;
-        if (d === 0 && v) { if (visible) { v.currentTime = 0; v.play().catch(function () {}); } }
+        if (d === 0 && v) { if (visible) { v.currentTime = 0; intentar(it, v); } }
         else if (v) v.pause();
       });
       var it = items[act];
@@ -116,7 +122,7 @@
     function ir(i) { act = (i + n) % n; pintar(); }
     items.forEach(function (it, i) {
       var v = $('video', it);
-      it.addEventListener('click', function () { if (i !== act) ir(i); else if (it.dataset.ig) window.open(it.dataset.ig, '_blank', 'noopener'); });
+      it.addEventListener('click', function (e) { if (e.target.closest('a')) return; if (i !== act) { ir(i); return; } if (v && v.paused) { if (!v.src) v.src = v.dataset.src; intentar(it, v); return; } if (it.dataset.ig) window.open(it.dataset.ig, '_blank', 'noopener'); });
       if (v) {
         v.addEventListener('timeupdate', function () { if (i === act && barra && v.duration) { barra.style.transition = 'width .25s linear'; barra.style.width = (v.currentTime / v.duration * 100) + '%'; } });
         v.addEventListener('ended', function () { if (i === act) ir(act + 1); });
@@ -135,12 +141,19 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
       visible = es[0].isIntersecting;
       var v = $('video', items[act]); if (!v) return;
-      if (visible) { if (!v.src) v.src = v.dataset.src; v.play().catch(function () {}); } else v.pause();
+      if (visible) { if (!v.src) v.src = v.dataset.src; intentar(items[act], v); } else v.pause();
     }, { threshold: 0.35 }).observe(vc);
     // respaldo: si un video no puede reproducirse, avanzar cada 7 s
-    timer = setInterval(function () { var v = $('video', items[act]); if (visible && (!v || v.paused && v.readyState < 2)) ir(act + 1); }, 7000);
+    timer = setInterval(function () { var it = items[act], v = $('video', it); if (it.classList.contains('bloq')) return; if (visible && (!v || v.paused && v.readyState < 2)) ir(act + 1); }, 7000);
     pintar();
   })();
+
+  /* ---------- Videos sueltos: tocar para reproducir si el teléfono bloqueó el autoplay ---------- */
+  document.addEventListener('click', function (e) {
+    var v = e.target.closest && e.target.closest('video');
+    if (!v || v.closest('.vc-item')) return;
+    if (v.paused) { if (!v.src && v.dataset.src) v.src = v.dataset.src; v.play().catch(function () {}); }
+  });
 
   /* ---------- Problema: burbujas sobre los puntos (toque en móvil) ---------- */
   var grid = $('.puntos-grid');
