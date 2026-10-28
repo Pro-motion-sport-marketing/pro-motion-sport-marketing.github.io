@@ -912,3 +912,18 @@
     secs.forEach(function (s) { io.observe(s); });
   }
 })();
+/* Galería de la charla: cambia entre video y fotos */
+(function () {
+  'use strict';
+  document.querySelectorAll('[data-charla]').forEach(function (g) {
+    var esc = g.querySelector('.charla-esc'), v = esc.querySelector('video');
+    g.querySelectorAll('.charla-min button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.dataset.k;
+        g.querySelectorAll('.charla-min button').forEach(function (x) { x.classList.toggle('on', x === b); });
+        esc.querySelectorAll('[data-k]').forEach(function (el) { el.hidden = el.dataset.k !== k; });
+        if (k !== '0' && v && !v.paused) v.pause();
+      });
+    });
+  });
+})();
