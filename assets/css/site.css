@@ -2308,3 +2308,5 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
   .sim-dice::before{left:50%;top:-9px;margin-left:-11px}
   .sim-dice{display:block;text-align:center;font-size:16px}
 }
+.esc-anim.esc-id{width:min(100%,300px);height:200px;overflow:visible}
+.esc-anim.esc-id .an{height:200px}
