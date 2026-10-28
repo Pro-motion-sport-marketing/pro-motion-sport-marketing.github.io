@@ -927,3 +927,12 @@
     });
   });
 })();
+/* Menú «Más»: abrir con toque o teclado */
+(function () {
+  'use strict';
+  var m = document.querySelector('.nav-mas'); if (!m) return;
+  var b = m.querySelector('button');
+  b.addEventListener('click', function (e) { e.stopPropagation(); var a = m.classList.toggle('abierto'); b.setAttribute('aria-expanded', a); });
+  document.addEventListener('click', function (e) { if (!m.contains(e.target)) { m.classList.remove('abierto'); b.setAttribute('aria-expanded', 'false'); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { m.classList.remove('abierto'); b.setAttribute('aria-expanded', 'false'); } });
+})();

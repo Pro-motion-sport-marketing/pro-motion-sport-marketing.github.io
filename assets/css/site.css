@@ -2499,3 +2499,36 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .paq-alt:hover{background:#fff8ef}
 .paq-alt b{display:block}.paq-alt span{font-size:14px;color:var(--rojo);font-weight:600}
 @media (max-width:560px){.camp-quien{grid-template-columns:1fr}}
+/* Servicios · Informe: escena de la junta contenta */
+.inf-escena{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:26px;align-items:center;background:var(--crema);color:var(--negro);padding:clamp(18px,3vw,32px);margin:6px 0 30px}
+.ie-vis{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:280px}
+.ie-sol{position:absolute;left:50%;bottom:0;width:min(78%,300px);aspect-ratio:1;border-radius:50%;background:var(--rojo);transform:translateX(-50%)}
+.ie-pj{position:relative;z-index:1;width:min(100%,420px);height:auto}
+.ie-globo{position:absolute;z-index:2;top:-6px;right:0;background:var(--negro);color:var(--crema);font-weight:700;font-size:15px;padding:9px 14px;border-radius:16px;animation:ieGlobo 5s ease-in-out infinite}
+.ie-globo::after{content:"";position:absolute;right:auto;left:30%;bottom:-9px;border:7px solid transparent;border-top:10px solid var(--negro);border-bottom:0}
+@keyframes ieGlobo{0%,8%{opacity:0;transform:translateY(8px) scale(.9)}16%,86%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(8px) scale(.9)}}
+.ie-barras{position:absolute;z-index:2;left:2%;top:6%;display:flex;align-items:flex-end;gap:5px;height:90px;padding:8px;background:#fff;border:2px solid var(--negro)}
+.ie-barras i{width:12px;height:var(--h);background:var(--negro);transform-origin:bottom;animation:ieBarra 5s ease-out infinite}
+.ie-barras i:last-of-type{background:var(--rojo)}
+.ie-barras i:nth-child(2){animation-delay:.15s}.ie-barras i:nth-child(3){animation-delay:.3s}.ie-barras i:nth-child(4){animation-delay:.45s}
+.ie-barras b{position:absolute;top:-12px;right:-14px;background:var(--rojo);color:#fff;font-size:12px;padding:3px 7px;border-radius:99px;transform:rotate(8deg)}
+@keyframes ieBarra{0%{transform:scaleY(0)}25%,100%{transform:scaleY(1)}}
+.ie-dos{display:grid;gap:14px}
+.ie-dos .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo);font-weight:600}
+.ie-dos p{margin:4px 0 0;font-size:19px;line-height:1.35;font-weight:600}
+@media (max-width:820px){.inf-escena{grid-template-columns:1fr}.ie-vis{min-height:230px;padding-top:44px}.ie-barras{height:60px;top:auto;bottom:6%;left:0}.ie-globo{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:14px;animation:none}}
+@media (prefers-reduced-motion:reduce){.ie-globo,.ie-barras i{animation:none}}
+/* Menú: seis pestañas + «Más» */
+.beta{display:inline-block;font-family:var(--clash);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--rojo);color:#fff;padding:2px 6px;border-radius:99px;vertical-align:middle;margin-left:4px}
+.nav-mas{position:relative}
+.nav-mas>button{font:inherit;font-family:var(--clash);font-weight:500;font-size:16px;color:inherit;background:none;border:0;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.nav-mas>button i{font-style:normal;font-size:11px;transition:transform .2s}
+.nav-mas.act>button{box-shadow:inset 0 -2px 0 var(--rojo)}
+.nav-mas-m{position:absolute;top:100%;right:0;min-width:270px;background:var(--crema);border:2px solid var(--negro);box-shadow:6px 6px 0 var(--negro);padding:6px;display:none;z-index:90}
+.nav-mas:hover .nav-mas-m,.nav-mas:focus-within .nav-mas-m,.nav-mas.abierto .nav-mas-m{display:block}
+.nav-mas:hover>button i,.nav-mas.abierto>button i{transform:rotate(180deg)}
+.nav .nav-mas-m a{display:block;padding:10px 12px;font-weight:700}
+.nav .nav-mas-m a::after{display:none}
+.nav .nav-mas-m a span{display:block;font-weight:400;font-size:13px;color:var(--gris);margin-top:2px}
+.nav .nav-mas-m a:hover,.nav .nav-mas-m a[aria-current="page"]{background:#fff8ef}
+.menu-movil .beta{font-size:12px;vertical-align:super}
