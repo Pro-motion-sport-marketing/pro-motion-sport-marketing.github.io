@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=35">
+<link rel="stylesheet" href="../assets/css/site.css?v=36">
 
 </head>
 <body>
@@ -100,15 +100,21 @@
 <!-- 03 Simulador -->
 <section class="sec oscuro" id="simulador">
   <div class="wrap" style="max-width:900px">
-    <div class="cab"><div class="kicker rv">Herramienta 03 · Simulador de negociación</div><h2 class="epic h2 rv">La reunión, antes de tenerla</h2><p class="lead rv">Al frente tienes a una directora de marketing ecuatoriana con presupuesto ajustado y diez solicitudes iguales esta semana. Te va a objetar. Practica aquí y falla aquí.</p></div>
-    <div class="panel os rv" id="simulador-panel" data-jabali="../assets/img/boar_crossed.webp?v=1">
+    <div class="cab"><div class="kicker rv">Herramienta 03 · Simulador de negociación</div><h2 class="epic h2 rv">La reunión, antes de tenerla</h2><p class="lead rv">Al frente tienes al gerente de marketing de una marca ecuatoriana, con presupuesto ajustado y diez solicitudes iguales esta semana. Te va a objetar. Practica aquí y falla aquí.</p></div>
+    <div class="panel os rv" id="simulador-panel" data-img="../assets/img/">
       <div class="medidor"><i style="width:0"></i></div>
-      <div class="sim-caja" style="margin-top:18px">
-        <p class="lead" style="font-size:18px">Cuatro objeciones reales. Elige cómo respondes.</p>
-        <div class="btns" style="margin-top:18px"><button class="btn rojo sim-empezar" type="button">Entrar a la reunión »</button></div>
+      <div class="sim-escena">
+        <figure class="sim-jab"><img src="../assets/img/boar_crossed.webp?v=1" alt="El gerente de marketing, un jabalí de traje, te espera de brazos cruzados"></figure>
+        <div class="sim-dialogo">
+          <span class="globo crema sim-dice">A ver… ¿qué tienes para ofrecer?</span>
+          <div class="sim-caja">
+            <p class="lead" style="font-size:18px">Cuatro objeciones reales. Elige cómo respondes y mira cómo reacciona.</p>
+            <div class="btns" style="margin-top:18px"><button class="btn rojo sim-empezar" type="button">Entrar a la reunión <span class="chev">»</span></button></div>
+          </div>
+        </div>
       </div>
     </div>
-    <script type="application/json" id="simulador-data">[{"q": "“Tengo diez solicitudes iguales esta semana. ¿Por qué tú?”", "o": [["Porque soy campeón nacional y entreno muy duro.", 10, "El resultado es tu credencial, no tu oferta. Las otras nueve también entrenan duro."], ["Porque mi comunidad en Cuenca es exactamente tu cliente de este trimestre, y te propongo cómo llegar a ella.", 25, "Hablaste de su negocio, no del tuyo."], ["Porque necesito el apoyo para poder competir afuera.", 0, "“Apoyo” convierte la reunión en un pedido de ayuda."]]}, {"q": "“No tengo presupuesto para auspicios este año.”", "o": [["Entiendo, ¿y el próximo año?", 5, "Cerraste la puerta tú mismo."], ["¿Qué presupuesto de marketing tienen para activar marca este trimestre? Puedo ser una pieza de esa campaña.", 25, "Moviste la conversación del rubro “auspicio” al de “marketing”, donde sí hay dinero."], ["Con cualquier aporte me ayudaría bastante.", 0, "Te vendiste por debajo de tu valor."]]}, {"q": "“¿Y cuántos seguidores tienes?”", "o": [["Unos 8.000, pero voy creciendo.", 10, "Aceptaste competir en el terreno de los influencers."], ["8.000, pero el dato que te importa es otro: 60 % están en tu zona de venta y tengo un calendario de 9 competencias con presencia de marca.", 25, "Cambiaste seguidores por audiencia útil y calendario."], ["Los seguidores no importan, lo importante es el deporte.", 5, "Para ella sí importan: dale un número mejor, no un sermón."]]}, {"q": "“Envíame una propuesta y la reviso.”", "o": [["Perfecto, te la envío esta semana.", 10, "Es la frase con la que terminan el 80 % de estas reuniones."], ["Claro. Para que no sea genérica: ¿qué objetivo tiene que cumplir esta campaña y quién más decide? Te la presento el jueves en 15 minutos.", 25, "Saliste con información y una segunda reunión agendada."], ["¿Pero entonces sí me van a auspiciar?", 0, "Presionaste sin haber construido valor."]]}]</script>
+    <script type="application/json" id="simulador-data">[{"q": "“Tengo diez solicitudes iguales esta semana. ¿Por qué tú?”", "o": [["Porque soy campeón nacional y entreno muy duro.", 10, "El resultado es tu credencial, no tu oferta. Las otras nueve también entrenan duro."], ["Porque mi comunidad en Cuenca es exactamente tu cliente de este trimestre, y te propongo cómo llegar a ella.", 25, "Hablaste de su negocio, no del tuyo."], ["Porque necesito el apoyo para poder competir afuera.", 0, "“Apoyo” convierte la reunión en un pedido de ayuda."]]}, {"q": "“No tengo presupuesto para auspicios este año.”", "o": [["Entiendo, ¿y el próximo año?", 5, "Cerraste la puerta tú mismo."], ["¿Qué presupuesto de marketing tienen para activar marca este trimestre? Puedo ser una pieza de esa campaña.", 25, "Moviste la conversación del rubro “auspicio” al de “marketing”, donde sí hay dinero."], ["Con cualquier aporte me ayudaría bastante.", 0, "Te vendiste por debajo de tu valor."]]}, {"q": "“¿Y cuántos seguidores tienes?”", "o": [["Unos 8.000, pero voy creciendo.", 10, "Aceptaste competir en el terreno de los influencers."], ["8.000, pero el dato que te importa es otro: 60 % están en tu zona de venta y tengo un calendario de 9 competencias con presencia de marca.", 25, "Cambiaste seguidores por audiencia útil y calendario."], ["Los seguidores no importan, lo importante es el deporte.", 5, "Para él sí importan: dale un número mejor, no un sermón."]]}, {"q": "“Envíame una propuesta y la reviso.”", "o": [["Perfecto, te la envío esta semana.", 10, "Es la frase con la que terminan el 80 % de estas reuniones."], ["Claro. Para que no sea genérica: ¿qué objetivo tiene que cumplir esta campaña y quién más decide? Te la presento el jueves en 15 minutos.", 25, "Saliste con información y una segunda reunión agendada."], ["¿Pero entonces sí me van a auspiciar?", 0, "Presionaste sin haber construido valor."]]}]</script>
   </div>
 </section>
 
@@ -185,6 +191,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=20" defer></script>
+<script src="../assets/js/site.js?v=21" defer></script>
 </body>
 </html>

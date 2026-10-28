@@ -625,30 +625,56 @@
     $('[data-enviar]', r).onclick = function () { abrirWA('Hola Daniel, armé mi pitch en Pro Academy. ¿Me ayudas a revisarlo?\n\n' + t); };
   });
 
-  /* ---------- Academy: simulador de reunión ---------- */
+  /* ---------- Academy: simulador de reunión (el jabalí reacciona a cada respuesta) ---------- */
   var sim = $('#simulador-panel');
   if (sim) (function () {
     var R = JSON.parse($('#simulador-data').textContent), k = 0, pts = 0, faltas = [];
-    var caja = $('.sim-caja', sim), med = $('.medidor i', sim);
+    var caja = $('.sim-caja', sim), med = $('.medidor i', sim), img = $('.sim-jab img', sim), dice = $('.sim-dice', sim), base = sim.dataset.img;
+    var GESTOS = {
+      espera: ['boar_crossed', 'te espera de brazos cruzados'],
+      bien: ['boar_magnify', 'se inclina con una lupa, interesado'],
+      duda: ['boar_confused', 'se toca la barbilla, dudando'],
+      mal: ['boar_walk', 'mira el reloj y empieza a irse'],
+      trato: ['handshake', 'te da la mano']
+    };
+    function gesto(g, txt) {
+      var G = GESTOS[g];
+      img.classList.remove('entra'); void img.offsetWidth;
+      img.src = base + G[0] + '.webp?v=1'; img.alt = 'El gerente de marketing ' + G[1];
+      img.classList.add('entra');
+      sim.setAttribute('data-gesto', g);
+      if (txt) { dice.textContent = txt; dice.classList.remove('entra'); void dice.offsetWidth; dice.classList.add('entra'); }
+    }
+    var REACC = {
+      bien: ['Mmm… eso sí me interesa. Sigue.', 'Ok, ahora estás hablando de mi negocio.', 'Interesante. Cuéntame más.'],
+      duda: ['Mmm… no me convence del todo.', 'Eso ya lo escuché esta semana.', 'Ajá… ¿y?'],
+      mal: ['Tengo otra reunión en cinco minutos…', 'Creo que estamos perdiendo el tiempo.', 'Bueno… cualquier cosa te escribo.']
+    };
     function ronda() {
       if (k >= R.length) return fin();
       var r = R[k];
-      caja.innerHTML = '<div class="sim-boca"><img src="' + sim.dataset.jabali + '" alt=""><span class="globo crema">' + r.q + '</span></div><div class="sim-op">' + r.o.map(function (o, i) { return '<button type="button" data-i="' + i + '">' + o[0] + '</button>'; }).join('') + '</div><p class="sim-fb" style="margin-top:12px;font-size:16px;min-height:48px"></p>';
+      gesto(k ? 'duda' : 'espera', r.q.replace(/[“”]/g, ''));
+      caja.innerHTML = '<span class="sim-paso">Objeción ' + (k + 1) + ' de ' + R.length + '</span><div class="sim-op">' + r.o.map(function (o, i) { return '<button type="button" data-i="' + i + '">' + o[0] + '</button>'; }).join('') + '</div><p class="sim-fb" style="margin-top:12px;font-size:16px;min-height:48px"></p>';
       $$('.sim-op button', caja).forEach(function (b) {
         b.onclick = function () {
           var o = r.o[+b.dataset.i]; pts += o[1];
+          var tipo = o[1] >= 20 ? 'bien' : o[1] >= 10 ? 'duda' : 'mal';
           b.classList.add(o[1] >= 20 ? 'ok' : 'mal');
           $$('.sim-op button', caja).forEach(function (x) { x.disabled = true; });
           if (o[1] < 20) faltas.push(r.o.filter(function (x) { return x[1] >= 20; })[0][0]);
+          gesto(tipo, REACC[tipo][k % 3]);
           $('.sim-fb', caja).innerHTML = '<b>' + (o[1] >= 20 ? 'Bien.' : 'Ahí perdiste puntos.') + '</b> ' + o[2];
           med.style.width = (pts / (R.length * 25) * 100) + '%';
-          setTimeout(function () { k++; ronda(); }, 2600);
+          setTimeout(function () { k++; ronda(); }, 3200);
         };
       });
     }
     function fin() {
       var nota = Math.round(pts / (R.length * 25) * 100);
       var v = nota >= 80 ? 'Saliste con una segunda reunión agendada.' : nota >= 50 ? 'Te dijeron “envíame una propuesta y la reviso”. Sabes lo que significa.' : 'La reunión terminó antes de tiempo.';
+      if (nota >= 80) gesto('trato', '¿Te parece el jueves a las diez? Trae los números.');
+      else if (nota >= 50) gesto('duda', 'Envíame la propuesta por correo y la reviso…');
+      else gesto('mal', 'Gracias por venir. Te escribimos.');
       caja.innerHTML = '<div class="resultado" style="background:rgba(255,231,201,.06)"><span class="lbl">Cercanía al cierre</span><h3 class="epic" style="font-size:64px">' + nota + '<small style="font-size:24px">/100</small></h3><p>' + v + '</p>' + (faltas.length ? '<span class="lbl">La frase que te faltó</span><p>“' + faltas[0] + '”</p>' : '') + '<div class="btns" style="margin-top:16px"><button class="btn crema" type="button" data-otra>Repetir</button><button class="btn rojo" type="button" data-wa2>Entrenar con Pro Motion <span class="chev">»</span></button></div></div>';
       $('[data-otra]', caja).onclick = function () { k = 0; pts = 0; faltas = []; med.style.width = '0'; ronda(); };
       $('[data-wa2]', caja).onclick = function () { abrirWA('Hola Daniel, hice el simulador de negociación de Pro Academy y saqué ' + nota + '/100. Quiero preparar mi reunión con una marca.'); };
