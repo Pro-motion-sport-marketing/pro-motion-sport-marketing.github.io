@@ -2547,3 +2547,25 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:560px){.pmv-n{border-width:18px}.pmv-a{left:calc(50% - 50px)}.pmv-a .fig,.pmv-b .fig{--h:110px!important}}
 @media (prefers-reduced-motion:reduce){.pmv *{animation:none!important}}
 .pmv-a,.pmv-b{filter:drop-shadow(1.5px 0 0 var(--negro)) drop-shadow(-1.5px 0 0 var(--negro)) drop-shadow(0 1.5px 0 var(--negro)) drop-shadow(0 -1.5px 0 var(--negro))}
+/* Marcas: escenas animadas en las tarjetas (Alejo 209 y 212) */
+.mv{position:relative;display:block;width:100%;height:100%;overflow:hidden}
+.mv-emb .mv-barra{position:absolute;left:0;right:0;bottom:0;height:34%;background:var(--rojo);z-index:2}
+.mv-emb .mv-sol{position:absolute;left:8%;bottom:20%;width:34%;aspect-ratio:1;border-radius:50%;background:var(--rojo);opacity:.9;animation:mvSol 6s ease-in-out infinite;z-index:1}
+@keyframes mvSol{0%{transform:translateY(70%)}40%,80%{transform:translateY(-10%)}100%{transform:translateY(70%)}}
+.mv-emb .mv-cam{position:absolute;left:58%;bottom:34%;height:56%;width:auto;z-index:3;animation:mvCam 1s ease-in-out infinite}
+@keyframes mvCam{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.mv-cont .mv-vid{position:absolute;left:4%;bottom:6px;z-index:2;line-height:0}
+.mv-cont .mv-luz{position:absolute;left:24%;bottom:0;top:0;right:0;background:var(--rojo);clip-path:polygon(0 52%,100% 5%,100% 95%);transform-origin:0 52%;animation:mvLuz 2.4s ease-in-out infinite}
+@keyframes mvLuz{0%,100%{opacity:.95;transform:scaleX(1)}45%{opacity:.75;transform:scaleX(.96)}50%{opacity:1}55%{opacity:.8}}
+/* ProMatch: rueda bajo el deportista y aro con caminante (Alejo 188 y 189) */
+.pmd,.pmm{position:relative;display:block;width:180px;height:150px;max-width:none;max-height:none}
+.pmd-domo{position:absolute;left:10px;right:10px;bottom:0;height:80px;overflow:hidden}
+.pmd-domo>i{position:absolute;left:0;right:0;top:0;aspect-ratio:1;border-radius:50%;background:var(--rojo);animation:aroGira 6s linear infinite}
+.pmd-domo>i::before,.pmd-domo>i::after{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:var(--crema);opacity:.55;top:14%;left:50%}
+.pmd-domo>i::after{top:auto;bottom:14%}
+.pmd-fig{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);line-height:0}
+.pmd-fig .fig,.pmm-fig .fig{animation:mvCam .9s ease-in-out infinite}
+.pmm-aro{position:absolute;left:50%;top:0;width:150px;height:150px;margin-left:-75px;border-radius:50%;border:16px solid var(--negro);animation:aroGira 5s linear infinite}
+.pmm-aro::after{content:"";position:absolute;top:-14px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--rojo)}
+.pmm-fig{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);line-height:0}
+@media (prefers-reduced-motion:reduce){.mv *,.pmd *,.pmm *{animation:none!important}}
