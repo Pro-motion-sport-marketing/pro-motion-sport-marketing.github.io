@@ -2469,3 +2469,13 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .charla-min span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:22px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .charla figcaption{margin-top:10px;font-size:15px;line-height:1.4}
 .charla figcaption b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo)}
+/* Eventos: Pico habla por radio y luego agita la bandera (Alejo 226) */
+.pico-loop{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end}
+.pico-loop .pj{position:relative}
+.ph .vis .pico-loop .pico-a{position:absolute;bottom:0;left:50%;transform:translateX(-50%);animation:picoA 6s infinite}
+.ph .vis .pico-loop .pico-b{transform-origin:40% 100%;animation:picoB 6s infinite}
+.pico-globo{position:absolute;top:4%;right:2%;max-width:none;white-space:nowrap;font-weight:700;animation:picoG 6s infinite}
+@keyframes picoA{0%,44%{opacity:1}46%,97%{opacity:0}99%,100%{opacity:1}}
+@keyframes picoB{0%,44%{opacity:0;transform:none}46%{opacity:1;transform:rotate(-2deg)}58%{transform:rotate(2.5deg)}68%{transform:rotate(-2.5deg)}78%{transform:rotate(2.5deg)}88%{transform:rotate(-1deg)}97%{opacity:1}99%,100%{opacity:0}}
+@keyframes picoG{0%,4%{opacity:0;transform:scale(.6)}10%,38%{opacity:1;transform:none}44%,100%{opacity:0;transform:scale(.6)}}
+@media (prefers-reduced-motion:reduce){.pico-loop .pico-a,.pico-globo{display:none}.ph .vis .pico-loop .pico-b{opacity:1;animation:none}}
