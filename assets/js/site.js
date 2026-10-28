@@ -673,3 +673,71 @@
     $('button', r).onclick = function () { abrirWA('Hola Daniel, armé mi plan editorial en Pro Academy (' + dep + ', rumbo a ' + comp + '). Quiero ayuda para producirlo.'); };
   });
 })();
+/* Audiencia interactiva: dona de género, columnas de edad, mapa de países y ciudades */
+(function () {
+  'use strict';
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  $$('[data-aud-gen]').forEach(function (g) {
+    var v = g.querySelector('[data-dc-v]'), n = g.querySelector('[data-dc-n]'), bs = $$('.aud-ley button', g);
+    function sel(k) {
+      g.setAttribute('data-sel', k);
+      bs.forEach(function (b) { var on = b.dataset.g === k; b.classList.toggle('on', on); if (on) { v.textContent = b.dataset.v; n.textContent = b.dataset.n; } });
+    }
+    bs.forEach(function (b) { b.addEventListener('click', function () { sel(b.dataset.g); }); });
+    $$('.d-seg', g).forEach(function (s) { s.addEventListener('click', function () { sel(s.getAttribute('data-g')); }); });
+  });
+
+  $$('[data-aud-edad]').forEach(function (c) {
+    var cols = $$('.col', c), modo = 't';
+    function pintar() {
+      var mx = 0;
+      cols.forEach(function (k) { mx = Math.max(mx, parseFloat(k.dataset[modo].replace(',', '.'))); });
+      cols.forEach(function (k) {
+        var s = k.querySelectorAll('.col-b i'), u = s[0], f = s[1], m = s[2], ht = +k.dataset.ht;
+        if (modo === 't') { u.style.height = (ht - k.dataset.hm - k.dataset.hf) + '%'; f.style.height = k.dataset.hf + '%'; m.style.height = k.dataset.hm + '%'; }
+        else { var p = parseFloat(k.dataset[modo].replace(',', '.')) / mx * 100; u.style.height = '0%'; (modo === 'm' ? f : m).style.height = '0%'; (modo === 'm' ? m : f).style.height = p + '%'; }
+        k.querySelector('.col-v').textContent = k.dataset[modo] + ' %';
+        k.classList.toggle('top', parseFloat(k.dataset[modo].replace(',', '.')) === mx);
+      });
+    }
+    $$('.aud-tg button', c).forEach(function (b) {
+      b.addEventListener('click', function () { modo = b.dataset.f; $$('.aud-tg button', c).forEach(function (x) { x.classList.toggle('on', x === b); }); pintar(); });
+    });
+    cols.forEach(function (k) { k.addEventListener('click', function () { cols.forEach(function (x) { x.style.opacity = x === k ? '' : '.55'; }); }); });
+    var hecho = false;
+    function arrancar() { if (!hecho) { hecho = true; pintar(); } }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { arrancar(); io.disconnect(); } }, { threshold: .3 });
+      io.observe(c);
+    } else arrancar();
+  });
+
+  function bandera(iso) { return iso.replace(/./g, function (ch) { return String.fromCodePoint(127397 + ch.charCodeAt(0)); }); }
+  $$('[data-aud-mapa]').forEach(function (c) {
+    var mapa = c.querySelector('.mapa'), info = c.querySelector('.mapa-info'), pz = $$('.pz', c), bs = $$('.aud-top button', c);
+    function sel(iso) {
+      var p = pz.filter(function (x) { return x.getAttribute('data-p') === iso; })[0];
+      if (!p) return;
+      mapa.classList.add('foco');
+      pz.forEach(function (x) { x.classList.toggle('sel', x === p); });
+      bs.forEach(function (b) { b.classList.toggle('on', b.dataset.p === iso); });
+      info.innerHTML = '<span class="fl">' + bandera(iso) + '</span><b>' + p.getAttribute('data-n') + '</b><em>' + p.getAttribute('data-v') + ' %</em>';
+    }
+    pz.forEach(function (p) {
+      p.addEventListener('click', function () { sel(p.getAttribute('data-p')); });
+      p.addEventListener('mouseenter', function () { sel(p.getAttribute('data-p')); });
+    });
+    bs.forEach(function (b) { b.addEventListener('click', function () { sel(b.dataset.p); }); b.addEventListener('mouseenter', function () { sel(b.dataset.p); }); });
+  });
+
+  $$('[data-aud-ciu]').forEach(function (c) {
+    var pins = $$('.pin', c), bs = $$('.aud-top button', c);
+    function sel(i) {
+      pins.forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-c') === i); });
+      bs.forEach(function (b) { b.classList.toggle('on', b.dataset.c === i); });
+    }
+    pins.forEach(function (p) { p.addEventListener('click', function () { sel(p.getAttribute('data-c')); }); p.addEventListener('mouseenter', function () { sel(p.getAttribute('data-c')); }); });
+    bs.forEach(function (b) { b.addEventListener('click', function () { sel(b.dataset.c); }); b.addEventListener('mouseenter', function () { sel(b.dataset.c); }); });
+  });
+})();

@@ -2125,3 +2125,76 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .vc-play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(229,35,34,.92);box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:3;pointer-events:none}
 .vc-play::after{content:"";position:absolute;left:27px;top:21px;border-left:20px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent}
 .vc-item.bloq[data-d="0"] .vc-play{display:block;animation:latido 1.6s ease-out infinite}
+/* Audiencia interactiva (fichas de deportistas) */
+.aud-viz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;margin-top:8px}
+.aud-card{background:#fff8ef;border:1px solid rgba(28,28,28,.08);border-radius:18px;padding:22px;min-width:0}
+.aud-pais,.aud-ciu{grid-column:1/-1}
+.aud-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.aud-cnt,.aud-mini,.aud-fuente{font-size:13px;color:var(--gris)}
+.aud-fuente{margin-top:14px}
+.dona-w{position:relative;width:min(220px,100%);margin:10px auto 6px}
+.dona{width:100%;display:block}
+.dona circle{fill:none;stroke-width:20}
+.dona .d-bg{stroke:rgba(28,28,28,.08)}
+.d-seg{transition:stroke-width .3s,opacity .3s;cursor:pointer}
+.d-m{stroke:var(--negro)}.d-f{stroke:var(--rojo)}
+.aud-gen[data-sel="m"] .d-f,.aud-gen[data-sel="f"] .d-m{opacity:.25}
+.aud-gen[data-sel="m"] .d-m,.aud-gen[data-sel="f"] .d-f{stroke-width:24}
+.dona-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.dona-c b{font-family:var(--epic);font-size:40px;line-height:1;color:var(--negro)}
+.dona-c span{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-top:4px}
+.aud-ley{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.aud-ley button,.aud-ley span{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:14px;color:var(--negro);background:none;border:1px solid rgba(28,28,28,.15);border-radius:99px;padding:6px 12px;cursor:pointer}
+.aud-ley span{border:0;padding:0 6px;font-size:12px;color:var(--gris);cursor:default}
+.aud-ley button.on{background:var(--negro);color:var(--crema);border-color:var(--negro)}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sw.m{background:var(--negro)}.sw.f{background:var(--rojo)}.sw.u{background:#d9c7ae}
+.aud-ley button.on .sw.m{background:var(--crema)}
+.aud-tg{display:inline-flex;background:rgba(28,28,28,.06);border-radius:99px;padding:3px}
+.aud-tg button{font:inherit;font-size:13px;border:0;background:none;padding:6px 12px;border-radius:99px;cursor:pointer;color:var(--negro)}
+.aud-tg button.on{background:var(--rojo);color:#fff}
+.cols{display:flex;align-items:flex-end;gap:8px;height:230px;margin-top:14px}
+.col{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;background:none;border:0;padding:0;font:inherit;cursor:pointer;color:var(--negro)}
+.col-v{font-size:13px;font-weight:600;text-align:center;margin-bottom:6px;transition:opacity .3s}
+.col-b{flex:0 1 auto;height:calc(100% - 50px);display:flex;flex-direction:column;justify-content:flex-end;border-radius:8px 8px 0 0;overflow:hidden}
+.col-b i{display:block;width:100%;height:0;transition:height .9s var(--golpe)}
+.col-b .s-m{background:var(--negro)}.col-b .s-f{background:var(--rojo)}.col-b .s-u{background:#d9c7ae}
+.col-e{font-size:12px;text-align:center;margin-top:8px;color:var(--gris);white-space:nowrap}
+.col.top .col-v{color:var(--rojo)}
+.col:hover .col-b,.col:focus-visible .col-b{outline:2px solid var(--rojo);outline-offset:2px}
+.aud-ley.chica{justify-content:flex-start;margin-top:12px}
+.mapa-w{position:relative;margin:6px -6px 4px}
+.mapa{width:100%;display:block}
+.mapa .pz{stroke:#fff8ef;stroke-width:.6;cursor:pointer;transition:fill .25s,opacity .25s}
+.pz.n1{fill:#f4a58f}.pz.n2{fill:#ee7d66}.pz.n3{fill:#e9573f}.pz.n4{fill:#e2392a}.pz.n5{fill:var(--rojo)}
+.mapa.foco .pz{opacity:.35}.mapa.foco .pz.sel{opacity:1;fill:var(--negro)}
+.mapa-info{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:8px;background:var(--negro);color:var(--crema);border-radius:99px;padding:7px 14px;font-size:14px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.mapa-info em{font-style:normal;color:var(--rojo-vivo);font-weight:600}
+.aud-top{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.aud-top li button,.aud-top li.otros{position:relative;width:100%;display:flex;align-items:center;gap:8px;font:inherit;font-size:14px;color:var(--negro);background:rgba(28,28,28,.04);border:1px solid transparent;border-radius:12px;padding:10px 12px;overflow:hidden;cursor:pointer;text-align:left}
+.aud-top li.otros{cursor:default;color:var(--gris)}
+.aud-top .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;position:relative}
+.aud-top b,.aud-top .fl{position:relative}
+.aud-top li button i{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:rgba(229,35,34,.12)}
+.aud-top li button.on,.aud-top li button:hover{border-color:var(--rojo)}
+.ciu-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px;align-items:center}
+.ec{width:100%;max-height:340px;display:block}
+.ec .ec-vec{fill:#efe0cb;stroke:#fff8ef;stroke-width:.03}
+.ec .ec-pais{fill:#e8d6be;stroke:#fff8ef;stroke-width:.04}
+.ec .pin{cursor:pointer}
+.ec .pin circle{fill:var(--rojo);transition:opacity .3s}
+.ec .pin .halo{opacity:.18}
+.ec .pin.on circle{fill:var(--negro)}
+.ec .pin.on .halo{opacity:.25;animation:latido 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.ciu-in .aud-top{grid-template-columns:1fr;margin:0}
+@media (max-width:760px){
+  .aud-viz{grid-template-columns:minmax(0,1fr)}
+  .aud-card{padding:18px 16px}
+  .cols{height:200px;gap:5px}.col-v{font-size:11px}.col-e{font-size:10.5px}
+  .ciu-in{grid-template-columns:minmax(0,1fr)}
+  .ec{max-height:300px}
+  .aud-top{grid-template-columns:1fr}
+  .mapa-w{margin:6px -10px 4px}
+  .mapa-info{position:static;display:inline-flex;margin:8px 0 0 10px;font-size:13px;padding:6px 12px}
+  .aud-cnt{width:100%}
+}
