@@ -2532,3 +2532,18 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .nav .nav-mas-m a span{display:block;font-weight:400;font-size:13px;color:var(--gris);margin-top:2px}
 .nav .nav-mas-m a:hover,.nav .nav-mas-m a[aria-current="page"]{background:#fff8ef}
 .menu-movil .beta{font-size:12px;vertical-align:super}
+/* ProMatch: círculos que se entrelazan y apretón de manos (Alejo 186) */
+.pmv{position:relative;width:min(100%,440px);aspect-ratio:1.25;margin:0 auto}
+.pmv-n,.pmv-r{position:absolute;top:12%;width:58%;aspect-ratio:1;border-radius:50%}
+.pmv-r{left:4%;background:var(--rojo);animation:pmvR 7s var(--golpe) infinite}
+.pmv-n{right:4%;border:26px solid var(--negro);z-index:2;animation:pmvN 7s var(--golpe) infinite}
+.pmv-a,.pmv-b{position:absolute;bottom:14%;z-index:3;line-height:0}
+.pmv-a{left:calc(50% - 64px);animation:pmvA 7s ease-in-out infinite}
+.pmv-b{left:calc(50% - 4px);animation:pmvB 7s ease-in-out infinite}
+@keyframes pmvR{0%{transform:translateY(70%);opacity:0}14%,90%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+@keyframes pmvN{0%{transform:translateY(-70%);opacity:0}14%,90%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+@keyframes pmvA{0%,18%{transform:translateX(-90px);opacity:0}24%{opacity:1}40%,90%{transform:none;opacity:1}100%{opacity:0}}
+@keyframes pmvB{0%,18%{transform:translateX(90px);opacity:0}24%{opacity:1}40%,90%{transform:none;opacity:1}100%{opacity:0}}
+@media (max-width:560px){.pmv-n{border-width:18px}.pmv-a{left:calc(50% - 50px)}.pmv-a .fig,.pmv-b .fig{--h:110px!important}}
+@media (prefers-reduced-motion:reduce){.pmv *{animation:none!important}}
+.pmv-a,.pmv-b{filter:drop-shadow(1.5px 0 0 var(--negro)) drop-shadow(-1.5px 0 0 var(--negro)) drop-shadow(0 1.5px 0 var(--negro)) drop-shadow(0 -1.5px 0 var(--negro))}
