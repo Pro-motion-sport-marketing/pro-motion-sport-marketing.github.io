@@ -2453,7 +2453,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 /* Marcas: el jabalí camina mientras el aro gira (Alejo 207) */
 .marca-aro.in,.marca-aro{animation:aroGira 9s linear infinite}
 .marca-aro::after{content:"";position:absolute;top:-35px;left:50%;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:var(--rojo)}
-@keyframes aroGira{to{transform:rotate(360deg)}}
+@keyframes aroGira{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .marca-jab{transform-origin:50% 100%;animation:jabCamina 1.1s ease-in-out infinite}
 @keyframes jabCamina{0%,100%{transform:translateY(0) rotate(-1.2deg)}25%{transform:translateY(-6px) rotate(0)}50%{transform:translateY(0) rotate(1.2deg)}75%{transform:translateY(-6px) rotate(0)}}
 @media (prefers-reduced-motion:reduce){.marca-aro,.marca-jab{animation:none}}
