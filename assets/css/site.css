@@ -2489,3 +2489,13 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @keyframes bocaHabla{0%,25%,100%{transform:none}5%,15%{transform:translateY(-4px) rotate(-2deg)}10%,20%{transform:translateY(-2px) rotate(2deg)}}
 @media (max-width:560px){.boca{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}.boca-p img{height:90px}}
 @media (prefers-reduced-motion:reduce){.boca-g{opacity:1;animation:none}.boca-p img{animation:none}}
+/* Servicios: campañas puntuales */
+.camp-quien{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.camp-quien .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo);font-weight:600}
+.camp-pasos{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px}
+.camp-pasos span{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;background:var(--negro);color:var(--crema);padding:6px 12px 6px 6px;border-radius:99px}
+.camp-pasos b{width:22px;height:22px;border-radius:50%;background:var(--rojo);color:#fff;display:grid;place-items:center;font-size:12px}
+.paq-alt{display:block;margin-top:18px;padding:14px 16px;border:2px dashed var(--negro);text-decoration:none;color:var(--negro);transition:background .2s}
+.paq-alt:hover{background:#fff8ef}
+.paq-alt b{display:block}.paq-alt span{font-size:14px;color:var(--rojo);font-weight:600}
+@media (max-width:560px){.camp-quien{grid-template-columns:1fr}}
