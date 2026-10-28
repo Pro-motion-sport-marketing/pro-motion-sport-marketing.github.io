@@ -594,6 +594,7 @@
 
   /* ---------- Brief de marca ---------- */
   var brief = $('#brief');
+  if (brief) brief.addEventListener('click', function (e) { if (e.target.closest('[data-b-otra]')) { $('.b-ok', brief).hidden = true; } });
   if (brief) brief.addEventListener('submit', function (e) {
     e.preventDefault();
     var d = new FormData(brief), faltan = [];
@@ -601,9 +602,10 @@
     var av = $('.brief-aviso');
     if (faltan.length) { av.textContent = 'Completa: ' + faltan.join(', ') + '.'; return; }
     av.textContent = '';
-    var L = [['Empresa', 'empresa'], ['Instagram / web', 'ig'], ['Contacto', 'contacto'], ['Objetivo', 'objetivo'], ['Audiencia', 'audiencia'], ['Territorio', 'territorio'], ['Duración', 'duracion'], ['Inversión', 'inversion'], ['Esperamos del deportista', 'espera'], ['Deportes de interés', 'deportes'], ['Éxito medido por', 'kpi'], ['Fecha clave', 'fecha'], ['Valores de marca', 'valores'], ['Referencias', 'referencias'], ['Evitar', 'evitar']];
+    var L = [['Empresa', 'empresa'], ['Instagram / web', 'ig'], ['Contacto', 'contacto'], ['Objetivo', 'objetivo'], ['Audiencia', 'audiencia'], ['Territorio', 'territorio'], ['Duración', 'duracion'], ['Inversión', 'inversion'], ['Esperamos del deportista', 'espera'], ['Deportes de interés', 'deportes'], ['Éxito medido por', 'kpi'], ['Fecha clave', 'fecha'], ['Valores de marca', 'valores'], ['Referencias', 'referencias'], ['Manual / logo', 'manual'], ['Evitar', 'evitar']];
     var txt = L.map(function (x) { var v = d.getAll(x[1]).map(function (y) { return String(y).trim(); }).filter(Boolean).join(', '); return v && v !== 'Por definir' ? x[0] + ': ' + v : ''; }).filter(Boolean).join('\n');
     abrirWA('Hola Daniel, soy de una marca y quiero diseñar una activación deportiva. Este es nuestro briefing:\n\n' + txt);
+    var ok = $('.b-ok', brief); if (ok) { ok.hidden = false; ok.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
   });
 
   /* ---------- Academy: diagnóstico de arquetipo ---------- */

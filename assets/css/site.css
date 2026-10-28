@@ -2397,3 +2397,8 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .b-mas[open] summary::before{content:"–"}
 .b-mas summary small{font-weight:400;opacity:.65}
 #brief textarea{resize:vertical}
+.b-ayuda{font-size:13px;opacity:.65}
+.b-ok{margin-top:18px;background:var(--negro);color:var(--crema);padding:18px 20px;border-left:6px solid var(--rojo)}
+.b-ok b{font-size:18px}
+.b-ok p{margin:6px 0 8px;font-size:15px;opacity:.85}
+.b-ok .link{background:none;border:0;color:var(--crema);font:inherit;font-size:14px;padding:0;cursor:pointer;text-decoration:underline}
