@@ -880,3 +880,35 @@
     elenco.addEventListener('mouseleave', function () { elenco.classList.remove('foco'); });
   }
 })();
+/* Servicios: filtro por público y barra de servicios con la sección activa */
+(function () {
+  'use strict';
+  var q = document.querySelector('.srv-quien');
+  if (q) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#catalogo .cat[data-para]'));
+    var cuenta = q.querySelector('.srv-cuenta'), nota = document.querySelector('.srv-marca-nota');
+    q.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      q.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+      var p = b.dataset.p, n = 0;
+      cards.forEach(function (c) { var ver = !p || c.dataset.para.split(' ').indexOf(p) > -1; c.classList.toggle('oculta', !ver); if (ver) n++; });
+      cuenta.textContent = p ? n + ' servicios para ti' : '';
+      if (nota) nota.hidden = p !== 'm';
+    });
+  }
+  var nav = document.querySelector('.srv-nav');
+  if (nav && 'IntersectionObserver' in window) {
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+    var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    var ALIAS = { '#simple': '#elige', '#completa': '#elige' };
+    Object.keys(ALIAS).forEach(function (k) { var el = document.querySelector(k); if (el) secs.push(el); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = '#' + en.target.id; id = ALIAS[id] || id;
+        links.forEach(function (a) { var on = a.getAttribute('href') === id; a.classList.toggle('on', on); if (on && a.scrollIntoView) { var r = nav.querySelector('.srv-nav-in'); r.scrollTo({ left: a.offsetLeft - 40, behavior: 'smooth' }); } });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  }
+})();

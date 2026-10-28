@@ -17,7 +17,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
-body{background:var(--papel) url(../brand/papel.jpg) repeat;background-size:720px;color:var(--tinta);font-family:var(--clash);font-size:18px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--papel) url(../brand/papel.jpg) repeat;background-size:720px;color:var(--tinta);font-family:var(--clash);font-size:18px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
 b,strong{font-weight:600}
@@ -2402,3 +2402,51 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .b-ok b{font-size:18px}
 .b-ok p{margin:6px 0 8px;font-size:15px;opacity:.85}
 .b-ok .link{background:none;border:0;color:var(--crema);font:inherit;font-size:14px;padding:0;cursor:pointer;text-decoration:underline}
+/* Servicios: filtro por público y barra de servicios fija */
+.srv-quien{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 22px}
+.srv-quien>span{font-weight:700;margin-right:4px}
+.srv-quien button{font:inherit;font-size:15px;font-weight:600;padding:10px 16px;border:2px solid var(--negro);background:#fff;color:var(--negro);cursor:pointer;transition:background .15s,color .15s}
+.srv-quien button.on{background:var(--negro);color:var(--crema)}
+.srv-quien button:hover:not(.on){background:var(--crema)}
+.srv-cuenta{font-style:normal;font-size:14px;color:var(--gris);margin-left:6px}
+.srv-marca-nota{margin:-8px 0 18px;font-size:15px}
+.cat.oculta{display:none}
+.srv-nav{position:sticky;top:0;z-index:70;background:var(--negro);border-bottom:2px solid var(--negro)}
+.srv-nav-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;max-width:1180px;margin:0 auto;padding:0 var(--gutter)}
+.srv-nav-in::-webkit-scrollbar{display:none}
+.srv-nav a{flex:none;color:var(--crema);text-decoration:none;font-size:14px;font-weight:600;padding:12px 12px;opacity:.7;border-bottom:3px solid transparent;transition:opacity .2s,border-color .2s}
+.srv-nav a:hover,.srv-nav a.on{opacity:1;border-bottom-color:var(--rojo)}
+.srv-nav a.srv-nav-cta{margin-left:auto;background:var(--rojo);color:#fff;opacity:1;text-transform:uppercase;letter-spacing:.04em;font-weight:700;align-self:center;padding:8px 14px;border:0}
+[id]{scroll-margin-top:60px}
+
+/* Servicios: cómo trabajamos, paquete, testimonios y preguntas */
+.pasos-srv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:34px;counter-reset:p}
+.paso-s{display:flex;gap:12px;align-items:flex-start;background:var(--negro);color:var(--crema);padding:16px}
+.paso-s>b{flex:none;width:34px;height:34px;border-radius:50%;background:var(--rojo);color:#fff;display:grid;place-items:center;font-family:var(--epic)}
+.paso-s h3{font-family:var(--clash);font-weight:700;font-size:17px;margin:2px 0 4px}
+.paso-s p{font-size:14px;opacity:.8;margin:0;line-height:1.4}
+.paso-s:first-child{background:var(--rojo)}
+.paso-s:first-child>b{background:var(--crema);color:var(--rojo)}
+.paquete{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:center}
+.paq-tx{position:relative}
+.paq-tag{display:inline-block;background:var(--rojo);color:#fff;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;margin-bottom:10px}
+.paq-nota{font-size:13px;color:var(--gris);margin-top:10px}
+.paq-items{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:q}
+.paq-items li{position:relative;background:#fff8ef;border:2px solid var(--negro);padding:16px 18px 16px 62px;counter-increment:q}
+.paq-items li::before{content:"+";position:absolute;left:16px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:var(--negro);color:var(--crema);display:grid;place-items:center;font-size:20px;font-weight:700}
+.paq-items li:first-child::before{content:"✓";background:var(--rojo)}
+.paq-items b{display:block;font-size:17px}
+.paq-items span{font-size:14px;color:var(--gris)}
+.testis{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.testi{margin:0;background:var(--crema);border-left:6px solid var(--rojo);padding:20px}
+.testi blockquote{margin:0 0 12px;font-size:17px;line-height:1.45}
+.testi b{display:block}.testi span{font-size:14px;color:var(--gris)}.testi em{display:block;font-style:normal;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);margin-top:4px}
+.faq{display:grid;gap:8px}
+.faq details{background:#fff8ef;border:2px solid var(--negro)}
+.faq summary{cursor:pointer;list-style:none;padding:16px 50px 16px 18px;font-weight:700;font-size:17px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--rojo);color:#fff;display:grid;place-items:center;font-size:18px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0;padding:0 18px 18px;font-size:16px}
+@media (max-width:900px){.pasos-srv{grid-template-columns:1fr 1fr}.paquete{grid-template-columns:1fr}}
+@media (max-width:520px){.pasos-srv{grid-template-columns:1fr}}
