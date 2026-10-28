@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=45">
+<link rel="stylesheet" href="../assets/css/site.css?v=46">
 
 </head>
 <body>
@@ -68,19 +68,32 @@
     <div class="cab" style="margin:0">
       <div class="kicker rv">Briefing breve · recomendación concreta</div>
       <h2 class="epic h2 rv h1-ac"><span class="nw">En lugar de un catálogo,</span> <span class="nw">cuéntanos tu objetivo</span></h2>
-      <p class="lead rv">Completa seis campos y envíanos el briefing por WhatsApp. Te respondemos con tres perfiles compatibles, la razón de cada uno y una idea de activación.</p>
+      <p class="lead rv">Completa lo esencial y envíanos el briefing por WhatsApp. Te respondemos con tres perfiles compatibles, la razón de cada uno y una idea de activación.</p>
     </div>
     <form class="panel rv" id="brief" novalidate>
       <div class="fila2">
         <div class="campo"><label for="b-emp">Empresa</label><input id="b-emp" name="empresa" autocomplete="organization" placeholder="Ej.: Lubricantes del Austro"></div>
+        <div class="campo"><label for="b-ig">Instagram o web de la marca</label><input id="b-ig" name="ig" placeholder="Ej.: @lubricantesdelaustro"></div>
+        <div class="campo"><label for="b-con">Tu nombre y cargo</label><input id="b-con" name="contacto" autocomplete="name" placeholder="Ej.: Carlos Andrade, jefe de marketing"></div>
         <div class="campo"><label for="b-obj">Objetivo de negocio *</label><input id="b-obj" name="objetivo" placeholder="Ej.: lanzar un producto en la Sierra"></div>
         <div class="campo"><label for="b-aud">Audiencia *</label><input id="b-aud" name="audiencia" placeholder="Ej.: jóvenes de 18 a 30 que entrenan"></div>
         <div class="campo"><label for="b-ter">Territorio *</label><input id="b-ter" name="territorio" placeholder="Ej.: Cuenca, Quito y Guayaquil"></div>
-        <div class="campo"><label for="b-dur">Duración</label><select id="b-dur" name="duracion"><option>Acción puntual</option><option>Un trimestre</option><option>Temporada completa</option></select></div>
+        <div class="campo"><label for="b-dur">Duración</label><select id="b-dur" name="duracion"><option>Acción puntual</option><option>Un trimestre</option><option>Temporada completa</option><option>Por definir</option></select></div>
         <div class="campo"><label for="b-inv">Rango de inversión</label><select id="b-inv" name="inversion"><option>USD 1.000 – 3.000</option><option>USD 3.000 – 8.000</option><option>Más de USD 8.000</option><option>Por definir</option></select></div>
       </div>
-      <div class="campo"><label for="b-val">Valores de la marca</label><input id="b-val" name="valores" placeholder="Ej.: constancia, familia, innovación"></div>
-      <div class="btns"><button class="btn rojo" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Ver perfiles recomendados</button><span class="brief-aviso" style="color:var(--rojo);font-weight:600"></span></div>
+      <div class="campo"><span class="b-lbl">¿Qué esperas del deportista? <small>(elige las que apliquen)</small></span><div class="b-chips"><label><input type="checkbox" name="espera" value="Contenido para redes"><span>Contenido para redes</span></label><label><input type="checkbox" name="espera" value="Presencia en eventos"><span>Presencia en eventos</span></label><label><input type="checkbox" name="espera" value="Embajador de producto"><span>Embajador de producto</span></label><label><input type="checkbox" name="espera" value="Experiencias para clientes o equipo"><span>Experiencias para clientes o equipo</span></label><label><input type="checkbox" name="espera" value="Causa o comunidad"><span>Causa o comunidad</span></label></div></div>
+      <details class="b-mas">
+        <summary>Afinar la recomendación <small>(opcional, 1 minuto)</small></summary>
+        <div class="campo"><span class="b-lbl">Deportes que te interesan</span><div class="b-chips"><label><input type="checkbox" name="deportes" value="Motor"><span>Motor</span></label><label><input type="checkbox" name="deportes" value="Ciclismo"><span>Ciclismo</span></label><label><input type="checkbox" name="deportes" value="Running y trail"><span>Running y trail</span></label><label><input type="checkbox" name="deportes" value="Deportes de equipo"><span>Deportes de equipo</span></label><label><input type="checkbox" name="deportes" value="Outdoor y aventura"><span>Outdoor y aventura</span></label><label><input type="checkbox" name="deportes" value="Abierto a recomendación"><span>Abierto a recomendación</span></label></div></div>
+        <div class="fila2">
+          <div class="campo"><label for="b-kpi">¿Cómo medirán el éxito?</label><select id="b-kpi" name="kpi"><option>Por definir</option><option>Ventas o contactos</option><option>Alcance y notoriedad</option><option>Interacción con la comunidad</option><option>Contenido para nuestros canales</option></select></div>
+          <div class="campo"><label for="b-fec">Fecha clave</label><input id="b-fec" name="fecha" placeholder="Ej.: lanzamiento en marzo"></div>
+        </div>
+        <div class="campo"><label for="b-val">Valores de la marca</label><input id="b-val" name="valores" placeholder="Ej.: constancia, familia, innovación"></div>
+        <div class="campo"><label for="b-ref">Referencias que les gustan</label><textarea id="b-ref" name="referencias" rows="2" placeholder="Ej.: enlaces de Pinterest, cuentas o campañas que admiran"></textarea></div>
+        <div class="campo"><label for="b-res">Lo que hay que evitar</label><input id="b-res" name="evitar" placeholder="Ej.: deportistas ligados a la competencia, temas sensibles"></div>
+      </details>
+      <div class="btns"><button class="btn rojo" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Enviar briefing y ver perfiles</button><span class="brief-aviso" style="color:var(--rojo);font-weight:600"></span></div>
     </form>
   </div>
 </section>
@@ -136,6 +149,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=24" defer></script>
+<script src="../assets/js/site.js?v=25" defer></script>
 </body>
 </html>

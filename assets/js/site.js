@@ -601,7 +601,9 @@
     var av = $('.brief-aviso');
     if (faltan.length) { av.textContent = 'Completa: ' + faltan.join(', ') + '.'; return; }
     av.textContent = '';
-    abrirWA('Hola Daniel, soy de una marca y quiero diseñar una activación deportiva.\n\nEmpresa: ' + d.get('empresa') + '\nObjetivo: ' + d.get('objetivo') + '\nAudiencia: ' + d.get('audiencia') + '\nTerritorio: ' + d.get('territorio') + '\nDuración: ' + d.get('duracion') + '\nInversión: ' + d.get('inversion') + '\nValores de marca: ' + d.get('valores'));
+    var L = [['Empresa', 'empresa'], ['Instagram / web', 'ig'], ['Contacto', 'contacto'], ['Objetivo', 'objetivo'], ['Audiencia', 'audiencia'], ['Territorio', 'territorio'], ['Duración', 'duracion'], ['Inversión', 'inversion'], ['Esperamos del deportista', 'espera'], ['Deportes de interés', 'deportes'], ['Éxito medido por', 'kpi'], ['Fecha clave', 'fecha'], ['Valores de marca', 'valores'], ['Referencias', 'referencias'], ['Evitar', 'evitar']];
+    var txt = L.map(function (x) { var v = d.getAll(x[1]).map(function (y) { return String(y).trim(); }).filter(Boolean).join(', '); return v && v !== 'Por definir' ? x[0] + ': ' + v : ''; }).filter(Boolean).join('\n');
+    abrirWA('Hola Daniel, soy de una marca y quiero diseñar una activación deportiva. Este es nuestro briefing:\n\n' + txt);
   });
 
   /* ---------- Academy: diagnóstico de arquetipo ---------- */

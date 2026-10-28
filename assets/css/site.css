@@ -2381,3 +2381,19 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .hero-conoce .hc-tx{display:flex;flex-direction:column;line-height:1.2}
 .hero-conoce .hc-tx small{font-size:13px;opacity:.75}
 .hero-conoce .hc-tx b{font-size:18px;white-space:nowrap}
+/* Marcas: briefing ampliado */
+.b-lbl{font-weight:600;font-size:15px}
+.b-lbl small{font-weight:400;opacity:.65}
+.b-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.b-chips label{cursor:pointer}
+.b-chips input{position:absolute;opacity:0;pointer-events:none}
+.b-chips span{display:inline-block;font-size:14px;padding:8px 14px;border:2px solid var(--negro);background:#fff;transition:background .15s,color .15s}
+.b-chips input:checked+span{background:var(--negro);color:var(--crema)}
+.b-chips input:focus-visible+span{box-shadow:0 0 0 3px var(--rojo)}
+.b-mas{border-top:2px dashed rgba(28,28,28,.25);margin:6px 0 16px;padding-top:12px}
+.b-mas summary{cursor:pointer;font-weight:700;font-size:16px;list-style:none;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.b-mas summary::-webkit-details-marker{display:none}
+.b-mas summary::before{content:"+";display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--rojo);color:#fff;font-size:18px;line-height:1}
+.b-mas[open] summary::before{content:"–"}
+.b-mas summary small{font-weight:400;opacity:.65}
+#brief textarea{resize:vertical}
