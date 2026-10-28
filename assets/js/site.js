@@ -653,6 +653,7 @@
     function ronda() {
       if (k >= R.length) return fin();
       var r = R[k];
+      if (!r.mez) { r.mez = 1; for (var a = r.o.length - 1; a > 0; a--) { var j = Math.floor(Math.random() * (a + 1)), x = r.o[a]; r.o[a] = r.o[j]; r.o[j] = x; } } // la buena no siempre en el medio
       gesto(k ? 'duda' : 'espera', r.q.replace(/[“”]/g, ''));
       caja.innerHTML = '<span class="sim-paso">Objeción ' + (k + 1) + ' de ' + R.length + '</span><div class="sim-op">' + r.o.map(function (o, i) { return '<button type="button" data-i="' + i + '">' + o[0] + '</button>'; }).join('') + '</div><p class="sim-fb" style="margin-top:12px;font-size:16px;min-height:48px"></p>';
       $$('.sim-op button', caja).forEach(function (b) {
@@ -676,7 +677,7 @@
       else if (nota >= 50) gesto('duda', 'Envíame la propuesta por correo y la reviso…');
       else gesto('mal', 'Gracias por venir. Te escribimos.');
       caja.innerHTML = '<div class="resultado" style="background:rgba(255,231,201,.06)"><span class="lbl">Cercanía al cierre</span><h3 class="epic" style="font-size:64px">' + nota + '<small style="font-size:24px">/100</small></h3><p>' + v + '</p>' + (faltas.length ? '<span class="lbl">La frase que te faltó</span><p>“' + faltas[0] + '”</p>' : '') + '<div class="btns" style="margin-top:16px"><button class="btn crema" type="button" data-otra>Repetir</button><button class="btn rojo" type="button" data-wa2>Entrenar con Pro Motion <span class="chev">»</span></button></div></div>';
-      $('[data-otra]', caja).onclick = function () { k = 0; pts = 0; faltas = []; med.style.width = '0'; ronda(); };
+      $('[data-otra]', caja).onclick = function () { k = 0; pts = 0; faltas = []; med.style.width = '0'; R.forEach(function (r) { r.mez = 0; }); ronda(); };
       $('[data-wa2]', caja).onclick = function () { abrirWA('Hola Daniel, hice el simulador de negociación de Pro Academy y saqué ' + nota + '/100. Quiero preparar mi reunión con una marca.'); };
     }
     $('.sim-empezar', sim).onclick = ronda;
