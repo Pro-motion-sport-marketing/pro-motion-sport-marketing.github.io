@@ -2349,7 +2349,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:480px){.ac-fmts{grid-template-columns:1fr}.ac-fmt-d{min-height:0}}
 /* Inicio: acceso a Conócenos como recuadro */
 .hero-conoce{display:inline-flex;align-items:center;gap:14px;margin-top:22px;background:var(--negro);color:var(--crema);padding:12px 20px 12px 14px;font-size:15px;opacity:1;text-decoration:none;transition:transform .2s,box-shadow .2s}
-.hero-conoce::before{content:"";flex:none;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 50% 70%,var(--rojo) 0 6px,transparent 6.5px),radial-gradient(circle at 50% 34%,transparent 0 5px,var(--crema) 5.5px 7.5px,transparent 8px)}
+.hero-conoce .hc-iso{flex:none;width:26px;height:32px}
 .hero-conoce b{font-size:17px;border-bottom:0;color:var(--rojo-vivo);padding:0}
 .hero-conoce:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--rojo)}
 .hero-conoce:hover b{color:var(--crema)}
@@ -2378,3 +2378,6 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .g-card .cuerpo{padding:18px 16px 20px}
 .g-card .epic{font-size:21px;line-height:1.02}
 .g-card .meta{font-weight:400}
+.hero-conoce .hc-tx{display:flex;flex-direction:column;line-height:1.2}
+.hero-conoce .hc-tx small{font-size:13px;opacity:.75}
+.hero-conoce .hc-tx b{font-size:18px;white-space:nowrap}
