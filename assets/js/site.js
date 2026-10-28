@@ -805,7 +805,7 @@
       '<div class="tdt-cta"><button type="button" class="btn rojo" data-tdt-wa>Desarrollemos tu perfil paso a paso <span class="chev">»</span></button><button type="button" class="tdt-atras" data-tdt-otra>Repetir el test</button></div>' +
       '</div></div>';
     if (elenco) {
-      elenco.classList.add('res');
+      elenco.classList.add('res'); elenco.classList.remove('foco'); if (info) info.style.display = 'none';
       elenco.querySelectorAll('.tdt-pj').forEach(function (f) { f.classList.toggle('hoy', f.dataset.t === hoy); f.classList.toggle('meta', f.dataset.t === meta); });
     }
     caja.querySelector('[data-tdt-wa]').addEventListener('click', function () {
@@ -816,9 +816,28 @@
         ' ¿Qué necesito para llegar ahí? Me interesa desarrollar mi perfil paso a paso con Pro Motion Sport Marketing.';
       window.open(window.PM.waLink(msg), '_blank', 'noopener');
     });
-    caja.querySelector('[data-tdt-otra]').addEventListener('click', function () { resp = []; orden = []; i = 0; if (elenco) elenco.classList.remove('res'); pregunta(); });
+    caja.querySelector('[data-tdt-otra]').addEventListener('click', function () { resp = []; orden = []; i = 0; if (elenco) elenco.classList.remove('res'); if (info) info.style.display = ''; pregunta(); });
     var top = caja.getBoundingClientRect().top + window.scrollY - 90;
     if (Math.abs(window.scrollY - top) > 200) window.scrollTo({ top: top, behavior: 'smooth' });
   }
   caja.querySelector('[data-tdt-ir]').addEventListener('click', function () { i = 0; pregunta(); });
+  // Descripción breve de cada personaje (cursor en computadora, toque en celular)
+  var info = document.querySelector('.tdt-info');
+  if (elenco && info) {
+    var figs = elenco.querySelectorAll('.tdt-pj');
+    var mostrar = function (f) {
+      if (elenco.classList.contains('res')) return;
+      figs.forEach(function (x) { x.classList.toggle('tdt-on', x === f); });
+      info.querySelectorAll('p').forEach(function (p) { p.classList.toggle('tdt-on', p.dataset.t === f.dataset.t); });
+      elenco.classList.add('foco'); info.classList.add('ver');
+      var fr = f.getBoundingClientRect(), ir = info.getBoundingClientRect();
+      info.style.setProperty('--fl', Math.max(16, Math.min(ir.width - 16, fr.left + fr.width / 2 - ir.left)) + 'px');
+    };
+    figs.forEach(function (f) {
+      f.addEventListener('mouseenter', function () { mostrar(f); });
+      f.addEventListener('click', function () { mostrar(f); });
+      f.addEventListener('focus', function () { mostrar(f); });
+    });
+    elenco.addEventListener('mouseleave', function () { elenco.classList.remove('foco'); });
+  }
 })();

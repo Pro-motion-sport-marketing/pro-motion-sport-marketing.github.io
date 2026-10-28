@@ -2269,3 +2269,20 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
   .tdt-globo{right:64px;top:-104px;width:min(230px,66vw);font-size:12.5px}
   .tdt-globo::after{right:14px}
 }
+/* Test: descripción de cada personaje al pasar el cursor o tocar */
+.tdt-pj{cursor:pointer;outline:none}
+.tdt-pj figcaption{transition:color .25s}
+.tdt-elenco.foco .tdt-pj{opacity:.4}
+.tdt-elenco.foco .tdt-pj.tdt-on{opacity:1}
+.tdt-pj.tdt-on img{transform:translateY(-8px) scale(1.05)}
+.tdt-pj.tdt-on figcaption{color:var(--rojo)}
+.tdt-info{position:relative;min-height:84px;max-width:860px;margin:6px auto 0;background:var(--negro);color:var(--crema);padding:16px 22px;display:flex;align-items:center}
+.tdt-info::before{content:"";position:absolute;top:-10px;left:var(--fl,50%);border:10px solid transparent;border-top:0;border-bottom:10px solid var(--negro);transform:translateX(-50%);transition:left .35s var(--golpe)}
+.tdt-info-def{opacity:.75;font-size:15px}
+.tdt-info p{display:none;margin:0;font-size:16px;line-height:1.4}
+.tdt-info p b{font-family:var(--epic);text-transform:uppercase;font-size:20px;color:var(--rojo-vivo)}
+.tdt-info p em{font-style:normal;opacity:.8}
+.tdt-info p span{display:block;margin-top:2px}
+.tdt-info.ver .tdt-info-def{display:none}
+.tdt-info.ver p.tdt-on{display:block;animation:tdtEntra .35s var(--golpe)}
+@media (max-width:760px){.tdt-info{padding:14px 16px;min-height:96px}.tdt-info p{font-size:15px}.tdt-info p b{font-size:17px}}
