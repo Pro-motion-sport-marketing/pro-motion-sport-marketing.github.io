@@ -763,3 +763,61 @@
   if (img.complete) ubicar(); else img.addEventListener('load', ubicar);
   window.addEventListener('resize', ubicar);
 })();
+/* Test: ¿qué tipo de deportista eres? */
+(function () {
+  'use strict';
+  var caja = document.querySelector('[data-tdt]'), dataEl = document.getElementById('tdt-data');
+  if (!caja || !dataEl) return;
+  var D = JSON.parse(dataEl.textContent), T = D.tipos, P = D.test, elenco = document.querySelector('.tdt-elenco');
+  var resp = [], i = 0, orden = [];
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function art(n) { return n.replace(/^El /, 'el ').replace(/^La /, 'la '); }
+  function mezclar(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), x = a[k]; a[k] = a[j]; a[j] = x; } return a; }
+  function pregunta() {
+    var q = P[i], ops = orden[i] || (orden[i] = mezclar(q[1]));
+    caja.innerHTML = '<div class="tdt-paso"><div class="tdt-top"><span class="tdt-num">Pregunta ' + (i + 1) + ' de ' + P.length + '</span><span class="tdt-barra"><i style="width:' + (i / P.length * 100) + '%"></i></span></div>' +
+      '<h3 class="tdt-q">' + esc(q[0]) + '</h3><div class="tdt-ops">' +
+      ops.map(function (o, k) { return '<button type="button" class="tdt-op' + (resp[i] === o[1] ? ' sel' : '') + '" data-t="' + o[1] + '"><b>' + 'ABCDEF'[k] + '</b>' + esc(o[0]) + '</button>'; }).join('') +
+      '</div>' + (i ? '<button type="button" class="tdt-atras">‹ Pregunta anterior</button>' : '') + '</div>';
+    caja.querySelectorAll('.tdt-op').forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.classList.add('sel'); resp[i] = b.dataset.t;
+        setTimeout(function () { i++; if (i < P.length) pregunta(); else resultado(); }, 280);
+      });
+    });
+    var at = caja.querySelector('.tdt-atras'); if (at) at.addEventListener('click', function () { i--; pregunta(); });
+  }
+  function resultado() {
+    // Hoy: el tipo más votado en las 5 primeras preguntas (en empate, gana la respuesta más reciente)
+    var pts = {}; resp.slice(0, P.length - 1).forEach(function (t, k) { pts[t] = (pts[t] || 0) + 1 + k * 0.01; });
+    var hoy = Object.keys(pts).sort(function (a, b) { return pts[b] - pts[a]; })[0];
+    // Meta: la última pregunta (lo que quieres que digan de ti); si eligió al perezoso, el tipo activo más votado
+    var meta = resp[P.length - 1];
+    if (meta === 'perezoso') { var activos = Object.keys(pts).filter(function (t) { return t !== 'perezoso'; }).sort(function (a, b) { return pts[b] - pts[a]; }); meta = activos[0] || 'zorro'; }
+    var h = T[hoy], m = T[meta], igual = hoy === meta;
+    caja.innerHTML = '<div class="tdt-paso tdt-res"><div class="tdt-fig"><img src="' + h.img + '" alt="' + esc(h.n) + '"></div><div>' +
+      '<div class="tdt-num">Hoy eres</div><h3>' + esc(h.n) + '</h3><p class="tdt-alias">' + esc(h.a) + '</p><p>' + esc(h.d) + '</p>' +
+      '<dl><div><dt>Tu fortaleza</dt><dd>' + esc(h.f) + '</dd></div><div><dt>Tu riesgo</dt><dd>' + esc(h.r) + '</dd></div></dl>' +
+      '<div class="tdt-meta"><img src="' + m.img + '" alt=""><div><span>' + (igual ? 'Tu meta: potenciarlo' : 'Te quieres convertir en') + '</span><b>' + esc(m.n) + '</b><p>Lo que trabajaríamos contigo: ' + esc(m.t) + '</p></div></div>' +
+      '<div class="tdt-form"><div class="campo"><label for="tdt-n">Tu nombre</label><input id="tdt-n" autocomplete="name" placeholder="Ej.: Ana Pérez"></div>' +
+      '<div class="campo"><label for="tdt-d">Tu disciplina</label><input id="tdt-d" placeholder="Ej.: ciclismo de ruta"></div></div>' +
+      '<div class="tdt-cta"><button type="button" class="btn rojo" data-tdt-wa>Desarrollemos tu perfil paso a paso <span class="chev">»</span></button><button type="button" class="tdt-atras" data-tdt-otra>Repetir el test</button></div>' +
+      '</div></div>';
+    if (elenco) {
+      elenco.classList.add('res');
+      elenco.querySelectorAll('.tdt-pj').forEach(function (f) { f.classList.toggle('hoy', f.dataset.t === hoy); f.classList.toggle('meta', f.dataset.t === meta); });
+    }
+    caja.querySelector('[data-tdt-wa]').addEventListener('click', function () {
+      var n = caja.querySelector('#tdt-n').value.trim(), d = caja.querySelector('#tdt-d').value.trim();
+      var quien = n ? 'soy ' + n + (d ? ', deportista de ' + d : '') + '. ' : (d ? 'soy deportista de ' + d + '. ' : '');
+      var msg = 'Hola Daniel, ' + quien + (quien ? 'Hice' : 'hice') + ' el test de Pro Academy y mi resultado fue: hoy soy ' + art(h.n) + ' (' + h.a.toLowerCase() + ')' +
+        (igual ? ' y quiero potenciarlo.' : ' y quiero convertirme en ' + art(m.n) + ' (' + m.a.toLowerCase() + ').') +
+        ' ¿Qué necesito para llegar ahí? Me interesa desarrollar mi perfil paso a paso con Pro Motion Sport Marketing.';
+      window.open(window.PM.waLink(msg), '_blank', 'noopener');
+    });
+    caja.querySelector('[data-tdt-otra]').addEventListener('click', function () { resp = []; orden = []; i = 0; if (elenco) elenco.classList.remove('res'); pregunta(); });
+    var top = caja.getBoundingClientRect().top + window.scrollY - 90;
+    if (Math.abs(window.scrollY - top) > 200) window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+  caja.querySelector('[data-tdt-ir]').addEventListener('click', function () { i = 0; pregunta(); });
+})();

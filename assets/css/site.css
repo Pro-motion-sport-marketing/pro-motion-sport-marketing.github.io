@@ -2198,3 +2198,65 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
   .mapa-info{position:static;display:inline-flex;margin:8px 0 0 10px;font-size:13px;padding:6px 12px}
   .aud-cnt{width:100%}
 }
+/* Test: ¿qué tipo de deportista eres? (Academy) */
+.tdt-elenco{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:end;gap:10px;margin:10px 0 0;position:relative;padding-bottom:14px}
+.tdt-elenco::after{content:"";position:absolute;left:0;right:0;bottom:44px;height:3px;background:var(--negro)}
+.tdt-pj{margin:0;display:flex;flex-direction:column;align-items:center;gap:22px;transition:transform .4s var(--golpe),opacity .4s}
+.tdt-pj img{height:clamp(150px,17vw,230px);width:auto;max-width:100%;object-fit:contain;object-position:bottom;transform-origin:50% 100%;transition:transform .4s var(--golpe)}
+.tdt-pj:hover img{transform:translateY(-6px) rotate(-2deg)}
+.tdt-pj figcaption{font-family:var(--epic);text-transform:uppercase;font-size:13px;letter-spacing:.02em;text-align:center}
+.tdt-elenco.res .tdt-pj{opacity:.25}
+.tdt-elenco.res .tdt-pj.hoy,.tdt-elenco.res .tdt-pj.meta{opacity:1}
+.tdt-elenco.res .tdt-pj.meta img{transform:scale(1.08)}
+.tdt-elenco.res .tdt-pj.hoy figcaption::after{content:" · hoy";color:var(--rojo)}
+.tdt-elenco.res .tdt-pj.meta figcaption::after{content:" · meta";color:var(--rojo)}
+.tdt-elenco.res .tdt-pj.hoy.meta figcaption::after{content:" · tú"}
+.tdt-caja{max-width:860px;margin:26px auto 0}
+.tdt-inicio{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.tdt-inicio p{margin:0;max-width:440px}
+.tdt-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.tdt-num{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo)}
+.tdt-barra{flex:1;height:6px;background:rgba(28,28,28,.12);max-width:300px}
+.tdt-barra i{display:block;height:100%;background:var(--rojo);transition:width .5s var(--golpe)}
+.tdt-q{font-family:var(--epic);text-transform:uppercase;font-size:clamp(24px,3vw,36px);line-height:.95;margin:0 0 20px}
+.tdt-ops{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tdt-op{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;font-size:16px;line-height:1.3;color:var(--negro);background:#fff;border:2px solid var(--negro);padding:14px 16px;cursor:pointer;transition:transform .2s,background .2s,color .2s}
+.tdt-op b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--negro);color:var(--crema);font-size:13px}
+.tdt-op:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--negro)}
+.tdt-op.sel{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+.tdt-op.sel b{background:#fff;color:var(--rojo)}
+.tdt-atras{background:none;border:0;font:inherit;font-size:14px;color:var(--gris);cursor:pointer;padding:0;margin-top:16px;text-decoration:underline}
+.tdt-paso{animation:tdtEntra .45s var(--golpe)}
+@keyframes tdtEntra{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.tdt-res{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px;align-items:start}
+.tdt-fig{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:320px}
+.tdt-fig::before{content:"";position:absolute;width:86%;aspect-ratio:1;border-radius:50%;background:var(--rojo);left:7%;bottom:6%}
+.tdt-fig img{position:relative;height:340px;max-width:100%;object-fit:contain;animation:tdtSalta .7s var(--golpe)}
+@keyframes tdtSalta{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+.tdt-res h3{font-family:var(--epic);text-transform:uppercase;font-size:clamp(34px,4.4vw,56px);line-height:.9;margin:4px 0 6px}
+.tdt-res .tdt-alias{font-size:18px;color:var(--rojo);margin:0 0 12px}
+.tdt-res dl{display:grid;gap:10px;margin:16px 0}
+.tdt-res dt{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
+.tdt-res dd{margin:2px 0 0}
+.tdt-meta{display:flex;align-items:center;gap:14px;background:var(--negro);color:var(--crema);padding:12px 16px;margin:16px 0}
+.tdt-meta img{width:58px;height:70px;object-fit:contain;object-position:bottom;flex:none}
+.tdt-meta span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;display:block}
+.tdt-meta b{font-family:var(--epic);text-transform:uppercase;font-size:22px;color:var(--rojo-vivo)}
+.tdt-meta p{margin:4px 0 0;font-size:14px;opacity:.85}
+.tdt-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.tdt-form .campo{margin:0}
+.tdt-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+.tdt-nota{font-size:13px;color:var(--gris);text-align:center;margin-top:14px}
+@media (max-width:760px){
+  .tdt-elenco{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter) 14px;scrollbar-width:none}
+  .tdt-elenco::-webkit-scrollbar{display:none}
+  .tdt-elenco::after{left:0;right:auto;width:200%}
+  .tdt-pj{flex:0 0 34%;scroll-snap-align:center}
+  .tdt-pj img{height:170px}
+  .tdt-ops{grid-template-columns:1fr}
+  .tdt-op{font-size:15px;padding:12px 14px}
+  .tdt-res{grid-template-columns:1fr;gap:6px}
+  .tdt-fig{min-height:250px}.tdt-fig img{height:260px}
+  .tdt-fig::before{width:72%;left:14%}
+  .tdt-form{grid-template-columns:1fr}
+}
