@@ -936,3 +936,15 @@
   document.addEventListener('click', function (e) { if (!m.contains(e.target)) { m.classList.remove('abierto'); b.setAttribute('aria-expanded', 'false'); } });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { m.classList.remove('abierto'); b.setAttribute('aria-expanded', 'false'); } });
 })();
+/* Servicios · Campañas: pedir propuesta por WhatsApp */
+(function () {
+  'use strict';
+  var f = document.getElementById('cp-pide'); if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = new FormData(f), para = d.getAll('para'), cuando = String(d.get('cuando') || '').trim();
+    var msg = 'Hola Daniel, soy ' + (d.get('quien') === 'Marca' ? 'de una marca' : 'deportista') + ' y quiero una campaña puntual (sin plan mensual).' +
+      (para.length ? '\nObjetivo: ' + para.join(', ') + '.' : '') + (cuando ? '\nFechas: ' + cuando + '.' : '') + '\n¿Me envías una propuesta?';
+    window.open(window.PM.waLink(msg), '_blank', 'noopener');
+  });
+})();
