@@ -2641,3 +2641,9 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ten-hoja{position:absolute;left:21.6%;top:41.5%;width:13.5%;height:19%;background:var(--negro);border:2px solid var(--crema);border-left:0;border-radius:0 6px 2px 0;transform-origin:0 50%;transform:skewY(-14deg);animation:tenHoja 3.2s ease-in-out infinite;z-index:2;pointer-events:none}
 @keyframes tenHoja{0%,45%{transform:skewY(-14deg) rotateY(0);opacity:0}50%{opacity:1}80%{transform:skewY(-14deg) perspective(300px) rotateY(-175deg);opacity:1}85%,100%{transform:skewY(-14deg) perspective(300px) rotateY(-178deg);opacity:0}}
 @media (prefers-reduced-motion:reduce){.ten-hoja{display:none}}
+/* Alejo ronda 4 · Eventos (caso GT) */
+.gt-e{transition:transform .2s var(--rebote),box-shadow .2s,background .2s}
+.gt-e:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--rojo);background:rgba(255,231,201,.08)}
+.gt-e .kicker{font-family:var(--clash);font-weight:700;letter-spacing:.08em}
+.gt-e p,.gt-e small{color:#bdb5ac;opacity:1}
+.gt-tabs button{font-family:var(--clash);font-weight:600;font-size:16px;letter-spacing:.06em}
