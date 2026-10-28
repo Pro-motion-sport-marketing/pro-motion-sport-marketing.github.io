@@ -741,3 +741,25 @@
     bs.forEach(function (b) { b.addEventListener('click', function () { sel(b.dataset.c); }); b.addEventListener('mouseenter', function () { sel(b.dataset.c); }); });
   });
 })();
+/* Burbuja anclada a un punto de la foto (respeta el recorte de object-fit:cover) */
+(function () {
+  'use strict';
+  var b = document.querySelector('.nos-burbuja[data-ancla]');
+  if (!b) return;
+  var hero = b.parentElement, img = hero.querySelector('img'), a = b.dataset.ancla.split(',').map(Number);
+  function ubicar() {
+    if (!img.naturalWidth) return;
+    var hr = hero.getBoundingClientRect(), ir = img.getBoundingClientRect(), cs = getComputedStyle(img);
+    var iw = img.offsetWidth, ih = img.offsetHeight, s = Math.max(iw / img.naturalWidth, ih / img.naturalHeight);
+    var pos = cs.objectPosition.split(' ').map(function (v) { return parseFloat(v) / 100; });
+    var rw = img.naturalWidth * s, rh = img.naturalHeight * s;
+    var x = img.offsetLeft + (iw - rw) * pos[0] + rw * a[0];
+    var y = img.offsetTop + (ih - rh) * pos[1] + rh * a[1];
+    var izq = Math.max(10, x - 30);
+    b.style.setProperty('--bx', izq + 'px');
+    b.style.setProperty('--by', y + 'px');
+    b.style.setProperty('--cola', Math.max(18, x - izq) + 'px');
+  }
+  if (img.complete) ubicar(); else img.addEventListener('load', ubicar);
+  window.addEventListener('resize', ubicar);
+})();
