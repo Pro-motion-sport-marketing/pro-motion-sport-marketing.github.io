@@ -146,7 +146,7 @@ section,header.top,footer{position:relative;overflow-x:clip}
 /* ---------- Franja que corre ---------- */
 .franja{background:var(--negro);color:var(--crema);overflow:hidden;white-space:nowrap;padding:14px 0;border-block:2px solid var(--negro)}
 .franja.roja{background-color:var(--rojo);background-image:url(../brand/rojo-papel.jpg);background-size:720px}
-.franja-in{display:inline-flex;gap:28px;animation:corre 32s linear infinite;font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.6vw,30px)}
+.franja-in{display:inline-flex;gap:28px;animation:franjaCorre 32s linear infinite;font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.6vw,30px)}
 .franja-in span{display:inline-flex;align-items:center;gap:28px}
 .franja-in span::after{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--rojo)}
 .franja.roja .franja-in span::after{background:var(--negro)}
@@ -2687,3 +2687,22 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .dg-cta .dg-atras{color:#fff}
 .dg-nota{font-size:13px;color:var(--gris);margin:0}
 @media (max-width:700px){.dg-grid{grid-template-columns:1fr}.dg-dim{grid-template-columns:96px minmax(0,1fr) 30px;font-size:14px}}
+@keyframes franjaCorre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* Academy portada: el talento abre la puerta, la preparación evita que se cierre (10 s, sin cortes) */
+.ac-pt{position:relative;width:min(100%,520px);height:clamp(300px,34vw,430px);margin:0 auto}
+.pt-marco{position:absolute;left:38%;bottom:0;width:30%;height:82%;border:10px solid var(--negro);border-bottom:0;background:var(--negro);perspective:700px}
+.pt-luz{position:absolute;inset:0;background:radial-gradient(circle at 50% 60%,#fff6dc 0 30%,#ffd56b 60%,var(--rojo) 100%);animation:ptLuz 10s ease-in-out infinite}
+.pt-hoja{position:absolute;inset:0;background:var(--rojo);transform-origin:100% 50%;animation:ptHoja 10s ease-in-out infinite;box-shadow:inset -10px 0 0 rgba(0,0,0,.12)}
+.pt-hoja::after{content:"";position:absolute;left:12%;top:52%;width:12px;height:12px;border-radius:50%;background:var(--crema)}
+.pt-sloth{position:absolute;bottom:0;left:2%;height:62%;width:auto;z-index:3;animation:ptSloth 10s ease-in-out infinite}
+.pt-esp{position:absolute;bottom:0;left:66%;height:74%;width:auto;z-index:3;animation:ptEsp 10s ease-in-out infinite}
+.pt-tag{position:absolute;z-index:4;font-weight:700;font-size:14px;padding:5px 11px;border-radius:99px;background:var(--negro);color:var(--crema);opacity:0}
+.pt-t1{left:6%;top:24%;animation:ptT1 10s ease-in-out infinite}
+.pt-t2{right:0;top:14%;background:var(--rojo);color:#fff;animation:ptT2 10s ease-in-out infinite}
+@keyframes ptSloth{0%{transform:translateX(-60%);opacity:0}6%{opacity:1}24%{transform:translateX(0)}46%{transform:translateX(0);opacity:1}66%{transform:translateX(105%) scale(.82);opacity:0}100%{transform:translateX(105%) scale(.82);opacity:0}}
+@keyframes ptHoja{0%,24%{transform:rotateY(0)}32%{transform:rotateY(72deg)}38%{transform:rotateY(72deg)}44%{transform:rotateY(38deg)}48%{transform:rotateY(70deg)}86%{transform:rotateY(70deg)}96%,100%{transform:rotateY(0)}}
+@keyframes ptLuz{0%,26%{opacity:.4}34%,86%{opacity:1}96%,100%{opacity:.4}}
+@keyframes ptEsp{0%,36%{transform:translateX(70%);opacity:0}44%{transform:translateX(4%);opacity:1}48%,86%{transform:translateX(0);opacity:1}96%,100%{transform:translateX(70%);opacity:0}}
+@keyframes ptT1{0%,22%{opacity:0;transform:translateY(6px)}28%,58%{opacity:1;transform:none}64%,100%{opacity:0}}
+@keyframes ptT2{0%,44%{opacity:0;transform:translateY(6px)}50%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.ac-pt *{animation:none!important}.pt-hoja{transform:rotateY(70deg)}.pt-tag{opacity:1}}
