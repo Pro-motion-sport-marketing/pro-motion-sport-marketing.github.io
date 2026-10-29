@@ -2706,3 +2706,20 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @keyframes ptT1{0%,22%{opacity:0;transform:translateY(6px)}28%,58%{opacity:1;transform:none}64%,100%{opacity:0}}
 @keyframes ptT2{0%,44%{opacity:0;transform:translateY(6px)}50%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.ac-pt *{animation:none!important}.pt-hoja{transform:rotateY(70deg)}.pt-tag{opacity:1}}
+/* Academy portada: pasillo infinito de puertas */
+.ac-pa{position:relative;width:min(100%,560px);height:clamp(300px,34vw,430px);margin:0 auto;overflow:hidden}
+.pa-suelo{position:absolute;left:0;right:0;bottom:6%;height:4px;background:var(--negro);z-index:2}
+.pa-pista{position:absolute;inset:0}
+.pa-puerta{position:absolute;bottom:calc(6% + 4px);left:0;border-radius:50%;background:var(--rojo);overflow:hidden;will-change:transform}
+.pa-luz{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 40%,#ffd56b 100%)}
+.pa-cie{position:absolute;left:0;right:0;height:50%;background:var(--negro)}
+.pa-cie.a{top:0;transform-origin:top}.pa-cie.b{bottom:0;transform-origin:bottom}
+.pa-herr{position:absolute;left:0;top:0;width:auto;z-index:4;opacity:0;will-change:transform}
+.pa-esp{position:absolute;left:-3%;bottom:6%;height:42%;width:auto;z-index:3;transform-origin:50% 100%;transition:transform .25s}
+.pa-esp.lanza{transform:rotate(-4deg) translateY(-4px)}
+.pa-sloth{position:absolute;left:27%;bottom:6%;height:46%;width:auto;z-index:5;animation:paCorre .42s ease-in-out infinite}
+@keyframes paCorre{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-6px) rotate(1.5deg)}}
+.pa-tag{position:absolute;z-index:6;font-weight:700;font-size:13px;padding:5px 11px;border-radius:99px}
+.pa-tag.t1{left:31%;top:36%;background:var(--negro);color:var(--crema)}
+.pa-tag.t2{left:0;top:46%;background:var(--rojo);color:#fff}
+@media (prefers-reduced-motion:reduce){.pa-sloth{animation:none}}

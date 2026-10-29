@@ -1015,3 +1015,40 @@
     window.open(window.PM.waLink(msg), '_blank', 'noopener');
   });
 })();
+/* Academy: pasillo infinito — las puertas se cierran y Espid lanza una herramienta que las mantiene abiertas */
+(function () {
+  'use strict';
+  var box = document.querySelector('[data-pasillo]'); if (!box) return;
+  var puertas = [].slice.call(box.querySelectorAll('.pa-puerta')), herr = [].slice.call(box.querySelectorAll('.pa-herr')), esp = box.querySelector('.pa-esp');
+  var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, D, S, L, base, t0 = null;
+  function medir() { W = box.clientWidth; H = box.clientHeight; D = Math.min(W * 0.42, H * 0.6); S = Math.max(W * 0.62, (W + D) / 3.6); L = S * puertas.length; base = H * 0.06 + 4;
+    puertas.forEach(function (p) { p.style.width = p.style.height = D + 'px'; }); herr.forEach(function (h) { h.style.height = D * 0.26 + 'px'; }); }
+  function clamp(x) { return Math.max(0, Math.min(1, x)); }
+  function ease(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  function paso(ts) {
+    if (t0 === null) t0 = ts;
+    var t = (ts - t0) / 1000, v = S / 2.3, lanzando = false;
+    puertas.forEach(function (p, i) {
+      var u = ((i * S + v * t) % L + L) % L, x = W + D * 0.6 - u;   // centro de la puerta en pantalla
+      var cierra = clamp((W * 0.98 - x) / (W * 0.36)) * 0.78;                 // se va cerrando al acercarse
+      var vuelo = clamp((W * 0.84 - x) / (W * 0.24));                         // la herramienta vuela
+      var abre = clamp((W * 0.60 - x) / (W * 0.16));                          // al caer, la puerta se reabre
+      var c = vuelo >= 1 ? cierra * (1 - ease(abre)) + 0.05 : cierra;
+      p.style.transform = 'translate(' + (x - D / 2) + 'px,0)';
+      p.children[1].style.transform = p.children[2].style.transform = 'scaleY(' + c + ')';
+      var h = herr[i], hw = h.offsetWidth || D * 0.3, hh = h.offsetHeight || D * 0.3;
+      if (x > W * 0.84 || x < -D) { h.style.opacity = 0; return; }
+      var sx = W * 0.12, sy = H * 0.6, tx = x - hw / 2, ty = H - base - hh * 0.92;
+      var e = ease(vuelo), px = sx + (tx - sx) * e, py = sy + (ty - sy) * e - Math.sin(Math.PI * vuelo) * H * 0.28;
+      h.style.opacity = vuelo > 0 ? 1 : 0;
+      h.style.transform = 'translate(' + px + 'px,' + py + 'px) rotate(' + (vuelo < 1 ? 540 * e : 0) + 'deg)';
+      if (vuelo > 0 && vuelo < 0.2) lanzando = true;
+    });
+    esp.classList.toggle('lanza', lanzando);
+    requestAnimationFrame(paso);
+  }
+  medir(); addEventListener('resize', medir);
+  if (quieto) { puertas.forEach(function (p, i) { p.style.transform = 'translate(' + (W * 0.62 - D / 2 + i * S) + 'px,0)'; }); return; }
+  requestAnimationFrame(paso);
+})();
