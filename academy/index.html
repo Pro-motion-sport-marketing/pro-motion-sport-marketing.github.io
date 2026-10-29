@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=75">
+<link rel="stylesheet" href="../assets/css/site.css?v=76">
 
 </head>
 <body>
@@ -64,14 +64,47 @@
 <!-- 01 Diagnóstico -->
 <section class="sec" id="diagnostico">
   <div class="wrap" style="max-width:900px">
-    <div class="cab"><div class="kicker rv">Herramienta 01 · Diagnóstico de valor comercial</div><h2 class="epic h2 rv h1-ac"><span class="nw">¿Qué perdería</span> <span class="nw">una marca si tú</span> <span class="nw">no existieras?</span></h2><p class="lead rv">Declara tu disciplina, tu etapa y tu audiencia. Te devolvemos tu arquetipo comercial, las industrias compatibles y una idea de activación que no es poner un logo en la camiseta.</p></div>
-    <form class="panel rv" id="diagnostico-form" novalidate>
-      <div class="fila2">
-        <div class="campo"><label for="d-dep">Tu disciplina</label><input id="d-dep" name="deporte" placeholder="Ej.: automovilismo, trail, pádel, fútbol"></div>
-        <div class="campo"><label for="d-eta">Tu etapa</label><select id="d-eta" name="etapa"><option>En formación</option><option>Competencia nacional</option><option>Alto rendimiento / élite</option></select></div>
-      </div>
-      <div class="campo"><label for="d-aud">¿Quién te sigue hoy?</label><input id="d-aud" name="audiencia" placeholder="Ej.: jóvenes de mi ciudad, familias del club, aficionados al motor"></div>
-      <div class="btns"><button class="btn rojo" type="submit">Generar diagnóstico »</button></div>
+    <div class="cab"><div class="kicker rv">Herramienta 01 · Diagnóstico de valor comercial</div><h2 class="epic h2 rv h1-ac"><span class="nw">¿Qué perdería</span> <span class="nw">una marca si tú</span> <span class="nw">no existieras?</span></h2><p class="lead rv">Tres pasos, unos tres minutos. Te devolvemos tu puntaje de preparación comercial, tu arquetipo, las industrias compatibles y tus tres brechas principales.</p></div>
+    <form class="panel rv dg" id="diagnostico-form" novalidate>
+      <div class="dg-top"><span class="dg-paso-t">Paso <b>1</b> de 3</span><span class="dg-barra"><i></i></span></div>
+      <fieldset class="dg-paso" data-p="1">
+        <legend>Tu deporte y tu calendario</legend>
+        <div class="fila2">
+          <div class="campo"><label for="d-dep">Tu disciplina *</label><input id="d-dep" name="deporte" placeholder="Ej.: automovilismo, trail, pádel, fútbol"></div>
+          <div class="campo"><label for="d-ciu">Ciudad y país</label><input id="d-ciu" name="ciudad" placeholder="Ej.: Cuenca, Ecuador"></div>
+        </div>
+        <div class="campo"><span class="b-lbl">Tu etapa *</span><div class="b-chips"><label><input type="radio" name="etapa" value="En formación"><span>En formación</span></label><label><input type="radio" name="etapa" value="Amateur competitivo"><span>Amateur competitivo</span></label><label><input type="radio" name="etapa" value="Profesional nacional"><span>Profesional nacional</span></label><label><input type="radio" name="etapa" value="Internacional"><span>Internacional</span></label></div></div>
+        <div class="fila2">
+          <div class="campo"><span class="b-lbl">Competencias al año</span><div class="b-chips"><label><input type="radio" name="comp" value="1 a 3"><span>1 a 3</span></label><label><input type="radio" name="comp" value="4 a 8"><span>4 a 8</span></label><label><input type="radio" name="comp" value="9 o más"><span>9 o más</span></label></div></div>
+          <div class="campo"><span class="b-lbl">Alcance de tus competencias</span><div class="b-chips"><label><input type="radio" name="alcance" value="Local"><span>Local</span></label><label><input type="radio" name="alcance" value="Nacional"><span>Nacional</span></label><label><input type="radio" name="alcance" value="Internacional"><span>Internacional</span></label></div></div>
+        </div>
+        <div class="campo"><label for="d-log">Tu logro más reciente <small>(opcional)</small></label><input id="d-log" name="logro" placeholder="Ej.: subcampeón nacional 2026"></div>
+      </fieldset>
+      <fieldset class="dg-paso" data-p="2" hidden>
+        <legend>Con quién conectas hoy</legend>
+        <div class="campo"><span class="b-lbl">Tamaño de tu comunidad en redes</span><div class="b-chips"><label><input type="radio" name="tam" value="Menos de 1.000"><span>Menos de 1.000</span></label><label><input type="radio" name="tam" value="1.000 a 5.000"><span>1.000 a 5.000</span></label><label><input type="radio" name="tam" value="5.000 a 20.000"><span>5.000 a 20.000</span></label><label><input type="radio" name="tam" value="Más de 20.000"><span>Más de 20.000</span></label></div></div>
+        <div class="campo"><span class="b-lbl">¿Quiénes son? <small>(elige las que apliquen)</small></span><div class="b-chips"><label><input type="checkbox" name="quien" value="Jóvenes"><span>Jóvenes</span></label><label><input type="checkbox" name="quien" value="Familias"><span>Familias</span></label><label><input type="checkbox" name="quien" value="Aficionados del deporte"><span>Aficionados del deporte</span></label><label><input type="checkbox" name="quien" value="Deportistas amateurs"><span>Deportistas amateurs</span></label><label><input type="checkbox" name="quien" value="Empresarios y profesionales"><span>Empresarios y profesionales</span></label><label><input type="checkbox" name="quien" value="Niños de academias"><span>Niños de academias</span></label><label><input type="checkbox" name="quien" value="Mujeres"><span>Mujeres</span></label></div></div>
+        <div class="fila2">
+          <div class="campo"><span class="b-lbl">¿Dónde están?</span><div class="b-chips"><label><input type="radio" name="donde" value="Mi ciudad"><span>Mi ciudad</span></label><label><input type="radio" name="donde" value="Mi país"><span>Mi país</span></label><label><input type="radio" name="donde" value="Varios países"><span>Varios países</span></label></div></div>
+          <div class="campo"><span class="b-lbl">Tu red principal</span><div class="b-chips"><label><input type="radio" name="red" value="Instagram"><span>Instagram</span></label><label><input type="radio" name="red" value="TikTok"><span>TikTok</span></label><label><input type="radio" name="red" value="Facebook"><span>Facebook</span></label><label><input type="radio" name="red" value="YouTube"><span>YouTube</span></label></div></div>
+        </div>
+        <div class="campo"><span class="b-lbl">¿Cada cuánto publicas?</span><div class="b-chips"><label><input type="radio" name="frec" value="Casi no publico"><span>Casi no publico</span></label><label><input type="radio" name="frec" value="1 o 2 por semana"><span>1 o 2 por semana</span></label><label><input type="radio" name="frec" value="3 o más por semana"><span>3 o más por semana</span></label></div></div>
+        <div class="campo"><span class="b-lbl">Comunidades fuera de redes</span><div class="b-chips"><label><input type="checkbox" name="off" value="Club"><span>Club</span></label><label><input type="checkbox" name="off" value="Colegio o universidad"><span>Colegio o universidad</span></label><label><input type="checkbox" name="off" value="Barrio"><span>Barrio</span></label><label><input type="checkbox" name="off" value="Causa social"><span>Causa social</span></label><label><input type="checkbox" name="off" value="Ninguna"><span>Ninguna</span></label></div></div>
+      </fieldset>
+      <fieldset class="dg-paso" data-p="3" hidden>
+        <legend>Lo que ofreces hoy</legend>
+        <div class="fila2">
+          <div class="campo"><span class="b-lbl">¿Tienes perfil comercial o dossier?</span><div class="b-chips"><label><input type="radio" name="dossier" value="Sí, actualizado"><span>Sí, actualizado</span></label><label><input type="radio" name="dossier" value="Sí, pero desactualizado"><span>Sí, pero desactualizado</span></label><label><input type="radio" name="dossier" value="No"><span>No</span></label></div></div>
+          <div class="campo"><span class="b-lbl">¿Has tenido auspicios?</span><div class="b-chips"><label><input type="radio" name="ausp" value="Nunca"><span>Nunca</span></label><label><input type="radio" name="ausp" value="Sí, sin entregar resultados"><span>Sí, sin entregar resultados</span></label><label><input type="radio" name="ausp" value="Sí, con informe de resultados"><span>Sí, con informe de resultados</span></label></div></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><span class="b-lbl">¿Quién produce tu contenido?</span><div class="b-chips"><label><input type="radio" name="prod" value="Yo, con el celular"><span>Yo, con el celular</span></label><label><input type="radio" name="prod" value="Alguien me ayuda"><span>Alguien me ayuda</span></label><label><input type="radio" name="prod" value="Un equipo profesional"><span>Un equipo profesional</span></label></div></div>
+          <div class="campo"><span class="b-lbl">Frente a la cámara te sientes…</span><div class="b-chips"><label><input type="radio" name="cam" value="Me cuesta"><span>Me cuesta</span></label><label><input type="radio" name="cam" value="Más o menos"><span>Más o menos</span></label><label><input type="radio" name="cam" value="Con soltura"><span>Con soltura</span></label></div></div>
+        </div>
+        <div class="campo"><span class="b-lbl">Tus valores o causas <small>(hasta tres)</small></span><div class="b-chips"><label><input type="checkbox" name="valores" value="Disciplina"><span>Disciplina</span></label><label><input type="checkbox" name="valores" value="Familia"><span>Familia</span></label><label><input type="checkbox" name="valores" value="Superación"><span>Superación</span></label><label><input type="checkbox" name="valores" value="Comunidad"><span>Comunidad</span></label><label><input type="checkbox" name="valores" value="Innovación"><span>Innovación</span></label><label><input type="checkbox" name="valores" value="Medio ambiente"><span>Medio ambiente</span></label><label><input type="checkbox" name="valores" value="Inclusión"><span>Inclusión</span></label></div></div>
+        <div class="campo"><label for="d-nom">Tu nombre</label><input id="d-nom" name="nombre" autocomplete="name" placeholder="Ej.: Ana Pérez"></div>
+      </fieldset>
+      <div class="dg-nav"><button type="button" class="dg-atras" hidden>‹ Atrás</button><button type="button" class="btn rojo dg-sig">Siguiente <span class="chev">»</span></button><span class="dg-aviso" aria-live="polite"></span></div>
       <div class="diag-res" aria-live="polite"></div>
     </form>
     <script type="application/json" id="arquetipos-data">[{"k": ["ciclismo", "atletismo", "trail", "maratón", "maraton", "triatlón", "triatlon", "natación", "natacion", "marcha", "running", "ironman", "ultra"], "a": "El Estratega de la Resistencia", "v": "Tu activo no es la velocidad: es la administración del esfuerzo en el tiempo. Eso es exactamente lo que una marca necesita comunicar sobre constancia y largo plazo.", "f": "Constancia · Planificación · Tolerancia a la incomodidad", "o": "Seguros, banca, salud preventiva, energía", "act": "Serie de temporada donde cada capítulo documenta una decisión de ritmo y su resultado, con datos reales de la competencia."}, {"k": ["downhill", "motocross", "bmx", "skate", "surf", "escalada", "enduro", "automovilismo", "rally", "karting", "moto", "gt", "piloto"], "a": "El Arquitecto del Riesgo Calculado", "v": "Vendes control en escenarios de incertidumbre. Ese relato es transferible a cualquier industria que gestione riesgo o innovación.", "f": "Decisión bajo presión · Técnica · Adaptabilidad", "o": "Tecnología, automotriz, telecomunicaciones, bebidas", "act": "Formato vertical con cámara a bordo explicando la lectura de terreno segundo a segundo, patrocinado como “laboratorio de decisiones”."}, {"k": ["fútbol", "futbol", "basket", "básquet", "voley", "vóley", "rugby", "hockey", "equipo", "handball"], "a": "El Conector de Vestuario", "v": "Tu valor comercial está en la influencia interna: mueves a un grupo antes de mover a una audiencia.", "f": "Liderazgo · Comunicación · Regularidad", "o": "Retail, telecom, consumo masivo, educación", "act": "Programa de mentoría filmado con las formativas del club, con la marca como habilitadora del proceso."}, {"k": ["pádel", "padel", "tenis", "tiro", "golf", "ajedrez", "esgrima", "bádminton", "badminton", "boxeo", "judo", "taekwondo"], "a": "El Analista de Precisión", "v": "Tu deporte es toma de decisiones repetida. Traduces disciplina en método, no en épica.", "f": "Precisión · Foco · Lectura del rival", "o": "Banca, consultoría, tecnología, salud", "act": "Micro-serie “una decisión, un punto”: análisis técnico corto con la marca como patrocinadora del dato."}]</script>
@@ -195,6 +228,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=31" defer></script>
+<script src="../assets/js/site.js?v=33" defer></script>
 </body>
 </html>

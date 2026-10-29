@@ -608,17 +608,84 @@
     var ok = $('.b-ok', brief); if (ok) { ok.hidden = false; ok.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
   });
 
-  /* ---------- Academy: diagnóstico de arquetipo ---------- */
+  /* ---------- Academy: prediagnóstico de valor comercial (3 pasos) ---------- */
   var diag = $('#diagnostico-form');
-  if (diag) diag.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var T = JSON.parse($('#arquetipos-data').textContent), dep = (diag.deporte.value || '').toLowerCase().trim();
-    if (!dep) { $('.diag-res').innerHTML = '<p>Escribe tu disciplina para empezar.</p>'; return; }
-    var a = T.filter(function (t) { return t.k.some(function (k) { return dep.indexOf(k) > -1; }); })[0] || T[T.length - 1];
-    var r = $('.diag-res');
-    r.innerHTML = '<div class="resultado"><span class="lbl">Tu arquetipo · ' + esc(diag.etapa.value) + '</span><h3 class="epic">' + a.a + '</h3><p>' + a.v + '</p><span class="lbl">Fortalezas que una marca compra</span><p>' + a.f + '</p><span class="lbl">Industrias compatibles</span><p>' + a.o + '</p><span class="lbl">Idea de activación (no es poner un logo)</span><p>' + a.act + '</p><div class="btns" style="margin-top:18px"><button class="btn rojo" type="button">Revisar mi diagnóstico con Pro Motion <span class="chev">»</span></button></div></div>';
-    $('button', r).onclick = function () { abrirWA('Hola Daniel, hice el diagnóstico de Pro Academy.\n\nDisciplina: ' + diag.deporte.value + '\nEtapa: ' + diag.etapa.value + '\nAudiencia: ' + diag.audiencia.value + '\nArquetipo: ' + a.a + '\n\nQuiero revisarlo contigo.'); };
-  });
+  if (diag) (function () {
+    var T = JSON.parse($('#arquetipos-data').textContent), paso = 1;
+    var pasos = $$('.dg-paso', diag), sig = $('.dg-sig', diag), atras = $('.dg-atras', diag), aviso = $('.dg-aviso', diag), res = $('.diag-res', diag);
+    function v(n) { var d = new FormData(diag); return d.getAll(n).map(function (x) { return String(x).trim(); }).filter(Boolean); }
+    function uno(n) { return v(n)[0] || ''; }
+    function idx(n, ops) { return ops.indexOf(uno(n)); }
+    $$('input[name="valores"]', diag).forEach(function (c) { c.addEventListener('change', function () { if (v('valores').length > 3) c.checked = false; }); });
+    function mostrar() {
+      pasos.forEach(function (f) { f.hidden = +f.dataset.p !== paso; });
+      $('.dg-paso-t b', diag).textContent = paso;
+      $('.dg-barra i', diag).style.width = (paso / 3 * 100) + '%';
+      atras.hidden = paso === 1;
+      sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Ver mi prediagnóstico <span class="chev">»</span>';
+      aviso.textContent = '';
+    }
+    function calc() {
+      var cap = function (x) { return Math.max(0, Math.min(100, Math.round(x))); };
+      var et = idx('etapa', ['En formación', 'Amateur competitivo', 'Profesional nacional', 'Internacional']);
+      var off = v('off').filter(function (x) { return x !== 'Ninguna'; }).length;
+      var D = {
+        Identidad: cap((et + 1) * 10 + Math.min(v('valores').length, 2) * 15 + (uno('logro') ? 20 : 0) + (off ? 10 : 0)),
+        Audiencia: cap([10, 30, 50, 70][idx('tam', ['Menos de 1.000', '1.000 a 5.000', '5.000 a 20.000', 'Más de 20.000'])] || 0) + Math.min(v('quien').length, 2) * 8 + ([5, 10, 15][idx('donde', ['Mi ciudad', 'Mi país', 'Varios países'])] || 0),
+        Calendario: cap(([25, 50, 70][idx('comp', ['1 a 3', '4 a 8', '9 o más'])] || 0) + ([10, 20, 30][idx('alcance', ['Local', 'Nacional', 'Internacional'])] || 0)),
+        Contenido: cap(([10, 35, 60][idx('frec', ['Casi no publico', '1 o 2 por semana', '3 o más por semana'])] || 0) + ([10, 20, 30][idx('prod', ['Yo, con el celular', 'Alguien me ayuda', 'Un equipo profesional'])] || 0) + ([0, 5, 10][idx('cam', ['Me cuesta', 'Más o menos', 'Con soltura'])] || 0)),
+        Experiencia: cap(([50, 30, 0][idx('dossier', ['Sí, actualizado', 'Sí, pero desactualizado', 'No'])] || 0) + ([0, 20, 50][idx('ausp', ['Nunca', 'Sí, sin entregar resultados', 'Sí, con informe de resultados'])] || 0))
+      };
+      D.Audiencia = cap(D.Audiencia);
+      var P = { Identidad: 20, Audiencia: 25, Calendario: 20, Contenido: 20, Experiencia: 15 }, total = 0;
+      Object.keys(P).forEach(function (k) { total += D[k] * P[k] / 100; });
+      return { D: D, total: Math.round(total) };
+    }
+    var ACC = {
+      Identidad: ['Tu propuesta de valor no está clara', 'Define qué representas y qué gana una marca contigo, más allá de tus resultados.'],
+      Audiencia: ['Tu audiencia no está documentada', 'Mide quién te sigue (edades, ciudades, intereses): es lo primero que pregunta una marca.'],
+      Calendario: ['Tu calendario no se está aprovechando', 'Convierte tus fechas de competencia en un plan de contenido que una marca pueda activar.'],
+      Contenido: ['Tu contenido no tiene constancia', 'Publica con un plan semanal y entrena tu forma de hablar a cámara.'],
+      Experiencia: ['Te falta evidencia comercial', 'Arma tu dossier y entrega informes a tus auspiciantes: así se renueva.']
+    };
+    function resultado() {
+      var dep = uno('deporte').toLowerCase(), r = calc();
+      var a = T.filter(function (t) { return t.k.some(function (k) { return dep.indexOf(k) > -1; }); })[0] || T[T.length - 1];
+      var orden = Object.keys(r.D).sort(function (x, y) { return r.D[x] - r.D[y]; });
+      if (uno('dossier') === 'No' && orden.indexOf('Experiencia') > 2) { orden.splice(orden.indexOf('Experiencia'), 1); orden.unshift('Experiencia'); }
+      var brechas = orden.slice(0, 3);
+      var nivel = r.total >= 70 ? 'Listo para negociar con marcas' : r.total >= 45 ? 'Con bases, pero aún no listo' : 'Etapa de construcción';
+      res.innerHTML = '<div class="dg-res">' +
+        '<div class="dg-score"><div class="dg-num"><b>' + r.total + '</b><span>/100</span></div><div><span class="lbl">Preparación comercial</span><h3>' + nivel + '</h3></div></div>' +
+        '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + k + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
+        '<div class="dg-grid"><div><span class="lbl">Tu arquetipo comercial</span><h4>' + a.a + '</h4><p>' + a.v + '</p></div><div><span class="lbl">Industrias compatibles</span><p>' + a.o + '</p><span class="lbl">Idea de activación</span><p>' + a.act + '</p></div></div>' +
+        '<span class="lbl">Tus 3 brechas principales</span><ol class="dg-brechas">' + brechas.map(function (k) { return '<li><b>' + ACC[k][0] + '</b><span>' + ACC[k][1] + '</span></li>'; }).join('') + '</ol>' +
+        '<div class="dg-cta"><h4>Esto es un prediagnóstico</h4><p>Para un diagnóstico completo y a profundidad, con tus objetivos, tus intereses y todo tu ecosistema actual, nos encantaría ayudarte de forma personalizada.</p><button type="button" class="btn rojo lg" data-dg-wa>Enviar mi prediagnóstico por WhatsApp <span class="chev">»</span></button><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
+        '<p class="dg-nota">Resultado orientativo, calculado con tus respuestas. El diagnóstico completo lo hace un estratega de Pro Motion.</p></div>';
+      $('[data-dg-wa]', res).onclick = function () {
+        var L = function (t, x) { return x ? '\n' + t + ': ' + x : ''; };
+        var msg = 'Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Hice el prediagnóstico de Pro Academy y quiero el diagnóstico completo.\n' +
+          '\nPuntaje: ' + r.total + '/100 (' + nivel + ')' + Object.keys(r.D).map(function (k) { return '\n· ' + k + ': ' + r.D[k]; }).join('') +
+          '\nArquetipo: ' + a.a +
+          '\n\nMi perfil' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
+          '\n\nMi comunidad' + L('Tamaño', uno('tam')) + L('Quiénes', v('quien').join(', ')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', v('off').join(', ')) +
+          '\n\nLo que ofrezco' + L('Dossier', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', v('valores').join(', ')) +
+          '\n\nMis brechas: ' + brechas.map(function (k) { return ACC[k][0].toLowerCase(); }).join('; ') + '.';
+        abrirWA(msg);
+      };
+      $('[data-dg-otra]', res).onclick = function () { diag.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', diag).hidden = false; $('.dg-top', diag).hidden = false; mostrar(); diag.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', diag).hidden = true; $('.dg-top', diag).hidden = true;
+      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    sig.addEventListener('click', function () {
+      if (paso === 1 && (!uno('deporte') || !uno('etapa'))) { aviso.textContent = 'Escribe tu disciplina y elige tu etapa.'; return; }
+      if (paso < 3) { paso++; mostrar(); diag.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
+    });
+    atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
+    diag.addEventListener('submit', function (e) { e.preventDefault(); });
+    diag.addEventListener('input', function () { aviso.textContent = ''; });
+    mostrar();
+  })();
 
   /* ---------- Academy: constructor de pitch ---------- */
   var pitch = $('#pitch-form');

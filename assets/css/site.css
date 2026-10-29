@@ -2650,3 +2650,40 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .ph .vis .pico-loop .pico-globo{position:absolute;z-index:5;top:10%;left:-10%;right:auto;background:var(--negro);color:var(--crema);font-size:16px;padding:10px 16px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
 .ph .vis .pico-loop .pico-globo::after{border-top-color:var(--negro);left:auto;right:22%}
 @media (max-width:760px){.ph .vis .pico-loop .pico-globo{top:-4px;left:-2%;font-size:14px;padding:8px 13px}}
+/* Academy: prediagnóstico en tres pasos */
+.dg{display:grid;gap:14px}
+.dg-top{display:flex;align-items:center;gap:14px}
+.dg-paso-t{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo);white-space:nowrap}
+.dg-barra{flex:1;height:6px;background:rgba(28,28,28,.12)}
+.dg-barra i{display:block;height:100%;width:33%;background:var(--rojo);transition:width .4s var(--golpe)}
+.dg-paso{border:0;margin:0;padding:0;min-width:0}
+.dg-paso legend{font-family:var(--epic);text-transform:uppercase;font-size:clamp(22px,2.6vw,30px);line-height:1;margin-bottom:16px;padding:0}
+.dg-paso .campo{margin-bottom:14px}
+.dg-nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.dg-atras{background:none;border:0;font:inherit;font-size:15px;cursor:pointer;text-decoration:underline;color:var(--negro);padding:0}
+.dg-aviso{color:var(--rojo);font-weight:600}
+.dg-res{display:grid;gap:18px}
+.dg-score{display:flex;align-items:center;gap:20px;background:var(--negro);color:var(--crema);padding:18px 22px}
+.dg-num b{font-family:var(--epic);font-size:clamp(52px,7vw,80px);line-height:1;color:var(--rojo-vivo)}
+.dg-num span{font-size:20px;opacity:.7}
+.dg-score h3{font-family:var(--clash);font-weight:700;font-size:clamp(20px,2.4vw,26px);margin:4px 0 0}
+.dg-res .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo);font-weight:600;display:block}
+.dg-dims{display:grid;gap:8px}
+.dg-dim{display:grid;grid-template-columns:120px minmax(0,1fr) 34px;gap:10px;align-items:center;font-weight:600}
+.dg-dim i{height:12px;background:rgba(28,28,28,.12);display:block}
+.dg-dim em{display:block;height:100%;background:var(--rojo);transition:width .8s var(--golpe)}
+.dg-dim b{text-align:right}
+.dg-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dg-grid h4{font-family:var(--epic);text-transform:uppercase;font-size:22px;line-height:1;margin:6px 0 8px}
+.dg-grid p{margin:4px 0 10px;font-size:16px}
+.dg-brechas{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:b}
+.dg-brechas li{position:relative;background:#fff8ef;border:2px solid var(--negro);padding:12px 14px 12px 52px;counter-increment:b}
+.dg-brechas li::before{content:counter(b);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--rojo);color:#fff;display:grid;place-items:center;font-family:var(--epic)}
+.dg-brechas b{display:block}.dg-brechas span{font-size:15px}
+.dg-cta{background:var(--rojo);color:#fff;padding:22px;display:grid;gap:10px;justify-items:start}
+.dg-cta h4{font-family:var(--epic);text-transform:uppercase;font-size:clamp(24px,3vw,34px);line-height:1;margin:0}
+.dg-cta p{margin:0;font-size:17px;max-width:620px}
+.dg-cta .btn.rojo{background:var(--negro);color:var(--crema)}
+.dg-cta .dg-atras{color:#fff}
+.dg-nota{font-size:13px;color:var(--gris);margin:0}
+@media (max-width:700px){.dg-grid{grid-template-columns:1fr}.dg-dim{grid-template-columns:96px minmax(0,1fr) 30px;font-size:14px}}
