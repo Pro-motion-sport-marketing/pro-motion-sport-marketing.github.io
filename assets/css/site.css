@@ -2735,3 +2735,33 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .pt-pieza-c{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:2px solid var(--negro)}
 .pt-copiar{font:inherit;font-size:14px;font-weight:700;background:var(--negro);color:var(--crema);border:0;padding:6px 12px;cursor:pointer}
 .pt-pieza pre{margin:0;padding:14px;white-space:pre-wrap;font-family:var(--clash);font-size:16px;line-height:1.5}
+
+/* Academy portada: la oportunidad se cierra y el deportista la mantiene abierta (minimalista) */
+.ac-pe{--d:clamp(240px,30vw,380px);position:relative;width:calc(var(--d) * 1.25);height:calc(var(--d) * 1.08);margin:0 auto}
+.pe-circ{position:absolute;right:0;bottom:calc(var(--d) * .06);width:var(--d);height:var(--d);border-radius:50%;background:var(--rojo);overflow:hidden}
+.pe-luz{position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff6dc 0 35%,#ffd36a 70%,rgba(255,211,106,0) 100%);animation:peLuz 8s ease-in-out infinite}
+.pe-hoja{position:absolute;top:0;bottom:0;left:0;width:100%;background:var(--negro);animation:peHoja 8s cubic-bezier(.45,0,.3,1) infinite}
+.pe-fig{position:absolute;bottom:calc(var(--d) * .06);left:0;width:calc(var(--d) * .42);height:calc(var(--d) * .41);line-height:0;animation:peFig 8s cubic-bezier(.45,0,.3,1) infinite}
+.pe-fig .fig{--h:100%!important;height:100%}
+.pe-suelo{position:absolute;left:0;right:0;bottom:calc(var(--d) * .06 - 3px);height:4px;background:var(--negro)}
+/* borde de la hoja, medido desde la izquierda del círculo (0 = cerrado, 1 = abierto) */
+@keyframes peHoja{0%,12%{transform:translateX(100%)}46%{transform:translateX(40%)}50%{transform:translateX(40%)}62%,88%{transform:translateX(60%)}96%,100%{transform:translateX(100%)}}
+@keyframes peFig{0%,18%{transform:translateX(calc(var(--d) * -.5));opacity:0}24%{opacity:1}46%,50%{transform:translateX(calc(var(--d) * .25 + var(--d) * .4 - var(--d) * .42 + var(--d) * .02))}62%,88%{transform:translateX(calc(var(--d) * .25 + var(--d) * .6 - var(--d) * .42 + var(--d) * .02));opacity:1}96%,100%{transform:translateX(calc(var(--d) * .25 + var(--d) * .6 - var(--d) * .42 + var(--d) * .02));opacity:0}}
+@keyframes peLuz{0%,12%{opacity:1;transform:scale(1)}46%,50%{opacity:.35;transform:scale(.8)}62%,88%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.pe-hoja,.pe-fig,.pe-luz{animation:none}.pe-hoja{transform:translateX(60%)}.pe-fig{transform:translateX(calc(var(--d) * .45))}}
+/* Academy portada: la clase de Espid en la pizarra */
+.ph .wrap:has(.ac-cl-w){grid-template-columns:1fr 1.05fr}
+.ac-cl-w{align-items:center!important;min-height:0!important}
+.ac-cl{position:relative;margin:0;width:100%;container-type:inline-size}
+.ac-cl img{width:100%;height:auto;display:block;border-radius:6px}
+.cl-tiza{position:absolute;left:53.5%;top:14%;width:38%;height:46%;display:flex;flex-direction:column;justify-content:center;gap:2.2cqw;font-family:"Caveat Brush",var(--clash),cursive;color:#f4f1e8;text-shadow:0 0 1px rgba(255,255,255,.6),0 0 .6cqw rgba(255,255,255,.25);line-height:1}
+.cl-tiza p{margin:0;font-size:3.25cqw;white-space:nowrap;clip-path:inset(0 100% 0 0);animation:clEscribe 10s steps(28,end) infinite}
+.cl-tiza p span{color:#ffd36a}
+.cl-tiza .t2{animation-delay:0s;animation-name:clEscribe2}
+.cl-tiza .t3{font-size:5.6cqw;animation-name:clEscribe3;align-self:flex-start}
+.cl-tiza .t3 b{font-weight:400;color:#ff7a6b;padding:0 .3em;border:.35cqw solid #ff7a6b;border-radius:50% 45% 55% 48%/55% 48% 52% 45%}
+@keyframes clEscribe{0%,4%{clip-path:inset(0 100% 0 0);opacity:1}18%,86%{clip-path:inset(0 0 0 0);opacity:1}94%,100%{clip-path:inset(0 0 0 0);opacity:0}}
+@keyframes clEscribe2{0%,22%{clip-path:inset(0 100% 0 0);opacity:1}38%,86%{clip-path:inset(0 0 0 0);opacity:1}94%,100%{clip-path:inset(0 0 0 0);opacity:0}}
+@keyframes clEscribe3{0%,42%{clip-path:inset(0 100% 0 0);opacity:1}52%,86%{clip-path:inset(0 0 0 0);opacity:1}94%,100%{clip-path:inset(0 0 0 0);opacity:0}}
+@media (max-width:899px){.ph .wrap:has(.ac-cl-w){grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.cl-tiza p{animation:none;clip-path:none}}
