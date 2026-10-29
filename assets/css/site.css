@@ -2765,3 +2765,21 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @keyframes clEscribe3{0%,42%{clip-path:inset(0 100% 0 0);opacity:1}52%,86%{clip-path:inset(0 0 0 0);opacity:1}94%,100%{clip-path:inset(0 0 0 0);opacity:0}}
 @media (max-width:899px){.ph .wrap:has(.ac-cl-w){grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.cl-tiza p{animation:none;clip-path:none}}
+/* Academy: plan de contenido */
+.pl-narr h3{font-family:var(--epic);text-transform:uppercase;font-size:clamp(24px,3vw,34px);line-height:1;color:var(--crema);margin:6px 0 0}
+.pl-estrella{background:var(--rojo);color:#fff;padding:16px 18px}
+.pl-estrella .lbl{color:#fff}
+.pl-estrella b{display:block;font-size:18px;margin-top:4px}
+.pl-estrella p{margin:4px 0 0;font-size:16px}
+.pl-semanas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pl-sem{background:#fff8ef;border:2px solid var(--negro);padding:14px 16px}
+.pl-sem-c{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pl-sem-c b{font-size:17px}
+.pl-sem-c span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--rojo);font-weight:700}
+.pl-gancho{margin:6px 0 8px;font-size:14px;color:var(--gris);font-style:italic}
+.pl-sem ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.pl-sem li{font-size:15px;line-height:1.4}
+.pl-sem li em{display:block;font-style:normal;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.pl-nota{margin:0;font-size:15px}
+.dg-res .pt-copiar{justify-self:start}
+@media (max-width:700px){.pl-semanas{grid-template-columns:1fr}}

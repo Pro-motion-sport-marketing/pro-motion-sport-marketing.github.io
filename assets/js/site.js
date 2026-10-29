@@ -817,22 +817,102 @@
     $('.sim-empezar', sim).onclick = ronda;
   })();
 
-  /* ---------- Academy: plan editorial ---------- */
+  /* ---------- Academy: plan de contenido en 3 pasos ---------- */
   var plan = $('#plan-form');
-  if (plan) plan.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var paso = (plan.paso.value || '').trim(), comp = (plan.competencia.value || '').trim() || 'tu próxima competencia', dep = (plan.deporte.value || '').trim() || 'tu disciplina';
-    if (!paso) { $('.plan-res').innerHTML = '<p>Cuéntanos qué pasó para encontrar el ángulo.</p>'; return; }
-    var S = [
-      ['Semana 1 · Antes', 'El contexto', 'Reel de 30–45 s: “Esto pasó: ' + paso + '”. Sin filtro, contado por ti, mirando a cámara.', 'Demuestra autenticidad: la marca ve que tu historia es real.'],
-      ['Semana 2 · Proceso', 'La decisión', 'Carrusel de 5 láminas: qué cambiaste en tu preparación de ' + dep + ' después de lo que pasó.', 'Demuestra método: constancia y disciplina transferibles a una marca.'],
-      ['Semana 3 · Comunidad', 'La gente', 'Video con alguien de tu entorno (entrenador, familia, club) hablando de tu proceso rumbo a ' + comp + '.', 'Demuestra vínculo comunitario: lo que una marca más valora.'],
-      ['Semana 4 · Competencia', 'El momento', 'Cobertura en vivo de ' + comp + ' (stories) + reel de cierre: resultado y lo que aprendiste.', 'Demuestra visibilidad en tu pico mediático: el espacio que se vende.']
-    ];
-    var r = $('.plan-res');
-    r.innerHTML = '<div class="resultado"><span class="lbl">El ángulo real de tu historia</span><h3 class="epic">No es lo que pasó. Es lo que hiciste después.</h3>' + S.map(function (s) { return '<span class="lbl">' + s[0] + ' · ' + s[1] + '</span><p>' + esc(s[2]) + '</p><p style="opacity:.75;font-size:14px">Activo comercial: ' + s[3] + '</p>'; }).join('') + '<div class="btns" style="margin-top:16px"><button class="btn rojo" type="button">Que Pro Motion lo produzca <span class="chev">»</span></button></div></div>';
-    $('button', r).onclick = function () { abrirWA('Hola Daniel, armé mi plan editorial en Pro Academy (' + dep + ', rumbo a ' + comp + '). Quiero ayuda para producirlo.'); };
-  });
+  if (plan) (function () {
+    var paso = 1, pasos = $$('.dg-paso', plan), sig = $('.dg-sig', plan), atras = $('.dg-atras', plan), aviso = $('.dg-aviso', plan), res = $('.plan-res', plan);
+    function v(n) { return new FormData(plan).getAll(n).map(function (x) { return String(x).trim(); }).filter(Boolean); }
+    function uno(n) { return v(n)[0] || ''; }
+    // [narrativa, temas de cada semana, semana de la pieza estrella, idea concreta de cada semana, gancho de cada semana]
+    var M = {
+      'Una lesión': ['No es lo que pasó, es lo que hiciste después.', ['El golpe', 'La recuperación', 'El regreso', 'La competencia'], 1,
+        ['qué pasó ese día y qué sentiste', 'una sesión de fisioterapia y lo que aprendiste de tu cuerpo', 'tu primer entrenamiento completo después de la lesión', 'llegar a la carrera después de todo lo vivido'],
+        ['«Esto no lo había contado…»', '«Lo más difícil no fue el dolor»', '«Hoy volví a sentirme deportista»', '«Llegué. Y no llegué solo»']],
+      'Una derrota': ['Perder también es parte del camino.', ['Lo que dolió', 'Lo que aprendí', 'Los ajustes', 'La revancha'], 1,
+        ['el momento exacto en que se te escapó el resultado', 'las tres lecciones que te dejó esa carrera', 'qué cambiaste en tu preparación desde entonces', 'la previa de la revancha'],
+        ['«No terminó como quería»', '«Lo que aprendí perdiendo»', '«Cambié esto en mi preparación»', '«Esta vez es distinto»']],
+      'Una victoria': ['Ganar es el comienzo de la historia, no el final.', ['El momento', 'Detrás del triunfo', 'Quienes lo hicieron posible', 'Lo que viene'], 1,
+        ['los segundos más intensos de la victoria, en primera persona', 'los meses de trabajo que nadie vio', 'las personas y marcas que estuvieron detrás', 'tu próximo objetivo y por qué'],
+        ['«Así se vivió desde adentro»', '«Esto pasó antes del podio»', '«Nada de esto lo hice solo»', '«Esto recién empieza»']],
+      'Cambio de equipo': ['Nuevo capítulo, misma hambre.', ['La despedida', 'La llegada', 'El nuevo equipo', 'El debut'], 2,
+        ['lo que te llevas de tu equipo anterior', 'tu primer día en el nuevo equipo', 'quiénes son tus nuevos compañeros y cómo trabajan', 'la previa de tu debut'],
+        ['«Gracias por todo»', '«Primer día»', '«Les presento a mi equipo»', '«Debut»']],
+      'Nuevo auspiciante': ['Una alianza con sentido, no un logo más.', ['El anuncio', 'Por qué ellos', 'La alianza en acción', 'Juntos en competencia'], 2,
+        ['el anuncio de la alianza, contado como historia', 'qué valores compartes con la marca', 'el producto o servicio en tu día a día real', 'la marca presente en tu competencia'],
+        ['«Tengo algo que contarles»', '«Por qué elegí trabajar con ellos»', '«Así lo uso de verdad»', '«Juntos en la pista»']],
+      'Vuelvo tras una pausa': ['Volver también es ganar.', ['Por qué me fui', 'El regreso a entrenar', 'Lo que cambió', 'De vuelta en competencia'], 1,
+        ['por qué te alejaste, con honestidad', 'tu primer entrenamiento de regreso', 'qué haces distinto ahora', 'la previa de tu vuelta a competir'],
+        ['«Me alejé un tiempo»', '«Volví a entrenar»', '«Ahora lo hago distinto»', '«Estoy de vuelta»']],
+      'Preparación normal': ['La rutina también es historia.', ['Un día conmigo', 'El detalle que nadie ve', 'Mi equipo', 'La competencia'], 1,
+        ['un día completo de entrenamiento, de principio a fin', 'el detalle técnico que más te cuesta y cómo lo trabajas', 'las personas que te acompañan en el proceso', 'la previa y la carrera'],
+        ['«Un día normal… o no tanto»', '«Lo que nadie ve»', '«Mi equipo»', '«Faltan días. Así llego»']]
+    };
+    function idea(fmt, ide, comp) {
+      return {
+        'Hablar a cámara': 'Reel de 30–45 s mirando a cámara: ' + ide + '.',
+        'Video sin hablar': 'Reel sin voz, con texto en pantalla y música: ' + ide + '.',
+        'Fotos o carrusel': 'Carrusel de 5 láminas: ' + ide + ', con una idea por lámina y una pregunta al final.',
+        'Historias del día a día': 'Historias del día: ' + ide + ', con encuesta o caja de preguntas.',
+        'En vivo': 'En vivo de 10 minutos: ' + ide + (comp ? ', rumbo a ' + comp : '') + ', respondiendo preguntas.'
+      }[fmt];
+    }
+    var ACTIVO = {
+      'Que me conozcan más': ['Visibilidad', 'Identidad', 'Comunidad', 'Visibilidad'],
+      'Mostrarle valor a mi auspiciante': ['Credibilidad', 'Integración de marca', 'Evidencia para la marca', 'Visibilidad para la marca'],
+      'Conseguir un auspiciante nuevo': ['Narrativa', 'Credibilidad', 'Audiencia demostrable', 'Caso para presentar a marcas'],
+      'Conectar con mi comunidad': ['Cercanía', 'Confianza', 'Participación', 'Comunidad en vivo']
+    };
+    function mostrar() {
+      pasos.forEach(function (f) { f.hidden = +f.dataset.p !== paso; });
+      $('.dg-paso-t b', plan).textContent = paso; $('.dg-barra i', plan).style.width = (paso / 3 * 100) + '%';
+      atras.hidden = paso === 1; aviso.textContent = '';
+      sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Crear mi plan <span class="chev">»</span>';
+    }
+    function fechaTxt(f) { if (!f) return ''; var d = new Date(f + 'T12:00:00'); return isNaN(d) ? '' : d.toLocaleDateString('es-EC', { day: 'numeric', month: 'long' }); }
+    function resultado() {
+      var mom = uno('momento'), m = M[mom], dep = uno('deporte'), comp = uno('competencia'), desc = uno('paso'), obj = uno('objetivo');
+      var fmts = v('formatos'), n = { '1–2 por semana': 2, '3–4 por semana': 3, '5 o más por semana': 4 }[uno('frec')] || 2;
+      var sutil = uno('animo') === 'Prefiero algo sutil';
+      if (sutil && fmts.length > 1) fmts = fmts.filter(function (f) { return f !== 'En vivo'; }).concat(fmts.indexOf('En vivo') > -1 ? ['En vivo'] : []);
+      var fecha = fechaTxt(uno('fecha')), eq = uno('equipo'), act = ACTIVO[obj] || ACTIVO['Que me conozcan más'];
+      var semanas = m[1].map(function (tema, i) {
+        var piezas = [];
+        for (var k = 0; k < n; k++) { var f = fmts[(i + k) % fmts.length], ide = m[3][i] + (i === 0 && desc && k === 0 ? ' («' + desc + '»)' : ''); piezas.push([f, idea(f, ide, comp)]); }
+        if (i === 2 && uno('ausp') === 'Sí') piezas[piezas.length - 1] = ['Integración de marca', 'Pieza donde tu auspiciante aparece de forma natural en ' + tema.toLowerCase() + ': el producto en uso, sin decir «gracias a mi sponsor».'];
+        var t = 'Semana ' + (i + 1) + ' · ' + tema + (i === 3 && fecha ? ' (' + fecha + ')' : '');
+        return { t: t, g: m[4][i], p: piezas, a: act[i] };
+      });
+      var estrella = semanas[m[2]].p[0];
+      var nota = eq === 'Solo mi celular' ? 'Todo se puede grabar con celular: luz natural, cámara a la altura de los ojos y audio cerca.' : eq === 'Equipo profesional' ? 'Con equipo profesional, reserva una jornada para grabar las piezas de dos semanas.' : 'Pídele a quien te graba tomas de proceso, no solo de resultado.';
+      var txt = 'Mi narrativa: ' + m[0] + '\n\n' + semanas.map(function (s) { return s.t + ' (activo: ' + s.a + ')\nGancho: ' + s.g + '\n' + s.p.map(function (p) { return '• ' + p[0] + ': ' + p[1]; }).join('\n'); }).join('\n\n');
+      res.innerHTML = '<div class="dg-res">' +
+        '<div class="dg-score pl-narr"><div><span class="lbl">Tu narrativa</span><h3>' + esc(m[0]) + '</h3></div></div>' +
+        '<div class="pl-estrella"><span class="lbl">★ Pieza estrella</span><b>' + esc(estrella[0]) + '</b><p>' + esc(estrella[1]) + '</p></div>' +
+        '<div class="pl-semanas">' + semanas.map(function (s) { return '<div class="pl-sem"><div class="pl-sem-c"><b>' + esc(s.t) + '</b><span>' + esc(s.a) + '</span></div><p class="pl-gancho">Gancho: ' + esc(s.g) + '</p><ul>' + s.p.map(function (p) { return '<li><em>' + esc(p[0]) + '</em>' + esc(p[1]) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
+        '<p class="pl-nota">' + esc(nota) + '</p><button type="button" class="pt-copiar" data-pl-copiar>Copiar mi plan</button>' +
+        '<div class="dg-cta"><h4>Esto es un borrador de tu plan</h4><p>Con Pro Motion lo producimos contigo: guion, grabación, edición y publicación.</p><button type="button" class="btn rojo lg" data-pl-wa>Enviar mi plan por WhatsApp <span class="chev">»</span></button><button type="button" class="dg-atras" data-pl-otra>Volver a empezar</button></div></div>';
+      $('[data-pl-copiar]', res).onclick = function (e) { navigator.clipboard && navigator.clipboard.writeText(txt); e.target.textContent = 'Copiado ✓'; };
+      $('[data-pl-wa]', res).onclick = function () {
+        abrirWA('Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Armé mi plan de contenido en Pro Academy y quiero producirlo con ustedes.\n' +
+          '\nDisciplina: ' + dep + (comp ? '\nPróxima competencia: ' + comp + (fecha ? ' (' + fecha + ')' : '') : '') + '\nMomento: ' + mom + (desc ? ' — ' + desc : '') +
+          (uno('animo') ? '\nCómo me siento: ' + uno('animo') : '') + (uno('red') ? '\nRed: ' + uno('red') : '') + (uno('frec') ? '\nPuedo publicar: ' + uno('frec') : '') +
+          (eq ? '\nCuento con: ' + eq : '') + '\nFormatos: ' + v('formatos').join(', ') + '\nObjetivo: ' + obj + (uno('ausp') ? '\nAuspiciantes hoy: ' + uno('ausp') : '') + '\n\n' + txt);
+      };
+      $('[data-pl-otra]', res).onclick = function () { plan.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', plan).hidden = false; $('.dg-top', plan).hidden = false; mostrar(); plan.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', plan).hidden = true; $('.dg-top', plan).hidden = true;
+      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    sig.addEventListener('click', function () {
+      if (paso === 1 && (!uno('deporte') || !uno('momento'))) { aviso.textContent = 'Escribe tu disciplina y elige qué pasó.'; return; }
+      if (paso === 2 && !v('formatos').length) { aviso.textContent = 'Elige al menos un formato.'; return; }
+      if (paso === 3 && !uno('objetivo')) { aviso.textContent = 'Elige para qué quieres contarlo.'; return; }
+      if (paso < 3) { paso++; mostrar(); plan.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
+    });
+    atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
+    plan.addEventListener('submit', function (e) { e.preventDefault(); });
+    plan.addEventListener('input', function () { aviso.textContent = ''; });
+    mostrar();
+  })();
 })();
 /* Audiencia interactiva: dona de género, columnas de edad, mapa de países y ciudades */
 (function () {
