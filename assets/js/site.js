@@ -687,22 +687,77 @@
     mostrar();
   })();
 
-  /* ---------- Academy: constructor de pitch ---------- */
+  /* ---------- Academy: constructor de pitch en 3 pasos ---------- */
   var pitch = $('#pitch-form');
-  if (pitch) pitch.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var g = function (n) { return (pitch[n].value || '').trim(); };
-    var prohib = /\b(apoyo|ayuda|ayúdame|sueño|sueños)\b/i, todo = [g('logro'), g('valor')].join(' ');
-    var aviso = prohib.test(todo) ? '<p style="color:var(--rojo-vivo)">Ojo: tu texto usa “apoyo”, “ayuda” o “sueño”. Cámbialo por lo que la marca gana.</p>' : '';
-    var t = 'Hola, soy ' + (g('nombre') || '[tu nombre]') + ', ' + (g('deporte') || '[tu disciplina]') + '.\n\n' +
-      'En los últimos meses ' + (g('logro') || '[tu logro más reciente]') + '. Pero lo que puedo aportarle a ' + (g('industria') || '[industria]') + ' no es solo un resultado: ' + (g('valor') || '[qué te hace distinto]') + '.\n\n' +
-      'Les propongo una alianza con tres piezas: (1) presencia en mi calendario de competencia, (2) una activación con mi comunidad que la marca pueda contar, y (3) entregables medibles al cierre de cada mes.\n\n' +
-      '¿Qué objetivo comercial tiene su marca este trimestre en el que yo pueda ser la solución?';
-    var r = $('.pitch-res');
-    r.innerHTML = '<div class="resultado"><span class="lbl">Tu pitch de socio comercial</span>' + aviso + '<pre>' + esc(t) + '</pre><div class="btns" style="margin-top:14px"><button class="btn crema" type="button" data-copiar>Copiar</button><button class="btn rojo" type="button" data-enviar>Que Pro Motion lo revise <span class="chev">»</span></button></div></div>';
-    $('[data-copiar]', r).onclick = function (ev) { navigator.clipboard && navigator.clipboard.writeText(t); ev.target.textContent = 'Copiado ✓'; };
-    $('[data-enviar]', r).onclick = function () { abrirWA('Hola Daniel, armé mi pitch en Pro Academy. ¿Me ayudas a revisarlo?\n\n' + t); };
-  });
+  if (pitch) (function () {
+    var paso = 1, pasos = $$('.dg-paso', pitch), sig = $('.dg-sig', pitch), atras = $('.dg-atras', pitch), aviso = $('.dg-aviso', pitch), res = $('.pitch-res', pitch);
+    function v(n) { return new FormData(pitch).getAll(n).map(function (x) { return String(x).trim(); }).filter(Boolean); }
+    function uno(n) { return v(n)[0] || ''; }
+    function cap(x) { x = (x || '').trim(); return x ? x.charAt(0).toUpperCase() + x.slice(1) + (/[.!?]$/.test(x) ? '' : '.') : ''; }
+    function lista(arr) { arr = arr.map(function (x) { return x.charAt(0).toLowerCase() + x.slice(1); }); return arr.length < 2 ? arr.join('') : arr.slice(0, -1).join(', ') + ' y ' + arr[arr.length - 1]; }
+    $$('input[name="pvalores"]', pitch).forEach(function (c) { c.addEventListener('change', function () { if (v('pvalores').length > 3) c.checked = false; }); });
+    var pista = $('.pt-pista', pitch);
+    $$('input[name="industria"]', pitch).forEach(function (c) { c.addEventListener('change', function () { pista.innerHTML = 'Lo que suele comprar esta industria: <b>' + c.dataset.compra + '</b>.'; }); });
+    function mostrar() {
+      pasos.forEach(function (f) { f.hidden = +f.dataset.p !== paso; });
+      $('.dg-paso-t b', pitch).textContent = paso; $('.dg-barra i', pitch).style.width = (paso / 3 * 100) + '%';
+      atras.hidden = paso === 1; aviso.textContent = '';
+      sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Construir mi pitch <span class="chev">»</span>';
+    }
+    function resultado() {
+      var nom = uno('nombre'), dep = uno('deporte'), ciu = uno('ciudad'), marca = uno('marca'), ind = uno('industria');
+      var compra = (pitch.querySelector('input[name="industria"]:checked') || {}).dataset ? pitch.querySelector('input[name="industria"]:checked').dataset.compra : '';
+      var nec = v('necesita'), of = v('ofrece'), val = v('pvalores'), dato = uno('dato'), cifra = uno('cifra');
+      var prueba = cifra ? (dato === 'Resultado deportivo' ? cifra : cifra + ' ' + (dato || '').toLowerCase()) : '';
+      var a = marca ? 'el equipo de ' + marca : 'su equipo';
+      var m1 = 'Hola' + (marca ? ', equipo de ' + marca : '') + '. Soy ' + nom + ', ' + dep + (ciu ? ' de ' + ciu : '') + '.\n\n' +
+        'Sé que en ' + ind.toLowerCase() + ' buscan ' + (compra || 'conectar con su cliente') + (nec.length ? ', y que hoy necesitan ' + lista(nec) : '') + '. ' +
+        'Tengo una propuesta concreta para lograrlo' + (prueba ? ', con ' + prueba : '') + ' y una comunidad que confía en mí.\n\n¿Podemos agendar 15 minutos esta semana?';
+      var m2 = '1. Quién soy (10 s): ' + nom + ', ' + dep + '.' + (uno('logro') ? ' ' + cap(uno('logro')) : '') + '\n' +
+        '2. Lo que su marca necesita (10 s): ' + (nec.length ? lista(nec) : 'conectar con ' + (uno('cliente') || 'su cliente')) + (uno('cliente') ? ', hablándole a ' + uno('cliente') : '') + '.\n' +
+        '3. Mi propuesta (20 s): ' + (of.length ? lista(of) : 'una alianza con entregables medibles') + '.\n' +
+        '4. La prueba (10 s): ' + (prueba ? cap(prueba) + ' ' : '') + cap(uno('valor')) + (val.length ? ' Comparto sus valores: ' + lista(val) + '.' : '') + '\n' +
+        '5. Cierre (10 s): ¿Qué objetivo tiene su marca este trimestre en el que yo pueda ser parte de la solución?';
+      var m3 = 'Propuesta de alianza: ' + nom + (marca ? ' × ' + marca : '') + '\n' +
+        '• Quién soy y mi trayectoria\n• Lo que ' + (marca || 'la marca') + ' necesita' + (nec.length ? ': ' + lista(nec) : '') + '\n• Mi comunidad y mis datos' + (prueba ? ': ' + prueba : '') + '\n• Lo que propongo: ' + (of.length ? lista(of) : '[tu propuesta]') + '\n• Cómo lo vamos a medir y el informe al cierre\n• Próximo paso y fecha';
+      var texto = [uno('logro'), uno('valor'), uno('cliente')].join(' ');
+      var C = [
+        ['Sin «apoyo», «ayuda» ni «sueño»', !/\b(apoyo|apoyen|ayuda|ay[uú]dame|sueño|sueños)\b/i.test(texto), 'Cambia esas palabras por lo que gana la marca.'],
+        ['Hablas de lo que necesita la marca', nec.length > 0, 'Elige al menos una necesidad de la marca en el paso 2.'],
+        ['Incluyes un número', /\d/.test(cifra), 'Agrega tu dato fuerte con una cifra real.'],
+        ['Propones algo concreto', of.length > 0, 'Elige qué le ofreces en el paso 3.'],
+        ['Está dirigido a una marca real', !!marca, 'Escribe el nombre de la marca: un pitch genérico se nota.']
+      ];
+      var ok = C.filter(function (c) { return c[1]; }).length, fuerza = ok * 20;
+      var piezas = [['Primer mensaje', m1], ['Guion de 60 segundos', m2], ['Estructura de tu propuesta', m3]];
+      var uso = uno('uso'); if (uso === 'Primer mensaje') piezas = [piezas[0], piezas[2]]; else if (uso === 'Una reunión') piezas = [piezas[1], piezas[2]];
+      res.innerHTML = '<div class="dg-res">' +
+        '<div class="dg-score"><div class="dg-num"><b>' + fuerza + '</b><span>/100</span></div><div><span class="lbl">Fuerza de tu pitch</span><h3>' + (fuerza >= 80 ? 'Listo para enviar' : fuerza >= 60 ? 'Casi listo' : 'Hay que reforzarlo') + '</h3></div></div>' +
+        '<ul class="pt-checks">' + C.map(function (c) { return '<li class="' + (c[1] ? 'ok' : 'no') + '"><b>' + (c[1] ? '✓' : '✗') + '</b><span>' + c[0] + (c[1] ? '' : '<small>' + c[2] + '</small>') + '</span></li>'; }).join('') + '</ul>' +
+        piezas.map(function (pz, i) { return '<div class="pt-pieza"><div class="pt-pieza-c"><span class="lbl">' + pz[0] + '</span><button type="button" class="pt-copiar" data-i="' + i + '">Copiar</button></div><pre>' + esc(pz[1]) + '</pre></div>'; }).join('') +
+        '<div class="dg-cta"><h4>Esto es un borrador</h4><p>Revisemos tu pitch juntos y adaptémoslo a la marca real que quieres conquistar.</p><button type="button" class="btn rojo lg" data-pt-wa>Enviar mi pitch por WhatsApp <span class="chev">»</span></button><button type="button" class="dg-atras" data-pt-otra>Volver a empezar</button></div></div>';
+      $$('.pt-copiar', res).forEach(function (b) { b.onclick = function () { navigator.clipboard && navigator.clipboard.writeText(piezas[+b.dataset.i][1]); b.textContent = 'Copiado ✓'; }; });
+      $('[data-pt-wa]', res).onclick = function () {
+        abrirWA('Hola Daniel, soy ' + nom + ' (' + dep + (ciu ? ', ' + ciu : '') + '). Armé mi pitch en Pro Academy y quiero revisarlo contigo.\n' +
+          '\nMarca objetivo: ' + (marca || 'por definir') + ' · ' + ind + (nec.length ? '\nLo que necesita: ' + lista(nec) : '') + (uno('cliente') ? '\nSu cliente: ' + uno('cliente') : '') +
+          (of.length ? '\nLo que propongo: ' + lista(of) : '') + (prueba ? '\nMi dato fuerte: ' + prueba : '') + (val.length ? '\nMis valores: ' + lista(val) : '') +
+          '\nFuerza del pitch: ' + fuerza + '/100\n\n' + piezas.map(function (pz) { return '— ' + pz[0] + ' —\n' + pz[1]; }).join('\n\n'));
+      };
+      $('[data-pt-otra]', res).onclick = function () { pitch.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', pitch).hidden = false; $('.dg-top', pitch).hidden = false; pista.textContent = ''; mostrar(); pitch.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', pitch).hidden = true; $('.dg-top', pitch).hidden = true;
+      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    sig.addEventListener('click', function () {
+      if (paso === 1 && (!uno('nombre') || !uno('deporte'))) { aviso.textContent = 'Escribe tu nombre y tu disciplina.'; return; }
+      if (paso === 2 && (!uno('industria') || !v('necesita').length)) { aviso.textContent = 'Elige la industria y lo que necesita la marca.'; return; }
+      if (paso === 3 && !v('ofrece').length) { aviso.textContent = 'Elige qué le ofreces.'; return; }
+      if (paso < 3) { paso++; mostrar(); pitch.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
+    });
+    atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
+    pitch.addEventListener('submit', function (e) { e.preventDefault(); });
+    pitch.addEventListener('input', function () { aviso.textContent = ''; });
+    mostrar();
+  })();
 
   /* ---------- Academy: simulador de reunión (el jabalí reacciona a cada respuesta) ---------- */
   var sim = $('#simulador-panel');

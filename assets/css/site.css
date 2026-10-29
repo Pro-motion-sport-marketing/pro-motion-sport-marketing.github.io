@@ -2723,3 +2723,15 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .pa-tag.t1{left:31%;top:36%;background:var(--negro);color:var(--crema)}
 .pa-tag.t2{left:0;top:46%;background:var(--rojo);color:#fff}
 @media (prefers-reduced-motion:reduce){.pa-sloth{animation:none}}
+/* Academy: constructor de pitch */
+.pt-cifra{margin-top:8px;max-width:260px}
+.pt-pista{margin:8px 0 0;font-size:15px;color:var(--rojo)}
+.pt-checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.pt-checks li{display:flex;gap:10px;align-items:flex-start;font-weight:600}
+.pt-checks li b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px}
+.pt-checks li.ok b{background:#1f7a3a}.pt-checks li.no b{background:var(--rojo)}
+.pt-checks small{display:block;font-weight:400;font-size:14px;color:var(--gris)}
+.pt-pieza{background:#fff8ef;border:2px solid var(--negro)}
+.pt-pieza-c{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:2px solid var(--negro)}
+.pt-copiar{font:inherit;font-size:14px;font-weight:700;background:var(--negro);color:var(--crema);border:0;padding:6px 12px;cursor:pointer}
+.pt-pieza pre{margin:0;padding:14px;white-space:pre-wrap;font-family:var(--clash);font-size:16px;line-height:1.5}

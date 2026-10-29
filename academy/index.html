@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=80">
+<link rel="stylesheet" href="../assets/css/site.css?v=81">
 
 </head>
 <body>
@@ -121,16 +121,38 @@
 <!-- 02 Pitch -->
 <section class="sec crema-sec" id="pitch">
   <div class="wrap" style="max-width:900px">
-    <div class="cab"><div class="kicker rv">Herramienta 02 · Constructor de pitch</div><h2 class="epic h2 rv h1-ac"><span class="nw">Deja de pedir.</span> <span class="nw">Empieza a proponer.</span></h2><p class="lead rv">Sin las palabras “apoyo”, “ayuda” ni “sueño”. Una presentación de socio comercial que termina en una pregunta de negocio.</p></div>
-    <form class="panel rv" id="pitch-form" novalidate>
-      <div class="fila2">
-        <div class="campo"><label for="p-nom">Tu nombre</label><input id="p-nom" name="nombre" placeholder="Ej.: Ana Pérez"></div>
-        <div class="campo"><label for="p-dep">Disciplina y nivel</label><input id="p-dep" name="deporte" placeholder="Ej.: piloto GT de Ecuador"></div>
-        <div class="campo"><label for="p-ind">Industria objetivo</label><select id="p-ind" name="industria"><option>Seguros y medicina prepagada</option><option>Banca y cooperativas</option><option>Nutrición y suplementación</option><option>Retail deportivo</option><option>Bebidas e isotónicos</option><option>Automotriz y lubricantes</option><option>Turismo y hotelería regional</option><option>Telecomunicaciones</option></select></div>
-        <div class="campo"><label for="p-log">Tu logro más reciente</label><input id="p-log" name="logro" placeholder="Ej.: llegué a la final del campeonato"></div>
-      </div>
-      <div class="campo"><label for="p-val">¿Qué te hace distinto?</label><input id="p-val" name="valor" placeholder="Ej.: llevo mi historia a colegios de mi ciudad cada mes"></div>
-      <div class="btns"><button class="btn rojo" type="submit">Construir mi pitch »</button></div>
+    <div class="cab"><div class="kicker rv">Herramienta 02 · Constructor de pitch</div><h2 class="epic h2 rv h1-ac"><span class="nw">Deja de pedir.</span> <span class="nw">Empieza a proponer.</span></h2><p class="lead rv">Tres pasos para pasar de pedir a proponer: un primer mensaje, un guion de 60 segundos y la estructura de tu propuesta, revisados para que hables de lo que gana la marca.</p></div>
+    <form class="panel rv dg" id="pitch-form" novalidate>
+      <div class="dg-top"><span class="dg-paso-t">Paso <b>1</b> de 3</span><span class="dg-barra"><i></i></span></div>
+      <fieldset class="dg-paso" data-p="1">
+        <legend>Tú</legend>
+        <div class="fila2">
+          <div class="campo"><label for="p-nom">Tu nombre *</label><input id="p-nom" name="nombre" autocomplete="name" placeholder="Ej.: Ana Pérez"></div>
+          <div class="campo"><label for="p-dep">Disciplina y nivel *</label><input id="p-dep" name="deporte" placeholder="Ej.: piloto GT de Ecuador"></div>
+        </div>
+        <div class="fila2">
+          <div class="campo"><label for="p-ciu">Ciudad</label><input id="p-ciu" name="ciudad" placeholder="Ej.: Cuenca"></div>
+          <div class="campo"><label for="p-log">Tu logro más reciente</label><input id="p-log" name="logro" placeholder="Ej.: llegué a la final del campeonato"></div>
+        </div>
+        <div class="campo"><span class="b-lbl">Tu dato fuerte <small>(elige uno y escribe la cifra)</small></span><div class="b-chips"><label><input type="radio" name="dato" value="Seguidores"><span>Seguidores</span></label><label><input type="radio" name="dato" value="Vistas de mi mejor video"><span>Vistas de mi mejor video</span></label><label><input type="radio" name="dato" value="Asistentes a mis competencias"><span>Asistentes a mis competencias</span></label><label><input type="radio" name="dato" value="Resultado deportivo"><span>Resultado deportivo</span></label></div><input name="cifra" class="pt-cifra" placeholder="Ej.: 18.000"></div>
+        <div class="campo"><label for="p-val">¿Qué te hace distinto?</label><input id="p-val" name="valor" placeholder="Ej.: llevo mi historia a colegios de mi ciudad cada mes"></div>
+      </fieldset>
+      <fieldset class="dg-paso" data-p="2" hidden>
+        <legend>La marca</legend>
+        <div class="campo"><span class="b-lbl">Industria *</span><div class="b-chips"><label><input type="radio" name="industria" value="Seguros y medicina prepagada" data-compra="confianza, familia y prevención"><span>Seguros y medicina prepagada</span></label><label><input type="radio" name="industria" value="Banca y cooperativas" data-compra="disciplina, metas y comunidad local"><span>Banca y cooperativas</span></label><label><input type="radio" name="industria" value="Nutrición y suplementación" data-compra="rendimiento, salud y constancia"><span>Nutrición y suplementación</span></label><label><input type="radio" name="industria" value="Bebidas e hidratación" data-compra="energía, jóvenes y adrenalina"><span>Bebidas e hidratación</span></label><label><input type="radio" name="industria" value="Automotriz y lubricantes" data-compra="potencia, confiabilidad y técnica"><span>Automotriz y lubricantes</span></label><label><input type="radio" name="industria" value="Tecnología y telecomunicaciones" data-compra="conexión, innovación y velocidad"><span>Tecnología y telecomunicaciones</span></label><label><input type="radio" name="industria" value="Retail y moda deportiva" data-compra="estilo, comunidad y ventas"><span>Retail y moda deportiva</span></label><label><input type="radio" name="industria" value="Consumo masivo y alimentos" data-compra="familia, cercanía y alcance nacional"><span>Consumo masivo y alimentos</span></label></div><p class="pt-pista" aria-live="polite"></p></div>
+        <div class="fila2">
+          <div class="campo"><label for="p-mar">Nombre de la marca <small>(opcional)</small></label><input id="p-mar" name="marca" placeholder="Ej.: Seguros del Austro"></div>
+          <div class="campo"><label for="p-cli">¿A quién le vende?</label><input id="p-cli" name="cliente" placeholder="Ej.: familias jóvenes de la Sierra"></div>
+        </div>
+        <div class="campo"><span class="b-lbl">¿Qué necesita esa marca? *</span><div class="b-chips"><label><input type="checkbox" name="necesita" value="Llegar a jóvenes"><span>Llegar a jóvenes</span></label><label><input type="checkbox" name="necesita" value="Lanzar un producto"><span>Lanzar un producto</span></label><label><input type="checkbox" name="necesita" value="Vender en una ciudad"><span>Vender en una ciudad</span></label><label><input type="checkbox" name="necesita" value="Mejorar su imagen"><span>Mejorar su imagen</span></label><label><input type="checkbox" name="necesita" value="Conectar con su equipo"><span>Conectar con su equipo</span></label><label><input type="checkbox" name="necesita" value="Fidelizar a sus clientes"><span>Fidelizar a sus clientes</span></label></div></div>
+      </fieldset>
+      <fieldset class="dg-paso" data-p="3" hidden>
+        <legend>Tu propuesta</legend>
+        <div class="campo"><span class="b-lbl">¿Qué le ofreces? *</span><div class="b-chips"><label><input type="checkbox" name="ofrece" value="Contenido para sus redes"><span>Contenido para sus redes</span></label><label><input type="checkbox" name="ofrece" value="Presencia en mi competencia"><span>Presencia en mi competencia</span></label><label><input type="checkbox" name="ofrece" value="Experiencias para sus clientes"><span>Experiencias para sus clientes</span></label><label><input type="checkbox" name="ofrece" value="Embajador de producto"><span>Embajador de producto</span></label><label><input type="checkbox" name="ofrece" value="Una causa compartida"><span>Una causa compartida</span></label><label><input type="checkbox" name="ofrece" value="Charlas en su empresa"><span>Charlas en su empresa</span></label></div></div>
+        <div class="campo"><span class="b-lbl">Tus valores <small>(hasta tres)</small></span><div class="b-chips"><label><input type="checkbox" name="pvalores" value="Disciplina"><span>Disciplina</span></label><label><input type="checkbox" name="pvalores" value="Familia"><span>Familia</span></label><label><input type="checkbox" name="pvalores" value="Superación"><span>Superación</span></label><label><input type="checkbox" name="pvalores" value="Comunidad"><span>Comunidad</span></label><label><input type="checkbox" name="pvalores" value="Innovación"><span>Innovación</span></label><label><input type="checkbox" name="pvalores" value="Medio ambiente"><span>Medio ambiente</span></label><label><input type="checkbox" name="pvalores" value="Inclusión"><span>Inclusión</span></label></div></div>
+        <div class="campo"><span class="b-lbl">¿Para qué lo usarás?</span><div class="b-chips"><label><input type="radio" name="uso" value="Primer mensaje"><span>Primer mensaje</span></label><label><input type="radio" name="uso" value="Una reunión"><span>Una reunión</span></label><label><input type="radio" name="uso" value="Ambos"><span>Ambos</span></label></div></div>
+      </fieldset>
+      <div class="dg-nav"><button type="button" class="dg-atras" hidden>‹ Atrás</button><button type="button" class="btn rojo dg-sig">Siguiente <span class="chev">»</span></button><span class="dg-aviso" aria-live="polite"></span></div>
       <div class="pitch-res" aria-live="polite"></div>
     </form>
   </div>
@@ -235,6 +257,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=35" defer></script>
+<script src="../assets/js/site.js?v=37" defer></script>
 </body>
 </html>
