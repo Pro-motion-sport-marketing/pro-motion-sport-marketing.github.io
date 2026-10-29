@@ -869,38 +869,80 @@
       sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Crear mi plan <span class="chev">»</span>';
     }
     function fechaTxt(f) { if (!f) return ''; var d = new Date(f + 'T12:00:00'); return isNaN(d) ? '' : d.toLocaleDateString('es-EC', { day: 'numeric', month: 'long' }); }
+    var BANCO = JSON.parse(($('#ideas-data') || { textContent: '[]' }).textContent), semilla = 0;
+    var FMT = { 'Hablar a cámara': 'cam', 'Video sin hablar': 'sinvoz', 'Fotos o carrusel': 'carr', 'Historias del día a día': 'hist', 'En vivo': 'vivo' };
+    var FMT_N = { cam: 'Reel hablando a cámara', sinvoz: 'Reel sin voz, con texto', carr: 'Carrusel', hist: 'Historias', vivo: 'En vivo' };
+    var PROP_N = { alcance: 'Alcance', conexion: 'Conexión', marca: 'Valor para tu marca' };
+    var FAM = { motor: /rally|kart|gt|auto|moto|piloto|f4|enduro|circuito|drift/, resistencia: /cicl|bici|run|corr|trail|marat|triat|nata|ironman|marcha|mtb|downhill/, equipo: /fút|fut|básq|basq|vóley|voley|rugby|hockey|handball/, precision: /tenis|pádel|padel|golf|tiro|ajedrez|esgrima|box|judo|taekwon|arquer|bádm|badm/ };
+    function rnd(i) { var x = Math.sin((i + 1) * 9301 + semilla * 49297) * 233280; return x - Math.floor(x); }
+    function relleno(t, ctx) { return t.replace(/\{(\w+)\}/g, function (_, k) { return ctx[k] || ''; }); }
     function resultado() {
       var mom = uno('momento'), m = M[mom], dep = uno('deporte'), comp = uno('competencia'), desc = uno('paso'), obj = uno('objetivo');
-      var fmts = v('formatos'), n = { '1–2 por semana': 2, '3–4 por semana': 3, '5 o más por semana': 4 }[uno('frec')] || 2;
-      var sutil = uno('animo') === 'Prefiero algo sutil';
-      if (sutil && fmts.length > 1) fmts = fmts.filter(function (f) { return f !== 'En vivo'; }).concat(fmts.indexOf('En vivo') > -1 ? ['En vivo'] : []);
+      var fmts = v('formatos').map(function (f) { return FMT[f]; }), n = { '1–2 por semana': 2, '3–4 por semana': 3, '5 o más por semana': 4 }[uno('frec')] || 2;
       var fecha = fechaTxt(uno('fecha')), eq = uno('equipo'), act = ACTIVO[obj] || ACTIVO['Que me conozcan más'];
-      var semanas = m[1].map(function (tema, i) {
-        var piezas = [];
-        for (var k = 0; k < n; k++) { var f = fmts[(i + k) % fmts.length], ide = m[3][i] + (i === 0 && desc && k === 0 ? ' («' + desc + '»)' : ''); piezas.push([f, idea(f, ide, comp)]); }
-        if (i === 2 && uno('ausp') === 'Sí') piezas[piezas.length - 1] = ['Integración de marca', 'Pieza donde tu auspiciante aparece de forma natural en ' + tema.toLowerCase() + ': el producto en uso, sin decir «gracias a mi sponsor».'];
-        var t = 'Semana ' + (i + 1) + ' · ' + tema + (i === 3 && fecha ? ' (' + fecha + ')' : '');
-        return { t: t, g: m[4][i], p: piezas, a: act[i] };
+      var nivelEq = { 'Solo mi celular': 0, 'Alguien que me graba': 1, 'Equipo profesional': 2 }[eq] || 0;
+      var sutil = uno('animo') === 'Prefiero algo sutil', empieza = uno('animo') === 'No sé por dónde empezar', estilo = uno('estilo');
+      var tieneAus = uno('ausp') === 'Sí' || mom === 'Nuevo auspiciante', marca = uno('marca') || 'mi auspiciante';
+      var fam = Object.keys(FAM).filter(function (k) { return FAM[k].test(dep.toLowerCase()); })[0] || 'otros';
+      var dias = ''; if (uno('fecha')) { var dd = Math.round((new Date(uno('fecha') + 'T12:00:00') - new Date()) / 864e5); dias = dd > 1 ? dd + ' días' : 'horas'; }
+      var ctx = { dep: dep || 'mi deporte', comp: comp || 'mi próxima competencia', dias: dias || 'pocos días', marca: marca, momento: (mom || '').replace(/^Una? /, '').toLowerCase() };
+      var PIL = ['reto', 'proceso', 'prueba', 'prueba'];
+      var OBJ = { 'Que me conozcan más': 'alcance', 'Mostrarle valor a mi auspiciante': 'marca', 'Conseguir un auspiciante nuevo': 'marca', 'Conectar con mi comunidad': 'conexion' }[obj];
+      function puntua(it, w) {
+        if (it.aus && !tieneAus) return -1;
+        if (it.fam !== '*' && it.fam.indexOf(fam) < 0) return -1;
+        var f = it.f.filter(function (x) { return fmts.indexOf(x) > -1; })[0]; if (!f) return -1;
+        var sc = 0;
+        if (it.w && it.w.indexOf(w) < 0) return -1;
+        if (it.m !== '*' && it.m.indexOf(mom) < 0) return -1;
+        sc += it.m === '*' ? 1 : 4;
+        sc += it.p === PIL[w] ? 3 : 0;
+        sc += it.o === OBJ ? 2 : 0;
+        if (it.e >= 4 && nivelEq === 0) sc -= 3;
+        if (sutil && (f === 'vivo' || f === 'cam')) sc -= 2;
+        if (empieza && it.e <= 2) sc += 1.5;
+        if (estilo && it.est && it.est.indexOf(estilo) > -1) sc += 1.5;
+        if (w === 3 && it.w && it.w.indexOf(3) > -1) sc += 2.5;
+        if (w === 3 && comp && /^Cobertura en tiempo real/.test(it.t)) sc += 8;
+        return sc + rnd(BANCO.indexOf(it) + w * 37) * 2.2;
+      }
+      var usadas = {}, ultimoMolde = '';
+      var semanas = m[1].map(function (tema, w) {
+        var cand = BANCO.map(function (it) { return [it, puntua(it, w)]; }).filter(function (x) { return x[1] >= 0 && !usadas[x[0].t]; }).sort(function (a, b) { return b[1] - a[1]; });
+        var piezas = [], alta = false;
+        for (var i = 0; i < cand.length && piezas.length < n; i++) {
+          var it = cand[i][0];
+          if (it.e >= 4 && alta) continue;
+          if (it.g[0] === ultimoMolde && cand.length > n + 2) continue;
+          var f = it.f.filter(function (x) { return fmts.indexOf(x) > -1; })[0];
+          usadas[it.t] = 1; ultimoMolde = it.g[0]; if (it.e >= 4) alta = true;
+          piezas.push({ t: relleno(it.t, ctx), f: FMT_N[f], e: it.e, o: PROP_N[it.o], g: relleno(it.g[1], ctx), molde: it.g[0], c: it.c, sc: cand[i][1] });
+        }
+        return { t: 'Semana ' + (w + 1) + ' · ' + tema + (w === 3 && fecha ? ' (' + fecha + ')' : ''), a: act[w], p: piezas };
       });
-      var estrella = semanas[m[2]].p[0];
+      var todas = [].concat.apply([], semanas.map(function (s) { return s.p; })), estrella = todas.slice().sort(function (a, b) { return b.sc - a.sc; })[0];
       var nota = eq === 'Solo mi celular' ? 'Todo se puede grabar con celular: luz natural, cámara a la altura de los ojos y audio cerca.' : eq === 'Equipo profesional' ? 'Con equipo profesional, reserva una jornada para grabar las piezas de dos semanas.' : 'Pídele a quien te graba tomas de proceso, no solo de resultado.';
-      var txt = 'Mi narrativa: ' + m[0] + '\n\n' + semanas.map(function (s) { return s.t + ' (activo: ' + s.a + ')\nGancho: ' + s.g + '\n' + s.p.map(function (p) { return '• ' + p[0] + ': ' + p[1]; }).join('\n'); }).join('\n\n');
+      var pts = function (e) { return '●●●●●'.slice(0, e) + '○○○○○'.slice(0, 5 - e); };
+      var txt = 'Mi narrativa: ' + m[0] + '\n\n' + semanas.map(function (s) { return s.t + ' (activo: ' + s.a + ')\n' + s.p.map(function (p) { return '• ' + p.t + ' — ' + p.f + '. Gancho: «' + p.g + '». ' + p.c; }).join('\n'); }).join('\n\n');
       res.innerHTML = '<div class="dg-res">' +
         '<div class="dg-score pl-narr"><div><span class="lbl">Tu narrativa</span><h3>' + esc(m[0]) + '</h3></div></div>' +
-        '<div class="pl-estrella"><span class="lbl">★ Pieza estrella</span><b>' + esc(estrella[0]) + '</b><p>' + esc(estrella[1]) + '</p></div>' +
-        '<div class="pl-semanas">' + semanas.map(function (s) { return '<div class="pl-sem"><div class="pl-sem-c"><b>' + esc(s.t) + '</b><span>' + esc(s.a) + '</span></div><p class="pl-gancho">Gancho: ' + esc(s.g) + '</p><ul>' + s.p.map(function (p) { return '<li><em>' + esc(p[0]) + '</em>' + esc(p[1]) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
-        '<p class="pl-nota">' + esc(nota) + '</p><button type="button" class="pt-copiar" data-pl-copiar>Copiar mi plan</button>' +
-        '<div class="dg-cta"><h4>Esto es un borrador de tu plan</h4><p>Con Pro Motion lo producimos contigo: guion, grabación, edición y publicación.</p><button type="button" class="btn rojo lg" data-pl-wa>Enviar mi plan por WhatsApp <span class="chev">»</span></button><button type="button" class="dg-atras" data-pl-otra>Volver a empezar</button></div></div>';
+        (estrella ? '<div class="pl-estrella"><span class="lbl">★ Pieza estrella</span><b>' + esc(estrella.t) + '</b><p>' + esc(estrella.f) + ' · Gancho: «' + esc(estrella.g) + '»</p><p>' + esc(estrella.c) + '</p></div>' : '') +
+        '<div class="pl-semanas">' + semanas.map(function (s) { return '<div class="pl-sem"><div class="pl-sem-c"><b>' + esc(s.t) + '</b><span>' + esc(s.a) + '</span></div><ul>' + s.p.map(function (p) {
+          return '<li><div class="pl-idea"><b>' + esc(p.t) + '</b><span class="pl-meta">' + esc(p.f) + ' · <i title="Esfuerzo de producción">' + pts(p.e) + '</i> · ' + esc(p.o) + '</span></div><p class="pl-g">«' + esc(p.g) + '» <small>' + esc(p.molde) + '</small></p><p class="pl-c">' + esc(p.c) + '</p></li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
+        '<p class="pl-nota">' + esc(nota) + ' Los puntos (●) indican el esfuerzo de producción: combinamos piezas ligeras con una más elaborada por semana para que sostengas la constancia.</p>' +
+        '<div class="pl-acc"><button type="button" class="pt-copiar" data-pl-otra-idea>↻ Generar otras ideas</button><button type="button" class="pt-copiar" data-pl-copiar>Copiar mi plan</button></div>' +
+        '<div class="dg-cta"><h4>Esto es un plan preliminar</h4><p>Es una propuesta tentativa. Una estrategia de comunicación continua, pensada para tus objetivos, tu periodo de competencia, tu disciplina, tu personalidad y lo que tu perfil necesita para ti y para tus auspiciantes, se construye en conjunto con el equipo de Pro Motion.</p><button type="button" class="btn rojo lg" data-pl-wa>Desarrollar mi estrategia con Pro Motion <span class="chev">»</span></button><button type="button" class="dg-atras" data-pl-otra>Volver a empezar</button></div></div>';
+      $('[data-pl-otra-idea]', res).onclick = function () { semilla++; resultado(); };
       $('[data-pl-copiar]', res).onclick = function (e) { navigator.clipboard && navigator.clipboard.writeText(txt); e.target.textContent = 'Copiado ✓'; };
       $('[data-pl-wa]', res).onclick = function () {
-        abrirWA('Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Armé mi plan de contenido en Pro Academy y quiero producirlo con ustedes.\n' +
+        abrirWA('Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Armé un plan preliminar de contenido en Pro Academy y quiero desarrollar mi estrategia de comunicación con ustedes.\n' +
           '\nDisciplina: ' + dep + (comp ? '\nPróxima competencia: ' + comp + (fecha ? ' (' + fecha + ')' : '') : '') + '\nMomento: ' + mom + (desc ? ' — ' + desc : '') +
-          (uno('animo') ? '\nCómo me siento: ' + uno('animo') : '') + (uno('red') ? '\nRed: ' + uno('red') : '') + (uno('frec') ? '\nPuedo publicar: ' + uno('frec') : '') +
-          (eq ? '\nCuento con: ' + eq : '') + '\nFormatos: ' + v('formatos').join(', ') + '\nObjetivo: ' + obj + (uno('ausp') ? '\nAuspiciantes hoy: ' + uno('ausp') : '') + '\n\n' + txt);
+          (uno('animo') ? '\nCómo me siento: ' + uno('animo') : '') + (estilo ? '\nMi estilo: ' + estilo : '') + (uno('red') ? '\nRed: ' + uno('red') : '') + (uno('frec') ? '\nPuedo publicar: ' + uno('frec') : '') +
+          (eq ? '\nCuento con: ' + eq : '') + '\nFormatos: ' + v('formatos').join(', ') + '\nObjetivo: ' + obj + (uno('ausp') ? '\nAuspiciantes hoy: ' + uno('ausp') + (uno('marca') ? ' (' + uno('marca') + ')' : '') : '') + '\n\n' + txt);
       };
-      $('[data-pl-otra]', res).onclick = function () { plan.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', plan).hidden = false; $('.dg-top', plan).hidden = false; mostrar(); plan.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      $('[data-pl-otra]', res).onclick = function () { plan.reset(); res.innerHTML = ''; paso = 1; semilla = 0; $('.dg-nav', plan).hidden = false; $('.dg-top', plan).hidden = false; mostrar(); plan.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
       pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', plan).hidden = true; $('.dg-top', plan).hidden = true;
-      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!semilla) res.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     sig.addEventListener('click', function () {
       if (paso === 1 && (!uno('deporte') || !uno('momento'))) { aviso.textContent = 'Escribe tu disciplina y elige qué pasó.'; return; }
