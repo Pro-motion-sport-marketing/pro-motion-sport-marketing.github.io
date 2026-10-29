@@ -1229,3 +1229,16 @@
   if (quieto) { puertas.forEach(function (p, i) { p.style.transform = 'translate(' + (W * 0.62 - D / 2 + i * S) + 'px,0)'; }); return; }
   requestAnimationFrame(paso);
 })();
+/* Ver video completo en pantalla grande */
+(function () {
+  'use strict';
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-cine-abre]'); if (!b) return;
+    var m = document.createElement('div'); m.className = 'cine-modal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-label', 'Video');
+    m.innerHTML = '<video controls autoplay playsinline poster="' + b.dataset.cinePoster + '"><source src="' + b.dataset.cineAbre + '" type="video/mp4"></video><button type="button" aria-label="Cerrar">✕</button>';
+    function cerrar() { m.remove(); document.removeEventListener('keydown', esc); }
+    function esc(ev) { if (ev.key === 'Escape') cerrar(); }
+    m.addEventListener('click', function (ev) { if (ev.target === m || ev.target.tagName === 'BUTTON') cerrar(); });
+    document.addEventListener('keydown', esc); document.body.appendChild(m);
+  });
+})();
