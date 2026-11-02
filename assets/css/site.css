@@ -2807,3 +2807,14 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .cine-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:16px}
 .cine-modal video{width:min(100%,1180px);max-height:86vh;background:#000}
 .cine-modal button{position:absolute;top:14px;right:16px;font:inherit;font-size:28px;color:#fff;background:none;border:0;cursor:pointer}
+/* Privacidad */
+.nota-priv{font-size:12.5px;color:var(--gris);margin:14px 0 0}
+.nota-priv a{color:inherit;text-decoration:underline}
+.os .nota-priv,.oscuro .nota-priv,.cp-pide .nota-priv{color:rgba(255,231,201,.65)}
+.pie small a{color:inherit;text-decoration:underline}
+.pv-fecha{font-size:14px;color:var(--gris);margin-top:10px}
+.pv-sec{padding:22px 0;border-top:1px solid rgba(28,28,28,.12)}
+.pv-sec h2{font-family:var(--clash);font-weight:700;font-size:21px;margin:0 0 10px}
+.pv-sec p,.pv-sec li{font-size:17px;line-height:1.55}
+.pv-sec ul{padding-left:20px;display:grid;gap:6px}
+.pv-sec a{color:var(--rojo)}

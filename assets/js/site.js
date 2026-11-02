@@ -1242,3 +1242,14 @@
     document.addEventListener('keydown', esc); document.body.appendChild(m);
   });
 })();
+/* Aviso de privacidad bajo cada formulario que envía datos */
+(function () {
+  'use strict';
+  var enl = document.querySelector('.pie a[href$="privacidad/"]'); if (!enl) return;
+  ['brief', 'pm-reg', 'cp-pide', 'diagnostico-form', 'pitch-form', 'plan-form'].forEach(function (id) {
+    var f = document.getElementById(id); if (!f) return;
+    var p = document.createElement('p'); p.className = 'nota-priv';
+    p.innerHTML = 'Tus respuestas se procesan en tu navegador y solo nos llegan si las envías por WhatsApp. <a href="' + enl.getAttribute('href') + '">Política de privacidad</a>.';
+    f.appendChild(p);
+  });
+})();
