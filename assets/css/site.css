@@ -2818,3 +2818,15 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .pv-sec p,.pv-sec li{font-size:17px;line-height:1.55}
 .pv-sec ul{padding-left:20px;display:grid;gap:6px}
 .pv-sec a{color:var(--rojo)}
+/* Franja de marcas */
+.marcas-fr{border-block:2px solid rgba(28,28,28,.08);overflow:hidden;padding-block:46px}
+.marcas-fr .kicker{text-align:center;margin-bottom:22px}
+.mf-cinta{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mf-lista{list-style:none;margin:0;padding:0;display:flex;align-items:center;width:max-content;animation:mfCorre 42s linear infinite}
+.mf-lista li{display:flex;align-items:center;padding:0 38px;flex:none}
+.mf-lista img{width:auto;max-width:220px;opacity:.8;transition:opacity .2s,transform .2s}
+.mf-cinta:hover .mf-lista{animation-play-state:paused}
+.mf-lista img:hover{opacity:1;transform:scale(1.06)}
+@keyframes mfCorre{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (max-width:600px){.mf-lista{animation-duration:30s}.mf-lista li{padding:0 22px}.mf-lista img{max-width:150px;zoom:.78}}
+@media (prefers-reduced-motion:reduce){.mf-lista{animation-duration:120s}}
