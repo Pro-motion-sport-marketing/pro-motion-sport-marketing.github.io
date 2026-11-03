@@ -1253,3 +1253,14 @@
     f.appendChild(p);
   });
 })();
+
+// Videos de casos: cargan y se reproducen solo cuando están en pantalla
+(function(){
+  var vs=document.querySelectorAll('video[data-src]'); if(!vs.length) return;
+  var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!('IntersectionObserver' in window)){vs.forEach(function(v){v.src=v.dataset.src});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
+    if(e.isIntersecting){if(!v.getAttribute('src')){v.src=v.dataset.src}if(!quieto){var p=v.play();if(p&&p.catch)p.catch(function(){})}}
+    else if(!v.paused){v.pause()}})},{rootMargin:'120px 0px',threshold:.25});
+  vs.forEach(function(v){io.observe(v)});
+})();
