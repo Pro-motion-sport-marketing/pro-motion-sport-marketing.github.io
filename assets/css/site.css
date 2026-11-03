@@ -2981,3 +2981,5 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .nos-al-logos{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px;font-family:var(--epic);text-transform:uppercase;font-size:18px}
 .nos-al-logos img{height:34px;width:auto}
 .nos-al-logos span{color:var(--rojo)}
+.nos-al-logos{gap:18px}.nos-al-logos span{font-size:22px}
+.nos-al-logos img.pm{height:56px}
