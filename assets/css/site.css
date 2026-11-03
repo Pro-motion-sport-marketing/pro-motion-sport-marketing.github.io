@@ -2938,3 +2938,19 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .autor-nota{margin-top:50px;padding:28px;border:2px solid rgba(255,231,201,.25);display:grid;gap:10px;max-width:820px}
 .autor-nota h3{font-family:var(--epic);text-transform:uppercase;font-size:clamp(26px,3vw,38px);line-height:1;margin:0}
 .autor-nota .btn{justify-self:start;margin-top:6px}
+/* Móvil: logos legibles y Pico sin tapar el globo */
+@media (max-width:600px){
+ .mf-lista img{zoom:1;max-width:170px;opacity:.88}
+ .mf-lista li{padding:0 20px}
+ .marcas-fr{padding-block:34px}
+ .ph .vis .pico-loop{padding-top:52px}
+ .ph .vis .pico-loop .pico-globo{top:0;left:50%;right:auto;transform-origin:50% 100%;translate:-50% 0}
+ .ph .vis .pico-loop .pico-globo::after{left:50%;right:auto;margin-left:-8px}
+ .ph .vis .pico-loop .pico-b{height:clamp(270px,72vw,320px)}
+}
+.solo-tactil{display:none;font-style:normal}.solo-raton{font-style:normal}
+@media (hover:none){.solo-tactil{display:inline}.solo-raton{display:none}}
+@media (max-width:700px){
+ .atl-c:not(.on) .atl-fade{background:linear-gradient(90deg,rgba(6,6,7,.88) 0%,rgba(6,6,7,.55) 55%,rgba(6,6,7,.2) 100%)}
+ .atl-c:not(.on) .atl-id *{color:#fff!important;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+}
