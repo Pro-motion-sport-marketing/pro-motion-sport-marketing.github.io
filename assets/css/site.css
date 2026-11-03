@@ -2965,3 +2965,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .car-vt b{font-family:var(--epic);text-transform:uppercase;font-size:clamp(15px,1.8vw,20px);line-height:1.05}
 .car-vt span{font-size:clamp(12px,1.3vw,14px);opacity:.88;max-width:620px}
 @media (max-width:600px){.car-v .car-pista{aspect-ratio:4/3}.car-vt{padding:30px 12px 10px}}
+.cs-iniciativa{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-family:var(--body,inherit);letter-spacing:.04em;text-transform:none;font-size:13px;font-weight:600;color:var(--crema);opacity:.9}
+.cs-iniciativa img{height:30px;width:auto;filter:invert(1) brightness(1.6);opacity:.95}
+.cs-iniciativa{flex-wrap:wrap}
+.cs .cs-iniciativa img{height:24px!important;width:auto!important;max-width:150px;flex:none}
