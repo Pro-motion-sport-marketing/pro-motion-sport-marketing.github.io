@@ -1264,3 +1264,26 @@
     else if(!v.paused){v.pause()}})},{rootMargin:'120px 0px',threshold:.25});
   vs.forEach(function(v){io.observe(v)});
 })();
+
+// Carruseles de casos: flechas, puntos y contador sobre un carril con scroll-snap
+(function(){
+  document.querySelectorAll('[data-car]').forEach(function(c){
+    var p=c.querySelector('.car-pista'),s=p.children,n=s.length,cont=c.querySelector('.car-n'),dots=c.querySelector('.car-dots'),a=c.querySelector('.car-ant'),b=c.querySelector('.car-sig'),i=0;
+    if(n<16){for(var k=0;k<n;k++)dots.appendChild(document.createElement('i'))}
+    function pinta(){if(!p.clientWidth)return;i=Math.round(p.scrollLeft/p.clientWidth);cont.textContent=(i+1)+' / '+n;a.disabled=i<=0;b.disabled=i>=n-1;
+      [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)});
+      var im=s[i+1]&&s[i+1].querySelector('img');if(im)im.loading='eager'}
+    function ir(k){p.scrollTo({left:Math.max(0,Math.min(n-1,k))*p.clientWidth,behavior:'smooth'})}
+    a.addEventListener('click',function(){ir(i-1)});b.addEventListener('click',function(){ir(i+1)});
+    p.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();ir(i+1)}if(e.key==='ArrowLeft'){e.preventDefault();ir(i-1)}});
+    var t;p.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(pinta,60)},{passive:true});pinta();
+  });
+  // «Ver más del caso»: despliega y repliega el resto del caso
+  document.querySelectorAll('.cs-abre').forEach(function(btn){btn.addEventListener('click',function(){
+    var m=document.getElementById(btn.getAttribute('aria-controls')),abre=m.hidden;m.hidden=!abre;
+    m.closest('.cs').querySelectorAll('.cs-abre').forEach(function(x){x.setAttribute('aria-expanded',abre)});
+    var h=m.closest('.cs').querySelector('.cs-hero .cs-abre');h.firstChild.textContent=abre?'Ocultar detalle ':'Ver más del caso ';
+    if(abre){m.querySelectorAll('[data-car]').forEach(function(c){c.querySelector('.car-pista').dispatchEvent(new Event('scroll'))})}
+    else{m.closest('.cs').scrollIntoView({behavior:'smooth',block:'start'})}
+  })});
+})();
