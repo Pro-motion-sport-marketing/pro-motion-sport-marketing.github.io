@@ -2969,3 +2969,5 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .cs-iniciativa img{height:30px;width:auto}
 .cs-iniciativa{flex-wrap:wrap}
 .cs .cs-iniciativa img{height:30px!important;width:auto!important;max-width:190px;flex:none}
+.mf-lista img{max-width:none!important;object-fit:contain}
+@media (max-width:600px){.mf-lista img{zoom:.8}}
