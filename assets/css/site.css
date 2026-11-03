@@ -2983,3 +2983,11 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .nos-al-logos span{color:var(--rojo)}
 .nos-al-logos{gap:18px}.nos-al-logos span{font-size:22px}
 .nos-al-logos img.pm{height:56px}
+.al-top{display:grid;gap:30px;align-items:center}
+.al-top .cab{margin-bottom:0}
+.al-teaser{margin:0;max-width:340px;justify-self:center}
+.al-teaser video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:22px;background:#111;box-shadow:0 20px 40px -22px rgba(0,0,0,.6);display:block}
+.al-teaser figcaption{display:grid;gap:4px;margin-top:12px;font-size:14px}
+.al-teaser figcaption b{font-family:var(--epic);text-transform:uppercase;font-size:17px}
+.nos-aliados .cs-bl:first-of-type{margin-top:56px}
+@media (min-width:900px){.al-top{grid-template-columns:minmax(0,1fr) 320px;gap:60px}}
