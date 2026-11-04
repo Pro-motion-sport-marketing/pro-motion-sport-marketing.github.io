@@ -2996,3 +2996,8 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .oscuro .al-teaser figcaption{color:var(--crema)}
 .an-onair{position:absolute;top:14%;right:12%;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--rojo);animation:onair 1.4s steps(2) infinite}
 @keyframes onair{50%{opacity:.25}}
+.cs-fase-t{font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.2vw,28px);color:var(--rojo);margin:48px 0 0;padding-top:20px;border-top:2px solid rgba(28,28,28,.12)}
+.cs-fase-t + .cs-bl{margin-top:24px}
+.cs-fase-t + .cs-p{margin-top:14px}
+.cs-hero .car-v{max-width:none}
+@media (min-width:860px){.cs-hero:has(.car-v){grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:44px}}
