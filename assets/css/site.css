@@ -3001,3 +3001,15 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .cs-fase-t + .cs-p{margin-top:14px}
 .cs-hero .car-v{max-width:none}
 @media (min-width:860px){.cs-hero:has(.car-v){grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:44px}}
+/* Caso con carrusel de video horizontal: texto arriba en dos columnas, video a lo ancho */
+.cs-hero:has(.car-v){display:flex;flex-direction:column-reverse;align-items:stretch;gap:34px}
+.cs-hero:has(.car-v) .car-v{max-width:1100px;width:100%;margin:0 auto}
+@media (min-width:900px){
+ .cs-hero:has(.car-v) .cs-txt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);column-gap:56px;align-items:start}
+ .cs-hero:has(.car-v) .cs-txt>.kicker{grid-column:1;grid-row:1}
+ .cs-hero:has(.car-v) .cs-txt>.h2{grid-column:1;grid-row:2 / span 3;align-self:start}
+ .cs-hero:has(.car-v) .cs-txt>.lead{grid-column:2;grid-row:1 / span 2;margin-top:0}
+ .cs-hero:has(.car-v) .cs-txt>.cs-cifras{grid-column:2;grid-row:3;grid-template-columns:repeat(4,minmax(0,1fr));margin:22px 0 20px}
+ .cs-hero:has(.car-v) .cs-txt>.cs-abre{grid-column:2;grid-row:4;justify-self:start}
+ .cs-hero:has(.car-v) .cs-cifras b{font-size:clamp(26px,2.6vw,38px)}
+}
