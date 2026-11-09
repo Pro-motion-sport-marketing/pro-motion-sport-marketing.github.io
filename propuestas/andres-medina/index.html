@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrés Medina × Pro Motion</title>
+<meta name="description" content="Cómo trabajamos en Pro Motion Sport Marketing: diagnóstico ProMatch, ruta según tu etapa, plan de acción y desarrollo de personalidad.">
+<link rel="icon" href="../../assets/brand/favicon.svg">
+<style>
+@font-face{font-family:"GC Epic Pro";src:url(../../assets/fonts/GCEpicPro-ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(../../assets/fonts/ClashDisplay-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(../../assets/fonts/ClashDisplay-Semibold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(../../assets/fonts/ClashDisplay-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{
+  --rojo:#E52322;--rojo-vivo:#FF4A3D;--crema:#FFE7C9;--negro:#1C1C1C;--papel:#ECE5E0;--tinta:#2A2626;--gris:#8D8680;
+  --epic:"GC Epic Pro","Arial Black",Impact,sans-serif;--clash:"Clash Display","Helvetica Neue",Arial,sans-serif;
+  --golpe:cubic-bezier(.16,1,.3,1);--rebote:cubic-bezier(.2,1.5,.4,1);
+  --pegado:drop-shadow(0 4px 0 rgba(40,25,20,.16)) drop-shadow(0 10px 14px rgba(40,25,20,.18));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--papel) url(../../assets/brand/papel.jpg) repeat;background-size:720px;color:var(--tinta);font-family:var(--clash);font-size:18px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+b,strong{font-weight:600}
+a{color:inherit}
+.epic{font-family:var(--epic);font-weight:800;text-transform:uppercase;line-height:.92}
+.k{font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--rojo)}
+.h1{font-size:clamp(46px,8.4vw,120px)}
+.h2{font-size:clamp(36px,5.6vw,76px)}
+.h3{font-size:clamp(24px,2.8vw,34px)}
+.lead{font-size:clamp(17px,1.9vw,22px);line-height:1.42;letter-spacing:-.02em;max-width:660px}
+.lead b{color:var(--rojo)}
+.rojo{color:var(--rojo)}
+.box{display:inline-block;background:var(--rojo);color:var(--crema);padding:.28em .5em .22em;clip-path:polygon(1.5% 4%,99% 0,100% 94%,0 100%)}
+.box.n{background:var(--negro)}
+.box.c{background:var(--crema);color:var(--negro)}
+
+/* ---------- Deck ---------- */
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;visibility:hidden;transform:translateX(40px);transition:opacity .5s var(--golpe),transform .6s var(--golpe),visibility 0s .6s;-webkit-overflow-scrolling:touch}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .5s var(--golpe),transform .6s var(--golpe),visibility 0s}
+.slide.prev{transform:translateX(-40px)}
+.in{max-width:1200px;margin:0 auto;padding:84px 28px 120px;min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.oscuro{background:var(--negro);color:var(--crema)}
+.oscuro .lead{color:rgba(255,231,201,.86)} .oscuro .lead b{color:var(--crema)}
+.oscuro .k{color:var(--rojo-vivo)}
+.rojo-sec{background:var(--rojo) url(../../assets/brand/rojo-papel.jpg);background-size:720px;color:var(--crema)}
+.rojo-sec .k{color:var(--crema);opacity:.85}
+.crema-sec{background:var(--crema)}
+
+/* Aparición escalonada */
+.slide .a{opacity:0;transform:translateY(22px)}
+.slide.on .a{opacity:1;transform:none;transition:opacity .7s var(--golpe),transform .7s var(--golpe)}
+.slide.on .a.d1{transition-delay:.08s}.slide.on .a.d2{transition-delay:.16s}.slide.on .a.d3{transition-delay:.24s}.slide.on .a.d4{transition-delay:.32s}.slide.on .a.d5{transition-delay:.4s}
+
+/* Barra superior y navegación */
+.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;pointer-events:none}
+.top img{height:30px;width:auto;pointer-events:auto}
+.top .logo-b{display:none}
+body.dark .top .logo-n{display:none} body.dark .top .logo-b{display:block}
+.top .menu-b{pointer-events:auto;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:99px;background:rgba(28,28,28,.08)}
+body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:10px;background:var(--negro);color:var(--crema);padding:7px 8px;border-radius:99px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.nav button{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:20px;color:var(--crema);transition:background .2s}
+.nav button:hover{background:rgba(255,255,255,.12)}
+.nav .cnt{font-family:var(--epic);font-size:16px;min-width:64px;text-align:center;letter-spacing:.04em}
+.nav .cnt span{color:var(--rojo-vivo)}
+.prog{position:fixed;top:0;left:0;height:4px;background:var(--rojo);z-index:30;transition:width .6s var(--golpe)}
+.indice{position:fixed;inset:0;z-index:40;background:rgba(28,28,28,.96);color:var(--crema);display:none;overflow:auto}
+.indice.open{display:block}
+.indice .w{max-width:900px;margin:0 auto;padding:80px 28px}
+.indice ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:24px}
+.indice li button{width:100%;text-align:left;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.06);color:var(--crema);font-size:16px;display:flex;gap:12px;align-items:baseline}
+.indice li button:hover{background:var(--rojo)}
+.indice li b{font-family:var(--epic);color:var(--rojo-vivo);font-size:18px}
+.indice li button:hover b{color:var(--crema)}
+.indice .x{position:absolute;top:18px;right:24px;font-size:30px;color:var(--crema)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--epic);font-weight:800;text-transform:uppercase;font-size:17px;padding:15px 24px 13px;border-radius:99px;background:var(--negro);color:var(--crema);text-decoration:none;transition:transform .3s var(--rebote),background .2s}
+.btn:hover{transform:translateY(-3px) rotate(-1deg)}
+.btn.r{background:var(--rojo)}
+.btn.c{background:var(--crema);color:var(--negro)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 16px 8px;border-radius:99px;border:2px solid currentColor;font-weight:600;font-size:15px;transition:all .25s var(--golpe)}
+.chip:hover{transform:translateY(-2px)}
+.chip.on{background:var(--rojo);border-color:var(--rojo);color:var(--crema)}
+.oscuro .chip.on{background:var(--rojo-vivo);border-color:var(--rojo-vivo)}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -22px rgba(40,25,20,.35)}
+.oscuro .card{background:#2a2727;box-shadow:none}
+.nota{font-size:13px;color:var(--gris);line-height:1.45}
+.oscuro .nota{color:rgba(255,231,201,.55)}
+
+/* ---------- 01 Portada ---------- */
+#s1 .in{justify-content:center}
+.portada{display:grid;grid-template-columns:1.45fr .55fr;gap:40px;align-items:center}
+.portada .x{font-family:var(--epic);color:var(--rojo);font-size:.5em;vertical-align:middle;margin:0 .1em}
+.portada .fig{position:relative;justify-self:center}
+.portada .fig .sol{width:min(380px,70vw);aspect-ratio:1;border-radius:50%;background:var(--rojo);animation:latido 4s ease-in-out infinite}
+.portada .fig img{position:absolute;width:62%;left:14%;bottom:20%;filter:var(--pegado);animation:corre 1.2s ease-in-out infinite alternate}
+.portada .fig .linea{position:absolute;left:-10%;right:-10%;bottom:14%;height:5px;background:var(--negro);border-radius:3px}
+@keyframes latido{50%{transform:scale(1.04)}}
+@keyframes corre{to{transform:translateX(16px)}}
+.meta-p{display:flex;gap:22px;flex-wrap:wrap;font-size:15px}
+.meta-p span{display:flex;gap:8px;align-items:center}
+.meta-p i{width:9px;height:9px;border-radius:50%;background:var(--rojo);display:inline-block}
+.tip{font-size:14px;color:var(--gris);display:flex;gap:8px;align-items:center}
+.tip kbd{font-family:var(--clash);font-size:12px;border:1.5px solid currentColor;border-radius:6px;padding:1px 7px}
+
+/* ---------- 02 Quiénes somos ---------- */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.stat{border-top:3px solid var(--rojo-vivo);padding-top:12px}
+.stat .n{font-family:var(--epic);font-size:clamp(38px,4.4vw,62px);line-height:1;color:var(--crema)}
+.stat .n small{color:var(--rojo-vivo);font-size:.6em;margin-right:2px}
+.stat p{font-size:14px;color:rgba(255,231,201,.75);margin-top:6px;line-height:1.3}
+.disc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.disc-det{min-height:92px;padding:18px 20px;border-radius:16px;background:rgba(255,231,201,.07);font-size:16px;line-height:1.45}
+.disc-det b{color:var(--rojo-vivo);font-family:var(--epic);font-weight:800;text-transform:uppercase;font-size:20px;display:block;margin-bottom:4px}
+
+/* ---------- Casos ---------- */
+.caso{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}
+.caso .media{position:relative}
+.caso .media .vid{border-radius:24px;overflow:hidden;aspect-ratio:9/16;max-height:72vh;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);margin:0 auto}
+.caso .media video,.caso .media img.ph{width:100%;height:100%;object-fit:cover}
+.caso .badge{position:absolute;top:18px;right:-14px;width:96px;height:96px;border-radius:50%;background:var(--rojo);color:var(--crema);display:grid;place-items:center;text-align:center;font-family:var(--epic);line-height:.9;transform:rotate(8deg);box-shadow:0 10px 20px -8px rgba(0,0,0,.4)}
+.caso .badge b{font-size:38px;display:block}
+.caso .badge small{font-size:11px;letter-spacing:.06em}
+.cifras{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cifra{background:#fff;border-radius:18px;padding:16px 16px 14px}
+.oscuro .cifra{background:#2a2727}
+.cifra .n{font-family:var(--epic);font-size:clamp(28px,3vw,42px);line-height:1;color:var(--rojo)}
+.oscuro .cifra .n{color:var(--rojo-vivo)}
+.cifra p{font-size:13.5px;line-height:1.3;margin-top:6px}
+.clips{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.clip{flex:0 0 118px;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:9/16;background:#000;cursor:pointer;border:3px solid transparent;transition:border-color .2s,transform .3s var(--rebote)}
+.clip:hover{transform:translateY(-4px)}
+.clip.on{border-color:var(--rojo)}
+.clip img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.clip span{position:absolute;left:0;right:0;bottom:0;padding:24px 8px 7px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:12px;line-height:1.2}
+.clip span b{display:block;font-family:var(--epic);font-size:17px;color:var(--crema)}
+.leccion{border-left:4px solid var(--rojo);padding:4px 0 4px 16px;font-size:17px;line-height:1.45}
+.oscuro .leccion{border-color:var(--rojo-vivo)}
+.marcas{display:flex;flex-wrap:wrap;gap:6px}
+.marcas span{font-size:13px;font-weight:600;padding:5px 11px;border-radius:99px;background:rgba(28,28,28,.07)}
+.oscuro .marcas span{background:rgba(255,231,201,.1)}
+
+/* ---------- Metodología (escalera) ---------- */
+.escalera{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:end;margin-top:6px}
+.esc{text-align:left;border-radius:20px 20px 6px 6px;background:var(--negro);color:var(--crema);padding:16px 16px 18px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;transition:transform .35s var(--rebote),background .25s;position:relative}
+.esc:hover{transform:translateY(-6px)}
+.esc.on{background:var(--rojo)}
+.esc b{font-family:var(--epic);font-size:34px;line-height:1;color:var(--rojo-vivo)}
+.esc.on b{color:var(--crema)}
+.esc span{font-family:var(--epic);font-size:clamp(15px,1.5vw,20px);text-transform:uppercase;line-height:1}
+.esc:nth-child(1){height:110px}.esc:nth-child(2){height:140px}.esc:nth-child(3){height:170px}.esc:nth-child(4){height:200px}.esc:nth-child(5){height:230px}
+.esc-det{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;min-height:120px}
+.esc-det img{width:110px;filter:var(--pegado)}
+.esc-det h3{margin-bottom:6px}
+
+/* ---------- Andrés ---------- */
+#s6 .grid2{grid-template-columns:1fr 1fr}
+#s10 .grid2{grid-template-columns:.9fr 1.1fr}
+.obs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ob{background:#fff;border-radius:18px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:transform .3s var(--rebote)}
+.ob:hover{transform:translateY(-3px)}
+.ob .ic{flex:0 0 40px;height:40px;border-radius:50%;background:var(--crema);display:grid;place-items:center;font-size:20px}
+.ob h4{font-family:var(--epic);text-transform:uppercase;font-size:20px;line-height:1;margin-bottom:4px}
+.ob p{font-size:15px;line-height:1.4}
+.ob .op{display:none;margin-top:8px;color:var(--rojo);font-weight:600}
+.ob.open .op{display:block}
+.ob .mas{font-size:12px;color:var(--gris);margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
+.ob.open .mas{display:none}
+.perfil-card{display:flex;gap:16px;align-items:center;background:var(--negro);color:var(--crema);border-radius:22px;padding:18px 22px}
+.perfil-card .av{flex:0 0 64px;height:64px;border-radius:50%;background:var(--rojo);display:grid;place-items:center;font-family:var(--epic);font-size:26px}
+.perfil-card .num{display:flex;gap:20px;margin-top:6px;font-size:14px}
+.perfil-card .num b{font-family:var(--epic);font-size:22px;color:var(--rojo-vivo);display:block;line-height:1}
+
+/* ---------- ProMatch ---------- */
+.precio-tag{display:inline-flex;align-items:baseline;gap:8px;background:var(--negro);color:var(--crema);padding:14px 22px 10px;border-radius:16px;transform:rotate(-2deg)}
+.precio-tag b{font-family:var(--epic);font-size:54px;line-height:1;color:var(--rojo-vivo)}
+.precio-tag span{font-size:14px;line-height:1.2;max-width:150px}
+.sim{display:grid;gap:14px}
+.var label{display:flex;justify-content:space-between;font-size:15px;font-weight:600;gap:8px}
+.var label small{font-weight:400;color:var(--gris)}
+.var input{width:100%;accent-color:var(--rojo);height:22px}
+.var p{font-size:13px;color:var(--gris);line-height:1.35}
+.score{display:flex;align-items:center;gap:20px;margin-top:6px}
+.dial{--v:70;width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--rojo) calc(var(--v)*1%),rgba(28,28,28,.1) 0);display:grid;place-items:center;flex:0 0 auto;transition:--v .3s}
+.dial div{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--epic);font-size:40px}
+.score p{font-size:15px;line-height:1.4}
+.score p b{display:block;font-family:var(--epic);text-transform:uppercase;font-size:22px;color:var(--rojo)}
+.incluye{list-style:none;display:grid;gap:9px}
+.incluye li{display:flex;gap:10px;font-size:16px;line-height:1.4}
+.incluye li::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--rojo);margin-top:7px}
+.oscuro .incluye li::before{background:var(--rojo-vivo)}
+
+/* ---------- Rutas ---------- */
+.preg{display:flex;flex-direction:column;gap:12px}
+.rutas{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ruta{background:#fff;border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:10px;transition:transform .4s var(--rebote),opacity .3s,box-shadow .3s;position:relative;border:3px solid transparent}
+.ruta.dim{opacity:.38;transform:scale(.97)}
+.ruta.rec{border-color:var(--rojo);transform:translateY(-8px);box-shadow:0 24px 40px -24px rgba(229,35,34,.6)}
+.ruta.rec::before{content:"Tu ruta sugerida";position:absolute;top:-14px;left:18px;background:var(--rojo);color:var(--crema);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.ruta h4{font-family:var(--epic);text-transform:uppercase;font-size:24px;line-height:.95}
+.ruta .pr{font-family:var(--epic);font-size:28px;color:var(--rojo);line-height:1}
+.ruta .pr small{font-family:var(--clash);font-size:13px;color:var(--gris);font-weight:400;display:block;margin-top:3px;text-transform:none}
+.ruta ul{list-style:none;display:grid;gap:6px;font-size:14.5px;line-height:1.35}
+.ruta ul li{padding-left:16px;position:relative}
+.ruta ul li::before{content:"»";position:absolute;left:0;color:var(--rojo);font-weight:700}
+.ruta .para{font-size:13px;color:var(--gris);margin-top:auto;padding-top:8px;border-top:1px dashed rgba(0,0,0,.15)}
+
+/* ---------- Plan 3/6 ---------- */
+.toggle{display:inline-flex;background:rgba(28,28,28,.08);border-radius:99px;padding:5px}
+.toggle button{padding:10px 22px 8px;border-radius:99px;font-family:var(--epic);font-size:18px;text-transform:uppercase}
+.toggle button.on{background:var(--negro);color:var(--crema)}
+.meses{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;position:relative}
+.mes{background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;transition:opacity .4s,transform .5s var(--golpe)}
+.mes.off{opacity:.18;transform:scale(.96);filter:grayscale(1)}
+.mes .m{font-family:var(--epic);font-size:15px;color:var(--rojo);letter-spacing:.04em}
+.mes h4{font-family:var(--epic);text-transform:uppercase;font-size:21px;line-height:.95}
+.mes p{font-size:13.5px;line-height:1.35}
+.mes .ent{margin-top:auto;font-size:12px;font-weight:600;background:var(--crema);border-radius:10px;padding:7px 9px;line-height:1.3}
+.plan-res{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;background:var(--negro);color:var(--crema);border-radius:20px;padding:18px 24px}
+.plan-res b{font-family:var(--epic);font-size:30px;color:var(--rojo-vivo);line-height:1}
+.plan-res p{font-size:15px;max-width:600px}
+
+/* ---------- Personalidad ---------- */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vs div{border-radius:18px;padding:16px 18px;font-size:15px;line-height:1.4}
+.vs .no{background:rgba(255,231,201,.06);color:rgba(255,231,201,.6)}
+.vs .no b{text-decoration:line-through;text-decoration-color:var(--rojo-vivo);text-decoration-thickness:3px}
+.vs .si{background:var(--rojo);color:var(--crema)}
+.vs b{font-family:var(--epic);text-transform:uppercase;font-size:20px;display:block;margin-bottom:4px;line-height:1}
+.ideas{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;min-height:200px}
+.idea{background:var(--crema);color:var(--negro);border-radius:18px;padding:16px 18px;animation:pop .5s var(--rebote) both}
+.idea .t{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--rojo)}
+.idea h4{font-family:var(--epic);text-transform:uppercase;font-size:22px;line-height:.98;margin:4px 0 6px}
+.idea p{font-size:14px;line-height:1.38}
+.idea.especial{background:var(--rojo-vivo);color:#fff}
+.idea.especial .t{color:var(--crema)}
+.vacio{grid-column:1/-1;border:2px dashed rgba(255,231,201,.25);border-radius:18px;display:grid;place-items:center;text-align:center;padding:30px;color:rgba(255,231,201,.6);font-size:16px}
+@keyframes pop{from{opacity:0;transform:scale(.85) translateY(12px)}}
+
+/* ---------- Multiplicador ---------- */
+.mult{display:grid;grid-template-columns:.8fr auto 1.2fr;gap:24px;align-items:center}
+.crudo{background:var(--negro);color:var(--crema);border-radius:22px;padding:22px;display:grid;gap:12px}
+.crudo .fila{display:flex;align-items:center;gap:12px;font-size:16px}
+.crudo .fila b{font-family:var(--epic);font-size:34px;color:var(--rojo-vivo);min-width:52px;line-height:1}
+.crudo .antes{font-size:14px;color:rgba(255,231,201,.6);border-top:1px dashed rgba(255,231,201,.2);padding-top:12px}
+.flecha{display:grid;place-items:center;gap:10px}
+.flecha button{width:96px;height:96px;border-radius:50%;background:var(--rojo);color:var(--crema);font-family:var(--epic);font-size:15px;line-height:1;text-transform:uppercase;box-shadow:0 14px 30px -12px rgba(229,35,34,.7);animation:latido 2s ease-in-out infinite}
+.flecha button:hover{animation:none;transform:scale(1.06)}
+.piezas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pieza{background:#fff;border-radius:16px;padding:12px 13px;opacity:.16;transform:scale(.92);transition:opacity .5s,transform .6s var(--rebote);min-height:118px;display:flex;flex-direction:column;gap:4px}
+.pieza.on{opacity:1;transform:none}
+.pieza .ic{font-size:22px}
+.pieza h5{font-family:var(--epic);text-transform:uppercase;font-size:17px;line-height:.98}
+.pieza p{font-size:12.5px;line-height:1.3;color:#555}
+.pieza .cu{font-size:11px;font-weight:600;color:var(--rojo);letter-spacing:.06em;text-transform:uppercase;margin-top:auto}
+.res-mult{font-size:17px;min-height:28px}
+.res-mult b{color:var(--rojo)}
+
+/* ---------- Coberturas ---------- */
+.cob-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.cob-tabs button{padding:12px 20px 10px;border-radius:14px;background:rgba(28,28,28,.07);font-family:var(--epic);font-size:18px;text-transform:uppercase;text-align:left;line-height:1}
+.cob-tabs button small{display:block;font-family:var(--clash);font-size:12px;text-transform:none;font-weight:400;margin-top:3px;opacity:.7}
+.cob-tabs button.on{background:var(--negro);color:var(--crema)}
+.cob-tabs button.nuevo{position:relative}
+.cob-tabs button.nuevo::after{content:"Nuevo";position:absolute;top:-9px;right:-6px;background:var(--rojo);color:var(--crema);font-family:var(--clash);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:99px}
+.cob-panel{display:none;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.cob-panel.on{display:grid;animation:pop .45s var(--golpe) both}
+.flujo{display:grid;gap:10px}
+.paso{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:16px;padding:14px 16px}
+.paso b{flex:0 0 34px;height:34px;border-radius:50%;background:var(--rojo);color:var(--crema);display:grid;place-items:center;font-family:var(--epic);font-size:17px}
+.paso h5{font-size:16px;font-weight:600;line-height:1.25}
+.paso p{font-size:14px;line-height:1.35;color:#555}
+.cob-precio{background:var(--negro);color:var(--crema);border-radius:20px;padding:20px 22px;display:grid;gap:12px}
+.cob-precio .fila{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px dashed rgba(255,231,201,.2);padding-bottom:10px}
+.cob-precio .fila:last-of-type{border:0;padding-bottom:0}
+.cob-precio .fila span{font-size:15px;line-height:1.3}
+.cob-precio .fila span small{display:block;opacity:.6;font-size:12.5px}
+.cob-precio .fila b{font-family:var(--epic);font-size:24px;color:var(--rojo-vivo);white-space:nowrap}
+
+/* ---------- Perfil web + juego ---------- */
+.pdfvsweb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pdfvsweb div{border-radius:16px;padding:14px 16px;font-size:14.5px;line-height:1.4}
+.pdfvsweb .pdf{background:rgba(255,231,201,.12)}
+.pdfvsweb .web{background:var(--crema);color:var(--negro)}
+.pdfvsweb b{font-family:var(--epic);text-transform:uppercase;font-size:19px;display:block;line-height:1;margin-bottom:6px}
+.juego{background:var(--negro);border-radius:22px;overflow:hidden;position:relative;border:3px solid var(--crema)}
+.juego canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;touch-action:manipulation;cursor:pointer}
+.juego .bar{display:flex;gap:8px;align-items:center;padding:10px 12px;background:var(--crema);color:var(--negro);flex-wrap:wrap}
+.juego .bar label{font-size:13px;font-weight:600}
+.juego .bar input{flex:1;min-width:120px;font:inherit;font-size:15px;padding:7px 12px;border-radius:99px;border:2px solid var(--negro);background:#fff}
+
+/* ---------- Cierre ---------- */
+.ruta-final{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ruta-final span{font-family:var(--epic);text-transform:uppercase;font-size:clamp(16px,1.8vw,22px);padding:10px 16px 8px;border-radius:99px;background:rgba(255,231,201,.14)}
+.ruta-final span.y{background:var(--crema);color:var(--rojo)}
+.ruta-final i{font-style:normal;font-family:var(--epic);opacity:.6}
+.frase{font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.4vw,30px);line-height:1.05;max-width:760px}
+
+/* ---------- Responsive ---------- */
+.in>*,.grid2>*,.caso>*,.portada>*,.mult>*,.disc-wrap>*,.caso>div>*,.grid2>div>*,.mes,.ob{min-width:0}
+.k{overflow-wrap:anywhere}
+@media (max-width:980px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .rutas{grid-template-columns:repeat(2,1fr)}
+  .meses{grid-template-columns:repeat(3,1fr)}
+  .mult{grid-template-columns:1fr}
+  .flecha{grid-auto-flow:column}
+}
+@media (max-width:820px){
+  body{font-size:16px}
+  .in{padding:74px 16px 110px;justify-content:flex-start;gap:22px}
+  .portada,.grid2,#s6 .grid2,#s10 .grid2,.caso,.disc-wrap,.cob-panel.on,.obs{grid-template-columns:1fr}
+  .portada .fig .sol{width:min(260px,64vw)}
+  .caso .media .vid{max-height:56vh;max-width:300px}
+  .caso .badge{right:4px}
+  .escalera{gap:6px}
+  .esc{padding:10px 8px;border-radius:14px 14px 4px 4px}
+  .esc b{font-size:22px}.esc span{display:none}
+  .cifra .n{font-size:22px}
+  .esc:nth-child(1){height:90px}.esc:nth-child(2){height:115px}.esc:nth-child(3){height:140px}.esc:nth-child(4){height:165px}.esc:nth-child(5){height:190px}
+  .esc-det{grid-template-columns:1fr}.esc-det img{width:80px}
+  .ideas,.vs,.pdfvsweb{grid-template-columns:1fr}
+  .piezas{grid-template-columns:repeat(2,1fr)}
+  .rutas{grid-template-columns:1fr}
+  .meses{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mes h4{font-size:18px}
+  .cifras{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .cifra{padding:12px 10px}
+  .cifra p{font-size:12px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .top{padding:12px 16px}
+  .top img{height:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<header class="top">
+  <img class="logo-n" src="../../assets/brand/logo-negro.png?v=2" alt="Pro Motion Sport Marketing">
+  <img class="logo-b" src="../../assets/brand/logo-blanco.png" alt="Pro Motion Sport Marketing">
+  <button class="menu-b" id="menuB" aria-label="Ver índice">Índice ☰</button>
+</header>
+
+<main class="deck" id="deck">
+
+<!-- 01 · PORTADA -->
+<section class="slide" id="s1" data-t="Portada">
+  <div class="in">
+    <div class="portada">
+      <div style="display:grid;gap:24px">
+        <div class="k a">Propuesta de trabajo · Noviembre 2026</div>
+        <h1 class="epic h1 a d1">Andrés<span class="x">×</span><br><span class="rojo">Pro Motion</span></h1>
+        <p class="lead a d2">Correr ya lo haces. Lo que sigue es que <b>cada kilómetro cuente una historia</b> que la gente quiera seguir y que una marca quiera acompañar.</p>
+        <div class="meta-p a d3"><span><i></i>Quiénes somos</span><span><i></i>Dos casos reales</span><span><i></i>El método</span><span><i></i>Tu ruta</span></div>
+        <div class="tip a d4"><kbd>←</kbd><kbd>→</kbd> o desliza para avanzar</div>
+      </div>
+      <div class="fig a d2" aria-hidden="true">
+        <div class="sol"></div>
+        <img src="../../assets/mini/corredor.webp" alt="">
+        <div class="linea"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · QUIÉNES SOMOS -->
+<section class="slide oscuro" id="s2" data-t="Quiénes somos" data-dark>
+  <div class="in">
+    <div class="k a">Pro Motion Sport Marketing · Cuenca, Ecuador</div>
+    <h2 class="epic h2 a d1">Casi 6 años convirtiendo<br><span class="box">talento en oferta</span></h2>
+    <p class="lead a d2">Estrategia de comunicación y marketing deportivo a nivel <b>nacional e internacional</b>. No hacemos “videos bonitos”: construimos el valor comercial del deportista.</p>
+    <div class="stats a d3">
+      <div class="stat"><div class="n"><small>+</small><span data-c="37">0</span></div><p>campañas ejecutadas</p></div>
+      <div class="stat"><div class="n"><small>+</small><span data-c="19">0</span></div><p>marcas vinculadas</p></div>
+      <div class="stat"><div class="n"><small>+</small><span data-c="62">0</span></div><p>eventos documentados</p></div>
+      <div class="stat"><div class="n"><small>+</small><span data-c="14">0</span></div><p>disciplinas deportivas</p></div>
+      <div class="stat"><div class="n"><span data-c="6">0</span></div><p>países con coberturas</p></div>
+      <div class="stat"><div class="n"><small>+</small><span data-c="10">0</span>M</div><p>visualizaciones en un solo campeonato (GT Challenge)</p></div>
+    </div>
+    <div class="disc-wrap a d4">
+      <div>
+        <div class="k" style="margin-bottom:12px">Toca una disciplina</div>
+        <div class="chips" id="disc"></div>
+      </div>
+      <div class="disc-det" id="discDet"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · CASO LUIS CROSS -->
+<section class="slide" id="s3" data-t="Caso Luis Cross">
+  <div class="in">
+    <div class="caso">
+      <div class="media a">
+        <div class="vid"><video id="vLuis" muted loop playsinline preload="none" poster="../../assets/casos/v/luis-815k.webp" data-src="../../assets/casos/v/luis-815k.mp4"></video></div>
+        <div class="badge"><div><b>87</b><small>PROMATCH</small></div></div>
+      </div>
+      <div style="display:grid;gap:20px">
+        <div class="k a">Caso 1 · Desarrollo de marca personal</div>
+        <h2 class="epic h2 a d1">Luis Cross<br><span class="rojo">#124</span></h2>
+        <p class="lead a d2">Piloto de motocross de Cañar que compite <b>con un solo brazo</b>. No le contamos los tiempos de vuelta: le contamos su historia. Su contenido llega mucho más lejos que su cuenta.</p>
+        <div class="cifras a d3">
+          <div class="cifra"><div class="n" data-c="815269">0</div><p>vistas en un solo video en TikTok</p></div>
+          <div class="cifra"><div class="n" data-c="55371">0</div><p>vistas en su mes pico, con menos de 2.000 seguidores</p></div>
+          <div class="cifra"><div class="n"><span data-c="13">0</span>,3 %</div><p>engagement de sus reels</p></div>
+        </div>
+        <div class="a d4"><div class="k" style="margin-bottom:8px">Toca un video</div><div class="clips" id="clipsLuis"></div></div>
+        <p class="leccion a d5"><b>La lección para ti:</b> no hacen falta miles de seguidores. Hace falta una historia que se entienda en 3 segundos y una marca (Factory Bike) que aparece de forma natural.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · CASO SEBASTIÁN MERCHÁN -->
+<section class="slide oscuro" id="s4" data-t="Caso Sebastián Merchán" data-dark>
+  <div class="in">
+    <div class="caso">
+      <div class="media a">
+        <div class="vid"><video id="vSeb" muted loop playsinline preload="none" poster="../../assets/video/franja-sebastian.webp" data-src="../../assets/video/franja-sebastian.mp4"></video></div>
+        <div class="badge"><div><b>85</b><small>PROMATCH</small></div></div>
+      </div>
+      <div style="display:grid;gap:20px">
+        <div class="k a">Caso 2 · Desarrollo comercial · varios años juntos</div>
+        <h2 class="epic h2 a d1">Sebastián<br>Merchán</h2>
+        <p class="lead a d2">Piloto GT en el campeonato de Latinoamérica. Pasamos de “publicar la carrera” a <b>construir una propuesta que las marcas compran</b>: coberturas, experiencias VIP con auspiciantes y perfil comercial.</p>
+        <div class="cifras a d3">
+          <div class="cifra"><div class="n" data-c="67143">0</div><p>reproducciones en un video resumen</p></div>
+          <div class="cifra"><div class="n" data-c="45">0</div><p>países en su audiencia</p></div>
+          <div class="cifra"><div class="n">5/5</div><p>nivel de integración de marca</p></div>
+        </div>
+        <div class="a d4">
+          <div class="k" style="margin-bottom:8px">Marcas que activaron con él</div>
+          <div class="marcas"><span>Dorado Bet · experiencia VIP</span><span>Repsol</span><span>Crazy4Cars</span><span>SG Consulting Group</span></div>
+        </div>
+        <p class="leccion a d5"><b>La lección para ti:</b> la marca no paga por un logo; paga por <b>experiencias, contenido y evidencia</b>. Eso se diseña, se ejecuta y se mide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · MÉTODO -->
+<section class="slide" id="s5" data-t="Nuestro método">
+  <div class="in">
+    <div class="k a">¿Cómo logramos esos resultados?</div>
+    <h2 class="epic h2 a d1">El método: <span class="rojo">de menos a más</span></h2>
+    <p class="lead a d2">Cada deportista entra en el punto que corresponde a su momento y a su presupuesto. Toca cada escalón.</p>
+    <div class="escalera a d3" id="esc">
+      <button class="esc" data-i="0"><b>01</b><span>Diagnóstico ProMatch</span></button>
+      <button class="esc" data-i="1"><b>02</b><span>Ruta según tu etapa</span></button>
+      <button class="esc" data-i="2"><b>03</b><span>Plan de acción</span></button>
+      <button class="esc" data-i="3"><b>04</b><span>Personalidad y contenido</span></button>
+      <button class="esc" data-i="4"><b>05</b><span>Oferta comercial</span></button>
+    </div>
+    <div class="esc-det card a d4" id="escDet"></div>
+  </div>
+</section>
+
+<!-- 06 · ANDRÉS HOY -->
+<section class="slide crema-sec" id="s6" data-t="Tu punto de partida">
+  <div class="in">
+    <div class="grid2">
+      <div style="display:grid;gap:20px">
+        <div class="k a">Una primera mirada desde afuera</div>
+        <h2 class="epic h2 a d1">Tu punto de partida,<br><span class="box">Andrés</span></h2>
+        <p class="lead a d2">Revisamos tu perfil público antes de esta reunión. Esto es lo que ya se ve; <b>el diagnóstico lo confirma con tus datos reales</b>.</p>
+        <div class="perfil-card a d3">
+          <div class="av">AM</div>
+          <div>
+            <div style="font-weight:600">Andrés Medina Zamora · @andresmedinaz</div>
+            <div style="font-size:14px;opacity:.75">Running · Cuenca, Ecuador · 10K y 21K</div>
+            <div class="num"><span><b>1.530</b>seguidores</span><span><b>8+</b>carreras en la bio</span><span><b>6+</b>países en destacadas</span></div>
+          </div>
+        </div>
+        <p class="nota a d4">Lectura rápida del perfil público de Instagram (9 de noviembre de 2026). No reemplaza el diagnóstico.</p>
+      </div>
+      <div class="obs" id="obs">
+        <div class="ob a d1"><div class="ic">🌎</div><div><h4>Corres por el mundo</h4><p>Chicago, Nueva York, Madrid, Perú, Argentina, Colombia… viven en tus destacadas.</p><p class="op">Oportunidad: una serie de “correr para conocer” que hoy se queda escondida en historias de 24 horas.</p><div class="mas">Toca para ver la oportunidad</div></div></div>
+        <div class="ob a d2"><div class="ic">📆</div><div><h4>Publicas poco</h4><p>Unas 5 publicaciones en 2026, casi todas carruseles.</p><p class="op">Oportunidad: cada carrera puede ser dos semanas de contenido, no un solo post.</p><div class="mas">Toca para ver la oportunidad</div></div></div>
+        <div class="ob a d3"><div class="ic">📈</div><div><h4>Tienes datos</h4><p>Tu Strava está en la bio: ritmos, rutas, kilómetros.</p><p class="op">Oportunidad: los datos convertidos en historias (“mi carrera en números”) son contenido que pocos corredores aprovechan.</p><div class="mas">Toca para ver la oportunidad</div></div></div>
+        <div class="ob a d4"><div class="ic">🌊</div><div><h4>Hay más que correr</h4><p>Viajes, mar y surf, amigos: tu vida fuera del asfalto.</p><p class="op">Oportunidad: ahí está tu diferencia frente a los demás corredores. Lo trabajamos en el paso 4.</p><div class="mas">Toca para ver la oportunidad</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · DIAGNÓSTICO PROMATCH -->
+<section class="slide" id="s7" data-t="Paso 1 · Diagnóstico ProMatch">
+  <div class="in">
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:20px">
+        <div class="k a">Paso 1</div>
+        <h2 class="epic h2 a d1">Diagnóstico<br><span class="rojo">ProMatch</span></h2>
+        <p class="lead a d2">Una auditoría completa de tu <b>capacidad de desarrollo comercial</b>. No medimos qué tan bonitos son tus videos: medimos el momento real de tu cuenta, cómo amplificarla y cuáles son los primeros pasos.</p>
+        <div class="a d3" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+          <div class="precio-tag"><b>$35</b><span>valor inicial del diagnóstico</span></div>
+          <p style="font-size:15px;flex:1 1 200px;max-width:320px;line-height:1.4"><b>Es tuyo, trabajemos o no juntos.</b> Un punto de partida para ver el futuro comercial que puedes tener como deportista.</p>
+        </div>
+        <div class="a d4">
+          <div class="k" style="margin-bottom:10px">Qué recibes</div>
+          <ul class="incluye">
+            <li>Puntaje ProMatch con las variables que lo explican</li>
+            <li>Audiencia real: edad, países y género de quien te sigue</li>
+            <li>Qué contenidos te funcionan y por qué</li>
+            <li>Sectores y marcas que encajan contigo</li>
+            <li>Tus primeros 3 pasos concretos</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card a d2">
+        <div class="k" style="margin-bottom:4px">Simulador · mueve las barras</div>
+        <p class="nota" style="margin-bottom:14px">Así se calcula el puntaje: cada variable pesa distinto. Ejemplo ilustrativo.</p>
+        <div class="sim" id="sim"></div>
+        <div class="score"><div class="dial" id="dial"><div id="scoreN">0</div></div><p id="scoreTxt"></p></div>
+        <img src="../../assets/img/boar_magnify.webp" alt="" style="width:90px;margin:-70px 0 0 auto;filter:var(--pegado)" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · RUTAS -->
+<section class="slide" id="s8" data-t="Paso 2 · Tu ruta">
+  <div class="in">
+    <div class="k a">Paso 2 · Después del diagnóstico</div>
+    <h2 class="epic h2 a d1">¿Qué tiene sentido <span class="rojo">hoy</span>?</h2>
+    <div class="preg a d2">
+      <p class="lead">Elegimos según lo que quieres lograr y el presupuesto que quieres destinar. <b>¿Cuánto te gustaría invertir al mes?</b></p>
+      <div class="chips" id="pres">
+        <button class="chip" data-r="0">Por ahora, solo aprender</button>
+        <button class="chip" data-r="1">Hasta USD 250</button>
+        <button class="chip" data-r="2">USD 250 – 500</button>
+        <button class="chip" data-r="3">Más de USD 500 / ya tengo marcas</button>
+      </div>
+    </div>
+    <div class="rutas a d3" id="rutas">
+      <div class="ruta"><h4>Asesoría o curso</h4><div class="pr">USD 35<small>consultoría de 1 hora · sesión intensiva de 2 h: USD 70</small></div><ul><li>Trabajamos sobre tu diagnóstico</li><li>Tú ejecutas con una guía clara</li><li>Talleres y programas en Pro Academy</li></ul><div class="para">Para quien quiere aprender a hacerlo solo.</div></div>
+      <div class="ruta"><h4>Plan mínimo viable</h4><div class="pr">USD 220<small>al mes · valor de referencia</small></div><ul><li>3 videos</li><li>2 carruseles</li><li>Guía continua de ideación: nuevos formatos para comunicar</li></ul><div class="para">Para empezar a publicar con criterio, sin un gran presupuesto.</div></div>
+      <div class="ruta"><h4>Plan de gestión</h4><div class="pr">Desde USD 260<small>al mes · Inicio estratégico · mínimo 3 meses</small></div><ul><li>Narrativa y optimización de perfiles</li><li>Calendario de carreras convertido en contenido</li><li>Producción, publicación e informe</li></ul><div class="para">Para crear constancia y una marca personal sólida.</div></div>
+      <div class="ruta"><h4>Plan + coberturas + perfil comercial</h4><div class="pr">Desde USD 450<small>al mes · Crecimiento Pro, según calendario</small></div><ul><li>Todo el plan de gestión</li><li>Coberturas presenciales o a distancia</li><li>Perfil comercial web para marcas</li></ul><div class="para">Para salir a buscar auspiciantes con evidencia.</div></div>
+    </div>
+    <p class="nota a d4">Rangos referenciales; la cotización final se define contigo según alcance. No incluyen viáticos fuera de Cuenca, pauta ni impuestos.</p>
+  </div>
+</section>
+
+<!-- 09 · PLAN DE ACCIÓN -->
+<section class="slide" id="s9" data-t="Paso 3 · Plan de acción">
+  <div class="in">
+    <div class="k a">Paso 3</div>
+    <h2 class="epic h2 a d1">Un plan de acción<br>de <span class="rojo" id="planN">3</span> meses</h2>
+    <div class="a d2" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+      <div class="toggle" id="planT"><button class="on" data-m="3">3 meses</button><button data-m="6">6 meses</button></div>
+      <p style="font-size:15px;max-width:520px">Comunicamos lo que necesitas en las primeras etapas de tu desarrollo comercial. Cada plan tiene su valor según el alcance.</p>
+    </div>
+    <div class="meses a d3" id="meses"></div>
+    <div class="plan-res a d4" id="planRes"></div>
+  </div>
+</section>
+
+<!-- 10 · PERSONALIDAD -->
+<section class="slide oscuro" id="s10" data-t="Paso 4 · Personalidad" data-dark>
+  <div class="in">
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:20px">
+        <div class="k a">Paso 4 · El acompañamiento</div>
+        <h2 class="epic h2 a d1">Tu personalidad<br><span class="box">es la estrategia</span></h2>
+        <p class="lead a d2">La marca personal no está en fotos bonitas ni videos sobreproducidos. Está en lo que <b>solo tú</b> puedes contar: además de correr, ¿qué te gusta? ¿con qué comunidades te conectas?</p>
+        <div class="vs a d3">
+          <div class="no"><b>Lo de siempre</b>Foto en la meta, medalla, “¡vamos!”. Igual a la de los otros 500 corredores.</div>
+          <div class="si"><b>Lo que hacemos</b>Correr + tu mundo: un contenido que entretiene y que nadie más en tu disciplina está haciendo.</div>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px">
+        <div class="a d2">
+          <div class="k" style="margin-bottom:10px">Laboratorio · elige lo que te gusta además de correr</div>
+          <div class="chips" id="gustos"></div>
+        </div>
+        <div class="ideas a d3" id="ideas"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · MULTIPLICADOR -->
+<section class="slide crema-sec" id="s11" data-t="Tu material vale más">
+  <div class="in">
+    <div class="k a">Reutilizar y distribuir</div>
+    <h2 class="epic h2 a d1">De un carrusel<br>a <span class="rojo">seis contenidos</span></h2>
+    <p class="lead a d2">Vuelves de una carrera con el celular lleno de fotos y videos… y máximo sale un carrusel. Ese material vale mucho más con una <b>estrategia de distribución</b>.</p>
+    <div class="mult a d3">
+      <div class="crudo">
+        <div class="k">Lo que traes de una carrera</div>
+        <div class="fila"><b>47</b>fotos tuyas y de amigos</div>
+        <div class="fila"><b>12</b>clips del celular</div>
+        <div class="fila"><b>1</b>foto oficial con tu tiempo</div>
+        <div class="fila"><b>1</b>archivo de Strava</div>
+        <div class="antes">Hoy: 1 carrusel y listo.</div>
+      </div>
+      <div class="flecha"><button id="multB">Multi­plicar</button></div>
+      <div class="piezas" id="piezas">
+        <div class="pieza"><div class="ic">🎬</div><h5>Reel resumen</h5><p>Antes, durante y después en 30 segundos.</p><div class="cu">Día 1</div></div>
+        <div class="pieza"><div class="ic">🖼️</div><h5>Carrusel de la carrera</h5><p>Las mejores fotos con una historia, no un álbum.</p><div class="cu">Día 2</div></div>
+        <div class="pieza"><div class="ic">🎙️</div><h5>Voz en off</h5><p>“Lo que pensé en el kilómetro 15”.</p><div class="cu">Día 4</div></div>
+        <div class="pieza"><div class="ic">📊</div><h5>Mi carrera en datos</h5><p>Ritmos, mapa y tiempo de Strava como arte.</p><div class="cu">Día 6</div></div>
+        <div class="pieza"><div class="ic">🤝</div><h5>Pieza para la marca</h5><p>Agradecimiento o producto en uso, natural.</p><div class="cu">Día 8</div></div>
+        <div class="pieza"><div class="ic">💬</div><h5>Historias interactivas</h5><p>Encuestas y preguntas: “¿cuál es la próxima?”.</p><div class="cu">Día 10</div></div>
+      </div>
+    </div>
+    <p class="res-mult a d4" id="multRes">Toca <b>Multiplicar</b>.</p>
+  </div>
+</section>
+
+<!-- 12 · COBERTURAS -->
+<section class="slide" id="s12" data-t="Coberturas">
+  <div class="in">
+    <div class="k a">Coberturas de carrera</div>
+    <h2 class="epic h2 a d1">Estemos o no <span class="rojo">en la carrera</span></h2>
+    <div class="cob-tabs a d2" id="cobT">
+      <button class="on nuevo" data-p="0">A distancia<small>Tú grabas, nosotros contamos</small></button>
+      <button data-p="1">Presencial<small>Nuestro equipo en la carrera</small></button>
+    </div>
+    <div class="a d3">
+      <div class="cob-panel on" data-p="0">
+        <div class="flujo">
+          <div class="paso"><b>1</b><div><h5>Antes: guía de tomas</h5><p>Te enviamos qué grabar, cómo y en qué momentos. Lo planificamos según tu personalidad.</p></div></div>
+          <div class="paso"><b>2</b><div><h5>Durante: nos envías el material</h5><p>Clips y fotos por WhatsApp o Drive, también lo que te pasan amigos y fotógrafos.</p></div></div>
+          <div class="paso"><b>3</b><div><h5>Nosotros editamos y publicamos</h5><p>En tiempo real durante el fin de semana, o después de la carrera.</p></div></div>
+          <div class="paso"><b>4</b><div><h5>De 3 a 5 contenidos con el mismo material</h5><p>Ideal para tus carreras fuera del país: sin pasajes ni viáticos.</p></div></div>
+        </div>
+        <div class="cob-precio">
+          <div class="k">Dos formas, dos valores</div>
+          <div class="fila"><span>Post carrera<small>Entrega en 72 h · 3 a 5 piezas</small></span><b>USD 90</b></div>
+          <div class="fila"><span>En tiempo real<small>Publicación durante la carrera + resumen final</small></span><b>USD 150</b></div>
+          <p class="nota">Valores de referencia por carrera. Se ajustan según la cantidad de piezas y días.</p>
+          <img src="../../assets/mini/videografo.webp" alt="" style="width:90px;justify-self:end;filter:invert(1) sepia(1) saturate(0) brightness(1.6);opacity:.85" loading="lazy">
+        </div>
+      </div>
+      <div class="cob-panel" data-p="1">
+        <div class="flujo">
+          <div class="paso"><b>S</b><div><h5>Cobertura simple</h5><p>Producción móvil para eventos de un día: fotos, videos e historias en tiempo real.</p></div></div>
+          <div class="paso"><b>C</b><div><h5>Cobertura completa</h5><p>Celular, dron y cámara 360: expectativa previa, historias durante y video resumen final.</p></div></div>
+          <div class="paso"><b>★</b><div><h5>Ejemplo real</h5><p>El video resumen de Sebastián Merchán: 67.143 reproducciones.</p></div></div>
+        </div>
+        <div class="cob-precio">
+          <div class="k">Valores de referencia</div>
+          <div class="fila"><span>Cobertura simple<small>Por día</small></span><b>Desde USD 250</b></div>
+          <div class="fila"><span>Cobertura completa<small>Dos días, con dron y 360</small></span><b>Desde USD 350</b></div>
+          <p class="nota">No incluyen viáticos fuera de Cuenca.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · PERFIL COMERCIAL WEB + JUEGO -->
+<section class="slide oscuro" id="s13" data-t="Paso 5 · Perfil comercial web" data-dark>
+  <div class="in">
+    <div class="grid2">
+      <div style="display:grid;gap:20px">
+        <div class="k a">Paso 5 · La oferta comercial</div>
+        <h2 class="epic h2 a d1">Tu perfil comercial<br><span class="box">no es un PDF</span></h2>
+        <p class="lead a d2">Hoy construimos perfiles comerciales en formato web: <b>un nuevo espacio de visibilidad para tu auspiciante</b>. Por ejemplo, un juego dentro de tu perfil donde la marca principal está en la meta.</p>
+        <div class="pdfvsweb a d3">
+          <div class="pdf"><b>PDF</b>Se envía, se abre una vez, se olvida. La marca no sabe si alguien lo leyó.</div>
+          <div class="web"><b>Web</b>Se comparte, se juega, se mide. La marca gana un espacio propio, nuevo y actual.</div>
+        </div>
+        <p class="nota a d4">Con inteligencia artificial hoy se pueden hacer muchísimas cosas. Vamos de menos a más.</p>
+      </div>
+      <div class="a d2" style="display:grid;gap:10px">
+        <div class="k">Pruébalo · toca o presiona espacio para saltar</div>
+        <div class="juego">
+          <canvas id="cv" width="960" height="540" aria-label="Juego de demostración: el corredor salta obstáculos rumbo a la meta del auspiciante"></canvas>
+          <div class="bar"><label for="marca">Escribe una marca:</label><input id="marca" maxlength="18" value="TU MARCA" autocomplete="off"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · CIERRE -->
+<section class="slide rojo-sec" id="s14" data-t="Próximo paso" data-dark>
+  <div class="in">
+    <div class="k a">Próximo paso</div>
+    <h2 class="epic a d1" style="font-size:clamp(42px,7vw,104px)">Empecemos por<br>el diagnóstico</h2>
+    <div class="ruta-final a d2">
+      <span class="y">Diagnóstico · $35</span><i>»</i><span>Tu ruta</span><i>»</i><span>Plan de 3 o 6 meses</span><i>»</i><span>Personalidad</span><i>»</i><span>Oferta comercial</span>
+    </div>
+    <p class="frase a d3">Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
+    <div class="a d4" style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn c" target="_blank" rel="noopener" href="https://wa.me/593984678812?text=Hola%20Daniel%2C%20quiero%20mi%20diagn%C3%B3stico%20ProMatch.">Quiero mi diagnóstico »</a>
+      <a class="btn" target="_blank" rel="noopener" href="https://promotionec.com/">Conoce Pro Motion</a>
+    </div>
+    <p style="font-size:15px;opacity:.85" class="a d5">Daniel Espinoza · +593 98 467 8812 · @pro_motion.ec</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav" aria-label="Navegación de la presentación">
+  <button id="prevB" aria-label="Anterior">‹</button>
+  <div class="cnt"><span id="cur">01</span> / <span style="color:inherit" id="tot">14</span></div>
+  <button id="nextB" aria-label="Siguiente">›</button>
+</nav>
+<div class="indice" id="indice" role="dialog" aria-label="Índice">
+  <button class="x" id="cerrarI" aria-label="Cerrar">×</button>
+  <div class="w"><div class="k" style="color:var(--rojo-vivo)">Índice</div><h2 class="epic h2">La presentación</h2><ol id="lista"></ol></div>
+</div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const slides=$$('.slide');let cur=0;
+const fmt=n=>n.toLocaleString('es-EC').replace(/,/g,'.');
+
+/* ---------- Navegación ---------- */
+$('#tot').textContent=String(slides.length).padStart(2,'0');
+function go(i,fromHash){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,j)=>{s.classList.toggle('on',j===i);s.classList.toggle('prev',j<i)});
+  cur=i;slides[i].scrollTop=0;
+  $('#cur').textContent=String(i+1).padStart(2,'0');
+  $('#prog').style.width=((i+1)/slides.length*100)+'%';
+  document.body.classList.toggle('dark',slides[i].hasAttribute('data-dark'));
+  if(!fromHash)history.replaceState(null,'','#'+(i+1));
+  onEnter(slides[i]);
+}
+$('#prevB').onclick=()=>go(cur-1);$('#nextB').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{
+  if(e.target.matches('input'))return;
+  if(cur===12&&(e.key===' '||e.key==='ArrowUp')){return}
+  if(['ArrowRight','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+  if(e.key==='Escape')$('#indice').classList.remove('open');
+});
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{
+  if(e.target.closest('.clips,canvas,input[type=range]'))return;
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(cur+(dx<0?1:-1));
+},{passive:true});
+$('#lista').innerHTML=slides.map((s,i)=>`<li><button data-i="${i}"><b>${String(i+1).padStart(2,'0')}</b>${s.dataset.t}</button></li>`).join('');
+$('#lista').onclick=e=>{const b=e.target.closest('button');if(b){go(+b.dataset.i);$('#indice').classList.remove('open')}};
+$('#menuB').onclick=()=>$('#indice').classList.add('open');$('#cerrarI').onclick=()=>$('#indice').classList.remove('open');
+
+/* ---------- Contadores y videos al entrar ---------- */
+function onEnter(s){
+  s.querySelectorAll('[data-c]').forEach(el=>{
+    const to=+el.dataset.c,t0=performance.now(),d=1400;
+    (function f(t){const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e));if(p<1)requestAnimationFrame(f)})(t0);
+  });
+  $$('video').forEach(v=>{if(!s.contains(v))v.pause()});
+  s.querySelectorAll('video[data-src]').forEach(v=>{if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})});
+  if(s.id==='s13')juego.start();else juego.stop();
+}
+
+/* ---------- Disciplinas ---------- */
+const disc=[
+ ['Automovilismo','Nuestra especialidad: es una de las disciplinas con más actividad comercial y competencia entre marcas del país. GT Challenge de las Américas, rally y circuitos.'],
+ ['Motocross','Luis Cross y el equipo Factory Bike: historias de superación con cientos de miles de vistas.'],
+ ['Rally','Juan Guerrero y Diego Serrano: identidad de marca, coberturas e informes para auspiciantes.'],
+ ['Salto ecuestre','Perfiles comerciales y propuestas para marcas.'],
+ ['Tenis','Asesoría y desarrollo de propuestas comerciales.'],
+ ['Esgrima','Asesoría y desarrollo de propuestas comerciales.'],
+ ['Box','Asesoría y desarrollo de propuestas comerciales.'],
+ ['Karate','Asesoría y desarrollo de propuestas comerciales.'],
+ ['Rugby','Podcast y contenido de larga duración: “De Ecuador a Mónaco” con Huma Rugby.'],
+ ['Ciclismo','Contenido y campañas con marcas como Specialized.'],
+ ['Running','Tu disciplina. Un deporte con comunidad enorme y marcas que buscan historias reales. Aquí empieza la tuya.']];
+$('#disc').innerHTML=disc.map((d,i)=>`<button class="chip${i===0?' on':''}" data-i="${i}">${d[0]}</button>`).join('');
+const showDisc=i=>{$('#discDet').innerHTML=`<b>${disc[i][0]}</b>${disc[i][1]}`;$$('#disc .chip').forEach((c,j)=>c.classList.toggle('on',j===i))};
+$('#disc').onclick=e=>{const b=e.target.closest('.chip');if(b)showDisc(+b.dataset.i)};showDisc(0);
+
+/* ---------- Clips Luis ---------- */
+const clips=[['luis-815k','815.269','El público lo rodea'],['luis-kr22','502.192','La moto adaptada'],['luis-no-puedes','501.224','“Nunca se rindan”'],['luis-lodo','319.211','“Ya comimos lodo”'],['luis-carnaval','25.262','Carnaval en su comunidad']];
+$('#clipsLuis').innerHTML=clips.map((c,i)=>`<button class="clip${i===0?' on':''}" data-i="${i}"><img src="../../assets/casos/v/${c[0]}.webp" alt="" loading="lazy"><span><b>${c[1]}</b>${c[2]}</span></button>`).join('');
+$('#clipsLuis').onclick=e=>{const b=e.target.closest('.clip');if(!b)return;const c=clips[+b.dataset.i],v=$('#vLuis');
+  $$('#clipsLuis .clip').forEach(x=>x.classList.toggle('on',x===b));v.poster=`../../assets/casos/v/${c[0]}.webp`;v.src=`../../assets/casos/v/${c[0]}.mp4`;v.play().catch(()=>{})};
+
+/* ---------- Escalera ---------- */
+const esc=[
+ ['Diagnóstico ProMatch','Una auditoría de tu momento comercial: audiencia, contenido, valores y marcas afines. Valor inicial USD 35.','../../assets/img/boar_magnify.webp'],
+ ['Ruta según tu etapa','Según tu objetivo y presupuesto: asesoría o curso, plan mínimo viable, plan de gestión o plan con coberturas.','../../assets/escenas/etapa-1.webp'],
+ ['Plan de acción','Un plan de 3 o 6 meses con objetivos, calendario de carreras y entregables mes a mes.','../../assets/escenas/tool-plan.webp'],
+ ['Personalidad y contenido','Te ayudamos a encontrar qué te hace distinto y lo convertimos en formatos que entretienen. Reutilizamos tu material al máximo.','../../assets/img/sloth_corre.webp'],
+ ['Oferta comercial','Perfil comercial web, activaciones y evidencia para que una marca te pueda evaluar, activar y medir.','../../assets/mini/trato.webp']];
+const showEsc=i=>{$('#escDet').innerHTML=`<img src="${esc[i][2]}" alt=""><div><div class="k">Escalón ${String(i+1).padStart(2,'0')}</div><h3 class="epic h3">${esc[i][0]}</h3><p style="font-size:16px;line-height:1.45">${esc[i][1]}</p></div>`;$$('#esc .esc').forEach((b,j)=>b.classList.toggle('on',j===i))};
+$('#esc').onclick=e=>{const b=e.target.closest('.esc');if(b)showEsc(+b.dataset.i)};showEsc(0);
+
+/* ---------- Observaciones ---------- */
+$('#obs').onclick=e=>{const o=e.target.closest('.ob');if(o)o.classList.toggle('open')};
+
+/* ---------- Simulador ProMatch ---------- */
+const vars=[['Afinidad de valores y causas',30,75,'Lo que defiendes coincide con lo que una marca quiere decir.'],['Compatibilidad de audiencia',25,60,'Quién te sigue frente al cliente de la marca.'],['Territorio y calendario',20,80,'Dónde y cuándo corres: fechas que una marca puede aprovechar.'],['Capacidades de contenido',15,45,'Constancia, hablar a cámara, integrar marcas con naturalidad.'],['Experiencia comercial previa',10,30,'Auspicios anteriores cumplidos, con evidencia.']];
+$('#sim').innerHTML=vars.map((v,i)=>`<div class="var"><label for="v${i}">${v[0]} <small>pesa ${v[1]} %</small></label><input type="range" id="v${i}" min="0" max="100" value="${v[2]}"><p>${v[3]}</p></div>`).join('');
+function calc(){
+  const s=Math.round(vars.reduce((a,v,i)=>a+(+$('#v'+i).value)*v[1]/100,0));
+  $('#scoreN').textContent=s;$('#dial').style.setProperty('--v',s);
+  const t=s>=80?['Listo para marcas','Tu propuesta se puede presentar con evidencia.']:s>=60?['En construcción','Hay base: falta ordenar contenido y evidencia.']:['Punto de partida','Primero narrativa y constancia; después marcas.'];
+  $('#scoreTxt').innerHTML=`<b>${t[0]}</b>${t[1]}`;
+}
+$('#sim').oninput=calc;calc();
+
+/* ---------- Rutas ---------- */
+$('#pres').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const r=+b.dataset.r;
+  $$('#pres .chip').forEach(c=>c.classList.toggle('on',c===b));
+  $$('#rutas .ruta').forEach((x,j)=>{x.classList.toggle('rec',j===r);x.classList.toggle('dim',j!==r)})};
+
+/* ---------- Plan 3/6 ---------- */
+const meses=[
+ ['Mes 1','Narrativa','Pilares de contenido, perfil optimizado y tus primeros formatos de personalidad.','Perfil listo + 1.ª tanda de piezas'],
+ ['Mes 2','Ritmo','Tu calendario de carreras convertido en calendario de contenido: antes, durante y después.','Calendario + publicación constante'],
+ ['Mes 3','Evidencia','Medimos qué funcionó y armamos tu primera carta de presentación para marcas.','Informe + media kit inicial'],
+ ['Mes 4','Perfil comercial','Tu perfil comercial en web, con datos reales de tu audiencia y sectores afines.','Perfil comercial web'],
+ ['Mes 5','Activación','Primera campaña o acercamiento con una marca afín a tu historia.','Propuesta de activación'],
+ ['Mes 6','Resultados','Informe de resultados para renovar, crecer o sumar un nuevo auspiciante.','Informe para marcas']];
+$('#meses').innerHTML=meses.map(m=>`<div class="mes"><div class="m">${m[0]}</div><h4>${m[1]}</h4><p>${m[2]}</p><div class="ent">${m[3]}</div></div>`).join('');
+function plan(n){
+  $('#planN').textContent=n;$$('#planT button').forEach(b=>b.classList.toggle('on',+b.dataset.m===n));
+  $$('#meses .mes').forEach((m,i)=>m.classList.toggle('off',i>=n));
+  $('#planRes').innerHTML=n===3?`<div><b>3 meses</b></div><p><b style="font-family:var(--clash);font-size:15px;color:var(--crema)">Objetivo:</b> pasar de publicar “cuando se puede” a tener una voz propia, constancia y los primeros datos que una marca quiere ver.</p>`:`<div><b>6 meses</b></div><p><b style="font-family:var(--clash);font-size:15px;color:var(--crema)">Objetivo:</b> todo lo anterior, más un perfil comercial web, una primera activación con una marca y la evidencia para negociar.</p>`;
+}
+$('#planT').onclick=e=>{const b=e.target.closest('button');if(b)plan(+b.dataset.m)};plan(3);
+
+/* ---------- Laboratorio de personalidad ---------- */
+const gustos={
+ 'Viajes':[['Correr para conocer','Una ciudad, una ruta: Chicago, Madrid o Lima contadas a 5:00 min/km, con dónde comer y qué ver.'],['La maleta del corredor','Qué llevas a una carrera fuera del país, y qué siempre se te olvida.']],
+ 'Música':[['La canción del kilómetro 18','La playlist de cada carrera y la canción que te salvó en el peor momento.'],['BPM vs. ritmo','¿Corres más rápido con reguetón o con rock? Lo probamos con tu reloj.']],
+ 'Cocina':[['Lo que como antes de un 21K','Tus recetas de carrera, explicadas como las haría un amigo, no un nutricionista.'],['Recuperación en 10 minutos','Una receta rápida después de cada fondo largo.']],
+ 'Surf':[['Del asfalto a la ola','Entrenamiento cruzado: lo que el surf le enseña a un corredor.'],['Correr frente al mar','Rutas de playa y cómo cambia el cuerpo en arena.']],
+ 'Café':[['Rodaje con parada de café','La ruta de cafeterías de Cuenca, una por domingo.']],
+ 'Datos':[['Mi carrera en números','El mapa y los ritmos de Strava convertidos en una historia que cualquiera entiende.'],['Arte con GPS','Dibujos con rutas de Strava por la ciudad.']],
+ 'Humor':[['Tipos de corredores','Los personajes que te encuentras en toda 10K. Todos se etiquetan.']],
+ 'Amigos y familia':[['¿Quién te espera en la meta?','La gente detrás de cada carrera: reacciones reales en la llegada.']],
+ 'Trabajo':[['Entrenar antes de la oficina','La vida real de un corredor amateur: 5 a. m., trabajo y kilómetros.']]
+};
+let sel=new Set(['Viajes']);
+$('#gustos').innerHTML=Object.keys(gustos).map(g=>`<button class="chip" data-g="${g}">${g}</button>`).join('');
+function ideas(){
+  $$('#gustos .chip').forEach(c=>c.classList.toggle('on',sel.has(c.dataset.g)));
+  let out=[];
+  if(sel.has('Música')&&sel.has('Cocina'))out.push(['Música + Cocina','Una receta por canción','Cocinas lo que te inspira el álbum que escuchas en tus rodajes. Entretenimiento puro, distinto a todo lo que hacen los demás corredores.',1]);
+  sel.forEach(g=>gustos[g].forEach(x=>out.push([g,x[0],x[1],0])));
+  out=out.slice(0,4);
+  $('#ideas').innerHTML=out.length?out.map(o=>`<div class="idea${o[3]?' especial':''}"><div class="t">Correr + ${o[0]}</div><h4>${o[1]}</h4><p>${o[2]}</p></div>`).join(''):'<div class="vacio">Elige uno o varios intereses<br>(prueba Música + Cocina)</div>';
+}
+$('#gustos').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const g=b.dataset.g;sel.has(g)?sel.delete(g):sel.add(g);ideas()};ideas();
+
+/* ---------- Multiplicador ---------- */
+let multOn=false;
+$('#multB').onclick=()=>{
+  const ps=$$('#piezas .pieza');multOn=!multOn;
+  if(!multOn){ps.forEach(p=>p.classList.remove('on'));$('#multRes').innerHTML='Toca <b>Multiplicar</b>.';$('#multB').textContent='Multi­plicar';return}
+  ps.forEach((p,i)=>setTimeout(()=>p.classList.add('on'),i*220));
+  setTimeout(()=>{$('#multRes').innerHTML='El mismo material: <b>1 carrusel → 6 contenidos</b> y casi <b>2 semanas de presencia</b>. Según tu personalidad, decidimos qué contar y cómo.';$('#multB').textContent='Reiniciar'},ps.length*220);
+};
+
+/* ---------- Coberturas ---------- */
+$('#cobT').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  $$('#cobT button').forEach(x=>x.classList.toggle('on',x===b));
+  $$('.cob-panel').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.p))};
+
+/* ---------- Juego ---------- */
+const juego=(()=>{
+  const cv=$('#cv'),c=cv.getContext('2d'),W=960,H=540,G=420;
+  const img=new Image();img.src='../../assets/mini/corredor.webp';
+  let run=false,raf=0,st,last=0;
+  const marca=()=>($('#marca').value.trim()||'TU MARCA').toUpperCase();
+  function reset(){st={y:G,vy:0,obs:[],t:0,km:0,speed:6,state:'intro',nextObs:90,best:st?st.best:0,flash:0}}
+  reset();
+  function jump(){
+    if(st.state!=='play'){reset();st.state='play';return}
+    if(st.y>=G-1)st.vy=-17;
+  }
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();jump()});
+  addEventListener('keydown',e=>{if(!run||e.target.matches('input'))return;if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();jump()}});
+  function rr(x,y,w,h,r){c.beginPath();c.roundRect?c.roundRect(x,y,w,h,r):c.rect(x,y,w,h);c.fill()}
+  function draw(){
+    const m=marca();
+    c.fillStyle='#1C1C1C';c.fillRect(0,0,W,H);
+    // sol
+    c.fillStyle='#E52322';c.beginPath();c.arc(760,200,120,0,7);c.fill();
+    // vallas con marca
+    const off=(st.t*st.speed*0.5)%320;
+    for(let i=-1;i<5;i++){const x=i*320-off;c.fillStyle='#FFE7C9';rr(x+20,300,260,56,6);c.fillStyle='#E52322';c.font='800 30px "GC Epic Pro",Impact,sans-serif';c.textAlign='center';c.fillText(m,x+150,340)}
+    // piso
+    c.fillStyle='#FFE7C9';c.fillRect(0,G+2,W,4);
+    c.fillStyle='rgba(255,231,201,.25)';for(let i=0;i<14;i++){const x=(i*90-(st.t*st.speed)%90);c.fillRect(x,G+40,40,3)}
+    // meta
+    const metaKm=21.1;
+    if(st.km>metaKm-0.6&&st.state==='play'){const mx=W-((st.km-(metaKm-0.6))/0.6)*W*0.6;c.fillStyle='#E52322';c.fillRect(mx,G-200,10,204);c.fillRect(mx+200,G-200,10,204);c.fillRect(mx,G-200,210,46);c.fillStyle='#FFE7C9';c.font='800 26px "GC Epic Pro",Impact';c.textAlign='center';c.fillText('META · '+m,mx+105,G-168)}
+    // obstáculos (conos)
+    st.obs.forEach(o=>{c.fillStyle='#FF4A3D';c.beginPath();c.moveTo(o.x,G+2);c.lineTo(o.x+o.w/2,G+2-o.h);c.lineTo(o.x+o.w,G+2);c.fill();c.fillStyle='#FFE7C9';c.fillRect(o.x+o.w*.28,G+2-o.h*.5,o.w*.44,6)});
+    // corredor
+    const rh=140,rw=rh*img.width/(img.height||1);
+    c.save();c.translate(120,st.y-rh+4);
+    if(img.complete&&img.width){c.filter='invert(1) sepia(.3)';c.drawImage(img,0,0,rw,rh);c.filter='none'}else{c.fillStyle='#FFE7C9';c.fillRect(0,0,50,rh)}
+    c.restore();
+    // HUD
+    c.textAlign='left';c.fillStyle='#FFE7C9';c.font='800 34px "GC Epic Pro",Impact';c.fillText(st.km.toFixed(1)+' KM',28,56);
+    c.font='600 16px "Clash Display",Arial';c.fillStyle='rgba(255,231,201,.7)';c.fillText('Patrocinado por '+m,28,82);
+    if(st.state!=='play'){
+      c.fillStyle='rgba(28,28,28,.82)';c.fillRect(0,0,W,H);c.textAlign='center';
+      c.fillStyle='#E52322';c.font='800 64px "GC Epic Pro",Impact';
+      const tit=st.state==='intro'?'MEDIA MARATÓN '+m:st.state==='win'?'¡LLEGASTE A LA META!':'¡CONO!';
+      c.fillText(tit.length>26?tit.slice(0,26):tit,W/2,H/2-30);
+      c.fillStyle='#FFE7C9';c.font='600 24px "Clash Display",Arial';
+      c.fillText(st.state==='intro'?'Toca para empezar · salta los conos hasta los 21,1 km':st.state==='win'?m+' te espera con la medalla · toca para repetir':'Llegaste a '+st.km.toFixed(1)+' km · toca para intentar de nuevo',W/2,H/2+20);
+      c.font='600 17px "Clash Display",Arial';c.fillStyle='rgba(255,231,201,.6)';c.fillText('Así una marca gana un espacio dentro de tu perfil comercial',W/2,H/2+60);
+    }
+  }
+  function step(t){
+    raf=requestAnimationFrame(step);
+    if(t-last<15)return;last=t;
+    if(st.state==='play'){
+      st.t++;st.speed=Math.min(13,6+st.t/500);st.km+=st.speed/1500;
+      st.vy+=1;st.y=Math.min(G,st.y+st.vy);if(st.y===G)st.vy=0;
+      if(--st.nextObs<=0&&st.km<20.3){const h=40+Math.random()*30;st.obs.push({x:W+20,w:42,h});st.nextObs=55+Math.random()*70}
+      st.obs.forEach(o=>o.x-=st.speed);st.obs=st.obs.filter(o=>o.x>-60);
+      const px=150,pw=46;
+      if(st.obs.some(o=>o.x<px+pw&&o.x+o.w>px+6&&st.y>G-o.h+12))st.state='over';
+      if(st.km>=21.1){st.km=21.1;st.state='win'}
+    }
+    draw();
+  }
+  return{start(){if(run)return;run=true;last=0;raf=requestAnimationFrame(step)},stop(){run=false;cancelAnimationFrame(raf)}};
+})();
+
+/* ---------- Inicio ---------- */
+const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1,true);
+addEventListener('hashchange',()=>{const n=parseInt(location.hash.slice(1));if(!isNaN(n)&&n-1!==cur)go(n-1,true)});
+})();
+</script>
+</body>
+</html>
