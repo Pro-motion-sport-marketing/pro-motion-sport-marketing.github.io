@@ -302,6 +302,22 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
 .ruta-final i{font-style:normal;font-family:var(--epic);opacity:.6}
 .frase{font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.4vw,30px);line-height:1.05;max-width:760px}
 
+.objetivo{font-size:15.5px;line-height:1.45;max-width:600px;background:var(--crema);border-left:4px solid var(--rojo);padding:12px 16px;border-radius:0 12px 12px 0}
+.objetivo b{color:var(--rojo)}
+.dif{margin-top:14px;font-size:14.5px;line-height:1.4;background:var(--crema);border-radius:12px;padding:10px 14px}
+.dif b{color:var(--rojo)}
+.rango-cob{font-family:var(--epic);font-size:clamp(38px,4vw,54px);line-height:1;color:var(--rojo-vivo)}
+.rango-cob span{font-size:.45em;color:var(--crema);opacity:.7;margin:0 .15em}
+.xmarca{display:grid;grid-template-columns:.8fr 1.2fr;gap:12px}
+.xmarca>div{border-radius:16px;padding:14px 16px;background:rgba(255,231,201,.08);font-size:14px;line-height:1.35}
+.xmarca b{display:block;font-family:var(--epic);text-transform:uppercase;font-size:20px;line-height:1;margin-bottom:5px}
+.xmarca .mas25{background:var(--rojo)}
+.xmarca .mas25 b{font-size:28px}
+.sigue{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sigue>div{background:rgba(255,231,201,.13);border-radius:18px;padding:16px 18px}
+.sigue b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--crema);color:var(--rojo);font-family:var(--epic);font-size:18px;margin-bottom:8px}
+.sigue h5{font-family:var(--epic);text-transform:uppercase;font-size:20px;line-height:1;margin-bottom:4px}
+.sigue p{font-size:14.5px;line-height:1.38;opacity:.9}
 /* ---------- Responsive ---------- */
 .in>*,.grid2>*,.caso>*,.portada>*,.mult>*,.disc-wrap>*,.caso>div>*,.grid2>div>*,.mes,.ob{min-width:0}
 .k{overflow-wrap:anywhere}
@@ -325,7 +341,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
   .cifra .n{font-size:22px}
   .esc:nth-child(1){height:90px}.esc:nth-child(2){height:115px}.esc:nth-child(3){height:140px}.esc:nth-child(4){height:165px}.esc:nth-child(5){height:190px}
   .esc-det{grid-template-columns:1fr}.esc-det img{width:80px}
-  .ideas,.vs,.pdfvsweb{grid-template-columns:1fr}
+  .ideas,.vs,.pdfvsweb,.xmarca,.sigue{grid-template-columns:1fr}
   .piezas{grid-template-columns:repeat(2,1fr)}
   .rutas{grid-template-columns:1fr}
   .meses{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -358,6 +374,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
         <div class="k a">Propuesta de trabajo · Noviembre 2026</div>
         <h1 class="epic h1 a d1">Andrés<span class="x">×</span><br><span class="rojo">Pro Motion</span></h1>
         <p class="lead a d2">Correr ya lo haces. Lo que sigue es que <b>cada kilómetro cuente una historia</b> que la gente quiera seguir y que una marca quiera acompañar.</p>
+        <div class="objetivo a d3"><b>El objetivo de hoy:</b> conocerte y mostrarte cómo trabajamos. Después llenas un formulario corto y te envío una <b>propuesta completa y personalizada</b> para tu proyecto.</div>
         <div class="meta-p a d3"><span><i></i>Quiénes somos</span><span><i></i>Dos casos reales</span><span><i></i>El método</span><span><i></i>Tu ruta</span></div>
         <div class="tip a d4"><kbd>←</kbd><kbd>→</kbd> o desliza para avanzar</div>
       </div>
@@ -497,20 +514,21 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
       <div style="display:grid;gap:20px">
         <div class="k a">Paso 1</div>
         <h2 class="epic h2 a d1">Diagnóstico<br><span class="rojo">ProMatch</span></h2>
-        <p class="lead a d2">Una auditoría completa de tu <b>capacidad de desarrollo comercial</b>. No medimos qué tan bonitos son tus videos: medimos el momento real de tu cuenta, cómo amplificarla y cuáles son los primeros pasos.</p>
+        <p class="lead a d2">Te envío un <b>formulario personalizado</b> y analizo lo que tu contenido y tu presencia actual transmiten. No medimos qué tan bonitos son tus videos: medimos tu <b>capacidad de desarrollo comercial</b>, cómo amplificarla y cuáles son los primeros pasos.</p>
         <div class="a d3" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
-          <div class="precio-tag"><b>$35</b><span>valor inicial del diagnóstico</span></div>
+          <div class="precio-tag"><b>$50</b><span>valor del diagnóstico ProMatch</span></div>
           <p style="font-size:15px;flex:1 1 200px;max-width:320px;line-height:1.4"><b>Es tuyo, trabajemos o no juntos.</b> Un punto de partida para ver el futuro comercial que puedes tener como deportista.</p>
         </div>
         <div class="a d4">
           <div class="k" style="margin-bottom:10px">Qué recibes</div>
           <ul class="incluye">
+            <li>Formulario personalizado para conocer tu proyecto</li>
+            <li>Análisis de lo que hoy transmiten tu contenido y tu presencia</li>
+            <li>Tu situación actual: si estás iniciando o ya tienes una base</li>
             <li>Puntaje ProMatch con las variables que lo explican</li>
-            <li>Audiencia real: edad, países y género de quien te sigue</li>
-            <li>Qué contenidos te funcionan y por qué</li>
-            <li>Sectores y marcas que encajan contigo</li>
-            <li>Tus primeros 3 pasos concretos</li>
+            <li>Sectores y marcas que encajan contigo, y tus primeros pasos</li>
           </ul>
+          <p class="dif"><b>¿Y la asesoría?</b> El diagnóstico te dice <b>dónde estás</b>. La asesoría (USD 35) es una sesión para idear <b>qué hacer</b> a partir de ahí.</p>
         </div>
       </div>
       <div class="card a d2">
@@ -539,7 +557,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
       </div>
     </div>
     <div class="rutas a d3" id="rutas">
-      <div class="ruta"><h4>Asesoría o curso</h4><div class="pr">USD 35<small>consultoría de 1 hora · sesión intensiva de 2 h: USD 70</small></div><ul><li>Trabajamos sobre tu diagnóstico</li><li>Tú ejecutas con una guía clara</li><li>Talleres y programas en Pro Academy</li></ul><div class="para">Para quien quiere aprender a hacerlo solo.</div></div>
+      <div class="ruta"><h4>Asesoría de ideación</h4><div class="pr">USD 35<small>por sesión · de 1 a 2 horas como máximo</small></div><ul><li>Qué puedes hacer en este momento</li><li>Hacia dónde puedes ir</li><li>Ideas y alternativas para que las ejecutes tú mismo</li><li>Talleres y cursos en Pro Academy</li></ul><div class="para">Para quien quiere ejecutar por su cuenta, con dirección.</div></div>
       <div class="ruta"><h4>Plan mínimo viable</h4><div class="pr">USD 220<small>al mes · valor de referencia</small></div><ul><li>3 videos</li><li>2 carruseles</li><li>Guía continua de ideación: nuevos formatos para comunicar</li></ul><div class="para">Para empezar a publicar con criterio, sin un gran presupuesto.</div></div>
       <div class="ruta"><h4>Plan de gestión</h4><div class="pr">Desde USD 260<small>al mes · Inicio estratégico · mínimo 3 meses</small></div><ul><li>Narrativa y optimización de perfiles</li><li>Calendario de carreras convertido en contenido</li><li>Producción, publicación e informe</li></ul><div class="para">Para crear constancia y una marca personal sólida.</div></div>
       <div class="ruta"><h4>Plan + coberturas + perfil comercial</h4><div class="pr">Desde USD 450<small>al mes · Crecimiento Pro, según calendario</small></div><ul><li>Todo el plan de gestión</li><li>Coberturas presenciales o a distancia</li><li>Perfil comercial web para marcas</li></ul><div class="para">Para salir a buscar auspiciantes con evidencia.</div></div>
@@ -633,10 +651,11 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
           <div class="paso"><b>4</b><div><h5>De 3 a 5 contenidos con el mismo material</h5><p>Ideal para tus carreras fuera del país: sin pasajes ni viáticos.</p></div></div>
         </div>
         <div class="cob-precio">
-          <div class="k">Dos formas, dos valores</div>
-          <div class="fila"><span>Post carrera<small>Entrega en 72 h · 3 a 5 piezas</small></span><b>USD 90</b></div>
-          <div class="fila"><span>En tiempo real<small>Publicación durante la carrera + resumen final</small></span><b>USD 150</b></div>
-          <p class="nota">Valores de referencia por carrera. Se ajustan según la cantidad de piezas y días.</p>
+          <div class="k">Cobertura a distancia · por carrera</div>
+          <div class="rango-cob">USD 150 <span>a</span> 250</div>
+          <div class="fila"><span>Cantidad de material<small>Cuántas fotos y videos nos puedas enviar</small></span><b>📦</b></div>
+          <div class="fila"><span>Tiempo real o post carrera<small>Publicar durante la carrera o contarla después</small></span><b>⏱️</b></div>
+          <p class="nota">El valor final depende de estas dos variables.</p>
           <img src="../../assets/mini/videografo.webp" alt="" style="width:90px;justify-self:end;filter:invert(1) sepia(1) saturate(0) brightness(1.6);opacity:.85" loading="lazy">
         </div>
       </div>
@@ -669,7 +688,11 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
           <div class="pdf"><b>PDF</b>Se envía, se abre una vez, se olvida. La marca no sabe si alguien lo leyó.</div>
           <div class="web"><b>Web</b>Se comparte, se juega, se mide. La marca gana un espacio propio, nuevo y actual.</div>
         </div>
-        <p class="nota a d4">Con inteligencia artificial hoy se pueden hacer muchísimas cosas. Vamos de menos a más.</p>
+        <div class="xmarca a d4">
+          <div><b>Perfil comercial base</b><span>Según el alcance del servicio</span></div>
+          <div class="mas25"><b>+ USD 25</b><span>por cada versión personalizada para una marca: el mismo perfil, enfocado en esa marca o negocio y con una idea de activación para ella</span></div>
+        </div>
+        <p class="nota a d5">Con inteligencia artificial hoy se pueden hacer muchísimas cosas. Vamos de menos a más.</p>
       </div>
       <div class="a d2" style="display:grid;gap:10px">
         <div class="k">Pruébalo · toca o presiona espacio para saltar</div>
@@ -685,14 +708,20 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
 <!-- 14 · CIERRE -->
 <section class="slide rojo-sec" id="s14" data-t="Próximo paso" data-dark>
   <div class="in">
-    <div class="k a">Próximo paso</div>
-    <h2 class="epic a d1" style="font-size:clamp(42px,7vw,104px)">Empecemos por<br>el diagnóstico</h2>
-    <div class="ruta-final a d2">
-      <span class="y">Diagnóstico · $35</span><i>»</i><span>Tu ruta</span><i>»</i><span>Plan de 3 o 6 meses</span><i>»</i><span>Personalidad</span><i>»</i><span>Oferta comercial</span>
+    <div class="k a">¿Cómo seguimos?</div>
+    <h2 class="epic a d1" style="font-size:clamp(40px,6vw,92px)">Tu propuesta,<br>hecha a tu medida</h2>
+    <div class="sigue a d2">
+      <div><b>1</b><h5>Hoy conversamos</h5><p>Me cuentas tu proyecto, tus carreras y lo que quieres lograr.</p></div>
+      <div><b>2</b><h5>Llenas un formulario corto</h5><p>Con eso entiendo tu caso a fondo.</p></div>
+      <div><b>3</b><h5>Te envío tu propuesta completa</h5><p>Mi recomendación personalizada para tu proyecto y, si quieres ir más allá, el resto de ofertas disponibles.</p></div>
     </div>
-    <p class="frase a d3">Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
+    <p class="a d3" style="font-size:16px;max-width:760px">Siempre de menos a más: esto es un proceso y una trayectoria, no tiene por qué ser abrumador desde el inicio. Si quieres ir más rápido (coberturas, plan estratégico o tu perfil comercial con ideas reales y factibles para posibles auspiciantes), también lo desarrollamos.</p>
+    <div class="ruta-final a d3">
+      <span class="y">Diagnóstico · $50</span><i>»</i><span>Tu ruta</span><i>»</i><span>Plan de 3 o 6 meses</span><i>»</i><span>Personalidad</span><i>»</i><span>Oferta comercial</span>
+    </div>
+    <p class="frase a d4" style="font-size:clamp(16px,1.7vw,22px)">Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
     <div class="a d4" style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn c" target="_blank" rel="noopener" href="https://wa.me/593984678812?text=Hola%20Daniel%2C%20quiero%20mi%20diagn%C3%B3stico%20ProMatch.">Quiero mi diagnóstico »</a>
+      <a class="btn c" target="_blank" rel="noopener" href="https://wa.me/593984678812?text=Hola%20Daniel%2C%20quiero%20recibir%20mi%20propuesta%20personalizada.">Quiero mi propuesta »</a>
       <a class="btn" target="_blank" rel="noopener" href="https://promotionec.com/">Conoce Pro Motion</a>
     </div>
     <p style="font-size:15px;opacity:.85" class="a d5">Daniel Espinoza · +593 98 467 8812 · @pro_motion.ec</p>
@@ -784,7 +813,7 @@ $('#clipsLuis').onclick=e=>{const b=e.target.closest('.clip');if(!b)return;const
 
 /* ---------- Escalera ---------- */
 const esc=[
- ['Diagnóstico ProMatch','Una auditoría de tu momento comercial: audiencia, contenido, valores y marcas afines. Valor inicial USD 35.','../../assets/img/boar_magnify.webp'],
+ ['Diagnóstico ProMatch','Formulario personalizado y análisis de lo que hoy transmiten tu contenido y tu presencia: tu punto de partida comercial. Valor: USD 50.','../../assets/img/boar_magnify.webp'],
  ['Ruta según tu etapa','Según tu objetivo y presupuesto: asesoría o curso, plan mínimo viable, plan de gestión o plan con coberturas.','../../assets/escenas/etapa-1.webp'],
  ['Plan de acción','Un plan de 3 o 6 meses con objetivos, calendario de carreras y entregables mes a mes.','../../assets/escenas/tool-plan.webp'],
  ['Personalidad y contenido','Te ayudamos a encontrar qué te hace distinto y lo convertimos en formatos que entretienen. Reutilizamos tu material al máximo.','../../assets/img/sloth_corre.webp'],
@@ -906,9 +935,9 @@ const juego=(()=>{
     c.font='600 16px "Clash Display",Arial';c.fillStyle='rgba(255,231,201,.7)';c.fillText('Patrocinado por '+m,28,82);
     if(st.state!=='play'){
       c.fillStyle='rgba(28,28,28,.82)';c.fillRect(0,0,W,H);c.textAlign='center';
-      c.fillStyle='#E52322';c.font='800 64px "GC Epic Pro",Impact';
+      c.fillStyle='#E52322';c.font='800 '+(st.state==='intro'?46:60)+'px "GC Epic Pro",Impact';
       const tit=st.state==='intro'?'MEDIA MARATÓN '+m:st.state==='win'?'¡LLEGASTE A LA META!':'¡CONO!';
-      c.fillText(tit.length>26?tit.slice(0,26):tit,W/2,H/2-30);
+      c.fillText(tit.length>34?tit.slice(0,34):tit,W/2,H/2-30);
       c.fillStyle='#FFE7C9';c.font='600 24px "Clash Display",Arial';
       c.fillText(st.state==='intro'?'Toca para empezar · salta los conos hasta los 21,1 km':st.state==='win'?m+' te espera con la medalla · toca para repetir':'Llegaste a '+st.km.toFixed(1)+' km · toca para intentar de nuevo',W/2,H/2+20);
       c.font='600 17px "Clash Display",Arial';c.fillStyle='rgba(255,231,201,.6)';c.fillText('Así una marca gana un espacio dentro de tu perfil comercial',W/2,H/2+60);
