@@ -803,13 +803,73 @@
     function evaluar(t, i) {
       var n = norm(t), p = 0, chips = [], palabras = n.split(/\s+/).filter(Boolean).length;
       CRIT.forEach(function (c) { if (c.re.test(n)) { p += c.p; chips.push([c.t, 1]); } });
-      if (EXTRA[i][1].test(n)) { p += 8; chips.push([EXTRA[i][0], 1]); }
+      if (EXTRA[i][1].test(n)) { p += 11; chips.push([EXTRA[i][0], 1]); }
       MALOS.forEach(function (c) {
         if (c.re.test(n) && !(c.p === -4 && chips.length > 1)) { p += c.p; chips.push([c.t, 0]); }
       });
       if (palabras < 6) { p -= 6; chips.push(['Respuesta muy corta', 0]); }
       if (!chips.some(function (c) { return c[1]; })) chips.push(['No le diste una razón de negocio', 0]);
       return { p: Math.max(0, Math.min(25, p)), chips: chips };
+    }
+
+    // ---- Réplicas del jabalí según lo que escribió el deportista ----
+    var CIUDADES = { cuenca: 'Cuenca', quito: 'Quito', guayaquil: 'Guayaquil', ambato: 'Ambato', loja: 'Loja', manta: 'Manta', machala: 'Machala', riobamba: 'Riobamba', ibarra: 'Ibarra', azogues: 'Azogues', latacunga: 'Latacunga', esmeraldas: 'Esmeraldas', portoviejo: 'Portoviejo', 'santo domingo': 'Santo Domingo', salinas: 'Salinas', gualaceo: 'Gualaceo', paute: 'Paute', canar: 'Cañar', imbabura: 'Imbabura', galapagos: 'Galápagos', ecuador: 'Ecuador' };
+    var REDES = { instagram: 'Instagram', tiktok: 'TikTok', 'tik tok': 'TikTok', facebook: 'Facebook', youtube: 'YouTube', strava: 'Strava', twitter: 'X', linkedin: 'LinkedIn' };
+    var DIAS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    function elige(arr, k) { return arr[(k + arr.length) % arr.length]; }
+    function contexto(t) {
+      var n = norm(t), c = { n: n };
+      var cifra = t.match(/\d[\d.,]*\s*(mil|k|millones|m\b)?/i);
+      if (cifra) c.cifra = cifra[0].trim().replace(/\s+/g, ' ');
+      var pct = t.match(/\d+[.,]?\d*\s*%/); if (pct) c.pct = pct[0].replace(/\s/g, '');
+      c.redes = Object.keys(REDES).filter(function (r) { return n.indexOf(r) >= 0; }).map(function (r) { return REDES[r]; }).filter(function (v, i, a) { return a.indexOf(v) === i; });
+      Object.keys(CIUDADES).some(function (x) { if (new RegExp('\\b' + x + '\\b').test(n)) { c.ciudad = CIUDADES[x]; return true; } });
+      DIAS.some(function (d) { if (n.indexOf(d) >= 0) { c.dia = d.replace('miercoles', 'miércoles'); return true; } });
+      var logro = n.match(/\b(subcampeon|campeon|medalla|podio|titulo|record|gane|primer lugar)/);
+      if (logro) c.logro = { subcampeon: 'tu subcampeonato', campeon: 'tu título de campeón', medalla: 'tus medallas', podio: 'tus podios', titulo: 'tus títulos', record: 'tu récord', gane: 'lo que ganaste', 'primer lugar': 'ese primer lugar' }[logro[1]];
+      var act = n.match(/\b(activacion(es)?|evento[s]?|clinica[s]?|serie|reto[s]?|carrera[s]? con|experiencia[s]?|concurso[s]?|sorteo[s]?|video[s]?|contenido[s]?|campana[s]?)\b/); if (act) c.act = act[0];
+      c.pide = /\b(apoyo|apoyar|apoyarme|ayuda|ayudar|ayudarme|por favor|porfa|necesito|regal|donar|donacion)/.test(n);
+      c.barato = /\b(cualquier|lo que sea|lo que puedan|poquito|algo es algo)/.test(n);
+      c.seguidores = /\b(seguidores|followers|seguidor|me siguen|redes|cuentas?)\b/.test(n) || (c.redes.length > 0 && !!c.cifra);
+      c.calidad = /\b(zona|ciudad|audiencia|clientes?|compran|edad|entre \d|mujeres|hombres|interaccion|engagement|alcance|vistas|reproducciones)\b/.test(n) || !!c.pct || !!c.ciudad;
+      c.comunidad = /\b(comunidad|club|grupo|familias|escuela|barrio|corredores|ciclistas|deportistas)\b/.test(n);
+      c.marketing = /\b(marketing|trimestre|campana|lanzamiento|activar marca|presupuesto de)/.test(n);
+      c.despues = /\b(proximo ano|el otro ano|mas adelante|despues|cuando tengan)\b/.test(n);
+      c.envio = /\b(te la envio|te lo envio|te envio|la mando|te mando|esta semana|por correo|ok|perfecto|dale)\b/.test(n);
+      c.pregunta = t.indexOf('?') >= 0;
+      c.reunion = !!c.dia || /\b(reunion|presento|presentar|presentacion|llamada|minutos|quien (mas )?decide|objetivo)\b/.test(n);
+      c.corta = n.split(/\s+/).filter(Boolean).length < 6;
+      return c;
+    }
+    function replica(t, tipo, k) {
+      var c = contexto(t), redes = c.redes.join(' y '), op = [];
+      // Primero lo que más le molesta a un gerente
+      if (c.pide) op.push(['mal', '¿Apoyo? Yo no manejo un fondo de ayuda, manejo metas de ventas. ¿Qué gana mi marca con esto?', 'Todos los que se sientan ahí me piden ayuda. Yo necesito que alguien me ayude a vender.']);
+      if (c.barato) op.push(['mal', 'Si tú mismo dices “cualquier aporte”, ¿cuánto crees que vale lo que me ofreces?', '“Lo que puedan”… así no se negocia. Ponle un valor a lo que traes.']);
+      if (k === 1 && c.despues) op.push(['mal', '¿El próximo año? Entonces ya te despediste de este.', 'Si me dices “más adelante”, yo escucho “nunca”.']);
+      if (k === 3 && c.envio && !c.reunion) op.push(['duda', 'Perfecto… la reviso cuando tenga un espacio. (Spoiler: casi nunca tengo espacio.)', 'Ok, mándala al correo. Ya tengo nueve propuestas esperando ahí.']);
+      if (c.seguidores && c.cifra && !c.calidad) op.push(['duda', '¿' + c.cifra + (redes ? ' en ' + redes : ' seguidores') + '? Seguidores tiene cualquiera. ¿Cuántos de ellos le compran a mi marca?', c.cifra + (redes ? ' en ' + redes : '') + ', ok… pero el influencer de la otra mesa tiene el triple. ¿Qué tienes tú que él no?']);
+      if (c.seguidores && !c.cifra && !c.calidad) op.push(['duda', '“Muchos seguidores” no es un dato. ¿Cuántos, de dónde son y qué compran?', 'Las redes las tiene todo el mundo. Dame un número que me sirva.']);
+      if (c.logro && !c.calidad && !c.act) op.push(['duda', 'Felicitaciones por ' + c.logro + '. Pero las otras nueve solicitudes también traen medallas.', 'Lo de ' + c.logro + ' habla de ti. Yo necesito saber qué hace por mi marca.']);
+      if (c.corta) op.push(['duda', '¿Eso es todo? Con eso no convenzo ni a mi jefe ni a nadie.', 'Muy corto. Dame algo con lo que yo pueda defenderte en la reunión de gerencia.']);
+      // Lo que le interesa
+      if (c.seguidores && c.calidad) op.push(['bien', (c.cifra ? c.cifra + (redes ? ' en ' + redes : '') + ' y ' : 'Y ') + (c.pct ? 'el ' + c.pct + ' en mi zona… ' : 'además gente que me sirve… ') + 'eso ya es otra conversación.', 'Ok, no me hablaste de seguidores, me hablaste de clientes. Sigue.']);
+      if (c.ciudad) op.push(['bien', c.ciudad + '… justo es una plaza donde queremos crecer este año. ¿Cómo llegarías a esa gente?', '¿Tu gente está en ' + c.ciudad + '? Ahí sí tengo puntos de venta. Te escucho.']);
+      if (c.pct && !c.seguidores) op.push(['bien', 'Me gustan los números. ¿Ese ' + c.pct + ' lo puedes respaldar con un reporte?', c.pct + '… ok, eso ya lo puedo poner en una presentación.']);
+      if (k === 1 && c.marketing) op.push(['bien', 'Si lo planteas como campaña de marketing y no como auspicio, ahí sí tengo de dónde mover presupuesto.', 'Ok, del rubro de auspicios no hay nada… pero de marketing sí. Sigue.']);
+      var ACT = { activacion: 'una activación', evento: 'un evento', clinica: 'una clínica', serie: 'una serie', reto: 'un reto', experiencia: 'una experiencia', concurso: 'un concurso', sorteo: 'un sorteo', video: 'un video', contenido: 'contenido', campana: 'una campaña' };
+      var actTxt = c.act ? (ACT[c.act.replace(/(es|s)$/, '').replace(/ con$/, '')] || 'esa idea') : '';
+      if (c.act) op.push(['bien', '¿' + actTxt.charAt(0).toUpperCase() + actTxt.slice(1) + '? Eso me interesa. ¿Qué haríamos exactamente y cómo lo mido?', 'Una propuesta concreta, por fin. Cuéntame cómo medimos si funcionó.']);
+      if (c.comunidad) op.push(['bien', 'Una comunidad que te sigue de verdad vale más que mil likes. ¿Cuánta gente mueves?', 'Eso de tu comunidad me interesa. ¿Los podemos convertir en clientes?']);
+      if (c.reunion) op.push(['bien', (c.dia ? '¿El ' + c.dia + '? ' : '') + 'Está bien, pero trae los números y quince minutos, no más.', 'Me gusta que ya pienses en el siguiente paso. Agéndalo con mi asistente.']);
+      if (c.pregunta) op.push(['bien', 'Me haces preguntas a mí. Casi nadie lo hace, y eso me gusta.', 'Buena pregunta. Eso significa que quieres entender mi negocio.']);
+      // Elegir la réplica que coincide con la reacción del jabalí; si no hay, la más cercana
+      var pref = tipo === 'duda' ? ['duda', 'mal', 'bien'] : tipo === 'mal' ? ['mal', 'duda'] : ['bien'];
+      for (var i = 0; i < pref.length; i++) {
+        var hit = op.filter(function (o) { return o[0] === pref[i]; })[0];
+        if (hit) return hit[1 + (k % 2)];
+      }
+      return REACC[tipo][k % 4];
     }
 
     function tipea(el, t, cb) {
@@ -864,7 +924,7 @@
           gesto(tipo); estado(tipo === 'bien' ? 'bien' : tipo === 'mal' ? 'mal' : 'base'); emo(EMOTE[tipo], tipo === 'bien' ? '#2f8f45' : tipo === 'mal' ? 'var(--negro)' : 'var(--rojo)'); flota(res.p);
           if (tipo === 'mal') { escena.classList.remove('sacude'); void escena.offsetWidth; escena.classList.add('sacude'); }
           if (silencio) tipea(gEl, '¿Hola? Mi tiempo también vale.');
-          else tipea(gEl, interes <= 0 ? 'Mira, mejor lo dejamos aquí.' : REACC[tipo][k % 4]);
+          else { var rep = replica(t, tipo, k); tipea(gEl, interes <= 0 ? rep + ' Mejor lo dejamos aquí.' : rep); }
           var mejor = r.o.filter(function (x) { return x[1] >= 20; })[0][0];
           if (res.p < 18) faltas.push(mejor);
           var ult = k >= R.length - 1 || interes <= 0;
