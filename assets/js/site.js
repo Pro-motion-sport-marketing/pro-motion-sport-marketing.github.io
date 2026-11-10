@@ -1604,7 +1604,7 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
         var nombres = otros.map(function (x) { return CAT[x] ? CAT[x].n : x; }).join(', ') || (d.referencia || 'mi compra');
         var esCurso = otros.some(function (x) { return /^curso/.test(x); }), esPM = otros.indexOf('promatch-diagnostico') >= 0;
         a.querySelector('.lead').textContent = esPM
-          ? 'En seguida te envío por WhatsApp el formulario ProMatch para empezar tu diagnóstico. Si quieres adelantarte, escríbeme con tu número de transacción.'
+          ? 'Siguiente paso: llena tu formulario ProMatch y envíame por WhatsApp las capturas de tu audiencia. En 4 días hábiles desde que los recibo, te entrego tu propuesta personalizada con el diagnóstico y el plan de acción para tu primera etapa.'
           : esCurso
           ? 'Te escribimos para darte acceso a tu curso. Si quieres adelantarte, envíanos tu número de transacción por WhatsApp.'
           : 'Ahora coordinemos tu sesión. Escríbenos por WhatsApp con tu número de transacción y agendamos fecha y hora.';
@@ -1612,6 +1612,7 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
         b.lastChild.nodeValue = esPM ? 'Pedir mi formulario ProMatch' : esCurso ? 'Escribir por WhatsApp' : 'Agendar mi sesión';
         b.href = waLink('Hola Daniel, acabo de pagar en la web: ' + nombres + '. Transacción ' + (d.transaccion || id) + '.');
         b.target = '_blank'; b.rel = 'noopener';
+        if (esPM) { b.href = '/promatch/formulario/'; b.removeAttribute('target'); b.lastChild.nodeValue = 'Llenar mi formulario ProMatch'; }
       }
       var filas = [['Monto', 'USD ' + (d.monto || 0).toFixed(2)], ['Transacción', d.transaccion], ['Autorización', d.autorizacion], ['Tarjeta', d.tarjeta],
         ['Fecha', d.fecha ? new Date(d.fecha).toLocaleString('es-EC') : null], ['Detalle', items.length ? items.map(function (x) { return (x.q > 1 ? x.q + 'x ' : '') + x.n; }).join(' + ') : d.referencia]];
