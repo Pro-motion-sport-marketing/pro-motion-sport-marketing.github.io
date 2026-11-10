@@ -767,7 +767,13 @@
     var emote = $('.mj-emote', sim), ptsEl = $('.mj-pts', sim), barra = $('.mj-barra i', sim), ronda = $('.mj-ronda b', sim);
     var arco = $('.mj-reloj .arco', sim), relojEl = $('.mj-reloj', sim), relojN = $('.mj-reloj b', sim);
     var ctrl = $('.mj-ctrl', sim), form = $('.mj-form', sim), txt = $('#mj-txt'), enviar = $('.mj-enviar', sim), cartas = $('.mj-cartas', sim), fb = $('.mj-fb', sim), cont = $('.mj-cont', sim);
-    var base = sim.dataset.img;
+    var base = sim.dataset.img, pj = '', depImg = $('.mj-dep img', sim);
+    function estado(e) {
+      if (!pj) return;
+      depImg.src = base + 'mj_' + pj + '_' + e + '.webp?v=1';
+      depImg.classList.remove('cambia'); void depImg.offsetWidth; depImg.classList.add('cambia');
+      sim.setAttribute('data-pjest', e);
+    }
     var GESTOS = { espera: 'boar_crossed', bien: 'boar_magnify', duda: 'boar_confused', mal: 'boar_walk', vete: 'boar_walk', trato: 'handshake' };
     var REACC = {
       bien: ['Mmm… eso sí me interesa. Sigue.', 'Ok, ahora estás hablando de mi negocio.', 'Interesante. Cuéntame más.', 'Eso no me lo había ofrecido nadie esta semana.'],
@@ -835,7 +841,7 @@
       var r = R[k]; ocupado = false;
       ronda.textContent = k + 1; fb.hidden = true; cartas.hidden = true; gTu.hidden = true;
       txt.value = ''; cont.textContent = '0/280';
-      gesto(k ? 'duda' : 'espera');
+      gesto(k ? 'duda' : 'espera'); estado('base');
       tipea(gEl, r.q.replace(/[“”]/g, ''), function () { bloquear(false); txt.focus({ preventScroll: true }); arrancaReloj(); });
     }
 
@@ -845,6 +851,7 @@
       if (silencio) { res = { p: 0, chips: [['Te quedaste en silencio', 0]] }; t = '…'; }
       else if (carta) { res = { p: carta[1], chips: [[carta[2], carta[1] >= 20 ? 1 : 0]] }; t = carta[0]; }
       else res = evaluar(t, k);
+      estado(silencio ? 'mal' : 'idea');
       dep.classList.remove('habla'); void dep.offsetWidth; dep.classList.add('habla');
       gEl.hidden = true; gTu.classList.remove('viejo');
       tipea(gTu, t, function () {
@@ -854,7 +861,7 @@
           pts += res.p;
           var delta = tipo === 'bien' ? 22 : tipo === 'duda' ? -4 : -20;
           setInteres(interes + delta);
-          gesto(tipo); emo(EMOTE[tipo], tipo === 'bien' ? '#2f8f45' : tipo === 'mal' ? 'var(--negro)' : 'var(--rojo)'); flota(res.p);
+          gesto(tipo); estado(tipo === 'bien' ? 'bien' : tipo === 'mal' ? 'mal' : 'base'); emo(EMOTE[tipo], tipo === 'bien' ? '#2f8f45' : tipo === 'mal' ? 'var(--negro)' : 'var(--rojo)'); flota(res.p);
           if (tipo === 'mal') { escena.classList.remove('sacude'); void escena.offsetWidth; escena.classList.add('sacude'); }
           if (silencio) tipea(gEl, '¿Hola? Mi tiempo también vale.');
           else tipea(gEl, interes <= 0 ? 'Mira, mejor lo dejamos aquí.' : REACC[tipo][k % 4]);
@@ -874,10 +881,10 @@
       paraReloj(); bloquear(true); fb.hidden = true; cartas.hidden = true; ctrl.hidden = true;
       var nota = Math.round(pts / (R.length * 25) * 100), salio = interes <= 0;
       var v, frase;
-      if (salio) { gesto('vete'); frase = 'Gracias por venir. Te escribimos.'; v = 'El gerente se levantó antes de terminar. Ninguna marca compra un pedido de ayuda: compra una razón de negocio.'; }
-      else if (nota >= 80) { gesto('trato'); frase = '¿Te parece el jueves a las diez? Trae los números.'; v = 'Saliste con una segunda reunión agendada. Así empiezan los auspicios de verdad.'; }
-      else if (nota >= 50) { gesto('duda'); frase = 'Envíame la propuesta por correo y la reviso…'; v = 'Te dijeron “envíame una propuesta y la reviso”. Ya sabes lo que significa.'; }
-      else { gesto('mal'); frase = 'Bueno… cualquier cosa te escribo.'; v = 'La reunión terminó sin un siguiente paso.'; }
+      if (salio) { gesto('vete'); estado('mal'); frase = 'Gracias por venir. Te escribimos.'; v = 'El gerente se levantó antes de terminar. Ninguna marca compra un pedido de ayuda: compra una razón de negocio.'; }
+      else if (nota >= 80) { gesto('trato'); estado('bien'); frase = '¿Te parece el jueves a las diez? Trae los números.'; v = 'Saliste con una segunda reunión agendada. Así empiezan los auspicios de verdad.'; }
+      else if (nota >= 50) { gesto('duda'); estado('base'); frase = 'Envíame la propuesta por correo y la reviso…'; v = 'Te dijeron “envíame una propuesta y la reviso”. Ya sabes lo que significa.'; }
+      else { gesto('mal'); estado('mal'); frase = 'Bueno… cualquier cosa te escribo.'; v = 'La reunión terminó sin un siguiente paso.'; }
       gTu.hidden = true; tipea(gEl, frase);
       setTimeout(function () {
         var d = document.createElement('div'); d.className = 'mj-final';
@@ -906,7 +913,17 @@
       cartas.hidden = false;
       $$('button', cartas).forEach(function (b) { b.onclick = function () { responder(null, o[+b.dataset.i]); }; });
     };
-    $('.sim-empezar', sim).onclick = function () { $('.mj-inicio', sim).remove(); ctrl.hidden = false; bloquear(true); setInteres(30); pregunta(); };
+    $$('.mj-pj', sim).forEach(function (b) {
+      b.onclick = function () {
+        pj = b.dataset.pj;
+        $$('.mj-pj', sim).forEach(function (x) { x.classList.toggle('on', x === b); });
+        $('.sim-empezar', sim).disabled = false;
+        ['base', 'idea', 'bien', 'mal'].forEach(function (e) { new Image().src = base + 'mj_' + pj + '_' + e + '.webp?v=1'; });
+        estado('base');
+      };
+    });
+    $('.sim-empezar', sim).onclick = function () {
+      if (!pj) return; $('.mj-inicio', sim).remove(); ctrl.hidden = false; bloquear(true); setInteres(30); pregunta(); };
   })();
 
   /* ---------- Academy: plan de contenido en 3 pasos ---------- */
