@@ -1510,7 +1510,8 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
     var h = '';
     if (pagar) h += '<div class="carro-total"><span>Total a pagar en línea</span><b>' + usd(pagar) + '</b></div>' +
       '<button type="button" class="btn rojo carro-pagar" data-pagar>Pagar ' + usd(pagar) + ' con tarjeta »</button>' +
-      '<p class="carro-seg">Pago seguro con tarjeta de crédito o débito vía Payphone.</p>';
+      '<p class="carro-seg">Pago seguro con tarjeta de crédito o débito vía Payphone.</p>' +
+      '<a class="btn crema" href="#" data-transferencia>Pagar por transferencia »</a>';
     if (cotizar.length) h += '<p class="carro-cot-n">' + (pagar ? 'Los productos marcados “se cotiza” no se cobran ahora: ' : '') + 'te enviamos la cotización por WhatsApp.</p>' +
       '<a class="btn' + (pagar ? ' crema' : ' rojo') + '" href="#" data-cotizar>Cotizar por WhatsApp »</a>';
     h += '<p class="carro-aviso" aria-live="polite"></p>';
@@ -1523,6 +1524,12 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
       var p = CAT[x.id]; return '• ' + (x.q > 1 ? x.q + 'x ' : '') + p.n + (p.precio ? ' (USD ' + p.precio * x.q + ')' : '');
     });
     return 'Hola Daniel, quiero cotizar esto desde la web de Pro Motion:\n' + lineas.join('\n');
+  }
+
+  function msgTransferencia() {
+    var c = leer().filter(function (x) { return CAT[x.id].precio; }), tot = 0;
+    var l = c.map(function (x) { var p = CAT[x.id]; tot += p.precio * x.q; return '• ' + (x.q > 1 ? x.q + 'x ' : '') + p.n + ' (USD ' + p.precio * x.q + ')'; });
+    return 'Hola Daniel, quiero pagar por transferencia mi compra en la web de Pro Motion:\n' + l.join('\n') + '\nTotal: USD ' + tot + '\n¿Me envías los datos para transferir?';
   }
 
   function pagar(btn) {
@@ -1543,7 +1550,7 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-carrito],[data-comprar],[data-abrir-carrito],[data-cerrar-carrito],[data-del],[data-q],[data-pagar],[data-cotizar]');
+    var t = e.target.closest('[data-carrito],[data-comprar],[data-abrir-carrito],[data-cerrar-carrito],[data-del],[data-q],[data-pagar],[data-cotizar],[data-transferencia]');
     if (!t) return;
     if (t.dataset.carrito) { e.preventDefault(); agregar(t.dataset.carrito); }
     else if (t.dataset.comprar) { e.preventDefault(); agregar(t.dataset.comprar); }
@@ -1554,6 +1561,7 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
       var c = leer(); c.forEach(function (x) { if (x.id === t.dataset.id) x.q = Math.max(1, Math.min(20, x.q + +t.dataset.q)); }); guardar(c);
     }
     else if (t.hasAttribute('data-pagar')) pagar(t);
+    else if (t.hasAttribute('data-transferencia')) { e.preventDefault(); window.open(waLink(msgTransferencia()), '_blank', 'noopener'); }
     else if (t.hasAttribute('data-cotizar')) { e.preventDefault(); window.open(waLink(mensaje(leer().some(function (x) { return CAT[x.id].precio; }))), '_blank', 'noopener'); }
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !caja.hidden) cerrar(); });

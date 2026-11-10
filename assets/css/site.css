@@ -3214,6 +3214,7 @@ body.carro-abierto{overflow:hidden}
 .carro-aviso{font-size:14px;color:var(--rojo);min-height:0}
 .carro-aviso a{color:inherit}
 .carro-pagar[disabled]{opacity:.6;cursor:wait}
+.carro-pie .btn.crema{border:2px solid var(--negro)}
 
 /* Tarjetas de curso */
 .cursos-3{grid-template-columns:repeat(3,minmax(0,1fr))}
