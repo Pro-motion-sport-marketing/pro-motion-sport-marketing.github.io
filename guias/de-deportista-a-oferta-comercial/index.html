@@ -387,6 +387,192 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
   .top a{display:none}
 }
 
+
+/* ================= CAPÍTULOS 2 A 4 (contenido pagado) ================= */
+.cap.c-n2 .num{background:var(--negro)} .cap.c-n3 .num{background:var(--rojo)} .cap.c-n4 .num{background:var(--negro)}
+.cap .pj.der{left:auto;right:-8%;bottom:-4%;width:min(32vw,190px)}
+.cx{padding:80px 0 90px}
+.cx h2{font-size:clamp(38px,6.6vw,80px)}
+.cx h3{font-size:clamp(30px,5vw,56px)}
+.cx .lead{max-width:680px;margin-top:18px}
+.cx.crema{background:var(--crema)}
+.cx.oscuro{background:var(--negro);color:var(--crema)}
+.cx.oscuro .lead{color:rgba(255,231,201,.86)} .cx.oscuro .lead b{color:var(--crema)}
+.cx .kicker{color:var(--rojo)} .cx.oscuro .kicker{color:var(--rojo-vivo)}
+.panel{background:var(--crema);padding:24px 20px 26px;clip-path:polygon(0 1%,100% 0,99.5% 100%,.5% 98.5%);margin-top:34px}
+.cx.crema .panel{background:#fff8ef}
+.panel .q{font-family:var(--epic);text-transform:uppercase;font-size:clamp(22px,3.4vw,34px);line-height:1;margin:6px 0 4px}
+.panel .hint{font-size:15px;opacity:.7}
+.btn.chico{font-size:16px;padding:13px 18px 11px}
+
+/* --- Ordenar el caos --- */
+.c2-orden{position:relative;margin-top:22px;min-height:440px;transition:min-height .5s}
+.c2-ficha{position:absolute;width:min(46%,250px);background:#fff;border:2px solid var(--negro);padding:12px 14px;font-size:15px;line-height:1.3;box-shadow:0 6px 0 rgba(0,0,0,.12);transition:left .7s cubic-bezier(.2,1.2,.4,1),top .7s cubic-bezier(.2,1.2,.4,1),transform .7s cubic-bezier(.2,1.2,.4,1),width .7s,background .4s}
+.c2-ficha b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris,#8D8680);margin-bottom:3px}
+.c2-ficha .nuevo{display:none}
+.c2-cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;opacity:0;transition:opacity .4s;pointer-events:none}
+.c2-cols div{border-top:5px solid var(--rojo);padding-top:8px;font-family:var(--epic);text-transform:uppercase;font-size:clamp(15px,2.2vw,22px);line-height:1}
+.c2-orden.ok .c2-cols{opacity:1}
+.c2-orden.ok .c2-ficha{transform:none!important;background:var(--crema)}
+.c2-orden.ok .c2-ficha .viejo{display:none} .c2-orden.ok .c2-ficha .nuevo{display:block}
+.c2-orden.ok .c2-ficha b{color:var(--rojo)}
+.c2-res{margin-top:16px;font-size:18px;min-height:28px}
+.c2-res b{color:var(--rojo)}
+@media (max-width:640px){.c2-orden.ok .c2-cols div{font-size:13px}}
+
+/* --- Tríada --- */
+.triada{display:grid;gap:6px;margin-top:30px}
+.triada span{font-family:var(--epic);text-transform:uppercase;font-size:clamp(40px,9vw,120px);line-height:.88}
+.triada span:nth-child(1){color:var(--tinta);opacity:.25;text-decoration:line-through;text-decoration-thickness:.08em;text-decoration-color:var(--rojo)}
+.triada span:nth-child(n+2){color:var(--rojo)}
+
+/* --- Pedir / negociar --- */
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:30px}
+.pn div{padding:16px 18px;font-size:clamp(17px,2.2vw,22px);line-height:1.2}
+.pn .p{background:rgba(42,38,38,.08)} .pn .n{background:var(--negro);color:var(--crema)}
+.pn .p b{color:var(--gris,#8D8680)} .pn .n b{color:var(--rojo-vivo)}
+.pn .t{font-family:var(--epic);text-transform:uppercase;font-size:26px}
+
+/* --- Tres ofertas --- */
+.ofertas-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:34px}
+.ofertas-tabs button{font:inherit;border:2px solid var(--crema);background:transparent;color:var(--crema);padding:14px 10px;cursor:pointer;text-align:left;display:grid;gap:4px;transition:background .2s,color .2s}
+.ofertas-tabs button span{font-family:var(--epic);font-size:30px;line-height:1;color:var(--rojo-vivo)}
+.ofertas-tabs button b{font-family:var(--epic);text-transform:uppercase;font-size:clamp(14px,1.9vw,20px);line-height:1}
+.ofertas-tabs button.on{background:var(--crema);color:var(--negro)}
+.ofertas-tabs button.on span{color:var(--rojo)}
+.oferta{display:none;margin-top:18px;background:var(--crema);color:var(--tinta);padding:26px 22px 28px;clip-path:polygon(0 1%,100% 0,99.5% 100%,.5% 98.5%)}
+.oferta.on{display:block;animation:entra .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.oferta h3{font-size:clamp(28px,4.4vw,48px)}
+.oferta .lead{color:var(--tinta)}
+.oferta .lema{display:inline-block;margin-top:16px}
+/* mapa de competición */
+.mapa{margin-top:24px;position:relative;padding:20px 0 0}
+.mapa svg{width:100%;height:auto;display:block}
+.mapa-hitos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.mapa-hitos button{font:inherit;font-size:14px;border:2px solid var(--negro);background:#fff8ef;padding:10px 8px;cursor:pointer;text-align:left;line-height:1.15}
+.mapa-hitos button b{display:block;font-family:var(--epic);text-transform:uppercase;font-size:17px}
+.mapa-hitos button.on{background:var(--rojo);color:var(--crema);border-color:var(--rojo)}
+.mapa-txt{margin-top:12px;background:var(--negro);color:var(--crema);padding:16px 18px;font-size:17px;min-height:84px}
+.mapa-txt b{color:var(--rojo-vivo)}
+@media (max-width:600px){.mapa-hitos{grid-template-columns:repeat(2,1fr)}}
+/* experiencias */
+.exp{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.exp button{font:inherit;font-size:15px;border:2px solid var(--negro);background:transparent;padding:9px 13px;cursor:pointer;border-radius:30px;transition:background .2s,color .2s,transform .2s cubic-bezier(.2,1.6,.4,1)}
+.exp button.on{background:var(--negro);color:var(--crema);transform:rotate(-2deg) scale(1.04)}
+.amplif{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-top:24px}
+.amplif .disco{position:relative;width:150px;aspect-ratio:1;border-radius:50%;background:var(--rojo);display:grid;place-items:center;color:var(--crema);font-family:var(--epic);font-size:44px}
+.amplif .disco i{position:absolute;inset:-12px;border:3px solid var(--rojo);border-radius:50%;opacity:0;animation:onda 2.4s infinite}
+.amplif .disco i:nth-child(2){animation-delay:.8s}.amplif .disco i:nth-child(3){animation-delay:1.6s}
+.amplif.apagado .disco i{animation:none}
+@keyframes onda{from{transform:scale(.9);opacity:.8}to{transform:scale(1.7);opacity:0}}
+.amplif p{font-size:17px}
+.amplif p b{color:var(--rojo)}
+.gasto{margin-top:22px}
+.gasto-barra{position:relative;height:16px;background:rgba(42,38,38,.12);margin-top:8px}
+.gasto-barra i{position:absolute;left:0;top:0;bottom:0;background:var(--rojo);width:0;transition:width .5s cubic-bezier(.2,1.2,.4,1)}
+.gasto-et{display:flex;justify-content:space-between;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.gasto-txt{margin-top:8px;font-size:17px;min-height:26px}
+@media (max-width:600px){.amplif{grid-template-columns:1fr}.amplif .disco{width:110px;font-size:32px}}
+/* incentivo */
+.inc{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
+.inc h4{font-family:var(--epic);text-transform:uppercase;font-size:20px;margin-bottom:8px}
+.inc label{display:flex;gap:10px;align-items:flex-start;font-size:16px;padding:9px 0;border-bottom:1px dashed rgba(42,38,38,.25);cursor:pointer}
+.inc input{accent-color:var(--rojo);width:20px;height:20px;flex:none;margin-top:1px}
+.conf{margin-top:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.conf img{width:110px;transition:transform .4s}
+.conf-m{height:22px;background:rgba(42,38,38,.12);position:relative}
+.conf-m i{position:absolute;left:0;top:0;bottom:0;width:8%;background:var(--negro);transition:width .5s cubic-bezier(.2,1.2,.4,1),background .3s}
+.conf-t{margin-top:8px;font-size:17px;min-height:48px}
+@media (max-width:640px){.inc{grid-template-columns:1fr}.conf img{width:80px}}
+/* plan */
+.plan3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.plan3 div{border:2px solid var(--negro);padding:18px 16px 16px;background:#fff8ef;position:relative}
+.plan3 .sello{position:absolute;top:-16px;right:12px;width:38px;height:38px;border-radius:50%;background:var(--rojo);color:var(--crema);display:grid;place-items:center;font-weight:700;transform:rotate(-12deg)}
+.plan3 b{font-family:var(--epic);text-transform:uppercase;font-size:22px;display:block;line-height:1}
+.plan3 p{font-size:16px;margin-top:8px}
+@media (max-width:760px){.plan3{grid-template-columns:1fr}}
+
+/* --- Capítulo 3: feed saturado --- */
+.feed{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:30px}
+.feed div{aspect-ratio:9/14;background:rgba(42,38,38,.1);border:1px solid rgba(42,38,38,.15);display:flex;flex-direction:column;justify-content:flex-end;padding:6px;font-size:10px;line-height:1.15;color:rgba(42,38,38,.55);filter:grayscale(1)}
+.feed div.unico{background:var(--rojo);color:var(--crema);border-color:var(--rojo);font-size:11px;font-weight:600;filter:none;transform:scale(1.06) rotate(-2deg);box-shadow:0 8px 0 rgba(0,0,0,.18)}
+@media (max-width:600px){.feed{grid-template-columns:repeat(4,1fr)}.feed div:nth-child(n+13){display:none}}
+.mezcla{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.mezcla fieldset{border:0}
+.mezcla legend{font-family:var(--epic);text-transform:uppercase;font-size:18px;margin-bottom:8px}
+.mezcla label{display:block;font-size:15px;border:2px solid var(--negro);padding:9px 11px;margin-bottom:6px;cursor:pointer;background:#fff;transition:background .2s,color .2s}
+.mezcla input{position:absolute;opacity:0;pointer-events:none}
+.mezcla input:checked+span{color:var(--crema)}
+.mezcla label:has(input:checked){background:var(--negro);color:var(--crema)}
+.mezcla input:focus-visible+span{outline:2px solid var(--rojo);outline-offset:3px}
+.idea{margin-top:18px;background:var(--negro);color:var(--crema);padding:20px 20px 22px;clip-path:polygon(0 2%,100% 0,99.5% 100%,.5% 98%)}
+.idea .kicker{color:var(--rojo-vivo)}
+.idea .titulo-idea{font-family:var(--epic);text-transform:uppercase;font-size:clamp(24px,3.6vw,38px);line-height:1;margin:8px 0 10px}
+.idea p{font-size:17px;line-height:1.4}
+.idea .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;font-size:15px}
+.idea .dos div{border-top:3px solid var(--rojo-vivo);padding-top:8px}
+@media (max-width:700px){.mezcla{grid-template-columns:1fr}.idea .dos{grid-template-columns:1fr}}
+.ruido{position:relative;margin-top:40px;padding:30px 0}
+.ruido .frase{font-family:var(--epic);text-transform:uppercase;font-size:clamp(30px,5.6vw,68px);line-height:.95;position:relative;z-index:1}
+.ruido .frase em{font-style:normal;color:var(--rojo)}
+.ruido svg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;transition:opacity .5s}
+.ruido.limpio svg{opacity:0}
+.ruido .btn{margin-top:20px;position:relative;z-index:3}
+.verbos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
+.verbos div{background:var(--crema);color:var(--negro);padding:16px 14px;font-size:15px}
+.verbos b{display:block;font-family:var(--epic);text-transform:uppercase;font-size:20px;line-height:1;margin-bottom:6px;color:var(--rojo)}
+@media (max-width:760px){.verbos{grid-template-columns:1fr 1fr}}
+
+/* --- Capítulo 4 --- */
+.recorte{margin-top:30px}
+.recorte svg{width:100%;height:auto;display:block}
+.recorte .et{font-size:14px;opacity:.75;margin-top:6px}
+.pruebas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+@media (max-width:860px){.pruebas{grid-template-columns:1fr 1fr}}
+.prueba{perspective:900px;cursor:pointer;min-height:190px}
+.prueba-in{position:relative;width:100%;height:100%;min-height:190px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,1.2,.4,1)}
+.prueba.on .prueba-in{transform:rotateY(180deg)}
+.prueba .cara{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:16px;display:flex;flex-direction:column;justify-content:space-between}
+.prueba .f{background:var(--negro);color:var(--crema)}
+.prueba .f span{font-family:var(--epic);text-transform:uppercase;font-size:clamp(20px,2.4vw,26px);line-height:1}
+.prueba .f small{opacity:.6}
+.prueba .b{background:var(--rojo);color:var(--crema);transform:rotateY(180deg);font-size:16px;line-height:1.3}
+.prueba .b b{font-family:var(--epic);text-transform:uppercase;font-size:15px;letter-spacing:.04em}
+.escalera{margin-top:34px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:end}
+.peldanos{display:flex;flex-direction:column-reverse;gap:6px}
+.peldanos button{font:inherit;text-align:left;border:0;background:rgba(42,38,38,.1);padding:12px 14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:background .25s,color .25s,margin .3s}
+.peldanos button span{font-family:var(--epic);font-size:22px;color:var(--rojo);width:28px}
+.peldanos button b{font-family:var(--epic);text-transform:uppercase;font-size:18px}
+.peldanos button.ok{background:var(--negro);color:var(--crema)}
+.peldanos button:nth-child(1){margin-right:40%}.peldanos button:nth-child(2){margin-right:30%}.peldanos button:nth-child(3){margin-right:20%}.peldanos button:nth-child(4){margin-right:10%}
+.esc-vis{position:relative;min-height:300px;display:flex;align-items:flex-end;justify-content:center}
+.esc-vis img{width:min(70%,220px);transition:transform .6s cubic-bezier(.2,1.4,.4,1)}
+.esc-txt{margin-top:14px;background:var(--crema);padding:16px 18px;font-size:17px;min-height:80px;color:var(--negro)}
+@media (max-width:760px){.escalera{grid-template-columns:1fr}.esc-vis{min-height:200px;order:-1}.esc-vis img{width:140px}}
+.confianza{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-top:40px}
+.confianza .frase{font-family:var(--epic);text-transform:uppercase;font-size:clamp(30px,5.4vw,66px);line-height:.95}
+.confianza .frase s{text-decoration-color:var(--rojo);text-decoration-thickness:.1em;opacity:.45}
+.confianza img{width:min(36vw,280px)}
+@media (max-width:700px){.confianza{grid-template-columns:1fr}.confianza img{margin:0 auto}}
+
+/* --- Cierre final --- */
+.fin{background:var(--rojo);color:var(--crema);padding:110px 0 0;overflow:hidden}
+.fin .tres{display:grid;gap:10px}
+.fin .tres div{display:flex;gap:14px;align-items:center;font-family:var(--epic);text-transform:uppercase;font-size:clamp(26px,5vw,58px);line-height:1}
+.fin .tres i{font-style:normal;width:46px;height:46px;flex:none;border-radius:50%;background:var(--crema);color:var(--rojo);display:grid;place-items:center;font-size:26px}
+.fin .pero{font-family:var(--epic);text-transform:uppercase;font-size:clamp(54px,12vw,170px);line-height:.85;color:var(--negro);margin-top:30px}
+.fin .giro{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:40px}
+.fin .giro div{padding:20px;font-size:clamp(18px,2.4vw,24px);line-height:1.2}
+.fin .giro .a{background:rgba(28,28,28,.2)} .fin .giro .b{background:var(--negro)}
+.fin .giro b{display:block;font-family:var(--epic);text-transform:uppercase;font-size:14px;letter-spacing:.06em;opacity:.7;margin-bottom:6px}
+.fin .manifiesto{max-width:760px;margin-top:40px;font-size:clamp(20px,2.6vw,27px);line-height:1.35;letter-spacing:-.02em}
+.fin .manifiesto b{color:var(--negro)}
+.fin .cta-fin{display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px;margin-top:40px}
+.fin .cta-fin img{width:min(46vw,260px);margin-left:auto}
+.fin .btn{background:var(--negro)}
+@media (max-width:640px){.fin .giro{grid-template-columns:1fr}}
+
 /* ---------- Muro de pago (vista previa) ---------- */
 .muro{background:var(--rojo);color:var(--crema);padding:90px 0 110px;overflow:hidden;position:relative}
 .muro .wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:48px;align-items:center}
@@ -719,6 +905,286 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 
 <!-- PAGO: INICIO · aquí van los capítulos 2 en adelante (solo con acceso pagado) -->
 
+<!-- ============ CAPÍTULO 2 ============ -->
+<section class="cap c-n2" id="capitulo-2">
+  <div class="wrap">
+    <div class="num pop"><span class="epic">2</span><div class="pj sube der"><img src="../../assets/img/espid_calc.webp?v=3" alt="" width="600" height="900"></div></div>
+    <div class="titulo">
+      <div class="kicker rv">Capítulo 2</div>
+      <h2 class="epic rv">Ordenar la<br>propuesta</h2>
+      <p class="rv">Del currículum deportivo a una solución comercial.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cx">
+  <div class="wrap">
+    <div class="kicker rv">El error más frecuente</div>
+    <h2 class="epic rv">Información<br>no es estrategia.</h2>
+    <p class="lead rv">Un currículum deportivo, una lista de competencias y un número de seguidores <b>no son una propuesta comercial.</b> En el mejor de los casos, son un documento informativo. En el peor, una acumulación de datos sin contexto ni dirección.</p>
+    <div class="panel rv">
+      <div class="kicker">Ordénalo tú</div>
+      <div class="q">Así llega la mayoría de propuestas</div>
+      <p class="hint">Datos sueltos sobre la mesa. Toca el botón y mira cómo cambian cuando se ordenan con intención.</p>
+      <div class="c2-orden" id="c2-orden">
+        <div class="c2-cols"><div>Competición</div><div>Comunidad</div><div>Incentivo tributario</div></div>
+        <div class="c2-ficha" data-col="0"><b>Currículum</b><span class="viejo">Campeón provincial 2024 y 2025</span><span class="nuevo">Mapa de las 6 fechas con más público para activar la marca</span></div><div class="c2-ficha" data-col="0"><b>Lista</b><span class="viejo">9 competencias este año</span><span class="nuevo">Previa, carrera y resultado como momentos de contenido</span></div><div class="c2-ficha" data-col="1"><b>Dato suelto</b><span class="viejo">12.000 seguidores</span><span class="nuevo">Las redes amplifican lo que pasa con personas reales</span></div><div class="c2-ficha" data-col="1"><b>Idea vaga</b><span class="viejo">“Puedo dar charlas”</span><span class="nuevo">Clínica con hijos de colaboradores y charla interna</span></div><div class="c2-ficha" data-col="2"><b>Pedido</b><span class="viejo">“Cualquier aporte ayuda”</span><span class="nuevo">Auspicio en especie o servicios, con incentivo tributario</span></div><div class="c2-ficha" data-col="2"><b>Sin dueño</b><span class="viejo">“La parte legal la ven ustedes”</span><span class="nuevo">Yo gestiono el trámite y doy seguimiento</span></div>
+      </div>
+      <button class="btn rojo chico" type="button" id="c2-btn">Convertir en propuesta <span class="chev">»</span></button>
+      <p class="c2-res" id="c2-res"></p>
+    </div>
+    <div class="triada" aria-label="Las marcas no buscan información. Buscan claridad, orden y ejecución.">
+      <span class="rv">Información</span><span class="rv d1">Claridad.</span><span class="rv d2">Orden.</span><span class="rv d3">Ejecución.</span>
+    </div>
+    <div class="pn rv">
+      <div class="p t">Pedir</div><div class="n t">Negociar</div>
+      <div class="p">Implica <b>necesidad</b></div><div class="n">Implica <b>propuesta</b></div>
+      <div class="p">Expone <b>carencia</b></div><div class="n">Ofrece una <b>solución</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="cx oscuro">
+  <div class="wrap">
+    <div class="kicker rv">La estructura</div>
+    <h2 class="epic rv">Tres ofertas.<br>Un plan que se puede ejecutar.</h2>
+    <p class="lead rv">Juntas construyen un plan <b>comprensible, defendible y ejecutable</b> para la marca. Toca cada una.</p>
+    <div class="ofertas-tabs" role="tablist">
+      <button type="button" class="on" role="tab" data-of="0"><span>01</span><b>Oferta de competición</b></button>
+      <button type="button" role="tab" data-of="1"><span>02</span><b>Actividad y comunidad</b></button>
+      <button type="button" role="tab" data-of="2"><span>03</span><b>Incentivo tributario</b></button>
+    </div>
+
+    <div class="oferta on" data-of="0">
+      <div class="kicker">01 · Oferta de competición</div>
+      <h3 class="epic">La competición es el contexto. <span class="h-rojo">No el argumento.</span></h3>
+      <p class="lead">Competir no genera valor por sí solo. Lo que genera valor es cómo usas la competición como <b>punto de contacto, narrativa, experiencia y activación.</b> No es un listado de carreras: es un mapa de dónde se concentra la atención.</p>
+      <div class="mapa">
+        <svg viewBox="0 0 600 150" aria-hidden="true"><path id="mapa-l" d="M0 130 C60 128 80 120 110 100 S150 30 175 32 S215 115 260 118 S320 108 350 70 S395 8 420 10 S470 110 520 112 S580 104 600 100" fill="none" stroke="#E52322" stroke-width="4"/>
+          <g font-family="Clash Display,Arial" font-size="12" fill="#2A2626"><circle cx="175" cy="32" r="7" fill="#1C1C1C"/><circle cx="420" cy="10" r="7" fill="#1C1C1C"/><circle cx="110" cy="100" r="5" fill="#E52322"/><circle cx="520" cy="112" r="5" fill="#E52322"/></g>
+          <text x="6" y="146" font-size="12" fill="#8D8680">Atención del público a lo largo de la temporada</text></svg>
+        <div class="mapa-hitos">
+          <button type="button" class="on" data-h="0"><b>La previa</b>Semana antes</button>
+          <button type="button" data-h="1"><b>El día</b>Competencia</button>
+          <button type="button" data-h="2"><b>El hito</b>Podio o récord</button>
+          <button type="button" data-h="3"><b>El regreso</b>Después</button>
+        </div>
+        <div class="mapa-txt" id="mapa-txt"></div>
+      </div>
+    </div>
+
+    <div class="oferta" data-of="1">
+      <div class="kicker">02 · Actividad y vinculación con la comunidad</div>
+      <h3 class="epic">El mayor diferencial. <span class="h-rojo">Y el mayor vacío.</span></h3>
+      <p class="lead">Durante años se creyó que las redes eran el valor central. Son una herramienta, no el fin. Las empresas necesitan <b>conectar con personas reales</b>, generar recordación y cercanía. El deportista no es solo un competidor: <b>es una plataforma de experiencias.</b></p>
+      <p class="hint" style="margin-top:18px">Arma tu plataforma: toca las experiencias que podrías ofrecer.</p>
+      <div class="exp" id="exp">
+        <button type="button">Micro retos</button><button type="button">Activaciones presenciales</button><button type="button">Charlas motivacionales</button>
+        <button type="button">Clínicas deportivas</button><button type="button">Eventos internos para empresas</button><button type="button">Actividades con comunidades</button>
+        <button type="button">Instituciones educativas</button><button type="button">Equipos de trabajo</button>
+      </div>
+      <div class="amplif apagado" id="amplif">
+        <div class="disco"><i></i><i></i><i></i><span id="amplif-n">0</span></div>
+        <p id="amplif-t">El contenido digital no desaparece: <b>deja de ser el protagonista y se convierte en amplificador.</b> Sin experiencias, no tiene nada que amplificar.</p>
+      </div>
+      <div class="gasto">
+        <div class="gasto-barra"><i id="gasto-i"></i></div>
+        <div class="gasto-et"><span>La marca lo ve como gasto</span><span>Lo ve como inversión</span></div>
+        <p class="gasto-txt" id="gasto-t"></p>
+      </div>
+    </div>
+
+    <div class="oferta" data-of="2">
+      <div class="kicker">03 · Oferta de incentivo tributario</div>
+      <h3 class="epic">De carga administrativa <span class="h-rojo">a argumento de confianza.</span></h3>
+      <p class="lead">Cuando existe, el incentivo tributario suele ser lo peor comunicado: genérico, poco claro, sin acompañamiento. Eso genera dudas. Una propuesta sólida explica las alternativas <b>y aclara quién se hace responsable.</b></p>
+      <div class="inc" id="inc">
+        <div><h4>Las alternativas</h4>
+          <label><input type="checkbox">Auspicio económico</label><label><input type="checkbox">Auspicio en especie</label>
+          <label><input type="checkbox">Equipamiento</label><label><input type="checkbox">Servicios profesionales</label></div>
+        <div><h4>El respaldo</h4>
+          <label><input type="checkbox" data-peso="2">Quién gestiona el proceso</label><label><input type="checkbox" data-peso="2">Cómo se da seguimiento</label>
+          <label><input type="checkbox" data-peso="2">Qué respaldo existe</label></div>
+      </div>
+      <div class="conf">
+        <img id="conf-img" src="../../assets/img/boar_confused.webp?v=3" alt="El ejecutivo de la marca" width="600" height="900">
+        <div><div class="kicker">Tranquilidad de la marca</div><div class="conf-m"><i id="conf-i"></i></div><p class="conf-t" id="conf-t"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cx">
+  <div class="wrap">
+    <div class="kicker rv">El resultado</div>
+    <h2 class="epic rv">De propuesta débil<br>a plan ejecutable.</h2>
+    <div class="plan3">
+      <div class="rv"><span class="sello">✓</span><b>Qué gana</b><p>La marca entiende con claridad el beneficio para su negocio.</p></div>
+      <div class="rv d1"><span class="sello">✓</span><b>Cómo se implementa</b><p>Sabe en qué se convierte su inversión y cuándo.</p></div>
+      <div class="rv d2"><span class="sello">✓</span><b>Qué resultados esperar</b><p>Puede defender la decisión dentro de su empresa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPÍTULO 3 ============ -->
+<section class="cap c-n3" id="capitulo-3">
+  <div class="wrap">
+    <div class="num pop"><span class="epic">3</span><div class="pj sube"><img src="../../assets/img/sloth_activo.webp?v=3" alt="" width="700" height="900"></div></div>
+    <div class="titulo">
+      <div class="kicker rv">Capítulo 3</div>
+      <h2 class="epic rv">Crear,<br>no reproducir</h2>
+      <p class="rv">La originalidad como estrategia.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cx crema">
+  <div class="wrap">
+    <div class="kicker rv">El entorno</div>
+    <h2 class="epic rv">Todo se parece<br>a todo.</h2>
+    <p class="lead rv">La repetición de estilos, frases y narrativas hace que gran parte del contenido deportivo <b>pase desapercibido, incluso cuando está bien producido.</b> Para que una historia tenga valor, necesita identidad.</p>
+    <div class="feed rv" id="feed" aria-hidden="true"></div>
+    <p class="hint rv" style="margin-top:12px">¿Cuál recordarías mañana?</p>
+
+    <div class="panel rv">
+      <div class="kicker">Tu estilo propio</div>
+      <div class="q">Mezcla tu historia, tu personalidad y tu disciplina</div>
+      <p class="hint">La originalidad no es hacer cosas extravagantes. Es una narrativa coherente con quien eres. Elige una opción de cada columna.</p>
+      <form class="mezcla" id="mezcla">
+        <fieldset><legend>Tu historia</legend>
+          <label><input type="radio" name="h" value="0" checked><span>Volví de una lesión</span></label>
+          <label><input type="radio" name="h" value="1"><span>Trabajo y entreno a la vez</span></label>
+          <label><input type="radio" name="h" value="2"><span>Vengo de un pueblo pequeño</span></label>
+          <label><input type="radio" name="h" value="3"><span>Empecé tarde en mi deporte</span></label></fieldset>
+        <fieldset><legend>Tu personalidad</legend>
+          <label><input type="radio" name="p" value="0" checked><span>Divertido</span></label>
+          <label><input type="radio" name="p" value="1"><span>Analítico</span></label>
+          <label><input type="radio" name="p" value="2"><span>Intenso</span></label>
+          <label><input type="radio" name="p" value="3"><span>Reservado</span></label></fieldset>
+        <fieldset><legend>Tu disciplina</legend>
+          <label><input type="radio" name="d" value="0" checked><span>Ciclismo</span></label>
+          <label><input type="radio" name="d" value="1"><span>Atletismo</span></label>
+          <label><input type="radio" name="d" value="2"><span>Deporte motor</span></label>
+          <label><input type="radio" name="d" value="3"><span>Deporte de equipo</span></label></fieldset>
+      </form>
+      <div class="idea" aria-live="polite"><div class="kicker">Tu idea de serie</div><div class="titulo-idea" id="idea-t"></div><p id="idea-p"></p>
+        <div class="dos"><div id="idea-m"></div><div id="idea-y"></div></div></div>
+    </div>
+
+    <div class="ruido" id="ruido">
+      <svg viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true"><path d="M10 40 L590 120 M20 130 L580 30 M5 80 Q150 10 300 90 T595 70 M40 150 C200 -20 400 180 560 10" stroke="#2A2626" stroke-width="5" fill="none" opacity=".55"/></svg>
+      <div class="frase rv">La originalidad sin estrategia <em>es ruido.</em><br>La estrategia con identidad <em>es valor.</em></div>
+      <button class="btn chico" type="button" id="ruido-btn">Quitar el ruido</button>
+    </div>
+  </div>
+</section>
+
+<section class="cx oscuro">
+  <div class="wrap">
+    <div class="kicker rv">El cambio de rol</div>
+    <h2 class="epic rv">De generador de contenido<br><span class="h-rojo">a creador estratégico.</span></h2>
+    <p class="lead rv">Siempre con un enfoque: <b>generar resultados para la marca y para tu proyecto personal.</b></p>
+    <div class="verbos">
+      <div class="rv"><b>Documentar</b>tus procesos, no solo tus resultados.</div>
+      <div class="rv d1"><b>Mostrar</b>vivencias reales, no escenas armadas.</div>
+      <div class="rv d2"><b>Comunicar</b>desde tu experiencia, no desde la tendencia.</div>
+      <div class="rv d3"><b>Construir</b>una relación auténtica con tu audiencia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPÍTULO 4 ============ -->
+<section class="cap c-n4" id="capitulo-4">
+  <div class="wrap">
+    <div class="num pop"><span class="epic">4</span><div class="pj sube der"><img src="../../assets/img/handshake.webp?v=3" alt="" width="748" height="823"></div></div>
+    <div class="titulo">
+      <div class="kicker rv">Capítulo 4</div>
+      <h2 class="epic rv">Prospección,<br>alianzas y<br>sostenibilidad</h2>
+      <p class="rv">Conseguir un auspicio es difícil. Mantenerlo, aún más.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cx">
+  <div class="wrap">
+    <div class="kicker rv">La realidad en Ecuador</div>
+    <h2 class="epic rv">Resultados ya.<br>O recorte.</h2>
+    <p class="lead rv">Muchas marcas buscan resultados inmediatos y, cuando no los ven, recortan presupuestos. Así nacen <b>auspicios cortos, relaciones frágiles y frustración</b> para ambos lados.</p>
+    <div class="recorte rv">
+      <svg viewBox="0 0 600 170" aria-hidden="true">
+        <line x1="20" y1="150" x2="590" y2="150" stroke="#2A2626" stroke-width="2"/>
+        <path d="M20 150 L120 60 L200 70 L230 150" fill="rgba(141,134,128,.25)" stroke="#8D8680" stroke-width="3"/>
+        <text x="80" y="50" font-size="13" fill="#8D8680" font-family="Clash Display,Arial">Auspicio sin plan</text>
+        <path d="M230 150 L240 150" stroke="#E52322" stroke-width="5"/><text x="210" y="168" font-size="12" fill="#E52322" font-family="Clash Display,Arial">✂ recorte</text>
+        <path d="M260 150 L330 118 L400 96 L470 70 L540 40 L590 26" fill="none" stroke="#E52322" stroke-width="4" stroke-dasharray="600" stroke-dashoffset="600" id="recorte-l"/>
+        <text x="420" y="22" font-size="13" fill="#E52322" font-family="Clash Display,Arial">Prueba → confianza → renovación</text>
+      </svg>
+      <p class="et">Ilustrativo: dos formas de empezar una relación con una marca.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cx crema">
+  <div class="wrap">
+    <div class="kicker rv">La oportunidad</div>
+    <h2 class="epic rv">La prueba gratuita<br>estratégica.</h2>
+    <p class="lead rv">Sin sistemas claros ni estándares definidos, muchas marcas <b>están dispuestas a probar.</b> Una prueba bien elegida demuestra capacidad, ejecución y resultados reales. Toca cada tarjeta.</p>
+    <div class="pruebas">
+      <div class="prueba rv" tabindex="0" role="button"><div class="prueba-in"><div class="cara f"><span>Intercambio inicial</span><small>Toca para ver »</small></div><div class="cara b"><b>Demuestra</b>Que cumples lo que prometes, antes de hablar de dinero.</div></div></div>
+      <div class="prueba rv d1" tabindex="0" role="button"><div class="prueba-in"><div class="cara f"><span>Micro campaña</span><small>Toca para ver »</small></div><div class="cara b"><b>Demuestra</b>Que puedes generar contenido y alcance con un objetivo claro.</div></div></div>
+      <div class="prueba rv d2" tabindex="0" role="button"><div class="prueba-in"><div class="cara f"><span>Activación puntual</span><small>Toca para ver »</small></div><div class="cara b"><b>Demuestra</b>Que mueves personas reales hacia la marca.</div></div></div>
+      <div class="prueba rv d3" tabindex="0" role="button"><div class="prueba-in"><div class="cara f"><span>Periodo de prueba</span><small>Toca para ver »</small></div><div class="cara b"><b>Demuestra</b>Constancia y resultados medibles en el tiempo.</div></div></div>
+    </div>
+    <p class="lead rv" style="margin-top:30px">Además, colaborar con marcas reconocidas, incluso en etapas tempranas y sin grandes presupuestos, <b>eleva la percepción de tu valor</b> y te da credibilidad frente a futuros auspiciantes.</p>
+
+    <div class="panel rv" style="background:#fff8ef">
+      <div class="kicker">Sube la escalera</div>
+      <div class="q">Así se construye un auspicio que dura</div>
+      <p class="hint">Toca cada peldaño, de abajo hacia arriba.</p>
+      <div class="escalera">
+        <div><div class="peldanos" id="peldanos">
+          <button type="button"><span>1</span><b>Prueba</b></button>
+          <button type="button"><span>2</span><b>Resultado</b></button>
+          <button type="button"><span>3</span><b>Credibilidad</b></button>
+          <button type="button"><span>4</span><b>Auspicio pagado</b></button>
+          <button type="button"><span>5</span><b>Renovación</b></button>
+        </div><div class="esc-txt" id="esc-txt">Empieza por el primer peldaño.</div></div>
+        <div class="esc-vis"><img id="esc-img" src="../../assets/img/espid_climb.webp?v=3" alt="Espid subiendo" width="604" height="900"></div>
+      </div>
+    </div>
+
+    <div class="confianza">
+      <div class="frase rv">El primer auspicio rara vez se cierra con <s>dinero</s>.<br><span class="h-rojo">Se cierra con confianza.</span></div>
+      <img class="rv d1" src="../../assets/img/handshake.webp?v=3" alt="Espid cierra un trato con el ejecutivo de la marca" width="748" height="823">
+    </div>
+  </div>
+</section>
+
+<!-- ============ CIERRE DEL LIBRO ============ -->
+<section class="fin" id="cierre-final">
+  <div class="wrap">
+    <div class="kicker rv">Cierre</div>
+    <h2 class="epic rv" style="font-size:clamp(40px,7vw,90px);margin:12px 0 34px">De deportista a<br>proyecto deportivo comercial</h2>
+    <div class="tres">
+      <div class="rv"><i>✓</i>Entrenar sigue siendo fundamental.</div>
+      <div class="rv d1"><i>✓</i>Competir sigue siendo necesario.</div>
+      <div class="rv d2"><i>✓</i>Ganar sigue siendo valioso.</div>
+    </div>
+    <div class="pero pop">Pero ya no<br>es suficiente.</div>
+    <div class="giro">
+      <div class="a rv"><b>Antes</b>Depender de la suerte. Negociar desde la necesidad.</div>
+      <div class="b rv d1"><b>Ahora</b>Construir oportunidades. Negociar desde el valor.</div>
+    </div>
+    <p class="manifiesto rv">El deportista que entiende cómo funcionan el marketing, la comunicación y la lógica empresarial deja de depender de la suerte. Este libro no es un manual para dejar de ser deportista. Es una guía para convertirte en <b>un proyecto deportivo sostenible</b>, capaz de crecer, evolucionar y generar impacto dentro y fuera de la competencia.</p>
+    <div class="cta-fin">
+      <div><a class="btn lg rv" href="#" data-wa="fin"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Construyamos tu proyecto <span class="chev">»</span></a>
+        <p class="rv d1" style="margin-top:12px;font-size:16px">Escríbeme por WhatsApp y revisamos tu caso.</p></div>
+      <img class="rv d2" src="../../assets/img/sloth_medal.webp?v=3" alt="El perezoso deportista, ahora con su medalla" width="700" height="900">
+    </div>
+  </div>
+</section>
+
+
 <footer>
   <img src="../../assets/brand/logo-blanco.png?v=2" alt="Pro Motion Sport Marketing">
   <p>Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
@@ -736,18 +1202,18 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
       <h2 class="epic rv">Ya identificaste tu valor.<br><em>Sigue con el capítulo 2.</em></h2>
       <p class="lead rv">Los siguientes capítulos convierten ese valor en algo que una marca pueda evaluar, aprobar y renovar.</p>
       <ol class="muro-caps" start="2">
-        <li class="rv">El calendario deportivo como calendario de contenido <span>· capítulo 2</span></li>
-        <li class="rv d1">Tu media kit en 7 páginas <span>· capítulo 3</span></li>
-        <li class="rv d2">El pitch sin “apoyo” <span>· capítulo 4</span></li>
+        <li class="rv">Ordenar la propuesta <span>· las 3 ofertas que una marca entiende</span></li>
+        <li class="rv d1">Crear, no reproducir <span>· tu estilo propio, con estrategia</span></li>
+        <li class="rv d2">Prospección, alianzas y sostenibilidad <span>· cómo conseguir y mantener un auspicio</span></li>
       </ol>
     </div>
     <div class="muro-caja rv d1">
       <span class="muro-candado" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1zm2 0h6V7a3 3 0 0 0-6 0z"/></svg></span>
-      <div class="kicker">Capítulo 2 en adelante · preventa</div>
+      <div class="kicker">Capítulos 2 a 4</div>
       <div class="muro-precio"><small>USD</small>15</div>
       <ul>
         <li>Pago único, sin suscripción</li>
-        <li>Recibes cada capítulo apenas se publica</li>
+        <li>Capítulos 2, 3 y 4 + cierre, con ejercicios interactivos</li>
         <li>Acceso permanente con tu enlace personal</li>
       </ul>
       <button class="btn rojo" type="button" id="btn-desbloquear">Desbloquear capítulo 2 <span class="chev">»</span></button>
@@ -885,6 +1351,139 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
     if (/^nada\.?$/i.test(v)){ av.textContent = 'Honesto. Ese es justo el punto de partida: escríbeme igual.'; }
     else av.textContent = '';
     window.open(waLink('Hola Daniel, leí la guía "De deportista a oferta comercial". A la pregunta "¿Qué perdería una marca si yo no existiera?" respondo: ' + v), '_blank', 'noopener');
+  });
+})();
+</script>
+
+<script>
+/* Capítulos 2 a 4 (solo existen en la página con acceso pagado) */
+(function(){
+  if (!document.getElementById('capitulo-2')) return;
+  var WA = '593984678812';
+  function waLink(t){ return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); }
+
+  // Ordenar el caos
+  var orden = document.getElementById('c2-orden'), fichas = [].slice.call(orden.querySelectorAll('.c2-ficha')), btn = document.getElementById('c2-btn'), res = document.getElementById('c2-res');
+  var caos = [[2,4,-6],[50,0,5],[8,40,3],[46,30,-4],[18,66,-2],[52,62,6]];
+  function desordenar(){
+    orden.classList.remove('ok'); orden.style.minHeight = '';
+    fichas.forEach(function(f,i){ var c = caos[i]; f.style.left = c[0] + '%'; f.style.top = c[1] + '%'; f.style.width = ''; f.style.transform = 'rotate(' + c[2] + 'deg)'; });
+    res.innerHTML = ''; btn.firstChild.nodeValue = 'Convertir en propuesta ';
+  }
+  function ordenar(){
+    orden.classList.add('ok');
+    var cuenta = [0,0,0], movil = innerWidth < 640, alto = movil ? 112 : 92;
+    fichas.forEach(function(f){ var c = +f.dataset.col, k = cuenta[c]++;
+      f.style.left = (c * 33.33 + .5) + '%'; f.style.width = 'calc(33.33% - 10px)'; f.style.top = (42 + k * (alto + 14)) + 'px'; });
+    orden.style.minHeight = (42 + 2 * (alto + 14) + 10) + 'px';
+    res.innerHTML = 'Los mismos datos, <b>ahora con intención</b>: dónde activar, con quién conectar y cómo darle seguridad a la marca.';
+    btn.firstChild.nodeValue = 'Volver al desorden ';
+  }
+  desordenar();
+  btn.addEventListener('click', function(){ orden.classList.contains('ok') ? desordenar() : ordenar(); });
+  addEventListener('resize', function(){ if (orden.classList.contains('ok')) ordenar(); });
+
+  // Tabs de ofertas
+  var tabs = document.querySelectorAll('.ofertas-tabs button'), ofs = document.querySelectorAll('.oferta');
+  tabs.forEach(function(t){ t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.classList.toggle('on', x === t); x.setAttribute('aria-selected', x === t); });
+    ofs.forEach(function(o){ o.classList.toggle('on', o.dataset.of === t.dataset.of); });
+  }); });
+
+  // Mapa de competición
+  var HITOS = [
+    ['La previa', 'La expectativa también es atención. <b>Activa:</b> la cuenta regresiva, el equipo que preparas y la marca presente en tu preparación.'],
+    ['El día', 'El pico de atención del calendario. <b>Activa:</b> la marca vive la experiencia contigo: invitados, cobertura en tiempo real, presencia en el lugar.'],
+    ['El hito', 'Un podio, un récord o una remontada son historias. <b>Activa:</b> el momento en que la marca celebra contigo, no solo pone su logo.'],
+    ['El regreso', 'Después de competir, la historia sigue. <b>Activa:</b> el balance, el agradecimiento y la siguiente meta con la marca dentro del relato.']
+  ];
+  var hBtn = document.querySelectorAll('.mapa-hitos button'), hTxt = document.getElementById('mapa-txt');
+  function hito(i){ hBtn.forEach(function(b){ b.classList.toggle('on', +b.dataset.h === i); }); hTxt.innerHTML = HITOS[i][1]; }
+  hBtn.forEach(function(b){ b.addEventListener('click', function(){ hito(+b.dataset.h); }); }); hito(0);
+
+  // Plataforma de experiencias
+  var exp = document.querySelectorAll('#exp button'), amp = document.getElementById('amplif'), ampN = document.getElementById('amplif-n'), ampT = document.getElementById('amplif-t'),
+      gi = document.getElementById('gasto-i'), gt = document.getElementById('gasto-t');
+  var GT = ['La marca todavía ve un gasto: solo logos y publicaciones.', 'Empieza a ver algo distinto: personas reales frente a su marca.', 'Ya hay retorno emocional y comunicacional.', 'Ahora lo ve como inversión: retorno emocional, social y comunicacional.'];
+  function expUpd(){
+    var n = document.querySelectorAll('#exp button.on').length;
+    ampN.textContent = n; amp.classList.toggle('apagado', !n);
+    ampT.innerHTML = n ? 'Tus redes ahora tienen <b>' + n + (n === 1 ? ' experiencia real' : ' experiencias reales') + '</b> que amplificar: emociones, mensajes y momentos que una marca quiere compartir.' :
+      'El contenido digital no desaparece: <b>deja de ser el protagonista y se convierte en amplificador.</b> Sin experiencias, no tiene nada que amplificar.';
+    gi.style.width = Math.min(100, n * 22) + '%';
+    gt.textContent = GT[Math.min(3, Math.ceil(n / 1.5))];
+  }
+  exp.forEach(function(b){ b.addEventListener('click', function(){ b.classList.toggle('on'); expUpd(); }); }); expUpd();
+
+  // Incentivo tributario
+  var inc = document.querySelectorAll('#inc input'), ci = document.getElementById('conf-i'), ct = document.getElementById('conf-t'), cimg = document.getElementById('conf-img');
+  function incUpd(){
+    var alt = 0, resp = 0;
+    inc.forEach(function(x){ if (x.checked) { if (x.dataset.peso) resp++; else alt++; } });
+    var pct = Math.min(100, 8 + alt * 8 + resp * 20);
+    ci.style.width = pct + '%'; ci.style.background = pct >= 80 ? '#E52322' : '#1C1C1C';
+    var img = '../../assets/img/' + (pct >= 80 ? 'handshake' : pct >= 40 ? 'boar_magnify' : 'boar_confused') + '.webp?v=3';
+    if (cimg.getAttribute('src') !== img) cimg.setAttribute('src', img);
+    ct.textContent = resp === 3 ? 'La marca siente que alguien se hace responsable. El incentivo pasa de carga a argumento de seguridad.' :
+      alt && !resp ? 'Explicaste las alternativas, pero nadie se hace cargo. La marca todavía duda.' :
+      resp ? 'Vas bien: falta aclarar todo el respaldo para que la marca esté tranquila.' : '“¿Y quién se encarga de todo esto?” Marca las casillas.';
+  }
+  inc.forEach(function(x){ x.addEventListener('change', incUpd); }); incUpd();
+
+  // Feed saturado
+  var feed = document.getElementById('feed'), FR = ['Día de entreno 💪', 'No pain no gain', 'Nunca te rindas', 'Grind 🔥', 'Otro día más', 'Disciplina ✔', 'Sin excusas', 'Vamos por más'];
+  var html = '';
+  for (var i = 0; i < 18; i++) html += i === 10 ? '<div class="unico">Volví de dos cirugías. Esta es la carrera que nadie esperaba que terminara.</div>' : '<div>' + FR[i % FR.length] + '</div>';
+  feed.innerHTML = html;
+
+  // Mezclador de identidad
+  var H = [['Volver', 'tu regreso después de la lesión, desde el primer día de recuperación hasta la línea de partida', 'resiliencia'],
+           ['Doble turno', 'cómo combinas trabajo y entrenamiento, con horarios, cansancio y pequeñas victorias', 'esfuerzo real'],
+           ['Desde mi pueblo', 'el camino desde tu pueblo hasta las competencias grandes, con la gente que te apoya', 'orgullo local'],
+           ['Nunca es tarde', 'qué significa empezar tarde y alcanzar a los que llevan toda la vida', 'superación']];
+  var P = [['con humor', 'retos y situaciones graciosas del día a día'], ['con datos', 'números, tiempos y análisis de tu progreso'], ['con intensidad', 'momentos de máxima exigencia contados en primera persona'], ['con calma', 'reflexiones cortas y escenas sin pose']];
+  var D = [['sobre la bici', 'rutas, subidas y entrenamientos'], ['en la pista', 'series, tiempos y carreras'], ['en el circuito', 'el box, la máquina y la carrera'], ['con tu equipo', 'el vestuario, los entrenamientos y los partidos']];
+  var MARCA = ['una marca de salud o recuperación', 'una marca que valora el esfuerzo diario: alimentos, bancos, telefonía', 'una marca local que quiere conectar con tu comunidad', 'una marca que habla de nuevas oportunidades: educación, seguros'];
+  var mz = document.getElementById('mezcla');
+  function mezclar(){
+    var h = +mz.h.value, p = +mz.p.value, d = +mz.d.value;
+    document.getElementById('idea-t').textContent = '“' + H[h][0] + '”: una serie ' + P[p][0] + ' ' + D[d][0];
+    document.getElementById('idea-p').textContent = 'Documentas ' + H[h][1] + '. El tono: ' + P[p][1] + '. El escenario: ' + D[d][1] + '.';
+    document.getElementById('idea-m').innerHTML = '<b>Para la marca</b><br>Un mensaje de ' + H[h][2] + ' que encaja con ' + MARCA[h] + '.';
+    document.getElementById('idea-y').innerHTML = '<b>Para tu proyecto</b><br>Una audiencia que te sigue por quién eres, no por la tendencia del momento.';
+  }
+  mz.addEventListener('change', mezclar); mezclar();
+
+  // Quitar el ruido
+  var ru = document.getElementById('ruido'), rb = document.getElementById('ruido-btn');
+  rb.addEventListener('click', function(){ var on = ru.classList.toggle('limpio'); rb.textContent = on ? 'Volver a poner ruido' : 'Quitar el ruido'; });
+
+  // Línea de recorte
+  var rl = document.getElementById('recorte-l');
+  if ('IntersectionObserver' in window) { var ob = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { ob.disconnect(); rl.style.transition = 'stroke-dashoffset 2.2s ease'; rl.style.strokeDashoffset = 0; } }, {threshold:.5}); ob.observe(rl); }
+  else rl.style.strokeDashoffset = 0;
+
+  // Tarjetas de prueba
+  document.querySelectorAll('.prueba').forEach(function(c){
+    function t(){ c.classList.toggle('on'); }
+    c.addEventListener('click', t);
+    c.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+
+  // Escalera
+  var ESC = ['Una prueba bien elegida: algo concreto, corto y medible.', 'Entregas resultados reales y los muestras con números.', 'La marca confía, y otras marcas empiezan a verte distinto.', 'La conversación ya no es un favor: es un acuerdo con presupuesto.', 'La relación se sostiene porque los dos ganan. Eso es un auspicio sostenible.'];
+  var pel = document.querySelectorAll('#peldanos button'), et = document.getElementById('esc-txt'), ei = document.getElementById('esc-img');
+  pel.forEach(function(b, i){ b.addEventListener('click', function(){
+    pel.forEach(function(x, j){ x.classList.toggle('ok', j <= i); });
+    et.textContent = ESC[i];
+    ei.style.transform = 'translateY(' + (-i * 5) + '%)';
+    if (i === 4) ei.src = '../../assets/img/handshake.webp?v=3'; else if (ei.src.indexOf('espid_climb') < 0) ei.src = '../../assets/img/espid_climb.webp?v=3';
+  }); });
+
+  // WhatsApp del cierre
+  document.querySelectorAll('[data-wa="fin"]').forEach(function(a){
+    a.href = waLink('Hola Daniel, terminé la guía completa "De deportista a oferta comercial" y quiero construir mi proyecto deportivo comercial.');
+    a.target = '_blank'; a.rel = 'noopener';
   });
 })();
 </script>
