@@ -1500,8 +1500,8 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
     var pagar = 0, cotizar = [];
     lista.innerHTML = c.map(function (x) {
       var p = CAT[x.id], fijo = !!p.precio;
-      if (fijo) pagar += p.precio * x.q; else cotizar.push(p);
-      var precio = fijo ? usd(p.precio * x.q) + (p.normal ? ' <s>' + usd(p.normal * x.q) + '</s>' : '') : (p.desde ? 'Desde USD ' + p.desde : 'A cotizar');
+      if (fijo) pagar += p.precio * x.q * (p.iva ? 1.15 : 1); else cotizar.push(p);
+      var precio = fijo ? usd(p.precio * x.q) + (p.iva ? ' + IVA' : '') + (p.normal ? ' <s>' + usd(p.normal * x.q) + '</s>' : '') : (p.desde ? 'Desde USD ' + p.desde : 'A cotizar');
       var cant = /^(guia|curso)/.test(x.id) ? '' :
         '<div class="carro-q"><button type="button" data-q="-1" data-id="' + x.id + '" aria-label="Quitar uno">−</button><span>' + x.q + '</span><button type="button" data-q="1" data-id="' + x.id + '" aria-label="Agregar uno">+</button></div>';
       return '<div class="carro-it' + (fijo ? '' : ' cot') + '"><div><span class="carro-tipo">' + esc(p.tipo) + (fijo ? '' : ' · se cotiza') + '</span><b>' + esc(p.n) + '</b>' +

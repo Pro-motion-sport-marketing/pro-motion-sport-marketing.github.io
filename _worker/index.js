@@ -67,6 +67,7 @@ function cookie(req, nombre) {
 }
 const COOKIE_GUIA = (v) => `pm_guia=${encodeURIComponent(v)}; Path=/; Max-Age=315360000; Secure; HttpOnly; SameSite=Lax`;
 const centavos = (usd) => Math.round(usd * 100);
+const IVA = 0.15; // Ecuador
 
 // ---------- Crear cobro ----------
 async function crear(req, env, url) {
@@ -82,7 +83,11 @@ async function crear(req, env, url) {
   }
   if (!lineas.length) return json({ error: 'No hay productos con precio fijo en el carrito.' }, 400);
 
-  const total = lineas.reduce((s, l) => s + centavos(l.p.precio) * l.q, 0);
+  // Productos marcados con iva: el precio es la base y se suma el 15 %
+  const conIva = lineas.filter((l) => l.p.iva).reduce((s, l) => s + centavos(l.p.precio) * l.q, 0);
+  const sinIva = lineas.filter((l) => !l.p.iva).reduce((s, l) => s + centavos(l.p.precio) * l.q, 0);
+  const impuesto = Math.round(conIva * IVA);
+  const total = conIva + sinIva + impuesto;
   const tieneGuia = lineas.some((l) => l.p.id === PRODUCTO_GUIA);
   const rnd = b64url(crypto.getRandomValues(new Uint8Array(6)));
   const txid = (tieneGuia ? 'PMG-' : 'PM-') + Date.now().toString(36) + '-' + rnd;
@@ -92,7 +97,8 @@ async function crear(req, env, url) {
 
   const datos = {
     amount: total,
-    amountWithoutTax: total,
+    amountWithoutTax: sinIva,
+    ...(conIva ? { amountWithTax: conIva, tax: impuesto } : {}),
     currency: 'USD',
     clientTransactionId: txid,
     storeId: env.PAYPHONE_STORE_ID,
@@ -105,7 +111,8 @@ async function crear(req, env, url) {
     order: {
       lineItems: lineas.map((l) => ({
         productName: l.p.n, unitPrice: centavos(l.p.precio), quantity: l.q,
-        totalAmount: centavos(l.p.precio) * l.q, taxAmount: 0, productDescription: l.p.d || l.p.tipo,
+        totalAmount: centavos(l.p.precio) * l.q + (l.p.iva ? Math.round(centavos(l.p.precio) * l.q * IVA) : 0),
+        taxAmount: l.p.iva ? Math.round(centavos(l.p.precio) * l.q * IVA) : 0, productDescription: l.p.d || l.p.tipo,
       })),
     },
   };
