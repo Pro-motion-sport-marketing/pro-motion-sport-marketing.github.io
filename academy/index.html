@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=118">
+<link rel="stylesheet" href="../assets/css/site.css?v=120">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -160,19 +160,35 @@
 
 <!-- 03 Simulador -->
 <section class="sec oscuro" id="simulador">
-  <div class="wrap" style="max-width:900px">
+  <div class="wrap" style="max-width:1080px">
     <div class="cab"><div class="kicker rv">Herramienta 03 · Simulador de negociación</div><h2 class="epic h2 rv h1-ac"><span class="nw">La reunión,</span> <span class="nw">antes de tenerla</span></h2><p class="lead rv">Al frente tienes al gerente de marketing de una marca ecuatoriana, con presupuesto ajustado y diez solicitudes iguales esta semana. Te va a objetar. Practica aquí y falla aquí.</p></div>
-    <div class="panel os rv" id="simulador-panel" data-img="../assets/img/">
-      <div class="medidor"><i style="width:0"></i></div>
-      <div class="sim-escena">
-        <figure class="sim-jab"><img src="../assets/img/boar_crossed.webp?v=1" alt="El gerente de marketing, un jabalí de traje, te espera de brazos cruzados"></figure>
-        <div class="sim-dialogo">
-          <span class="sim-dice">A ver… ¿qué tienes para ofrecer?</span>
-          <div class="sim-caja">
-            <p class="lead" style="font-size:18px">Cuatro objeciones reales. Elige cómo respondes y mira cómo reacciona.</p>
-            <div class="btns" style="margin-top:18px"><button class="btn rojo sim-empezar" type="button">Entrar a la reunión <span class="chev">»</span></button></div>
-          </div>
+    <div class="mj rv" id="simulador-panel" data-img="../assets/img/">
+      <div class="mj-hud">
+        <span class="mj-ronda">Objeción <b>0</b>/4</span>
+        <div class="mj-interes" aria-label="Interés del gerente"><span>Interés del gerente</span><div class="mj-barra"><i style="width:30%"></i></div></div>
+        <span class="mj-reloj" aria-label="Paciencia"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15.5"/><circle class="arco" cx="18" cy="18" r="15.5"/></svg><b>25</b></span>
+      </div>
+      <div class="mj-esc">
+        <i class="mj-ventana" aria-hidden="true"></i><i class="mj-sol" aria-hidden="true"></i><i class="mj-cuadro" aria-hidden="true"><b>Q3</b><em></em></i>
+        <figure class="mj-dep"><img src="../assets/mini/sentado.webp" alt="Tú: un deportista sentado frente al gerente" width="700" height="700"></figure>
+        <figure class="mj-jab"><span class="mj-emote" aria-hidden="true"></span><img src="../assets/img/boar_crossed.webp?v=1" alt="El gerente de marketing, un jabalí de traje, te espera de brazos cruzados"><span class="mj-pts" aria-hidden="true"></span></figure>
+        <span class="mj-globo tu" hidden></span><span class="mj-globo el" aria-live="polite">A ver… ¿qué tienes para ofrecer?</span>
+        <div class="mj-mesa" aria-hidden="true"><i class="taza"></i><i class="carpeta"></i><i class="papel"></i></div>
+        <div class="mj-inicio">
+          <span class="mj-tag">Juego · 4 rondas · 2 minutos</span>
+          <p>Siéntate frente al gerente. <b>Escribe con tus palabras</b> cómo respondes a cada objeción y mira cómo reacciona.</p>
+          <button class="btn rojo sim-empezar" type="button">Entrar a la reunión <span class="chev">»</span></button>
         </div>
+      </div>
+      <div class="mj-ctrl" hidden>
+        <form class="mj-form" autocomplete="off">
+          <label class="sr" for="mj-txt">Tu respuesta</label>
+          <textarea id="mj-txt" rows="2" maxlength="280" placeholder="Escribe tu respuesta como si estuvieras en la reunión…"></textarea>
+          <button class="btn rojo mj-enviar" type="submit">Responder <span class="chev">»</span></button>
+        </form>
+        <div class="mj-ayuda"><button type="button" class="mj-cartas-btn">¿Sin ideas? Elige una carta</button><span class="mj-cont">0/280</span></div>
+        <div class="mj-cartas" hidden></div>
+        <div class="mj-fb" hidden></div>
       </div>
     </div>
     <script type="application/json" id="simulador-data">[{"q": "“Tengo diez solicitudes iguales esta semana. ¿Por qué tú?”", "o": [["Porque soy campeón nacional y entreno muy duro.", 10, "El resultado es tu credencial, no tu oferta. Las otras nueve también entrenan duro."], ["Porque mi comunidad en Cuenca es exactamente tu cliente de este trimestre, y te propongo cómo llegar a ella.", 25, "Hablaste de su negocio, no del tuyo."], ["Porque necesito el apoyo para poder competir afuera.", 0, "“Apoyo” convierte la reunión en un pedido de ayuda."]]}, {"q": "“No tengo presupuesto para auspicios este año.”", "o": [["Entiendo, ¿y el próximo año?", 5, "Cerraste la puerta tú mismo."], ["¿Qué presupuesto de marketing tienen para activar marca este trimestre? Puedo ser una pieza de esa campaña.", 25, "Moviste la conversación del rubro “auspicio” al de “marketing”, donde sí hay dinero."], ["Con cualquier aporte me ayudaría bastante.", 0, "Te vendiste por debajo de tu valor."]]}, {"q": "“¿Y cuántos seguidores tienes?”", "o": [["Unos 8.000, pero voy creciendo.", 10, "Aceptaste competir en el terreno de los influencers."], ["8.000, pero el dato que te importa es otro: 60 % están en tu zona de venta y tengo un calendario de 9 competencias con presencia de marca.", 25, "Cambiaste seguidores por audiencia útil y calendario."], ["Los seguidores no importan, lo importante es el deporte.", 5, "Para él sí importan: dale un número mejor, no un sermón."]]}, {"q": "“Envíame una propuesta y la reviso.”", "o": [["Perfecto, te la envío esta semana.", 10, "Es la frase con la que terminan el 80 % de estas reuniones."], ["Claro. Para que no sea genérica: ¿qué objetivo tiene que cumplir esta campaña y quién más decide? Te la presento el jueves en 15 minutos.", 25, "Saliste con información y una segunda reunión agendada."], ["¿Pero entonces sí me van a auspiciar?", 0, "Presionaste sin haber construido valor."]]}]</script>
@@ -286,6 +302,6 @@
   </div>
 </footer>
 <a class="wa-flot" href="#" data-wa="Hola Daniel, vi la web de Pro Motion Sport Marketing y quiero más información." aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg></a>
-<script src="../assets/js/site.js?v=47" defer></script>
+<script src="../assets/js/site.js?v=49" defer></script>
 </body>
 </html>

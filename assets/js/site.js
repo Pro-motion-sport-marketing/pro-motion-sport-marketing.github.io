@@ -759,62 +759,154 @@
     mostrar();
   })();
 
-  /* ---------- Academy: simulador de reunión (el jabalí reacciona a cada respuesta) ---------- */
+  /* ---------- Academy: juego "La mesa" — el jabalí reacciona a lo que escribes ---------- */
   var sim = $('#simulador-panel');
   if (sim) (function () {
-    var R = JSON.parse($('#simulador-data').textContent), k = 0, pts = 0, faltas = [];
-    var caja = $('.sim-caja', sim), med = $('.medidor i', sim), img = $('.sim-jab img', sim), dice = $('.sim-dice', sim), base = sim.dataset.img;
-    var GESTOS = {
-      espera: ['boar_crossed', 'te espera de brazos cruzados'],
-      bien: ['boar_magnify', 'se inclina con una lupa, interesado'],
-      duda: ['boar_confused', 'se toca la barbilla, dudando'],
-      mal: ['boar_walk', 'mira el reloj y empieza a irse'],
-      trato: ['handshake', 'te da la mano']
-    };
-    function gesto(g, txt) {
-      var G = GESTOS[g];
-      img.classList.remove('entra'); void img.offsetWidth;
-      img.src = base + G[0] + '.webp?v=1'; img.alt = 'El gerente de marketing ' + G[1];
-      img.classList.add('entra');
-      sim.setAttribute('data-gesto', g);
-      if (txt) { dice.textContent = txt; dice.classList.remove('entra'); void dice.offsetWidth; dice.classList.add('entra'); }
-    }
+    var R = JSON.parse($('#simulador-data').textContent), k = 0, pts = 0, interes = 30, faltas = [], reloj = null, seg = 25, ocupado = false;
+    var escena = $('.mj-esc', sim), img = $('.mj-jab img', sim), gEl = $('.mj-globo.el', sim), gTu = $('.mj-globo.tu', sim), dep = $('.mj-dep', sim);
+    var emote = $('.mj-emote', sim), ptsEl = $('.mj-pts', sim), barra = $('.mj-barra i', sim), ronda = $('.mj-ronda b', sim);
+    var arco = $('.mj-reloj .arco', sim), relojEl = $('.mj-reloj', sim), relojN = $('.mj-reloj b', sim);
+    var ctrl = $('.mj-ctrl', sim), form = $('.mj-form', sim), txt = $('#mj-txt'), enviar = $('.mj-enviar', sim), cartas = $('.mj-cartas', sim), fb = $('.mj-fb', sim), cont = $('.mj-cont', sim);
+    var base = sim.dataset.img;
+    var GESTOS = { espera: 'boar_crossed', bien: 'boar_magnify', duda: 'boar_confused', mal: 'boar_walk', vete: 'boar_walk', trato: 'handshake' };
     var REACC = {
-      bien: ['Mmm… eso sí me interesa. Sigue.', 'Ok, ahora estás hablando de mi negocio.', 'Interesante. Cuéntame más.'],
-      duda: ['Mmm… no me convence del todo.', 'Eso ya lo escuché esta semana.', 'Ajá… ¿y?'],
-      mal: ['Tengo otra reunión en cinco minutos…', 'Creo que estamos perdiendo el tiempo.', 'Bueno… cualquier cosa te escribo.']
+      bien: ['Mmm… eso sí me interesa. Sigue.', 'Ok, ahora estás hablando de mi negocio.', 'Interesante. Cuéntame más.', 'Eso no me lo había ofrecido nadie esta semana.'],
+      duda: ['Mmm… no me convence del todo.', 'Eso ya lo escuché esta semana.', 'Ajá… ¿y eso a mí en qué me ayuda?', 'Puede ser… pero no me dijiste nada nuevo.'],
+      mal: ['Tengo otra reunión en cinco minutos…', 'Creo que estamos perdiendo el tiempo.', 'Bueno… cualquier cosa te escribo.', 'Esto suena a pedido, no a negocio.']
     };
-    function ronda() {
-      if (k >= R.length) return fin();
-      var r = R[k];
-      if (!r.mez) { r.mez = 1; for (var a = r.o.length - 1; a > 0; a--) { var j = Math.floor(Math.random() * (a + 1)), x = r.o[a]; r.o[a] = r.o[j]; r.o[j] = x; } } // la buena no siempre en el medio
-      gesto(k ? 'duda' : 'espera', r.q.replace(/[“”]/g, ''));
-      caja.innerHTML = '<span class="sim-paso">Objeción ' + (k + 1) + ' de ' + R.length + '</span><div class="sim-op">' + r.o.map(function (o, i) { return '<button type="button" data-i="' + i + '">' + o[0] + '</button>'; }).join('') + '</div><p class="sim-fb" style="margin-top:12px;font-size:16px;min-height:48px"></p>';
-      $$('.sim-op button', caja).forEach(function (b) {
-        b.onclick = function () {
-          var o = r.o[+b.dataset.i]; pts += o[1];
-          var tipo = o[1] >= 20 ? 'bien' : o[1] >= 10 ? 'duda' : 'mal';
-          b.classList.add(o[1] >= 20 ? 'ok' : 'mal');
-          $$('.sim-op button', caja).forEach(function (x) { x.disabled = true; });
-          if (o[1] < 20) faltas.push(r.o.filter(function (x) { return x[1] >= 20; })[0][0]);
-          gesto(tipo, REACC[tipo][k % 3]);
-          $('.sim-fb', caja).innerHTML = '<b>' + (o[1] >= 20 ? 'Bien.' : 'Ahí perdiste puntos.') + '</b> ' + o[2];
-          med.style.width = (pts / (R.length * 25) * 100) + '%';
-          setTimeout(function () { k++; ronda(); }, 3200);
-        };
+    var EMOTE = { bien: '!', duda: '?', mal: '…' };
+
+    // Qué busca el gerente en cada objeción (orden fijo de las 4 objeciones)
+    var EXTRA = [
+      ['Le diste una razón propia', /\b(zona|ciudad|cuenca|quito|guayaquil|comunidad|unico|diferente|nadie mas|exclusiv)/],
+      ['Moviste la charla a su presupuesto de marketing', /\b(marketing|trimestre|campana|activar|activacion|lanzamiento|presupuesto de)/],
+      ['Cambiaste seguidores por audiencia útil', /\b(alcance|audiencia|zona|interaccion|engagement|calendario|competencias|carreras|vistas|reproducciones|%|por ciento)/],
+      ['Aseguraste la siguiente reunión', /\b(reunion|presento|presentar|presentacion|lunes|martes|miercoles|jueves|viernes|minutos|quien decide|quien mas decide|objetivo)/]
+    ];
+    var CRIT = [
+      { t: 'Hablaste de su negocio', p: 8, re: /\b(cliente|clientes|tu marca|su marca|marca|ventas|vender|consumidor|mercado|producto|negocio|objetivo|publico|audiencia|comunidad|target)/ },
+      { t: 'Diste datos concretos', p: 7, re: /(\d|%|\bmil\b|por ciento)/ },
+      { t: 'Propusiste algo concreto', p: 7, re: /\b(activacion|contenido|evento|experiencia|serie|video|propuesta|plan|calendario|presencia|medir|medicion|resultado|reporte|retorno|alcance|campana)/ }
+    ];
+    var MALOS = [
+      { t: 'Sonó a pedido de ayuda', p: -12, re: /\b(apoyo|apoyar|apoyarme|ayuda|ayudar|ayudarme|aporte|por favor|porfa|necesito|regalar|regalen|donar|donacion|sueno|auspiciame|patrociname)/ },
+      { t: 'Te vendiste barato', p: -8, re: /\b(cualquier|lo que sea|lo que puedan|poquito|algo es algo)/ },
+      { t: 'Hablaste solo de ti', p: -4, re: /\b(entreno|campeon|medalla|esfuerzo|sacrificio|mis logros|gane|trofeo)/ }
+    ];
+    function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    function evaluar(t, i) {
+      var n = norm(t), p = 0, chips = [], palabras = n.split(/\s+/).filter(Boolean).length;
+      CRIT.forEach(function (c) { if (c.re.test(n)) { p += c.p; chips.push([c.t, 1]); } });
+      if (EXTRA[i][1].test(n)) { p += 8; chips.push([EXTRA[i][0], 1]); }
+      MALOS.forEach(function (c) {
+        if (c.re.test(n) && !(c.p === -4 && chips.length > 1)) { p += c.p; chips.push([c.t, 0]); }
+      });
+      if (palabras < 6) { p -= 6; chips.push(['Respuesta muy corta', 0]); }
+      if (!chips.some(function (c) { return c[1]; })) chips.push(['No le diste una razón de negocio', 0]);
+      return { p: Math.max(0, Math.min(25, p)), chips: chips };
+    }
+
+    function tipea(el, t, cb) {
+      var i = 0; el.hidden = false; el.textContent = ''; el.classList.remove('mj-pop'); void el.offsetWidth; el.classList.add('mj-pop');
+      (function paso() { el.textContent = t.slice(0, ++i); if (i < t.length) setTimeout(paso, t.length > 90 ? 14 : 24); else if (cb) setTimeout(cb, 250); })();
+    }
+    function pensando() { gTu.classList.add('viejo'); gEl.hidden = false; gEl.innerHTML = '<span class="puntos"><i></i><i></i><i></i></span>'; gEl.classList.remove('mj-pop'); void gEl.offsetWidth; gEl.classList.add('mj-pop'); }
+    function gesto(g) {
+      img.classList.remove('entra'); void img.offsetWidth;
+      img.src = base + GESTOS[g] + '.webp?v=1'; img.classList.add('entra');
+      sim.setAttribute('data-gesto', g);
+    }
+    function emo(c, color) { emote.textContent = c; emote.style.color = color || ''; emote.classList.remove('on'); void emote.offsetWidth; emote.classList.add('on'); }
+    function flota(v) { ptsEl.textContent = (v > 0 ? '+' : '') + v; ptsEl.style.color = v > 0 ? '#2f8f45' : 'var(--rojo)'; ptsEl.classList.remove('on'); void ptsEl.offsetWidth; ptsEl.classList.add('on'); }
+    function setInteres(v) { interes = Math.max(0, Math.min(100, v)); barra.style.width = interes + '%'; sim.setAttribute('data-int', interes >= 60 ? 'alto' : 'bajo'); }
+    function bloquear(b) { txt.disabled = b; enviar.disabled = b; $('.mj-cartas-btn', sim).disabled = b; }
+    function paraReloj() { clearInterval(reloj); relojEl.classList.remove('urge'); }
+    function arrancaReloj() {
+      paraReloj(); seg = 25; relojN.textContent = seg; arco.style.strokeDashoffset = 0;
+      reloj = setInterval(function () {
+        seg--; relojN.textContent = seg; arco.style.strokeDashoffset = 97.4 * (1 - seg / 25);
+        relojEl.classList.toggle('urge', seg <= 7);
+        if (seg <= 0) { paraReloj(); responder('', null, true); }
+      }, 1000);
+    }
+
+    function pregunta() {
+      if (k >= R.length || interes <= 0) return fin();
+      var r = R[k]; ocupado = false;
+      ronda.textContent = k + 1; fb.hidden = true; cartas.hidden = true; gTu.hidden = true;
+      txt.value = ''; cont.textContent = '0/280';
+      gesto(k ? 'duda' : 'espera');
+      tipea(gEl, r.q.replace(/[“”]/g, ''), function () { bloquear(false); txt.focus({ preventScroll: true }); arrancaReloj(); });
+    }
+
+    function responder(t, carta, silencio) {
+      if (ocupado) return; ocupado = true; paraReloj(); bloquear(true); cartas.hidden = true;
+      var r = R[k], res;
+      if (silencio) { res = { p: 0, chips: [['Te quedaste en silencio', 0]] }; t = '…'; }
+      else if (carta) { res = { p: carta[1], chips: [[carta[2], carta[1] >= 20 ? 1 : 0]] }; t = carta[0]; }
+      else res = evaluar(t, k);
+      dep.classList.remove('habla'); void dep.offsetWidth; dep.classList.add('habla');
+      gEl.hidden = true; gTu.classList.remove('viejo');
+      tipea(gTu, t, function () {
+        pensando();
+        setTimeout(function () {
+          var tipo = res.p >= 18 ? 'bien' : res.p >= 10 ? 'duda' : 'mal';
+          pts += res.p;
+          var delta = tipo === 'bien' ? 22 : tipo === 'duda' ? -4 : -20;
+          setInteres(interes + delta);
+          gesto(tipo); emo(EMOTE[tipo], tipo === 'bien' ? '#2f8f45' : tipo === 'mal' ? 'var(--negro)' : 'var(--rojo)'); flota(res.p);
+          if (tipo === 'mal') { escena.classList.remove('sacude'); void escena.offsetWidth; escena.classList.add('sacude'); }
+          if (silencio) tipea(gEl, '¿Hola? Mi tiempo también vale.');
+          else tipea(gEl, interes <= 0 ? 'Mira, mejor lo dejamos aquí.' : REACC[tipo][k % 4]);
+          var mejor = r.o.filter(function (x) { return x[1] >= 20; })[0][0];
+          if (res.p < 18) faltas.push(mejor);
+          var ult = k >= R.length - 1 || interes <= 0;
+          fb.innerHTML = '<div class="mj-chips">' + res.chips.map(function (c) { return '<span class="' + (c[1] ? '' : 'no') + '">' + (c[1] ? '✔ ' : '✘ ') + esc(c[0]) + '</span>'; }).join('') + '</div>'
+            + (res.p < 18 ? '<p><b>Una respuesta que funciona:</b> “' + esc(mejor) + '”</p>' : '<p><b>+' + res.p + ' puntos.</b> Así se responde a esa objeción.</p>')
+            + '<button class="btn crema mj-sig" type="button">' + (ult ? 'Ver cómo terminó la reunión' : 'Siguiente objeción') + ' <span class="chev">»</span></button>';
+          fb.hidden = false;
+          $('.mj-sig', fb).onclick = function () { k++; pregunta(); };
+        }, 1100);
       });
     }
+
     function fin() {
-      var nota = Math.round(pts / (R.length * 25) * 100);
-      var v = nota >= 80 ? 'Saliste con una segunda reunión agendada.' : nota >= 50 ? 'Te dijeron “envíame una propuesta y la reviso”. Sabes lo que significa.' : 'La reunión terminó antes de tiempo.';
-      if (nota >= 80) gesto('trato', '¿Te parece el jueves a las diez? Trae los números.');
-      else if (nota >= 50) gesto('duda', 'Envíame la propuesta por correo y la reviso…');
-      else gesto('mal', 'Gracias por venir. Te escribimos.');
-      caja.innerHTML = '<div class="resultado" style="background:rgba(255,231,201,.06)"><span class="lbl">Cercanía al cierre</span><h3 class="epic" style="font-size:64px">' + nota + '<small style="font-size:24px">/100</small></h3><p>' + v + '</p>' + (faltas.length ? '<span class="lbl">La frase que te faltó</span><p>“' + faltas[0] + '”</p>' : '') + '<div class="btns" style="margin-top:16px"><button class="btn crema" type="button" data-otra>Repetir</button><button class="btn rojo" type="button" data-wa2>Entrenar con Pro Motion <span class="chev">»</span></button></div></div>';
-      $('[data-otra]', caja).onclick = function () { k = 0; pts = 0; faltas = []; med.style.width = '0'; R.forEach(function (r) { r.mez = 0; }); ronda(); };
-      $('[data-wa2]', caja).onclick = function () { abrirWA('Hola Daniel, hice el simulador de negociación de Pro Academy y saqué ' + nota + '/100. Quiero preparar mi reunión con una marca.'); };
+      paraReloj(); bloquear(true); fb.hidden = true; cartas.hidden = true; ctrl.hidden = true;
+      var nota = Math.round(pts / (R.length * 25) * 100), salio = interes <= 0;
+      var v, frase;
+      if (salio) { gesto('vete'); frase = 'Gracias por venir. Te escribimos.'; v = 'El gerente se levantó antes de terminar. Ninguna marca compra un pedido de ayuda: compra una razón de negocio.'; }
+      else if (nota >= 80) { gesto('trato'); frase = '¿Te parece el jueves a las diez? Trae los números.'; v = 'Saliste con una segunda reunión agendada. Así empiezan los auspicios de verdad.'; }
+      else if (nota >= 50) { gesto('duda'); frase = 'Envíame la propuesta por correo y la reviso…'; v = 'Te dijeron “envíame una propuesta y la reviso”. Ya sabes lo que significa.'; }
+      else { gesto('mal'); frase = 'Bueno… cualquier cosa te escribo.'; v = 'La reunión terminó sin un siguiente paso.'; }
+      gTu.hidden = true; tipea(gEl, frase);
+      setTimeout(function () {
+        var d = document.createElement('div'); d.className = 'mj-final';
+        d.innerHTML = '<span class="mj-tag">Cercanía al cierre</span><h3>' + nota + '<small>/100</small></h3><p>' + v + '</p>'
+          + (faltas.length ? '<p class="falta"><b>La frase que te faltó:</b><br>“' + esc(faltas[0]) + '”</p>' : '')
+          + '<div class="btns"><button class="btn crema" type="button" data-otra>Jugar otra vez</button><button class="btn rojo" type="button" data-wa2>Entrenar con Pro Motion <span class="chev">»</span></button></div>';
+        escena.appendChild(d);
+        $('[data-otra]', d).onclick = function () { d.remove(); ctrl.hidden = false; k = 0; pts = 0; faltas = []; setInteres(30); pregunta(); };
+        $('[data-wa2]', d).onclick = function () { abrirWA('Hola Daniel, jugué el simulador de negociación de Pro Academy y saqué ' + nota + '/100. Quiero preparar mi reunión con una marca.'); };
+      }, salio ? 2200 : 1800);
     }
-    $('.sim-empezar', sim).onclick = ronda;
+
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      var t = txt.value.trim();
+      if (t.split(/\s+/).filter(Boolean).length < 2) { txt.focus(); txt.placeholder = 'Escribe al menos una frase…'; return; }
+      txt.value = ''; cont.textContent = '0/280';
+      responder(t);
+    };
+    txt.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.onsubmit(e); } });
+    txt.addEventListener('input', function () { cont.textContent = txt.value.length + '/280'; });
+    $('.mj-cartas-btn', sim).onclick = function () {
+      var r = R[k], o = r.o.slice();
+      for (var a = o.length - 1; a > 0; a--) { var j = Math.floor(Math.random() * (a + 1)), x = o[a]; o[a] = o[j]; o[j] = x; }
+      cartas.innerHTML = o.map(function (c, i) { return '<button type="button" data-i="' + i + '">' + esc(c[0]) + '</button>'; }).join('');
+      cartas.hidden = false;
+      $$('button', cartas).forEach(function (b) { b.onclick = function () { responder(null, o[+b.dataset.i]); }; });
+    };
+    $('.sim-empezar', sim).onclick = function () { $('.mj-inicio', sim).remove(); ctrl.hidden = false; bloquear(true); setInteres(30); pregunta(); };
   })();
 
   /* ---------- Academy: plan de contenido en 3 pasos ---------- */
