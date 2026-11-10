@@ -1640,7 +1640,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 .remate b{color:var(--rojo)}
 @media (prefers-reduced-motion:reduce){.blog-hero-vis .muleta,.figura .fig-pj{animation:none}}
 /* Guías: tenista que piensa */
-.ten-w{position:relative;z-index:1;width:min(64%,260px);margin:0 auto 14px}
+.ten-w{position:relative;z-index:1;width:min(82%,330px);margin:0 auto 6px}
 .ten-w .ten{width:100%;height:auto;display:block}
 .ten-piensa{position:absolute;right:62%;bottom:92%;width:220px;height:120px}
 .ten-piensa i{position:absolute;border-radius:50%;background:#fff;border:2px solid var(--negro);opacity:0;animation:vsPiensa 8s infinite}
