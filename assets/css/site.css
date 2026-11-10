@@ -829,6 +829,7 @@ a:hover .esc .fig,.esc:hover .fig{transform:translateX(-50%) translateY(-4px)}
 @media (max-width:620px){.fase{grid-template-columns:28px minmax(0,1fr) 60px}.fase .fb{grid-column:2/-1;grid-row:2}}
 @media (min-width:900px){.gt-top{grid-template-columns:1.25fr .75fr}.gt-concepto{grid-template-columns:1.2fr .8fr}.gt-piezas{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .gt-top>*,.gt-concepto>*{min-width:0}
+.gt-logo{display:block;width:clamp(190px,22vw,290px);height:auto;margin-bottom:18px}
 
 /* ---------- Identidad: casos ---------- */
 .id-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
