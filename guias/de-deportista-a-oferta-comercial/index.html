@@ -573,6 +573,48 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 .fin .btn{background:var(--negro)}
 @media (max-width:640px){.fin .giro{grid-template-columns:1fr}}
 
+
+/* --- Encabezado de capítulo con ilustración (2 a 4) --- */
+.capx{padding:110px 0 80px;overflow:hidden;border-top:10px solid var(--negro)}
+.capx .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
+.capx-fig{position:relative;width:100%;max-width:500px;aspect-ratio:1.12;justify-self:center}
+.capx-num{position:absolute;left:-4%;top:2%;width:62%;aspect-ratio:1;border-radius:50%;background:var(--negro);color:var(--crema);display:grid;place-items:center;font-size:min(36vw,230px);line-height:.8;padding-top:7%}
+.c-n3 .capx-num{background:var(--rojo)}
+.capx-fig img{position:absolute;right:-6%;bottom:-4%;height:100%;width:auto;filter:var(--pegado)}
+.capx-fig.ancho img{height:auto;width:88%;right:-10%;bottom:-6%}
+.capx-tx .kicker{color:var(--rojo)}
+.capx-tx{min-width:0}
+.capx-tx h2{font-size:88px;margin-top:12px;white-space:nowrap}
+.capx-tx p{font-size:clamp(19px,2.3vw,24px);margin-top:16px;letter-spacing:-.02em;max-width:28ch}
+@media (max-width:820px){
+  .capx{padding:64px 0 40px}
+  .capx .wrap{grid-template-columns:1fr;gap:34px;text-align:center}
+  .capx-fig{width:min(92vw,400px)}
+  .capx-tx p{margin-left:auto;margin-right:auto}
+}
+
+/* --- Resultado → WhatsApp --- */
+.enviar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:18px}
+.enviar .btn{font-size:15px;padding:12px 16px 10px}
+.enviar small{font-size:14px;opacity:.7}
+.wa-ic{width:18px;height:18px;fill:currentColor;flex:none}
+
+/* --- Ajustes de espacio --- */
+.cx .panel{margin-top:40px}
+.triada{margin-top:56px}
+.pn{margin-top:40px}
+.escalera{align-items:stretch}
+.esc-vis{overflow:hidden;min-height:340px}
+.esc-vis img{width:min(64%,200px)}
+.confianza{margin-top:64px;padding-top:40px;border-top:2px solid rgba(42,38,38,.15)}
+.fin .cta-fin{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:28px;margin-top:48px}
+.fin .cta-fin .ctas{display:grid;gap:12px;justify-items:start;padding-bottom:40px}
+.fin .cta-fin .ctas p{font-size:16px;margin-top:4px}
+.fin .btn.crema{background:var(--crema);color:var(--negro)}
+.fin .cta-fin img{width:min(40vw,300px);margin:0;filter:var(--pegado)}
+@media (max-width:640px){.fin .cta-fin{display:flex;flex-direction:column;align-items:stretch}.fin .cta-fin .ctas{padding-bottom:0}.fin .cta-fin .ctas .btn{width:100%;justify-content:center}.fin .cta-fin img{width:62vw;margin:0 auto}}
+@media (max-width:760px){.esc-vis{min-height:0;overflow:visible;padding-top:6px}.esc-vis img{width:120px!important;transform:none!important}}
+
 /* ---------- Muro de pago (vista previa) ---------- */
 .muro{background:var(--rojo);color:var(--crema);padding:90px 0 110px;overflow:hidden;position:relative}
 .muro .wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:48px;align-items:center}
@@ -606,7 +648,7 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 <!-- 1. PORTADA -->
 <header class="hero">
   <div class="top"><div class="wrap">
-    <a href="../../index.html" aria-label="Ir a Pro Motion Sport Marketing"><img src="../../assets/brand/logo-blanco.png?v=2" alt="Pro Motion Sport Marketing"></a>
+    <a href="../../index.html" aria-label="Ir a Pro Motion Sport Marketing"><img src="../../assets/brand/logo-blanco-punto-negro.png?v=1" alt="Pro Motion Sport Marketing"></a>
     <a class="wa" href="#" data-wa="general">Hablemos »</a>
   </div></div>
   <div class="wrap">
@@ -907,13 +949,13 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 <!-- PAGO: INICIO · aquí van los capítulos 2 en adelante (solo con acceso pagado) -->
 
 <!-- ============ CAPÍTULO 2 ============ -->
-<section class="cap c-n2" id="capitulo-2">
+<section class="capx c-n2" id="capitulo-2">
   <div class="wrap">
-    <div class="num pop"><span class="epic">2</span><div class="pj sube der"><img src="../../assets/img/espid_calc.webp?v=3" alt="" width="600" height="900"></div></div>
-    <div class="titulo">
+    <div class="capx-fig"><span class="capx-num epic pop">2</span><img class="rv d1" src="../../assets/img/guia_cap2_bloques.webp?v=1" alt="Espid apila tres bloques: las tres ofertas de una propuesta" width="656" height="900"></div>
+    <div class="capx-tx">
       <div class="kicker rv">Capítulo 2</div>
       <h2 class="epic rv">Ordenar la<br>propuesta</h2>
-      <p class="rv">Del currículum deportivo a una solución comercial.</p>
+      <p class="rv d1">Del currículum deportivo a una solución comercial.</p>
     </div>
   </div>
 </section>
@@ -993,6 +1035,7 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
         <div class="gasto-et"><span>La marca lo ve como gasto</span><span>Lo ve como inversión</span></div>
         <p class="gasto-txt" id="gasto-t"></p>
       </div>
+      <div class="enviar"><button class="btn rojo" type="button" id="env-exp"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Enviar mi plataforma por WhatsApp</button><small>Te ayudamos a convertirla en propuesta.</small></div>
     </div>
 
     <div class="oferta" data-of="2">
@@ -1011,6 +1054,7 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
         <img id="conf-img" src="../../assets/img/boar_confused.webp?v=3" alt="El ejecutivo de la marca" width="600" height="900">
         <div><div class="kicker">Tranquilidad de la marca</div><div class="conf-m"><i id="conf-i"></i></div><p class="conf-t" id="conf-t"></p></div>
       </div>
+      <div class="enviar"><button class="btn rojo" type="button" id="env-inc"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Consultar mi caso de incentivo</button><small>Cuéntanos qué podrías ofrecer.</small></div>
     </div>
   </div>
 </section>
@@ -1028,13 +1072,13 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 </section>
 
 <!-- ============ CAPÍTULO 3 ============ -->
-<section class="cap c-n3" id="capitulo-3">
+<section class="capx c-n3" id="capitulo-3">
   <div class="wrap">
-    <div class="num pop"><span class="epic">3</span><div class="pj sube"><img src="../../assets/img/sloth_activo.webp?v=3" alt="" width="700" height="900"></div></div>
-    <div class="titulo">
+    <div class="capx-fig"><span class="capx-num epic pop">3</span><img class="rv d1" src="../../assets/img/guia_cap3_lienzo.webp?v=1" alt="El zorro tenista pinta su propio círculo rojo en un lienzo" width="672" height="900"></div>
+    <div class="capx-tx">
       <div class="kicker rv">Capítulo 3</div>
       <h2 class="epic rv">Crear,<br>no reproducir</h2>
-      <p class="rv">La originalidad como estrategia.</p>
+      <p class="rv d1">La originalidad como estrategia.</p>
     </div>
   </div>
 </section>
@@ -1069,7 +1113,8 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
           <label><input type="radio" name="d" value="3"><span>Deporte de equipo</span></label></fieldset>
       </form>
       <div class="idea" aria-live="polite"><div class="kicker">Tu idea de serie</div><div class="titulo-idea" id="idea-t"></div><p id="idea-p"></p>
-        <div class="dos"><div id="idea-m"></div><div id="idea-y"></div></div></div>
+        <div class="dos"><div id="idea-m"></div><div id="idea-y"></div></div>
+        <div class="enviar"><button class="btn rojo" type="button" id="env-idea"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Enviar mi idea por WhatsApp</button><small style="color:var(--crema)">La revisamos contigo.</small></div></div>
     </div>
 
     <div class="ruido" id="ruido">
@@ -1095,13 +1140,13 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 </section>
 
 <!-- ============ CAPÍTULO 4 ============ -->
-<section class="cap c-n4" id="capitulo-4">
+<section class="capx c-n4" id="capitulo-4">
   <div class="wrap">
-    <div class="num pop"><span class="epic">4</span><div class="pj sube der"><img src="../../assets/img/handshake.webp?v=3" alt="" width="748" height="823"></div></div>
-    <div class="titulo">
+    <div class="capx-fig ancho"><span class="capx-num epic pop">4</span><img class="rv d1" src="../../assets/img/guia_cap4_arbol.webp?v=1" alt="Espid y el ejecutivo de la marca riegan juntos un árbol joven" width="900" height="747"></div>
+    <div class="capx-tx">
       <div class="kicker rv">Capítulo 4</div>
       <h2 class="epic rv">Prospección,<br>alianzas y<br>sostenibilidad</h2>
-      <p class="rv">Conseguir un auspicio es difícil. Mantenerlo, aún más.</p>
+      <p class="rv d1">Conseguir un auspicio es difícil. Mantenerlo, aún más.</p>
     </div>
   </div>
 </section>
@@ -1178,16 +1223,19 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
     </div>
     <p class="manifiesto rv">El deportista que entiende cómo funcionan el marketing, la comunicación y la lógica empresarial deja de depender de la suerte. Este libro no es un manual para dejar de ser deportista. Es una guía para convertirte en <b>un proyecto deportivo sostenible</b>, capaz de crecer, evolucionar y generar impacto dentro y fuera de la competencia.</p>
     <div class="cta-fin">
-      <div><a class="btn lg rv" href="#" data-wa="fin"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>Construyamos tu proyecto <span class="chev">»</span></a>
-        <p class="rv d1" style="margin-top:12px;font-size:16px">Escríbeme por WhatsApp y revisamos tu caso.</p></div>
-      <img class="rv d2" src="../../assets/img/sloth_medal.webp?v=3" alt="El perezoso deportista, ahora con su medalla" width="700" height="900">
+      <div class="ctas">
+        <a class="btn lg crema rv" href="../../academy/cursos/">Quiero aprender más <span class="chev">»</span></a>
+        <a class="btn lg rv d1" href="#" data-wa="fin"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Quiero trabajar con Pro Motion Sport Marketing</a>
+        <p class="rv d2">Cursos de Pro Academy, o te escribimos y revisamos tu caso.</p>
+      </div>
+      <img class="rv d2" src="../../assets/img/guia_fin_perezoso.webp?v=1" alt="El perezoso deportista, ahora seguro, con su medalla y su propuesta bajo el brazo" width="611" height="900">
     </div>
   </div>
 </section>
 
 
 <footer>
-  <img src="../../assets/brand/logo-blanco.png?v=2" alt="Pro Motion Sport Marketing">
+  <img src="../../assets/brand/logo-blanco-punto-negro.png?v=1" alt="Pro Motion Sport Marketing">
   <p>Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
   <small>© Pro Motion Sport Marketing · Ecuador · <a href="../" style="color:inherit">Más guías</a> · <a href="../../index.html" style="color:inherit">Ir a la web</a></small>
 </footer>
@@ -1361,6 +1409,12 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
 /* Capítulos 2 a 4 (solo existen en la página con acceso pagado) */
 (function(){
   if (!document.getElementById('capitulo-2')) return;
+  // Títulos de capítulo: la palabra más larga cabe en su columna
+  function ajustar(){ document.querySelectorAll('.capx-tx h2').forEach(function(h){
+    var t = h.parentNode, max = innerWidth < 820 ? 64 : 92, f = max; h.style.fontSize = f + 'px';
+    while (h.scrollWidth > t.clientWidth && f > 26) { f -= 2; h.style.fontSize = f + 'px'; }
+  }); }
+  ajustar(); addEventListener('resize', ajustar); if (document.fonts) document.fonts.ready.then(ajustar);
   var WA = '593984678812';
   function waLink(t){ return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); }
 
@@ -1478,13 +1532,28 @@ footer small{display:block;margin-top:14px;font-size:12px;opacity:.7}
   pel.forEach(function(b, i){ b.addEventListener('click', function(){
     pel.forEach(function(x, j){ x.classList.toggle('ok', j <= i); });
     et.textContent = ESC[i];
-    ei.style.transform = 'translateY(' + (-i * 5) + '%)';
+    ei.style.transform = innerWidth < 760 ? 'none' : 'translateY(' + (-i * 5) + '%)';
     if (i === 4) ei.src = '../../assets/img/handshake.webp?v=3'; else if (ei.src.indexOf('espid_climb') < 0) ei.src = '../../assets/img/espid_climb.webp?v=3';
+    ei.style.transform = i === 4 ? 'none' : ei.style.transform;
   }); });
 
+
+  // Enviar resultados por WhatsApp
+  function abrir(t){ window.open(waLink(t), '_blank', 'noopener'); }
+  document.getElementById('env-exp').addEventListener('click', function(){
+    var sel = [].map.call(document.querySelectorAll('#exp button.on'), function(b){ return '• ' + b.textContent; });
+    abrir('Hola Daniel, leí el capítulo 2 de la guía "De deportista a oferta comercial". Estas son las experiencias que podría ofrecer a una marca:\n' + (sel.length ? sel.join('\n') : '(todavía no elegí ninguna)') + '\n¿Me ayudas a convertirlas en una propuesta?');
+  });
+  document.getElementById('env-idea').addEventListener('click', function(){
+    abrir('Hola Daniel, armé mi idea de serie en la guía "De deportista a oferta comercial":\n' + document.getElementById('idea-t').textContent + '\n' + document.getElementById('idea-p').textContent + '\n¿La revisamos juntos?');
+  });
+  document.getElementById('env-inc').addEventListener('click', function(){
+    var sel = [].filter.call(document.querySelectorAll('#inc input'), function(x){ return x.checked; }).map(function(x){ return '• ' + x.parentNode.textContent.trim(); });
+    abrir('Hola Daniel, quiero estructurar la oferta de incentivo tributario de mi propuesta. Lo que tengo claro:\n' + (sel.length ? sel.join('\n') : '(aún nada)') + '\n¿Me asesoras?');
+  });
   // WhatsApp del cierre
   document.querySelectorAll('[data-wa="fin"]').forEach(function(a){
-    a.href = waLink('Hola Daniel, terminé la guía completa "De deportista a oferta comercial" y quiero construir mi proyecto deportivo comercial.');
+    a.href = waLink('Hola Daniel, terminé la guía completa "De deportista a oferta comercial" y quiero trabajar con Pro Motion Sport Marketing en mi proyecto deportivo comercial.');
     a.target = '_blank'; a.rel = 'noopener';
   });
 })();

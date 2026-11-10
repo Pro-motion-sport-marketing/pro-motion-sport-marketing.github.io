@@ -7,6 +7,7 @@
 // Secretos (Cloudflare → Workers → promotionec → Settings → Variables and Secrets):
 //   PAYPHONE_TOKEN    Token de la app "Pro Motion Web" en Payphone Developer
 //   PAYPHONE_STORE_ID StoreID de la misma app
+//   ADMIN_CLAVE       Contraseña de la página privada /admin/accesos/ (enlaces para pagos por transferencia)
 // Mientras PAYPHONE_TOKEN no exista, la guía sigue abierta y el carrito cotiza por WhatsApp.
 
 import CATALOGO from '../assets/catalogo.json';
@@ -22,6 +23,7 @@ export default {
     try {
       if (url.pathname === '/api/pago/crear' && req.method === 'POST') return await crear(req, env, url);
       if (url.pathname === '/api/pago/confirmar' && req.method === 'POST') return await confirmar(req, env);
+      if (url.pathname === '/api/admin/acceso' && req.method === 'POST') return await accesoManual(req, env);
       if (url.pathname.startsWith('/api/')) return json({ error: 'No encontrado' }, 404);
       if (url.pathname === GUIA || url.pathname === GUIA + 'index.html') return await guia(req, env, url);
     } catch (e) {
@@ -184,4 +186,19 @@ function vistaPrevia(html) {
   if (ini < 0 || fin < 0) return html;
   const muro = html.match(/<template id="muro-pago">([\s\S]*?)<\/template>/);
   return html.slice(0, ini) + (muro ? muro[1] : '') + html.slice(fin);
+}
+
+// ---------- Acceso manual (pagos por transferencia) ----------
+async function accesoManual(req, env) {
+  if (!env.ADMIN_CLAVE || !(env.ACCESO_SECRET || env.PAYPHONE_TOKEN)) return json({ error: 'Falta configurar ADMIN_CLAVE en Cloudflare.' }, 503);
+  let body; try { body = await req.json(); } catch { return json({ error: 'JSON inválido' }, 400); }
+  const dada = String(body.clave || '');
+  // comparación en tiempo constante
+  const a = await firma(env, 'admin:' + dada), b = await firma(env, 'admin:' + env.ADMIN_CLAVE);
+  let d = a.length ^ b.length; for (let i = 0; i < Math.min(a.length, b.length); i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  if (d !== 0) { await new Promise((r) => setTimeout(r, 800)); return json({ error: 'Clave incorrecta' }, 401); }
+  const nota = String(body.nota || '').normalize('NFD').replace(/[^\w]+/g, '').slice(0, 20) || 'cliente';
+  const txid = 'PMG-T-' + nota + '-' + Date.now().toString(36);
+  const acceso = await crearAcceso(env, txid);
+  return json({ url: GUIA + '?acceso=' + encodeURIComponent(acceso) });
 }
