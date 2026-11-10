@@ -22,6 +22,7 @@
 html,body{height:100%;overflow:hidden}
 body{background:var(--papel) url(../../assets/brand/papel.jpg) repeat;background-size:720px;color:var(--tinta);font-family:var(--clash);font-size:18px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
 img,video{display:block;max-width:100%}
+[hidden]{display:none!important}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 b,strong{font-weight:600}
 a{color:inherit}
@@ -321,6 +322,24 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
 .motul{background:var(--rojo);color:var(--crema);border-radius:18px;padding:14px 18px}
 .motul .k{color:var(--crema);opacity:.85;margin-bottom:4px}
 .motul p{font-size:15px;line-height:1.42}
+.motul b.t{display:block;font-family:var(--epic);text-transform:uppercase;font-size:20px;line-height:1;margin-bottom:4px;font-weight:800}
+.oscuro .clip span b{color:var(--crema)}
+.caso .media img.ph{object-fit:cover;width:100%;height:100%;background:#111}
+.pm-pasos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pm-p{background:rgba(28,28,28,.07);border-radius:14px;padding:12px 10px;font-family:var(--epic);text-transform:uppercase;font-size:clamp(13px,1.3vw,17px);line-height:1;text-align:left;display:grid;gap:6px;transition:background .2s,transform .3s var(--rebote)}
+.pm-p b{color:var(--rojo);font-size:24px}
+.pm-p.on{background:var(--negro);color:var(--crema)}
+.pm-p.on b{color:var(--rojo-vivo)}
+.pm-det{background:#fff;border-radius:16px;padding:16px 18px;font-size:15.5px;line-height:1.45;min-height:110px}
+.pm-det b{color:var(--rojo)}
+.pm-bars{display:grid;gap:10px}
+.pm-bars div{display:grid;grid-template-columns:1fr 34px;gap:4px 10px;align-items:center}
+.pm-bars span{grid-column:1/-1;font-size:14px;font-weight:600}
+.pm-bars i{height:12px;border-radius:99px;background:rgba(28,28,28,.08);position:relative;overflow:hidden}
+.pm-bars i::after{content:"";position:absolute;inset:0;width:0;background:var(--rojo);border-radius:99px;transition:width 1.2s var(--golpe) .3s}
+.slide.on .pm-bars i::after{width:var(--w)}
+.pm-bars b{font-family:var(--epic);font-size:22px;color:var(--rojo);line-height:1}
+.pm-bars .tu i::after{background:repeating-linear-gradient(45deg,var(--rojo) 0 6px,transparent 6px 12px)}
 /* ---------- Responsive ---------- */
 .in>*,.grid2>*,.caso>*,.portada>*,.mult>*,.disc-wrap>*,.caso>div>*,.grid2>div>*,.mes,.ob{min-width:0}
 .k{overflow-wrap:anywhere}
@@ -345,6 +364,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
   .esc:nth-child(1){height:90px}.esc:nth-child(2){height:115px}.esc:nth-child(3){height:140px}.esc:nth-child(4){height:165px}.esc:nth-child(5){height:190px}
   .esc-det{grid-template-columns:1fr}.esc-det img{width:80px}
   .ideas,.vs,.pdfvsweb,.xmarca,.sigue{grid-template-columns:1fr}
+  .pm-pasos{grid-template-columns:repeat(2,minmax(0,1fr))}
   .piezas{grid-template-columns:repeat(2,1fr)}
   .rutas{grid-template-columns:1fr}
   .meses{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -425,10 +445,10 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
       <div style="display:grid;gap:20px">
         <div class="k a">Caso 1 · Desarrollo de marca personal</div>
         <h2 class="epic h2 a d1">Luis Cross<br><span class="rojo">#124</span></h2>
-        <p class="lead a d2">Piloto de motocross de Cañar que compite <b>con un solo brazo</b>. No le contamos los tiempos de vuelta: le contamos su historia. Su contenido llega mucho más lejos que su cuenta.</p>
+        <p class="lead a d2">Piloto de motocross de Cañar que compite <b>con un solo brazo</b>. En 2025 superó los <b>9 millones de visualizaciones</b> entre Instagram, Facebook y TikTok, desarrollando únicamente su estrategia de comunicación junto a Pro Motion Sport Marketing.</p>
         <div class="cifras a d3">
+          <div class="cifra"><div class="n">+<span data-c="9">0</span>M</div><p>visualizaciones en 2025 entre Instagram, Facebook y TikTok</p></div>
           <div class="cifra"><div class="n" data-c="815269">0</div><p>vistas en un solo video en TikTok</p></div>
-          <div class="cifra"><div class="n" data-c="55371">0</div><p>vistas en su mes pico, con menos de 2.000 seguidores</p></div>
           <div class="cifra"><div class="n"><span data-c="13">0</span>,3 %</div><p>engagement de sus reels</p></div>
         </div>
         <div class="a d4"><div class="k" style="margin-bottom:8px">Toca un video</div><div class="clips" id="clipsLuis"></div></div>
@@ -443,7 +463,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
   <div class="in">
     <div class="caso">
       <div class="media a">
-        <div class="vid"><video id="vSeb" muted loop playsinline preload="none" poster="../../assets/video/franja-sebastian.webp" data-src="../../assets/video/franja-sebastian.mp4"></video></div>
+        <div class="vid"><video id="vSeb" muted loop playsinline preload="none" poster="../../assets/video/franja-sebastian.webp" data-src="../../assets/video/franja-sebastian.mp4"></video><img id="iSeb" class="ph" alt="" hidden></div>
         <div class="badge"><div><b>85</b><small>PROMATCH</small></div></div>
       </div>
       <div style="display:grid;gap:20px">
@@ -455,11 +475,12 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
           <div class="cifra"><div class="n" data-c="45">0</div><p>países en su audiencia</p></div>
           <div class="cifra"><div class="n">5/5</div><p>nivel de integración de marca</p></div>
         </div>
-        <div class="a d4">
-          <div class="k" style="margin-bottom:8px">Marcas que activaron con él</div>
-          <div class="marcas"><span>Motul</span><span>Dorado Bet · experiencia VIP</span><span>Crazy4Cars</span><span>SG Consulting Group</span></div>
+        <div class="a d4" style="display:grid;gap:10px">
+          <div class="k">Marcas que activaron con él · toca una</div>
+          <div class="chips" id="marcaT"><button class="chip on" data-m="0">Motul</button><button class="chip" data-m="1">Dorado Bet · experiencia VIP</button><button class="chip" data-m="2">SG Consulting Group</button></div>
+          <div class="motul" id="marcaTxt"></div>
+          <div class="clips" id="clipsSeb"></div>
         </div>
-        <div class="motul a d4"><div class="k">En detalle · Sebastián × Motul · temporada 2026</div><p>Motul lo acompaña en su campaña internacional del GT Challenge de las Américas, de mayo a octubre. Trabajamos <b>el anuncio de la alianza y el contenido de producto</b> desde su experiencia como piloto, y la comunicación de cada fecha entre su cuenta y la de la marca: <b>expectativa, carrera, resultado y activación</b>.</p></div>
         <p class="leccion a d5"><b>La lección para ti:</b> la marca no paga por un logo; paga por <b>experiencias, contenido y evidencia</b>. Eso se diseña, se ejecuta y se mide.</p>
       </div>
     </div>
@@ -511,6 +532,39 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
   </div>
 </section>
 
+<!-- PROMATCH · CÓMO FUNCIONA -->
+<section class="slide crema-sec" id="s6b" data-t="¿Qué es ProMatch?">
+  <div class="in">
+    <div class="grid2" style="align-items:start">
+      <div style="display:grid;gap:18px">
+        <div class="k a">Nuestra herramienta</div>
+        <h2 class="epic h2 a d1">¿Qué es<br><span class="box">ProMatch?</span></h2>
+        <p class="lead a d2">Es nuestro sistema para conectar <b>deportistas y marcas que sí encajan</b>. Ordena tu identidad, tu audiencia, tu calendario y tu capacidad de activación para que tu propuesta llegue mejor preparada a las marcas afines.</p>
+        <div class="pm-pasos a d3" id="pmPasos">
+          <button class="pm-p on" data-i="0"><b>1</b>Nos cuentas</button>
+          <button class="pm-p" data-i="1"><b>2</b>Analizamos</button>
+          <button class="pm-p" data-i="2"><b>3</b>Puntaje</button>
+          <button class="pm-p" data-i="3"><b>4</b>Recomendación</button>
+        </div>
+        <div class="pm-det a d3" id="pmDet"></div>
+        <p class="nota a d4">El puntaje mide tu preparación comercial, no garantiza un auspicio: aumentamos tus posibilidades, la decisión siempre es de la marca.</p>
+      </div>
+      <div class="card a d2" style="display:grid;gap:14px">
+        <div class="k">Perfiles ya auditados con ProMatch</div>
+        <div class="pm-bars">
+          <div><span>Luis Cross · motocross</span><i style="--w:87%"></i><b>87</b></div>
+          <div><span>Sebastián Merchán · GT</span><i style="--w:85%"></i><b>85</b></div>
+          <div><span>Diego Serrano · rally y circuitos</span><i style="--w:85%"></i><b>85</b></div>
+          <div><span>Juan Guerrero · rally</span><i style="--w:80%"></i><b>80</b></div>
+          <div class="tu"><span>Andrés Medina · running</span><i style="--w:12%"></i><b>?</b></div>
+        </div>
+        <p style="font-size:14.5px;line-height:1.4"><b>Y para las marcas:</b> nos dan un briefing corto y les recomendamos perfiles con la razón de su compatibilidad, una idea de activación y un rango de inversión.</p>
+        <img src="../../assets/escenas/eco-promatch.webp" alt="" loading="lazy" style="width:150px;justify-self:end">
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 07 · DIAGNÓSTICO PROMATCH -->
 <section class="slide" id="s7" data-t="Paso 1 · Diagnóstico ProMatch">
   <div class="in">
@@ -521,7 +575,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
         <p class="lead a d2">Te envío un <b>formulario personalizado</b> y analizo lo que tu contenido y tu presencia actual transmiten. No medimos qué tan bonitos son tus videos: medimos tu <b>capacidad de desarrollo comercial</b>, cómo amplificarla y cuáles son los primeros pasos.</p>
         <div class="a d3" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
           <div class="precio-tag"><b>$50</b><span>valor del diagnóstico ProMatch</span></div>
-          <p style="font-size:15px;flex:1 1 200px;max-width:320px;line-height:1.4"><b>Es tuyo, trabajemos o no juntos.</b> Un punto de partida para ver el futuro comercial que puedes tener como deportista.</p>
+          <p style="font-size:15px;flex:1 1 160px;min-width:0;max-width:320px;line-height:1.4"><b>Es tuyo, trabajemos o no juntos.</b> Un punto de partida para ver el futuro comercial que puedes tener como deportista.</p>
         </div>
         <div class="a d4">
           <div class="k" style="margin-bottom:10px">Qué recibes</div>
@@ -765,7 +819,7 @@ function go(i,fromHash){
 $('#prevB').onclick=()=>go(cur-1);$('#nextB').onclick=()=>go(cur+1);
 addEventListener('keydown',e=>{
   if(e.target.matches('input'))return;
-  if(cur===12&&(e.key===' '||e.key==='ArrowUp')){return}
+  if(slides[cur].id==='s13'&&(e.key===' '||e.key==='ArrowUp')){return}
   if(['ArrowRight','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
   if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
   if(e.key==='Escape')$('#indice').classList.remove('open');
@@ -963,6 +1017,42 @@ const juego=(()=>{
   }
   return{start(){if(run)return;run=true;last=0;raf=requestAnimationFrame(step)},stop(){run=false;cancelAnimationFrame(raf)}};
 })();
+
+/* ---------- Marcas Sebastián ---------- */
+const V='../../assets/',CM=V+'casos/m/';
+const marcasSeb=[
+ ['Motul · temporada 2026','Motul lo acompaña en su campaña internacional del GT Challenge de las Américas. Trabajamos el anuncio de la alianza, el contenido de producto desde su experiencia como piloto y las promociones de la marca.',[
+   ['i',CM+'DYfUD6Tx7oX/01.webp','165 me gusta','Anuncio oficial de la alianza'],
+   ['v',CM+'DYdkTf6NkJx/clip','3.213','Alianza con Motul Ecuador'],
+   ['v',CM+'DbnxiffRLQc/clip','2.911','El producto explicado por el piloto'],
+   ['v',CM+'DdUPnRiJkr5/clip','2.222','Promoción: viaje al paddock de la F1']]],
+ ['Dorado Bet · experiencia VIP','Los ganadores de la promoción de Dorado Bet vivieron una jornada de karting junto al piloto: competencia, podio y premiación. La marca no solo aparece: regala una experiencia que solo Sebastián puede dar.',[
+   ['v',V+'video/c-DcZKMZ2Jazl','2.185','Los ganadores corren con el piloto'],
+   ['i','media/dorado-karting.webp','En pista','Karting junto a Sebastián'],
+   ['i','media/dorado-podio.webp','Podio','Premiación con la marca'],
+   ['i','media/dorado-ganador.webp','Ganador','Foto con el piloto']]],
+ ['SG Consulting Group','Marca aliada de su proyecto deportivo, presente en su contenido de temporada y en su perfil comercial.',[]]];
+function showMedia(t,src){const v=$('#vSeb'),im=$('#iSeb');
+  if(t==='v'){im.hidden=true;v.hidden=false;v.poster=src+'.webp';v.src=src+'.mp4';v.play().catch(()=>{})}
+  else{v.pause();v.hidden=true;im.hidden=false;im.src=src}}
+function marcaSeb(i){const m=marcasSeb[i];
+  $$('#marcaT .chip').forEach((c,j)=>c.classList.toggle('on',j===i));
+  $('#marcaTxt').innerHTML=`<b class="t">${m[0]}</b><p>${m[1]}</p>`;
+  $('#clipsSeb').innerHTML=m[2].map((c,j)=>`<button class="clip" data-j="${j}"><img src="${c[0]==='v'?c[1]+'.webp':c[1]}" alt="" loading="lazy"><span><b>${c[2]}</b>${c[3]}</span></button>`).join('');
+  $('#clipsSeb').hidden=!m[2].length;$('#clipsSeb').dataset.m=i;
+}
+$('#marcaT').onclick=e=>{const b=e.target.closest('.chip');if(b)marcaSeb(+b.dataset.m)};
+$('#clipsSeb').onclick=e=>{const b=e.target.closest('.clip');if(!b)return;const c=marcasSeb[+$('#clipsSeb').dataset.m][2][+b.dataset.j];
+  $$('#clipsSeb .clip').forEach(x=>x.classList.toggle('on',x===b));showMedia(c[0],c[1])};
+marcaSeb(0);
+
+/* ---------- ProMatch pasos ---------- */
+const pmTxt=['<b>Un formulario personalizado.</b> Tu perfil deportivo, tu calendario de competencias, tu audiencia, lo que puedes producir y los sectores que te interesan (y las marcas que no aceptarías).',
+ '<b>Analizamos tu contenido y tu presencia actual:</b> qué transmites hoy, qué te funciona y en qué etapa estás. Un estratega revisa cada recomendación; no es solo un algoritmo.',
+ '<b>Cinco variables con distinto peso:</b> afinidad de valores (30 %), compatibilidad de audiencia (25 %), territorio y calendario (20 %), capacidades de contenido (15 %) y experiencia comercial previa (10 %).',
+ '<b>Qué sectores y marcas encajan contigo y por qué,</b> una idea de activación para cada uno y tus primeros pasos. Es la base de tu perfil comercial.'];
+const pm=i=>{$('#pmDet').innerHTML=pmTxt[i];$$('#pmPasos .pm-p').forEach((b,j)=>b.classList.toggle('on',j===i))};
+$('#pmPasos').onclick=e=>{const b=e.target.closest('.pm-p');if(b)pm(+b.dataset.i)};pm(0);
 
 /* ---------- Inicio ---------- */
 const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1,true);
