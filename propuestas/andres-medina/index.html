@@ -389,6 +389,52 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
   .top img{height:24px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- Oferta final ---------- */
+#s-oferta .in{gap:18px;justify-content:flex-start}
+#s-oferta .in>*{flex:none;min-height:0!important}
+.of-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+.of-rec{position:relative;background:var(--negro);color:var(--crema);border-radius:26px;padding:30px 28px 26px;display:grid;gap:16px}
+.of-rec .sello{position:absolute;top:-14px;left:24px;background:var(--rojo);color:var(--crema);font-family:var(--epic);font-size:14px;padding:7px 14px 5px;border-radius:99px;letter-spacing:.04em}
+.of-rec h3{font-family:var(--epic);text-transform:uppercase;font-size:clamp(28px,3.2vw,40px);line-height:.95}
+.of-rec .pr{display:flex;align-items:baseline;gap:10px}
+.of-rec .pr b{font-family:var(--epic);font-size:clamp(56px,6vw,80px);line-height:.85;color:var(--rojo-vivo)}
+.of-rec .pr span{font-size:15px;opacity:.8;max-width:220px;line-height:1.3}
+.of-pasos{list-style:none;display:grid;gap:10px;counter-reset:p}
+.of-pasos li{counter-increment:p;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:15.5px;line-height:1.35}
+.of-pasos li::before{content:counter(p);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--crema);color:var(--negro);font-family:var(--epic);font-size:17px}
+.of-pasos li b{display:block;font-size:16.5px}
+.of-pagar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.of-pagar .btn{justify-content:center;font-size:15px;padding:15px 14px 13px;cursor:pointer;border:0}
+.of-pagar .btn.c{border:2px solid var(--crema);background:transparent;color:var(--crema)}
+.of-aviso{font-size:14px;min-height:1em;color:var(--rojo-vivo)}
+.of-aviso a{color:inherit}
+.of-seg{font-size:13px;opacity:.65;line-height:1.4}
+.of-mas{display:grid;gap:14px}
+.of-mas .k{margin-bottom:-4px}
+.of-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.of-tabs .chip{cursor:pointer}
+.of-tabs .chip:not(.on){background:transparent}
+.of-panel{display:none}
+.of-panel.on{display:grid;gap:12px}
+.of-item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(42,38,38,.12)}
+.of-item b{display:block;font-size:16px}
+.of-item small{font-size:13.5px;color:var(--gris)}
+.of-q{display:inline-flex;align-items:center;gap:12px;border:2px solid var(--negro);border-radius:99px;padding:4px 10px}
+.of-q button{border:0;background:none;font-size:20px;width:22px;cursor:pointer;line-height:1}
+.of-q span{min-width:16px;text-align:center;font-weight:600}
+.of-tot{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;padding-top:4px}
+.of-tot b{font-family:var(--epic);font-size:28px;color:var(--rojo)}
+.of-plan{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:2px solid rgba(42,38,38,.15);border-radius:16px;cursor:pointer;transition:border-color .2s,background .2s}
+.of-plan input{accent-color:var(--rojo);width:18px;height:18px}
+.of-plan b{display:block;font-size:15.5px}
+.of-plan small{font-size:13px;color:var(--gris)}
+.of-plan .v{font-family:var(--epic);font-size:15px;white-space:nowrap;text-align:right}
+.of-plan:has(input:checked){border-color:var(--rojo);background:#fff8ef}
+.of-mas .btn{justify-self:start;font-size:15px;padding:13px 18px 11px}
+.of-nota{font-size:13px;color:var(--gris);line-height:1.4}
+@media (max-width:900px){.of-grid{grid-template-columns:1fr}}
+@media (max-width:480px){.of-pagar{grid-template-columns:1fr}.of-plan{grid-template-columns:auto 1fr}.of-plan .v{grid-column:2;text-align:left}}
 </style>
 </head>
 <body>
@@ -776,14 +822,64 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
 </section>
 
 <!-- 14 · CIERRE -->
+<!-- OFERTA FINAL -->
+<section class="slide crema-sec" id="s-oferta" data-t="Tu oferta">
+  <div class="in">
+    <div class="k a">Tu oferta · después de nuestra reunión</div>
+    <h2 class="epic h2 a d1">Empecemos por <span class="rojo">tu diagnóstico</span></h2>
+    <div class="of-grid">
+      <div class="of-rec a d2">
+        <span class="sello">Recomendado</span>
+        <h3>Diagnóstico ProMatch</h3>
+        <div class="pr"><b>$50</b><span>pago único · es tuyo, trabajemos o no juntos</span></div>
+        <ol class="of-pasos">
+          <li><div><b>Pagas el diagnóstico</b>Con tarjeta (Payphone) o por transferencia.</div></li>
+          <li><div><b>Te envío el formulario ProMatch</b>En seguida, por WhatsApp: tu equipo y categoría, tus próximas competencias, tu experiencia con marcas, cómo producimos tu contenido y quién participa en la decisión.</div></li>
+          <li><div><b>Recibes tu diagnóstico</b>Tu puntaje, los sectores y marcas que encajan contigo y tus primeros pasos.</div></li>
+        </ol>
+        <div class="of-pagar">
+          <button class="btn r" type="button" id="of-tarjeta">Pagar con tarjeta »</button>
+          <a class="btn c" id="of-transf" target="_blank" rel="noopener" href="https://wa.me/593984678812?text=Hola%20Daniel%2C%20quiero%20pagar%20el%20Diagn%C3%B3stico%20ProMatch%20(USD%2050)%20por%20transferencia.%20%C2%BFMe%20env%C3%ADas%20los%20datos%3F">Pagar por transferencia</a>
+        </div>
+        <p class="of-aviso" id="of-aviso" aria-live="polite"></p>
+        <p class="of-seg">Tarjeta de crédito o débito con Payphone, pago seguro. Por transferencia te envío los datos por WhatsApp.</p>
+      </div>
+
+      <div class="of-mas card a d3">
+        <div class="k">Si quieres avanzar desde ya</div>
+        <p style="font-size:15.5px;line-height:1.4">También puedes empezar con contenido o con un plan. Lo ajustamos con el diagnóstico.</p>
+        <div class="of-tabs" role="tablist">
+          <button class="chip on" type="button" data-p="0">Contenido eventual</button>
+          <button class="chip" type="button" data-p="1">Planes de comunicación</button>
+        </div>
+        <div class="of-panel on" data-p="0">
+          <div class="of-item"><div><b>Video para redes</b><small>Reel editado con tu material · USD 80 c/u</small></div><div class="of-q"><button type="button" data-q="v" data-d="-1" aria-label="Quitar video">−</button><span id="q-v">0</span><button type="button" data-q="v" data-d="1" aria-label="Agregar video">+</button></div></div>
+          <div class="of-item"><div><b>Carrusel o arte</b><small>Diseño con tus fotos · USD 50 c/u</small></div><div class="of-q"><button type="button" data-q="a" data-d="-1" aria-label="Quitar carrusel">−</button><span id="q-a">0</span><button type="button" data-q="a" data-d="1" aria-label="Agregar carrusel">+</button></div></div>
+          <div class="of-item"><div><b>Cobertura a distancia</b><small>Tú grabas, nosotros contamos la carrera · desde USD 150</small></div><div class="of-q"><button type="button" data-q="c" data-d="-1" aria-label="Quitar cobertura">−</button><span id="q-c">0</span><button type="button" data-q="c" data-d="1" aria-label="Agregar cobertura">+</button></div></div>
+          <div class="of-tot"><span>Total referencial</span><b id="of-total">USD 0</b></div>
+          <a class="btn r" id="of-cont" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:20px;height:20px;flex:none"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Quiero este contenido</a>
+        </div>
+        <div class="of-panel" data-p="1">
+          <label class="of-plan"><input type="radio" name="of-plan" value="Asesoría de ideación (USD 35 por sesión)"><div><b>Asesoría de ideación</b><small>Una sesión para idear qué hacer</small></div><span class="v">USD 35</span></label>
+          <label class="of-plan"><input type="radio" name="of-plan" value="Plan mínimo viable (USD 220 al mes)" checked><div><b>Plan mínimo viable</b><small>3 videos + 2 carruseles al mes</small></div><span class="v">USD 220/mes</span></label>
+          <label class="of-plan"><input type="radio" name="of-plan" value="Plan de gestión (desde USD 260 al mes)"><div><b>Plan de gestión</b><small>Narrativa, calendario, producción e informe</small></div><span class="v">Desde 260/mes</span></label>
+          <label class="of-plan"><input type="radio" name="of-plan" value="Plan + coberturas + perfil comercial (desde USD 450 al mes)"><div><b>Plan + coberturas + perfil comercial</b><small>Para salir a buscar auspiciantes</small></div><span class="v">Desde 450/mes</span></label>
+          <a class="btn r" id="of-plan-btn" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:20px;height:20px;flex:none"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.3z"/></svg>Me interesa este plan</a>
+        </div>
+        <p class="of-nota">Valores referenciales; la cotización final se define contigo. No incluyen viáticos fuera de Cuenca, pauta ni impuestos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="slide rojo-sec" id="s14" data-t="Próximo paso" data-dark>
   <div class="in">
     <div class="k a">¿Cómo seguimos?</div>
-    <h2 class="epic a d1" style="font-size:clamp(40px,6vw,92px)">Tu propuesta,<br>hecha a tu medida</h2>
+    <h2 class="epic a d1" style="font-size:clamp(40px,6vw,92px)">Tu ruta,<br>paso a paso</h2>
     <div class="sigue a d2">
-      <div><b>1</b><h5>Hoy conversamos</h5><p>Me cuentas tu proyecto, tus carreras y lo que quieres lograr.</p></div>
-      <div><b>2</b><h5>Llenas un formulario corto</h5><p>Con eso entiendo tu caso a fondo.</p></div>
-      <div><b>3</b><h5>Te envío tu propuesta completa</h5><p>Mi recomendación personalizada para tu proyecto y, si quieres ir más allá, el resto de ofertas disponibles.</p></div>
+      <div><b>1</b><h5>Pagas tu diagnóstico</h5><p>USD 50, con tarjeta o por transferencia.</p></div>
+      <div><b>2</b><h5>Llenas el formulario ProMatch</h5><p>Te lo envío en seguida por WhatsApp. Con eso entiendo tu caso a fondo.</p></div>
+      <div><b>3</b><h5>Recibes tu diagnóstico y tu ruta</h5><p>Tu punto de partida y mi recomendación de qué hacer después.</p></div>
     </div>
     <p class="a d3" style="font-size:16px;max-width:760px">Siempre de menos a más: esto es un proceso y una trayectoria, no tiene por qué ser abrumador desde el inicio. Si quieres ir más rápido (coberturas, plan estratégico o tu perfil comercial con ideas reales y factibles para posibles auspiciantes), también lo desarrollamos.</p>
     <div class="ruta-final a d3">
@@ -791,7 +887,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
     </div>
     <p class="frase a d4" style="font-size:clamp(16px,1.7vw,22px)">Donde otros ven atletas, nosotros vemos historias. Donde otros ven métricas, nosotros vemos significado.</p>
     <div class="a d4" style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn c" target="_blank" rel="noopener" href="https://wa.me/593984678812?text=Hola%20Daniel%2C%20quiero%20recibir%20mi%20propuesta%20personalizada.">Quiero mi propuesta »</a>
+      <button class="btn c" type="button" onclick="document.querySelector('#s-oferta')&&window.PMgoOferta()">Ver mi oferta »</button>
       <a class="btn" target="_blank" rel="noopener" href="https://promotionec.com/">Conoce Pro Motion</a>
     </div>
     <p style="font-size:15px;opacity:.85" class="a d5">Daniel Espinoza · +593 98 467 8812 · @pro_motion.ec</p>
@@ -1065,6 +1161,42 @@ const pmTxt=['<b>Un formulario personalizado.</b> Tu perfil deportivo, tu calend
  '<b>Qué sectores y marcas encajan contigo y por qué,</b> una idea de activación para cada uno y tus primeros pasos. Es la base de tu perfil comercial.'];
 const pm=i=>{$('#pmDet').innerHTML=pmTxt[i];$$('#pmPasos .pm-p').forEach((b,j)=>b.classList.toggle('on',j===i))};
 $('#pmPasos').onclick=e=>{const b=e.target.closest('.pm-p');if(b)pm(+b.dataset.i)};pm(0);
+
+
+/* ---------- Oferta final ---------- */
+(function(){
+  const WAN='593984678812', wl=t=>'https://wa.me/'+WAN+'?text='+encodeURIComponent(t);
+  const idx=[...document.querySelectorAll('.slide')].findIndex(x=>x.id==='s-oferta');
+  window.PMgoOferta=()=>go(idx);
+  // Pagar diagnóstico con Payphone
+  const bt=document.getElementById('of-tarjeta'), av=document.getElementById('of-aviso');
+  bt.onclick=()=>{
+    bt.disabled=true; av.textContent='Preparando tu pago seguro…';
+    fetch('/api/pago/crear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{id:'promatch-diagnostico',q:1}],volver:location.pathname})})
+      .then(r=>r.json().then(d=>({ok:r.ok,d})))
+      .then(x=>{ if(!x.ok||!x.d.url) throw 0;
+        try{localStorage.setItem('pm_pedido',JSON.stringify({txid:x.d.txid,items:x.d.items,total:x.d.total}))}catch(e){}
+        location.href=x.d.url; })
+      .catch(()=>{ bt.disabled=false; av.innerHTML='No pudimos abrir el pago con tarjeta. <a target="_blank" rel="noopener" href="'+document.getElementById('of-transf').href+'">Paga por transferencia »</a>'; });
+  };
+  // Pestañas
+  const tabs=document.querySelectorAll('.of-tabs .chip'), pan=document.querySelectorAll('.of-panel');
+  tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.toggle('on',x===t));pan.forEach(p=>p.classList.toggle('on',p.dataset.p===t.dataset.p))});
+  // Contenido eventual
+  const P={v:[80,'video para redes','videos para redes'],a:[50,'carrusel o arte','carruseles o artes'],c:[150,'cobertura a distancia','coberturas a distancia']}, q={v:0,a:0,c:0};
+  function upd(){
+    let t=0; Object.keys(q).forEach(k=>{t+=q[k]*P[k][0];document.getElementById('q-'+k).textContent=q[k]});
+    document.getElementById('of-total').textContent='USD '+t+(q.c?' +':'');
+    const l=Object.keys(q).filter(k=>q[k]).map(k=>'• '+q[k]+' '+(q[k]>1?P[k][2]:P[k][1]));
+    document.getElementById('of-cont').href=wl('Hola Daniel, vi mi propuesta de Pro Motion y quiero empezar con contenido eventual:\n'+(l.length?l.join('\n'):'(aún no elijo cantidades)')+'\nTotal referencial: USD '+t+(q.c?' o más':'')+'\n¿Cómo seguimos?');
+  }
+  document.querySelectorAll('.of-q button').forEach(b=>b.onclick=()=>{const k=b.dataset.q;q[k]=Math.max(0,Math.min(20,q[k]+ +b.dataset.d));upd()});
+  upd();
+  // Planes
+  const pb=document.getElementById('of-plan-btn');
+  function updPlan(){const v=document.querySelector('input[name="of-plan"]:checked').value;pb.href=wl('Hola Daniel, vi mi propuesta de Pro Motion y me interesa: '+v+'. ¿Lo conversamos?')}
+  document.querySelectorAll('input[name="of-plan"]').forEach(i=>i.onchange=updPlan); updPlan();
+})();
 
 /* ---------- Inicio ---------- */
 const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1,true);

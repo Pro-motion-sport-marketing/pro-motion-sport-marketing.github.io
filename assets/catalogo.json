@@ -7,6 +7,13 @@
   "precio": 15
  },
  {
+  "id": "promatch-diagnostico",
+  "tipo": "Diagnóstico",
+  "n": "Diagnóstico ProMatch",
+  "d": "Formulario personalizado + análisis de tu punto de partida comercial.",
+  "precio": 50
+ },
+ {
   "id": "consultoria-1a1",
   "tipo": "Formato",
   "n": "Consultoría 1 a 1",

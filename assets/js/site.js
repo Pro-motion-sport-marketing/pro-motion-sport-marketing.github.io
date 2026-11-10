@@ -1602,12 +1602,14 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
       if (otros.length || (!d.guia && !ids.length)) {
         var a = res.querySelector('.pago-agenda'); a.hidden = false;
         var nombres = otros.map(function (x) { return CAT[x] ? CAT[x].n : x; }).join(', ') || (d.referencia || 'mi compra');
-        var esCurso = otros.some(function (x) { return /^curso/.test(x); });
-        a.querySelector('.lead').textContent = esCurso
+        var esCurso = otros.some(function (x) { return /^curso/.test(x); }), esPM = otros.indexOf('promatch-diagnostico') >= 0;
+        a.querySelector('.lead').textContent = esPM
+          ? 'En seguida te envío por WhatsApp el formulario ProMatch para empezar tu diagnóstico. Si quieres adelantarte, escríbeme con tu número de transacción.'
+          : esCurso
           ? 'Te escribimos para darte acceso a tu curso. Si quieres adelantarte, envíanos tu número de transacción por WhatsApp.'
           : 'Ahora coordinemos tu sesión. Escríbenos por WhatsApp con tu número de transacción y agendamos fecha y hora.';
         var b = a.querySelector('[data-wa-agenda]');
-        b.lastChild.nodeValue = esCurso ? 'Escribir por WhatsApp' : 'Agendar mi sesión';
+        b.lastChild.nodeValue = esPM ? 'Pedir mi formulario ProMatch' : esCurso ? 'Escribir por WhatsApp' : 'Agendar mi sesión';
         b.href = waLink('Hola Daniel, acabo de pagar en la web: ' + nombres + '. Transacción ' + (d.transaccion || id) + '.');
         b.target = '_blank'; b.rel = 'noopener';
       }
