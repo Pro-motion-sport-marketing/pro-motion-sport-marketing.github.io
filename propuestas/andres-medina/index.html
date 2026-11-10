@@ -286,6 +286,13 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
 .cob-precio .fila span{font-size:15px;line-height:1.3}
 .cob-precio .fila span small{display:block;opacity:.6;font-size:12.5px}
 .cob-precio .fila b{font-family:var(--epic);font-size:24px;color:var(--rojo-vivo);white-space:nowrap}
+.ed-rata{position:relative;height:108px;margin-top:4px}
+.ed-rata img{position:absolute;right:26px;bottom:-115px;height:232px;width:auto;filter:drop-shadow(0 0 1px rgba(255,231,201,.55)) drop-shadow(0 6px 8px rgba(0,0,0,.35));pointer-events:none}
+.ed-listo{position:absolute;right:140px;top:22px;white-space:nowrap;background:var(--crema);color:var(--negro);font-family:var(--epic);text-transform:uppercase;font-size:15px;line-height:1;padding:10px 14px 9px;border-radius:12px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 18px -8px rgba(0,0,0,.6)}
+.ed-listo::before{content:"";position:absolute;right:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-right:0;border-left-color:var(--crema)}
+.ed-listo i{width:9px;height:9px;border-radius:50%;background:var(--rojo-vivo);animation:latido 1.6s ease-in-out infinite}
+.cob-panel[data-p="0"]{padding-bottom:96px}
+@media (max-width:560px){.ed-listo{white-space:normal;right:128px;left:0;font-size:14px;line-height:1.05}}
 
 /* ---------- Perfil web + juego ---------- */
 .pdfvsweb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -719,7 +726,7 @@ body.dark .top .menu-b{background:rgba(255,231,201,.14);color:var(--crema)}
           <div class="fila"><span>Cantidad de material<small>Cuántas fotos y videos nos puedas enviar</small></span><b>📦</b></div>
           <div class="fila"><span>Tiempo real o post carrera<small>Publicar durante la carrera o contarla después</small></span><b>⏱️</b></div>
           <p class="nota">El valor final depende de estas dos variables.</p>
-          <img src="../../assets/mini/videografo.webp" alt="" style="width:90px;justify-self:end;filter:invert(1) sepia(1) saturate(0) brightness(1.6);opacity:.85" loading="lazy">
+          <div class="ed-rata" aria-hidden="true"><img src="../../assets/img/espid_edita.webp" alt="" width="391" height="900" loading="lazy"><span class="ed-listo"><i></i>Video listo hoy mismo</span></div>
         </div>
       </div>
       <div class="cob-panel" data-p="1">
