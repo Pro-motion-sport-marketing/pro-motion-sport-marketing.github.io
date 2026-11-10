@@ -2,9 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "promotionec",
   "compatibility_date": "2026-10-01",
+  "main": "_worker/index.js",
   "assets": {
     "directory": ".",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/guias/de-deportista-a-oferta-comercial", "/guias/de-deportista-a-oferta-comercial/", "/guias/de-deportista-a-oferta-comercial/index.html"]
   },
   "routes": [
     { "pattern": "promotionec.com", "custom_domain": true },

@@ -1462,3 +1462,150 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
   t.querySelectorAll('button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
   var caja=t.parentNode;caja.querySelectorAll('.ev-panel').forEach(function(p){p.hidden=p.dataset.p!==b.dataset.t;
     if(!p.hidden)p.querySelectorAll('.car-pista').forEach(function(x){x.dispatchEvent(new Event('scroll'))})})})});
+
+/* ---------- Carrito y pagos (Payphone) ---------- */
+(function () {
+  'use strict';
+  var nodo = document.getElementById('catalogo'); if (!nodo) return;
+  var CAT = {}; try { JSON.parse(nodo.textContent).forEach(function (p) { CAT[p.id] = p; }); } catch (e) { return; }
+  var WA = '593984678812', KEY = 'pm_carrito';
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function waLink(t) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); }
+  function leer() { try { return (JSON.parse(localStorage.getItem(KEY)) || []).filter(function (x) { return CAT[x.id]; }); } catch (e) { return []; } }
+  function guardar(c) { try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {} pintar(); }
+  function usd(n) { return 'USD ' + (Math.round(n * 100) / 100).toLocaleString('es-EC', { minimumFractionDigits: n % 1 ? 2 : 0 }); }
+  var caja = document.getElementById('carro'), lista = caja.querySelector('.carro-lista'), pie = caja.querySelector('.carro-pie');
+
+  function agregar(id, abrirlo) {
+    var c = leer(), it = c.filter(function (x) { return x.id === id; })[0];
+    var unico = /^(guia|curso)/.test(id);
+    if (it) { if (!unico) it.q = Math.min(20, it.q + 1); } else c.push({ id: id, q: 1 });
+    guardar(c);
+    if (abrirlo !== false) abrir();
+  }
+  function abrir() { caja.hidden = false; requestAnimationFrame(function () { caja.classList.add('on'); }); document.body.classList.add('carro-abierto'); }
+  function cerrar() { caja.classList.remove('on'); document.body.classList.remove('carro-abierto'); setTimeout(function () { caja.hidden = true; }, 250); }
+
+  function pintar() {
+    var c = leer(), n = c.reduce(function (s, x) { return s + x.q; }, 0);
+    document.querySelectorAll('.carro-top').forEach(function (b) { b.hidden = !n; b.querySelector('[data-carro-n]').textContent = n; });
+    document.querySelectorAll('[data-carrito]').forEach(function (b) {
+      var en = c.some(function (x) { return x.id === b.dataset.carrito; });
+      b.classList.toggle('en', en);
+    });
+    if (!c.length) {
+      lista.innerHTML = '<div class="carro-vacio"><p>Tu carrito está vacío.</p><a class="link" href="/academy/cursos/">Ver cursos »</a></div>';
+      pie.innerHTML = ''; return;
+    }
+    var pagar = 0, cotizar = [];
+    lista.innerHTML = c.map(function (x) {
+      var p = CAT[x.id], fijo = !!p.precio;
+      if (fijo) pagar += p.precio * x.q; else cotizar.push(p);
+      var precio = fijo ? usd(p.precio * x.q) + (p.normal ? ' <s>' + usd(p.normal * x.q) + '</s>' : '') : (p.desde ? 'Desde USD ' + p.desde : 'A cotizar');
+      var cant = /^(guia|curso)/.test(x.id) ? '' :
+        '<div class="carro-q"><button type="button" data-q="-1" data-id="' + x.id + '" aria-label="Quitar uno">−</button><span>' + x.q + '</span><button type="button" data-q="1" data-id="' + x.id + '" aria-label="Agregar uno">+</button></div>';
+      return '<div class="carro-it' + (fijo ? '' : ' cot') + '"><div><span class="carro-tipo">' + esc(p.tipo) + (fijo ? '' : ' · se cotiza') + '</span><b>' + esc(p.n) + '</b>' +
+        (p.d ? '<small>' + esc(p.d) + '</small>' : '') + cant + '</div><div class="carro-der"><span class="carro-pr">' + precio + '</span><button type="button" class="carro-del" data-del="' + x.id + '">Quitar</button></div></div>';
+    }).join('');
+    var h = '';
+    if (pagar) h += '<div class="carro-total"><span>Total a pagar en línea</span><b>' + usd(pagar) + '</b></div>' +
+      '<button type="button" class="btn rojo carro-pagar" data-pagar>Pagar ' + usd(pagar) + ' con tarjeta »</button>' +
+      '<p class="carro-seg">Pago seguro con tarjeta de crédito o débito vía Payphone.</p>';
+    if (cotizar.length) h += '<p class="carro-cot-n">' + (pagar ? 'Los productos marcados “se cotiza” no se cobran ahora: ' : '') + 'te enviamos la cotización por WhatsApp.</p>' +
+      '<a class="btn' + (pagar ? ' crema' : ' rojo') + '" href="#" data-cotizar>Cotizar por WhatsApp »</a>';
+    h += '<p class="carro-aviso" aria-live="polite"></p>';
+    pie.innerHTML = h;
+  }
+
+  function mensaje(soloCotizar) {
+    var c = leer();
+    var lineas = c.filter(function (x) { return !soloCotizar || !CAT[x.id].precio; }).map(function (x) {
+      var p = CAT[x.id]; return '• ' + (x.q > 1 ? x.q + 'x ' : '') + p.n + (p.precio ? ' (USD ' + p.precio * x.q + ')' : '');
+    });
+    return 'Hola Daniel, quiero cotizar esto desde la web de Pro Motion:\n' + lineas.join('\n');
+  }
+
+  function pagar(btn) {
+    var av = pie.querySelector('.carro-aviso'), c = leer();
+    btn.disabled = true; av.textContent = 'Preparando tu pago seguro…';
+    fetch('/api/pago/crear', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: c, volver: location.pathname }) })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (x) {
+        if (!x.ok || !x.d.url) throw new Error(x.d && x.d.error || 'error');
+        try { localStorage.setItem('pm_pedido', JSON.stringify({ txid: x.d.txid, items: x.d.items, total: x.d.total })); } catch (e) {}
+        location.href = x.d.url;
+      })
+      .catch(function () {
+        btn.disabled = false;
+        av.innerHTML = 'El pago en línea no está disponible en este momento. <a href="' + waLink(mensaje(false)) + '" target="_blank" rel="noopener">Compra por WhatsApp »</a>';
+      });
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-carrito],[data-comprar],[data-abrir-carrito],[data-cerrar-carrito],[data-del],[data-q],[data-pagar],[data-cotizar]');
+    if (!t) return;
+    if (t.dataset.carrito) { e.preventDefault(); agregar(t.dataset.carrito); }
+    else if (t.dataset.comprar) { e.preventDefault(); agregar(t.dataset.comprar); }
+    else if (t.hasAttribute('data-abrir-carrito')) { e.preventDefault(); abrir(); }
+    else if (t.hasAttribute('data-cerrar-carrito')) cerrar();
+    else if (t.dataset.del) guardar(leer().filter(function (x) { return x.id !== t.dataset.del; }));
+    else if (t.dataset.q) {
+      var c = leer(); c.forEach(function (x) { if (x.id === t.dataset.id) x.q = Math.max(1, Math.min(20, x.q + +t.dataset.q)); }); guardar(c);
+    }
+    else if (t.hasAttribute('data-pagar')) pagar(t);
+    else if (t.hasAttribute('data-cotizar')) { e.preventDefault(); window.open(waLink(mensaje(leer().some(function (x) { return CAT[x.id].precio; }))), '_blank', 'noopener'); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !caja.hidden) cerrar(); });
+  window.addEventListener('storage', function (e) { if (e.key === KEY) pintar(); });
+  pintar();
+
+  /* ---------- Página de respuesta de Payphone ---------- */
+  var res = document.getElementById('pago-res'); if (!res) return;
+  var q = new URLSearchParams(location.search), id = q.get('id'), tx = q.get('clientTransactionId');
+  var pedido = {}; try { pedido = JSON.parse(localStorage.getItem('pm_pedido')) || {}; } catch (e) {}
+  function estado(s) { res.dataset.estado = s; }
+  if (!id || !tx) { estado('no'); res.querySelector('.pago-motivo').textContent = 'No recibimos los datos del pago.'; return; }
+  fetch('/api/pago/confirmar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id, clientTransactionId: tx }) })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d.estado !== 'aprobado') { estado('no'); if (d.mensaje) res.querySelector('.pago-motivo').textContent = d.mensaje; return; }
+      estado('ok');
+      var items = (pedido.txid === tx && pedido.items) || [];
+      var ids = items.map(function (x) { return x.id; });
+      // limpiar del carrito lo que ya se pagó
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY)) || [];
+        localStorage.setItem(KEY, JSON.stringify(c.filter(function (x) { return !CAT[x.id] || !CAT[x.id].precio; })));
+        localStorage.removeItem('pm_pedido');
+      } catch (e) {}
+      pintar();
+      if (d.guia) {
+        var g = res.querySelector('.pago-guia'); g.hidden = false;
+        var enlace = location.origin + d.guia.url;
+        g.querySelector('[data-enlace]').value = enlace;
+        g.querySelector('[data-copiar]').onclick = function () {
+          var inp = g.querySelector('[data-enlace]'); inp.select();
+          (navigator.clipboard ? navigator.clipboard.writeText(enlace) : Promise.reject()).catch(function () { document.execCommand('copy'); });
+          this.textContent = '¡Copiado!';
+        };
+      }
+      var otros = ids.filter(function (x) { return x !== 'guia-oferta'; });
+      if (otros.length || (!d.guia && !ids.length)) {
+        var a = res.querySelector('.pago-agenda'); a.hidden = false;
+        var nombres = otros.map(function (x) { return CAT[x] ? CAT[x].n : x; }).join(', ') || (d.referencia || 'mi compra');
+        var esCurso = otros.some(function (x) { return /^curso/.test(x); });
+        a.querySelector('.lead').textContent = esCurso
+          ? 'Te escribimos para darte acceso a tu curso. Si quieres adelantarte, envíanos tu número de transacción por WhatsApp.'
+          : 'Ahora coordinemos tu sesión. Escríbenos por WhatsApp con tu número de transacción y agendamos fecha y hora.';
+        var b = a.querySelector('[data-wa-agenda]');
+        b.lastChild.nodeValue = esCurso ? 'Escribir por WhatsApp' : 'Agendar mi sesión';
+        b.href = waLink('Hola Daniel, acabo de pagar en la web: ' + nombres + '. Transacción ' + (d.transaccion || id) + '.');
+        b.target = '_blank'; b.rel = 'noopener';
+      }
+      var filas = [['Monto', 'USD ' + (d.monto || 0).toFixed(2)], ['Transacción', d.transaccion], ['Autorización', d.autorizacion], ['Tarjeta', d.tarjeta],
+        ['Fecha', d.fecha ? new Date(d.fecha).toLocaleString('es-EC') : null], ['Detalle', items.length ? items.map(function (x) { return (x.q > 1 ? x.q + 'x ' : '') + x.n; }).join(' + ') : d.referencia]];
+      res.querySelector('.pago-recibo').innerHTML = filas.filter(function (f) { return f[1]; }).map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + esc(f[1]) + '</dd>'; }).join('');
+    })
+    .catch(function () { estado('no'); res.querySelector('.pago-motivo').textContent = 'No pudimos confirmar el pago. Si se debitó, escríbenos y lo revisamos.'; });
+})();
