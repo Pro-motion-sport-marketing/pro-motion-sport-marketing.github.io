@@ -400,22 +400,93 @@
   })();
 
   /* ---------- ProMatch: registro ---------- */
+  /* ---------- ProMatch: cómo funciona ---------- */
+  var crs = $('#pmx-crs');
+  if (crs) (function () {
+    var bs = $$('.pmx-bar', crs);
+    function ver(b) { bs.forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+      $('#pmx-det-t').textContent = b.dataset.t; $('#pmx-det-p').textContent = b.dataset.p; $('#pmx-det-s').textContent = 'Qué suma: ' + b.dataset.s; }
+    bs.forEach(function (b) { b.addEventListener('click', function () { ver(b); }); });
+    ver(bs[1]);
+  })();
+  var pint = $('#pmx-int');
+  if (pint) (function () {
+    var bs = $$('.pmx-esc-b button', pint);
+    function ver(b) { bs.forEach(function (x) { x.classList.toggle('lleno', +x.dataset.n <= +b.dataset.n); x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+      $('#pmx-niv-t').textContent = b.dataset.n + ' · ' + b.dataset.t; $('#pmx-niv-p').textContent = b.dataset.p; }
+    bs.forEach(function (b) { b.addEventListener('click', function () { ver(b); }); });
+    ver(bs[1]);
+  })();
+
+  /* ---------- ProMatch: registro con medidor ---------- */
   var reg = $('#pm-reg');
   if (reg) (function () {
+    var sec = $('#registro');
     function rol() { return reg.querySelector('input[name=quien]:checked').value; }
-    function mostrar() { var r = rol(); $$('.pm-campos', reg).forEach(function (f) { f.hidden = f.dataset.para !== r; }); $('.aviso', reg).textContent = ''; }
+    function v(n) {
+      var ins = reg.querySelectorAll('[name=' + n + ']');
+      if (!ins.length) return '';
+      if (ins[0].type === 'radio' || ins[0].type === 'checkbox') return [].filter.call(ins, function (x) { return x.checked; }).map(function (x) { return x.value; }).join(', ');
+      return (ins[0].value || '').trim();
+    }
+    function cuenta(n) { return reg.querySelectorAll('input[name=' + n + ']:checked').length; }
+    $$('input[name=d_valores]', reg).forEach(function (x) { x.addEventListener('change', function () { if (cuenta('d_valores') > 3) x.checked = false; }); });
+    function vars() {
+      if (rol() === 'marca') return [
+        ['Objetivo', v('m_reto') || v('m_frase') ? 'ok' : ''],
+        ['Público', v('m_pub') ? 'ok' : ''],
+        ['Territorio', v('m_ter') ? 'ok' : ''],
+        ['Formato', v('m_formato') ? 'ok' : ''],
+        ['Momento', v('m_cuando') ? (v('m_cuando') === 'Estamos explorando' ? 'med' : 'ok') : ''],
+        ['Inversión', v('m_inv') ? (v('m_inv') === 'Por definir' ? 'med' : 'ok') : '']];
+      var of = cuenta('d_ofrece'), ex = v('d_exp'), au = v('d_aud'), te = (v('d_ciudad') ? 1 : 0) + (v('d_prox') ? 1 : 0);
+      return [
+        ['Valores', cuenta('d_valores') ? 'ok' : ''],
+        ['Audiencia', au ? (au === 'Aún no lo sé' ? 'med' : 'ok') : ''],
+        ['Territorio', te === 2 ? 'ok' : te ? 'med' : ''],
+        ['Contenido', of >= 3 ? 'ok' : of ? 'med' : ''],
+        ['Experiencia', ex ? (ex === 'Nunca' ? 'med' : 'ok') : '']];
+    }
+    function lectura(L) {
+      function f(k) { return L.filter(function (x) { return x[1] === k; }).map(function (x) { return x[0]; }); }
+      return { f: f('ok'), m: f('med'), z: f('') };
+    }
+    function pintar() {
+      var M = rol() === 'marca', L = vars(), r = lectura(L), n = r.f.length + r.m.length, t = [];
+      $('#pmr-med-t').textContent = M ? 'Su briefing ProMatch' : 'Tu perfil ProMatch';
+      $('#pmr-med-n').textContent = n + ' de ' + L.length;
+      $('#pmr-med-l').innerHTML = L.map(function (x) { return '<li class="' + x[1] + '">' + x[0] + '</li>'; }).join('');
+      if (r.f.length) t.push((M ? 'Claro: ' : 'Fuerte: ') + r.f.join(', ') + '.');
+      if (r.m.length) t.push((M ? 'Por definir: ' : 'Por trabajar: ') + r.m.join(', ') + '.');
+      if (!n) t.push(M ? 'Responda y mire cómo se arma su briefing.' : 'Responde y mira cómo se arma tu perfil.');
+      else if (r.z.length) t.push('Falta: ' + r.z.join(', ') + '.');
+      else t.push(M ? 'Briefing completo: listo para comparar perfiles.' : 'Perfil completo: listo para una primera lectura.');
+      $('#pmr-med-p').textContent = t.join(' ');
+    }
+    function mostrar() {
+      var r = rol();
+      $$('[data-para]', sec).forEach(function (f) { f.hidden = f.dataset.para !== r || f.classList.contains('pmr-ok'); });
+      $('.aviso', reg).textContent = ''; pintar();
+    }
     $$('input[name=quien]', reg).forEach(function (r) { r.addEventListener('change', mostrar); });
-    function v(n) { var e = reg.elements[n]; return e ? e.value.trim() : ''; }
-    function linea(k, x) { return x ? '\n' + k + ': ' + x : ''; }
+    reg.addEventListener('input', pintar); reg.addEventListener('change', pintar);
+    function linea(k, x) { return x ? '\n• ' + k + ': ' + x : ''; }
     reg.addEventListener('submit', function (e) {
       e.preventDefault();
       var av = $('.aviso', reg), m = rol() === 'marca';
       if (m ? !(v('m_rep') && v('m_empresa')) : !(v('d_nombre') && v('d_disciplina'))) { av.textContent = m ? 'Completa el nombre del representante y de la empresa.' : 'Completa tu nombre y tu disciplina.'; return; }
       av.textContent = '';
+      var r = lectura(vars()), res = '\n\n*Lectura ProMatch*' + linea(m ? 'Claro' : 'Fuerte', r.f.join(', ')) + linea(m ? 'Por definir' : 'Por trabajar', r.m.join(', ')) + linea('Sin responder', r.z.join(', '));
       abrirWA(m
-        ? 'Hola Daniel, quiero unirme a la lista de ProMatch como marca.' + linea('Representante', v('m_rep')) + linea('Cargo', v('m_cargo')) + linea('Empresa', v('m_empresa')) + linea('Sector', v('m_sector')) + linea('Ciudad', v('m_ciudad')) + linea('Web/Instagram', v('m_web')) + linea('Busca', v('m_obj'))
-        : 'Hola Daniel, quiero unirme a la lista de ProMatch como deportista.' + linea('Nombre', v('d_nombre')) + linea('Disciplina', v('d_disciplina')) + linea('Edad', v('d_edad')) + linea('Ciudad', v('d_ciudad')) + linea('Nivel', v('d_nivel')) + linea('Instagram', v('d_ig')) + linea('Busca', v('d_obj')));
+        ? 'Hola Daniel, quiero unirme a la lista de ProMatch como marca.\n\n*La marca*' + linea('Representante', v('m_rep')) + linea('Cargo', v('m_cargo')) + linea('Empresa', v('m_empresa')) + linea('Sector', v('m_sector')) + linea('Web/Instagram', v('m_web'))
+          + '\n\n*La necesidad*' + linea('Resolver', v('m_reto')) + linea('El reto', v('m_frase')) + linea('Público', v('m_pub')) + linea('Territorio', v('m_ter'))
+          + '\n\n*Cómo y cuándo*' + linea('Espera del deportista', v('m_formato')) + linea('Cuándo', v('m_cuando')) + linea('Experiencia previa', v('m_prev')) + linea('Inversión', v('m_inv')) + res
+        : 'Hola Daniel, quiero unirme a la lista de ProMatch como deportista.\n\n*Mi perfil*' + linea('Nombre', v('d_nombre')) + linea('Disciplina', v('d_disciplina')) + linea('Ciudad', v('d_ciudad')) + linea('Instagram', v('d_ig')) + linea('Nivel', v('d_nivel'))
+          + '\n\n*Mi momento*' + linea('Busco', v('d_obj')) + linea('Experiencia con marcas', v('d_exp')) + linea('Próxima competencia', v('d_prox'))
+          + '\n\n*Lo que ofrezco*' + linea('Puedo hacer', v('d_ofrece')) + linea('Me representa', v('d_valores')) + linea('Me siguen sobre todo', v('d_aud')) + linea('No aceptaría', v('d_no')) + res);
+      $$('.pmr-ok', reg).forEach(function (o) { o.hidden = o.dataset.para !== rol(); });
     });
+    pintar();
   })();
 
 
