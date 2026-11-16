@@ -3553,3 +3553,16 @@ body.carro-abierto{overflow:hidden}
 .hv-climb{position:absolute;max-width:none;width:auto;height:24px;left:-18px;bottom:2px;opacity:0}
 .hero-video.sube .hv-climb{animation:hvSube 1s steps(5,end) forwards}
 @keyframes hvSube{0%{opacity:0;transform:translateY(8px)}20%{opacity:1;transform:translateY(6px)}100%{opacity:1;transform:translateY(-4px)}}
+/* Espid empuja con las manos sobre la bola (bola más grande, cuerpo inclinado) */
+.hv-barra{height:46px}
+.hv-pista{top:35px}
+.hv-cabeza{top:37px}
+.hv-bola{width:18px;height:18px;left:-9px;top:-19px}
+.hv-sit{top:-33px}
+.hv-push{height:24px;right:auto;left:-30px;bottom:1px;transform-origin:30% 100%;transform:rotate(12deg)}
+.hero-video.empuja.corre .hv-push{animation:hvEmpuja2 .55s ease-in-out infinite}
+.hero-video.cae .hv-push{animation:hvLevanta2 .45s ease-out .8s forwards}
+@keyframes hvEmpuja2{0%,100%{transform:rotate(12deg)}50%{transform:translateX(1px) rotate(15deg)}}
+@keyframes hvLevanta2{0%{opacity:1;transform:translateY(2px) rotate(-30deg) scaleY(.75)}100%{opacity:1;transform:rotate(12deg)}}
+.hv-globo{bottom:38px}
+@media (prefers-reduced-motion:reduce){.hero-video.empuja.corre .hv-push{animation:none}}
