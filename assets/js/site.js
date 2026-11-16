@@ -331,8 +331,75 @@
     else comic.classList.add('v-3');
   })();
 
-  /* ---------- Portada: el punto completa el isotipo ---------- */
-  var hv = $('.hero-vis'); if (hv) setTimeout(function () { hv.classList.add('listo'); }, 300);
+  /* ---------- Portada: video de introducción, Espid empuja la barra ---------- */
+  var hvc = $('#hv');
+  if (hvc) (function () {
+    var v = $('#hv-v', hvc), barra = $('.hv-barra', hvc), t = $('.hv-t b', hvc), cargado = false, cayo = false, raf = 0;
+    function mmss(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+    function dur() { return v.duration && isFinite(v.duration) ? v.duration : 190.8; }
+    function pintar() {
+      var p = Math.min(1, v.currentTime / dur());
+      barra.style.setProperty('--p', p);
+      t.textContent = mmss(v.currentTime);
+      barra.setAttribute('aria-valuenow', Math.floor(v.currentTime));
+      barra.setAttribute('aria-valuetext', mmss(v.currentTime) + ' de ' + mmss(dur()));
+    }
+    function bucle() { pintar(); if (!v.paused) raf = requestAnimationFrame(bucle); }
+    function cargar(listo) {
+      if (cargado) return listo();
+      cargado = true;
+      var src = v.dataset.hls;
+      if (v.canPlayType('application/vnd.apple.mpegurl') && !window.MediaSource) { v.src = src; return listo(); }
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js';
+      s.onload = function () {
+        if (window.Hls && Hls.isSupported()) { var h = new Hls({ capLevelToPlayerSize: true }); h.loadSource(src); h.attachMedia(v); }
+        else v.src = src;
+        listo();
+      };
+      s.onerror = function () { v.src = src; listo(); };
+      document.head.appendChild(s);
+    }
+    function play() { cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }); }
+    function alternar() { if (v.paused || v.ended) play(); else v.pause(); }
+    $('.hv-play', hvc).addEventListener('click', play);
+    v.addEventListener('click', alternar);
+    $('.hv-pp', hvc).addEventListener('click', alternar);
+    $('.hv-son', hvc).addEventListener('click', function () { v.muted = !v.muted; hvc.classList.toggle('mudo', v.muted); this.setAttribute('aria-label', v.muted ? 'Activar sonido' : 'Silenciar'); });
+    $('.hv-full', hvc).addEventListener('click', function () {
+      if (document.fullscreenElement) return document.exitFullscreen();
+      if (hvc.requestFullscreen) hvc.requestFullscreen(); else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+    });
+    $('.hv-otra', hvc).addEventListener('click', function (e) { e.stopPropagation(); v.currentTime = 0; play(); });
+    v.addEventListener('play', function () {
+      hvc.classList.add('iniciado', 'corre'); hvc.classList.remove('fin');
+      $('.hv-pp', hvc).setAttribute('aria-label', 'Pausar');
+      if (!cayo) { cayo = true; hvc.classList.add('cae'); setTimeout(function () { hvc.classList.add('empuja'); hvc.classList.remove('cae'); }, 1450); }
+      cancelAnimationFrame(raf); bucle();
+    });
+    v.addEventListener('pause', function () { hvc.classList.remove('corre'); $('.hv-pp', hvc).setAttribute('aria-label', 'Reproducir'); pintar(); });
+    v.addEventListener('ended', function () { hvc.classList.add('fin'); hvc.classList.remove('corre'); pintar(); });
+    v.addEventListener('seeked', pintar);
+    v.addEventListener('loadedmetadata', pintar);
+    function buscar(x) {
+      var r = $('.hv-pista', hvc).getBoundingClientRect(), p = Math.min(1, Math.max(0, (x - r.left) / r.width));
+      cargar(function () {
+        var ir = function () { v.currentTime = p * dur(); if (p < 1) hvc.classList.remove('fin'); pintar(); };
+        if (v.readyState >= 1) ir(); else v.addEventListener('loadedmetadata', ir, { once: true });
+      });
+      barra.style.setProperty('--p', p);
+    }
+    var arrastra = false;
+    barra.addEventListener('pointerdown', function (e) { if (e.target.closest('.hv-otra')) return; arrastra = true; barra.setPointerCapture(e.pointerId); buscar(e.clientX); });
+    barra.addEventListener('pointermove', function (e) { if (arrastra) buscar(e.clientX); });
+    barra.addEventListener('pointerup', function () { arrastra = false; });
+    barra.addEventListener('keydown', function (e) {
+      var d = { ArrowRight: 5, ArrowLeft: -5, Home: -1e4, End: 1e4 }[e.key];
+      if (d === undefined) return;
+      e.preventDefault();
+      cargar(function () { v.currentTime = Math.min(dur(), Math.max(0, v.currentTime + d)); pintar(); });
+    });
+  })();
 
   /* ---------- Franja acordeón de deportistas ---------- */
   $$('.atl-strip').forEach(function (st) {
