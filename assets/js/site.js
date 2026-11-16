@@ -869,6 +869,11 @@
       var f = $('.dx-form[data-perfil="' + k + '"]');
       if (f && mover) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    $$('.dx-bur').forEach(function (b) { b.addEventListener('click', function () {
+      $$('.dx-bur').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      $$('.dx-causa').forEach(function (c) { c.hidden = c.dataset.i !== b.dataset.i; c.classList.toggle('entra', !c.hidden); });
+    }); });
+    function anillo(el, n) { if (!el) return; $('.fg', el).style.strokeDashoffset = 100 - n; $('b', el).textContent = n; }
     $$('.dx-op[data-dx]').forEach(function (b) { b.addEventListener('click', function () { abrir(b.dataset.dx, true); history.replaceState(null, '', '#' + b.dataset.dx); }); });
     $$('.dx-form').forEach(function (form) {
       var P = DATA[form.dataset.perfil], paso = 1;
@@ -882,7 +887,15 @@
         atras.hidden = paso === 1;
         sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Ver mi diagnóstico <span class="chev">»</span>';
         aviso.textContent = '';
+        var tip = $('.dx-tip-g', form), T = JSON.parse(form.dataset.tips || '[]');
+        if (tip && T[paso - 1]) { tip.textContent = T[paso - 1]; tip.classList.remove('nuevo'); void tip.offsetWidth; tip.classList.add('nuevo'); }
       }
+      function vivo() {
+        var r = calc();
+        anillo($('.dx-lado .dx-ring', form), r.total);
+        $$('.dx-vivo li', form).forEach(function (li) { var n = r.D[li.dataset.k]; $('em', li).style.width = n + '%'; li.classList.toggle('ok', n >= 55); });
+      }
+      form.addEventListener('change', vivo); form.addEventListener('input', vivo);
       function calc() {
         var D = {}, M = {};
         Object.keys(P.dims).forEach(function (k) { D[k] = 0; M[k] = 0; });
@@ -918,7 +931,7 @@
         var nombre = v('nombre')[0] || '';
         var lista = function (arr) { return '<ul class="dx-l">' + arr.join('') + '</ul>'; };
         res.innerHTML = '<div class="dg-res">' +
-          '<div class="dg-score"><div class="dg-num"><b>' + r.total + '</b><span>/100</span></div><div><span class="lbl">Estado actual · ' + P.n + '</span><h3>' + nivel + '</h3></div></div>' +
+          '<div class="dg-score"><div class="dx-ring grande"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52" pathLength="100"/></svg><b>0</b><small>/100</small></div><div><span class="lbl">Estado actual · ' + P.n + '</span><h3>' + nivel + '</h3></div></div>' +
           '<p class="dx-estado">' + P.estado[ni] + '</p>' +
           '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + k + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
           '<div class="dx-cuad">' +
@@ -950,7 +963,9 @@
             '\n\n*Siguiente paso*\nEste es mi diagnóstico inicial. Quiero conocer con más profundidad mis fortalezas, oportunidades y capacidades reales con la Auditoría ProMatch (Commercial Readiness Score, Evidence Confidence Score, integración de marcas del 0 al 5, 13 capacidades comerciales y compatibilidad por sector).';
           abrirWA(msg);
         };
-        $('[data-dx-otra]', res).onclick = function () { form.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', form).hidden = false; $('.dg-top', form).hidden = false; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        $('[data-dx-otra]', res).onclick = function () { form.reset(); form.classList.remove('dx-hecho'); res.innerHTML = ''; vivo(); paso = 1; $('.dg-nav', form).hidden = false; $('.dg-top', form).hidden = false; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        form.classList.add('dx-hecho');
+        setTimeout(function () { anillo($('.dg-res .dx-ring', res), r.total); }, 250);
         pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
         res.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -962,7 +977,7 @@
       atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
       form.addEventListener('submit', function (e) { e.preventDefault(); });
       form.addEventListener('input', function () { aviso.textContent = ''; });
-      mostrar();
+      mostrar(); vivo();
     });
     var ini = (location.hash || '').slice(1) || new URLSearchParams(location.search).get('perfil');
     if (DATA[ini]) abrir(ini, false);

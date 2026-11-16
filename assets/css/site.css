@@ -3686,3 +3686,88 @@ body.carro-abierto{overflow:hidden}
 .dx-ph h1{font-size:clamp(32px,3.9vw,54px)}
 .dx-ph h1 .box{white-space:nowrap}
 @media (max-width:480px){.dx-ph h1{font-size:clamp(28px,8.4vw,36px)}}
+
+/* ---------- Diagnóstico: capa visual e interactiva ---------- */
+.dx-hero-g{position:absolute;right:2%;top:6%;font-size:15px;max-width:200px;animation:globoFlota 4s ease-in-out infinite}
+.dx-hero-g::after{left:auto;right:30%;transform:skewX(18deg)}
+/* síntomas en burbujas */
+.dx-sintomas{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;margin-top:36px}
+.dx-burs{display:flex;flex-wrap:wrap;gap:14px 12px;align-items:flex-start}
+.dx-bur{all:unset;box-sizing:border-box;cursor:pointer;position:relative;background:#fff;color:var(--negro);border:2px solid var(--negro);padding:14px 20px;border-radius:46% 54% 50% 50%/56% 48% 52% 44%;font-family:var(--clash);font-weight:600;font-size:16px;line-height:1.2;transition:transform .2s var(--rebote),background .2s,color .2s}
+.dx-bur::after{content:"";position:absolute;bottom:-12px;left:24%;border:8px solid transparent;border-top:14px solid var(--negro);transform:skewX(-18deg)}
+.dx-bur.b1,.dx-bur.b3{transform:rotate(1.5deg)}
+.dx-bur.b2{transform:rotate(-2deg)}
+.dx-bur:hover{transform:translateY(-3px) rotate(-1deg)}
+.dx-bur[aria-pressed="true"]{background:var(--negro);color:var(--crema)}
+.dx-bur:focus-visible{outline:3px solid var(--rojo);outline-offset:3px}
+.dx-causa{background:var(--negro);color:var(--crema);padding:24px 26px;position:relative;animation:dxEntra .35s ease-out}
+.dx-causa::before{content:"";position:absolute;left:-12px;top:30px;border:12px solid transparent;border-right-color:var(--negro);border-left:0}
+.dx-causa .lbl{display:block;color:var(--rojo-vivo);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.dx-causa p{font-size:18px;line-height:1.45;margin:8px 0 12px}
+.dx-causa small{font-size:13.5px;opacity:.75}
+@keyframes dxEntra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* lo que recibes: iconos en círculos rojos conectados */
+.dx-rec{position:relative}
+.dx-rec li{align-items:flex-start}
+.dx-rec li i{width:46px;height:46px}
+.dx-rec li i svg{width:24px;height:24px;color:#fff}
+.dx-rec li:last-child i{background:var(--crema)}
+.dx-rec li:last-child i svg{color:var(--negro)}
+/* niveles con flecha */
+.dx-niveles{grid-template-columns:1fr auto 1fr;align-items:stretch}
+.dx-flecha{display:grid;place-items:center;font-family:var(--epic);font-size:34px;color:var(--rojo)}
+/* tarjetas con escena */
+.dx-op{padding:14px 16px 18px}
+.dx-op-vis{display:block;height:120px;margin-bottom:8px}
+.dx-op-vis img{height:100%;width:100%;object-fit:contain;object-position:left bottom;transition:transform .35s var(--rebote)}
+.dx-op:hover .dx-op-vis img{transform:translateY(-4px) scale(1.03)}
+.dx-op[aria-pressed="true"] .dx-op-vis img{filter:brightness(0) invert(92%) sepia(12%) saturate(500%) hue-rotate(330deg)}
+/* formulario con lectura en vivo */
+.dx-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:28px;align-items:start}
+.dx-form.dx-hecho .dx-grid{display:block}
+.dx-form.dx-hecho .dx-lado{display:none}
+.dx-lado{position:sticky;top:96px;background:var(--negro);color:var(--crema);padding:18px 18px 0;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.dx-lado .lbl{color:var(--rojo-vivo);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.dx-ring{position:relative;width:130px;aspect-ratio:1;margin:2px auto}
+.dx-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dx-ring circle{fill:none;stroke-width:11}
+.dx-ring .bg{stroke:rgba(255,231,201,.15)}
+.dx-ring .fg{stroke:var(--rojo);stroke-dasharray:100;stroke-dashoffset:100;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.3,.1,.2,1)}
+.dx-ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--epic);font-size:38px;line-height:1;padding-bottom:10px}
+.dx-ring small{position:absolute;left:0;right:0;bottom:30%;text-align:center;font-size:12px;opacity:.7}
+.dx-vivo{list-style:none;padding:0;display:grid;gap:7px}
+.dx-vivo li{display:grid;grid-template-columns:86px 1fr;gap:8px;align-items:center;font-size:12.5px}
+.dx-vivo i{height:7px;background:rgba(255,231,201,.15);border-radius:4px;overflow:hidden}
+.dx-vivo em{display:block;height:100%;width:0;background:var(--crema);border-radius:4px;transition:width .5s ease}
+.dx-vivo li.ok em{background:var(--rojo)}
+.dx-tip{position:relative;margin-top:8px;min-height:150px}
+.dx-tip-g{position:relative;font-size:13px;max-width:none;display:block;text-align:left;padding:12px 14px;border-radius:18px}
+.dx-tip-g::after{left:auto;right:30%}
+.dx-tip-g.nuevo{animation:globoIn .5s var(--rebote)}
+.dx-tip-e{display:block;height:120px;width:auto;margin:14px 0 0 auto}
+.dg-res .dx-ring.grande{width:120px;margin:0;flex:none}
+.dg-res .dx-ring.grande .bg{stroke:rgba(255,231,201,.18)}
+.dg-score{align-items:center}
+@media (max-width:900px){
+  .dx-sintomas{grid-template-columns:1fr}
+  .dx-causa::before{display:none}
+  .dx-grid{grid-template-columns:1fr}
+  .dx-lado{position:static;order:-1;flex-direction:row;flex-wrap:wrap;align-items:center;padding:14px}
+  .dx-lado .lbl{width:100%}
+  .dx-lado .dx-ring{width:92px;margin:0}
+  .dx-lado .dx-ring b{font-size:28px}
+  .dx-vivo{flex:1;min-width:160px}
+  .dx-tip{display:none}
+  .dx-niveles{grid-template-columns:1fr}
+  .dx-flecha{transform:rotate(90deg);font-size:26px}
+}
+@media (max-width:560px){.dx-hero-g{display:none}.dx-op-vis{height:90px}.dx-bur{font-size:14.5px;padding:12px 16px}}
+@media (prefers-reduced-motion:reduce){.dx-hero-g,.dx-tip-g.nuevo,.dx-causa{animation:none}.dx-ring .fg{transition:none}}
+.dx-tip-g.nuevo{animation:dxPop .45s var(--rebote)}
+@keyframes dxPop{from{opacity:0;transform:scale(.85) translateY(6px)}to{opacity:1;transform:none}}
+.dx-hero-g{right:auto;left:-4%;top:4%}
+.dx-hero-g::after{left:auto;right:18%;transform:skewX(18deg)}
+.dx-bur{font-size:17px;padding:16px 22px}
+@media (max-width:560px){.dx-bur{font-size:15px;padding:12px 16px}}
+.dx-causa{animation:none}
+.dx-causa.entra{animation:dxEntra .35s ease-out}
