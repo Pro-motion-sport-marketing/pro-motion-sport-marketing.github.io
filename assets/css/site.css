@@ -3594,3 +3594,12 @@ body.carro-abierto{overflow:hidden}
 @media (min-width:980px){.hero .chips{display:flex;flex-wrap:wrap}.hero .chips .chip{font-size:14px;padding:10px 13px 9px}}
 .hv-play{opacity:0;pointer-events:none}
 .hero-video.hv-manual:not(.hv-iniciado) .hv-play{opacity:1;pointer-events:auto}
+/* Celular/tablet: el video va justo después del subtítulo, antes de los botones */
+@media (max-width:979px){
+  .hero .wrap{gap:0}
+  .hero-txt{display:contents}
+  .hero-txt h1{order:1}
+  .hero-txt .lead{order:2}
+  .hero-video{order:3;margin-top:22px}
+  .hero-txt .chips{order:4;margin-top:22px}
+}
