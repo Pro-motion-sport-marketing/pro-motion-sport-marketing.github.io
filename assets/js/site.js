@@ -811,6 +811,7 @@
     function v(n) { var d = new FormData(diag); return d.getAll(n).map(function (x) { return String(x).trim(); }).filter(Boolean); }
     function uno(n) { return v(n)[0] || ''; }
     function idx(n, ops) { return ops.indexOf(uno(n)); }
+    function conOtro(n) { var o = uno(n + '_otro'); return v(n).map(function (x) { return /^Otr[ao]$/.test(x) && o ? x + ': ' + o : x; }).join(', '); }
     $$('input[name="valores"]', diag).forEach(function (c) { c.addEventListener('change', function () { if (v('valores').length > 3) c.checked = false; }); });
     function mostrar() {
       pasos.forEach(function (f) { f.hidden = +f.dataset.p !== paso; });
@@ -823,10 +824,10 @@
     function calc() {
       var cap = function (x) { return Math.max(0, Math.min(100, Math.round(x))); };
       var et = idx('etapa', ['En formación', 'Amateur competitivo', 'Profesional nacional', 'Internacional']);
-      var off = v('off').filter(function (x) { return x !== 'Ninguna'; }).length;
+      var off = v('off').filter(function (x) { return x !== 'Ninguna' && x !== 'No lo sé'; }).length;
       var D = {
         Identidad: cap((et + 1) * 10 + Math.min(v('valores').length, 2) * 15 + (uno('logro') ? 20 : 0) + (off ? 10 : 0)),
-        Audiencia: cap([10, 30, 50, 70][idx('tam', ['Menos de 1.000', '1.000 a 5.000', '5.000 a 20.000', 'Más de 20.000'])] || 0) + Math.min(v('quien').length, 2) * 8 + ([5, 10, 15][idx('donde', ['Mi ciudad', 'Mi país', 'Varios países'])] || 0),
+        Audiencia: cap([10, 30, 50, 70][idx('tam', ['Menos de 1.000', '1.000 a 5.000', '5.000 a 20.000', 'Más de 20.000'])] || 0) + Math.min(v('quien').filter(function (x) { return x !== 'No lo sé'; }).length, 2) * 8 + ([5, 8, 10, 15][idx('donde', ['Mi ciudad', 'Varias ciudades', 'Mi país', 'Varios países'])] || 0),
         Calendario: cap(([25, 50, 70][idx('comp', ['1 a 3', '4 a 8', '9 o más'])] || 0) + ([10, 20, 30][idx('alcance', ['Local', 'Nacional', 'Internacional'])] || 0)),
         Contenido: cap(([10, 35, 60][idx('frec', ['Casi no publico', '1 o 2 por semana', '3 o más por semana'])] || 0) + ([10, 20, 30][idx('prod', ['Yo, con el celular', 'Alguien me ayuda', 'Un equipo profesional'])] || 0) + ([0, 5, 10][idx('cam', ['Me cuesta', 'Más o menos', 'Con soltura'])] || 0)),
         Experiencia: cap(([50, 30, 0][idx('dossier', ['Sí, actualizado', 'Sí, pero desactualizado', 'No'])] || 0) + ([0, 20, 50][idx('ausp', ['Nunca', 'Sí, sin entregar resultados', 'Sí, con informe de resultados'])] || 0))
@@ -869,8 +870,8 @@
           '\nPuntaje: ' + r.total + '/100 (' + nivel + ')' + Object.keys(r.D).map(function (k) { return '\n· ' + k + ': ' + r.D[k]; }).join('') +
           '\nArquetipo: ' + a.a +
           '\n\nMi perfil' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
-          '\n\nMi comunidad' + L('Tamaño', uno('tam')) + L('Quiénes', v('quien').join(', ')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', v('off').join(', ')) +
-          '\n\nLo que ofrezco' + L('Dossier', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', v('valores').join(', ')) +
+          '\n\nMi comunidad' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
+          '\n\nLo que ofrezco' + L('Dossier', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
           '\n\nMis brechas: ' + brechas.map(function (k) { return ACC[k][0].toLowerCase(); }).join('; ') + '.' +
           '\n\n*Oferta recomendada*\n' + OF[r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0].map(function (o) { return '• ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
           '\n\n*Siguiente paso*\nEste es mi diagnóstico inicial. Quiero conocer con más profundidad mis fortalezas, oportunidades y capacidades reales con la Auditoría ProMatch (Commercial Readiness Score, Evidence Confidence Score, integración de marcas del 0 al 5, 13 capacidades comerciales y compatibilidad por sector).';
@@ -991,7 +992,7 @@
             '\n\n*Riesgos*\n' + (riesgos.length ? riesgos.map(function (g) { return '• ' + g.t; }) : brechas.slice(0, 2).map(function (k) { return '• ' + P.acc[k][0]; })).join('\n') +
             '\n\n*Oferta recomendada*\n' + oferta.map(function (o) { return '• ' + o.n + ' (' + o.r + ')'; }).join('\n') +
             P.pasos.map(function (p) {
-              var L = p.q.filter(function (q) { return q.id !== 'contacto' && v(q.id).length; }).map(function (q) { return '\n• ' + q.l.replace(/\?$/, '').replace(/^¿/, '') + ': ' + v(q.id).join(', '); });
+              var L = p.q.filter(function (q) { return q.id !== 'contacto' && v(q.id).length; }).map(function (q) { var o = v(q.id + '_otro')[0]; return '\n• ' + q.l.replace(/\?$/, '').replace(/^¿/, '') + ': ' + v(q.id).map(function (x) { return /^Otr[ao]$/.test(x) && o ? x + ': ' + o : x; }).join(', '); });
               return L.length ? '\n\n*' + p.t + '*' + L.join('') : '';
             }).join('') +
             '\n\n*Siguiente paso*\nEste es mi diagnóstico inicial. Quiero conocer con más profundidad mis fortalezas, oportunidades y capacidades reales con la Auditoría ProMatch (Commercial Readiness Score, Evidence Confidence Score, integración de marcas del 0 al 5, 13 capacidades comerciales y compatibilidad por sector).';
@@ -1959,5 +1960,28 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
     if (!v.getAttribute('src') && v.dataset.src) v.src = v.dataset.src;
     v.muted = !v.muted; if (!v.muted) { v.currentTime = 0; v.play().catch(function () {}); }
     b.textContent = v.muted ? '🔊 Con sonido' : '🔇 Silenciar';
+  });
+})();
+
+/* Diagnósticos: «No lo sé» y «Ninguna» excluyen al resto; «Otra/Otro» abre un campo para escribir */
+(function () {
+  var SOLAS = ['No lo sé', 'Ninguna', 'Ninguna en particular'];
+  document.addEventListener('change', function (e) {
+    var i = e.target;
+    if (!i.matches || !i.matches('.b-chips input')) return;
+    var grupo = i.closest('.b-chips'), campo = grupo.parentNode;
+    if (i.type === 'checkbox' && i.checked) {
+      var sola = SOLAS.indexOf(i.value) > -1;
+      grupo.querySelectorAll('input[type=checkbox]').forEach(function (x) {
+        if (x !== i && (sola || SOLAS.indexOf(x.value) > -1)) x.checked = false;
+      });
+    }
+    var otro = campo.querySelector('.b-otro');
+    if (otro) {
+      var abierto = [].some.call(grupo.querySelectorAll('input'), function (x) { return x.checked && /^Otr[ao]$/.test(x.value); });
+      otro.hidden = !abierto;
+      if (abierto && i.checked && /^Otr[ao]$/.test(i.value)) otro.focus();
+      if (!abierto) otro.value = '';
+    }
   });
 })();
