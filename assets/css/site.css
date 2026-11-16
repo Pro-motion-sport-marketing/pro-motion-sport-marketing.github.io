@@ -3938,3 +3938,4 @@ body.carro-abierto{overflow:hidden}
   .inf-lock{bottom:4px}
 }
 @media (max-width:560px){.dx-form .dg-top{flex-wrap:wrap;gap:8px}.dx-form .dg-paso-t{white-space:normal}}
+.recorte img{background:#efe4d6}
