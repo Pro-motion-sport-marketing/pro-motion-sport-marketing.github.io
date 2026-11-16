@@ -898,8 +898,8 @@
     var AUD_TXT = AUD.replace(/<[^>]+>/g, '');
     function abrir(k, mover) {
       $$('.dx-op[data-dx]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.dx === k); });
-      $$('.dx-form').forEach(function (f) { f.hidden = f.dataset.perfil !== k; });
-      var f = $('.dx-form[data-perfil="' + k + '"]');
+      $$('.dx-form, .dx-dep').forEach(function (f) { f.hidden = f.dataset.perfil !== k; });
+      var f = $('.dx-form[data-perfil="' + k + '"], .dx-dep[data-perfil="' + k + '"]');
       if (f && mover) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     $$('.dx-bur').forEach(function (b) { b.addEventListener('click', function () {
@@ -1015,7 +1015,7 @@
       mostrar(); vivo();
     });
     var ini = (location.hash || '').slice(1) || new URLSearchParams(location.search).get('perfil');
-    if (DATA[ini]) abrir(ini, false);
+    if (DATA[ini] || ini === 'deportista') abrir(ini, false);
   })();
 
   /* ---------- Academy: constructor de pitch en 3 pasos ---------- */
