@@ -3977,3 +3977,4 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 /* Diagnósticos: ayuda y campo «¿Cuál?» */
 .b-ayuda{display:block;font-size:13.5px;line-height:1.4;opacity:.7;margin-top:2px;max-width:62ch}
 .b-otro{margin-top:10px;width:100%;max-width:420px}
+.dx-cta-btns [data-dg-wa],.dx-cta-btns [data-dx-wa]{order:-1}
