@@ -336,7 +336,7 @@
   if (hvc) (function () {
     var v = $('#hv-v', hvc), barra = $('.hv-barra', hvc), t = $('.hv-t b', hvc), cargado = false, cayo = false, raf = 0;
     function mmss(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
-    function dur() { return v.duration && isFinite(v.duration) ? v.duration : 190.8; }
+    function dur() { return v.duration && isFinite(v.duration) ? v.duration : 191.4; }
     function pintar() {
       var p = Math.min(1, v.currentTime / dur());
       barra.style.setProperty('--p', p);
