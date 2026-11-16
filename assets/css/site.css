@@ -3939,3 +3939,31 @@ body.carro-abierto{overflow:hidden}
 }
 @media (max-width:560px){.dx-form .dg-top{flex-wrap:wrap;gap:8px}.dx-form .dg-paso-t{white-space:normal}}
 .recorte img{background:#efe4d6}
+/* Fichas: proyectos inactivos o casos de estudio */
+.pt-estado{display:inline-block;margin:10px 0 0;padding:6px 12px;border-radius:99px;background:var(--rojo);color:#fff;font-size:12.5px;font-weight:600;letter-spacing:.02em}
+.pt-score.caso b{font-size:clamp(26px,3vw,38px)}
+/* Marcas: caso Tissot × Alfredo Campo */
+.tx{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,64px);align-items:center}
+.tx-video{position:relative;margin:0;max-width:380px;justify-self:center;width:100%}
+.tx-video video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:18px;background:var(--negro);box-shadow:0 24px 50px -24px rgba(28,28,28,.6)}
+.tx-son{all:unset;cursor:pointer;position:absolute;left:12px;top:12px;background:rgba(28,28,28,.75);color:var(--crema);font-size:13px;font-weight:600;padding:7px 12px;border-radius:99px}
+.tx-son:focus-visible{outline:2px solid var(--rojo)}
+.tx-video figcaption{margin-top:10px;font-size:13px;opacity:.75;text-align:center}
+.tx-video figcaption b{font-family:var(--epic);font-size:18px;opacity:1}
+.tx-logos{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin-bottom:16px}
+.tx-logos img{height:56px;width:auto;background:var(--negro);border-radius:10px;padding:4px 10px}
+.tx-logos span{font-family:var(--epic);color:var(--rojo);font-size:20px}
+.tx-logos b{font-family:var(--epic);text-transform:uppercase;font-size:16px}
+.tx .h2{font-size:clamp(28px,3.4vw,46px)}
+.tx-beats{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.tx-beats li{background:#fff;border:2px solid var(--negro);padding:12px 14px;font-size:14px;line-height:1.4}
+.tx-beats span{display:inline-block;font-family:var(--epic);color:var(--rojo);font-size:14px;margin-right:6px}
+.tx-beats b{display:block;font-size:15px;margin:2px 0 4px}
+.tx-vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.tx-vs>div{padding:14px 16px;border:2px dashed rgba(28,28,28,.35)}
+.tx-vs>div.si{border:2px solid var(--negro);background:var(--negro);color:var(--crema)}
+.tx-vs .lbl{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--rojo);margin-bottom:4px}
+.tx-vs p{font-size:14.5px;line-height:1.45}
+@media (max-width:900px){.tx{grid-template-columns:1fr}.tx-video{max-width:320px}}
+@media (max-width:560px){.tx-beats,.tx-vs{grid-template-columns:1fr}}
+.tx-logos img{height:60px;padding:6px 12px}

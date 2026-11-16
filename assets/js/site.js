@@ -1950,3 +1950,14 @@ document.querySelectorAll('.ev-tabs').forEach(function(t){t.addEventListener('cl
     })
     .catch(function () { estado('no'); res.querySelector('.pago-motivo').textContent = 'No pudimos confirmar el pago. Si se debitó, escríbenos y lo revisamos.'; });
 })();
+
+/* Marcas: sonido del caso Tissot */
+(function () {
+  var b = document.querySelector('.tx-son'); if (!b) return;
+  var v = b.parentNode.querySelector('video');
+  b.addEventListener('click', function () {
+    if (!v.getAttribute('src') && v.dataset.src) v.src = v.dataset.src;
+    v.muted = !v.muted; if (!v.muted) { v.currentTime = 0; v.play().catch(function () {}); }
+    b.textContent = v.muted ? '🔊 Con sonido' : '🔇 Silenciar';
+  });
+})();
