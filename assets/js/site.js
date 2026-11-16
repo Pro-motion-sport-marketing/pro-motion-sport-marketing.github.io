@@ -363,7 +363,7 @@
     function play() { cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }); }
     function alternar() { if (v.paused || v.ended) play(); else v.pause(); }
     $('.hv-play', hvc).addEventListener('click', play);
-    v.addEventListener('click', alternar);
+    v.addEventListener('click', function () { if (hvc.classList.contains('auto')) $('.hv-sonido', hvc).click(); else alternar(); });
     $('.hv-pp', hvc).addEventListener('click', alternar);
     $('.hv-son', hvc).addEventListener('click', function () { v.muted = !v.muted; hvc.classList.toggle('mudo', v.muted); this.setAttribute('aria-label', v.muted ? 'Activar sonido' : 'Silenciar'); });
     $('.hv-full', hvc).addEventListener('click', function () {
@@ -380,6 +380,21 @@
     v.addEventListener('pause', function () { hvc.classList.remove('corre'); $('.hv-pp', hvc).setAttribute('aria-label', 'Reproducir'); pintar(); });
     v.addEventListener('ended', function () { hvc.classList.add('fin'); hvc.classList.remove('corre'); pintar(); });
     v.addEventListener('seeked', pintar);
+    /* Reproducción automática en silencio; el botón «Activar sonido» reinicia con voz */
+    function salirAuto() { hvc.classList.remove('auto'); }
+    $('.hv-sonido', hvc).addEventListener('click', function (e) {
+      e.stopPropagation(); salirAuto(); v.muted = false; hvc.classList.remove('mudo');
+      $('.hv-son', hvc).setAttribute('aria-label', 'Silenciar'); v.currentTime = 0; play();
+    });
+    ['.hv-pp', '.hv-son', '.hv-barra', '.hv-otra'].forEach(function (s) { $(s, hvc).addEventListener('pointerdown', salirAuto); });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.muted = true; v.setAttribute('muted', ''); hvc.classList.add('auto', 'mudo'); $('.hv-son', hvc).setAttribute('aria-label', 'Activar sonido');
+      new IntersectionObserver(function (es) {
+        if (!hvc.classList.contains('auto')) return;
+        if (es[0].isIntersecting) cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () { hvc.classList.remove('auto', 'mudo'); v.muted = false; }); });
+        else v.pause();
+      }, { threshold: .35 }).observe(hvc);
+    }
     v.addEventListener('loadedmetadata', pintar);
     function buscar(x) {
       var r = $('.hv-pista', hvc).getBoundingClientRect(), p = Math.min(1, Math.max(0, (x - r.left) / r.width));

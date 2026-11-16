@@ -3536,3 +3536,10 @@ body.carro-abierto{overflow:hidden}
 .hero-video.empuja.fin .hv-push{opacity:0}
 .hero-video.empuja.fin .hv-sit{opacity:1;animation:hvSienta .4s ease-out}
 @keyframes hvSienta{0%{opacity:0;transform:translateY(-6px)}100%{opacity:1;transform:none}}
+.hero-video.auto .hv-play{opacity:0;pointer-events:none}
+.hv-sonido{all:unset;box-sizing:border-box;position:absolute;left:14px;bottom:14px;display:none;align-items:center;gap:8px;padding:9px 14px 9px 11px;border-radius:99px;background:var(--rojo);color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 8px 20px -8px rgba(0,0,0,.6);animation:hvLate 2.4s ease-in-out infinite}
+.hv-sonido svg{width:20px;height:20px}
+.hv-sonido:focus-visible{outline:3px solid var(--crema);outline-offset:2px}
+.hero-video.auto .hv-sonido{display:flex}
+@keyframes hvLate{0%,100%{transform:none}50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.hv-sonido{animation:none}}
