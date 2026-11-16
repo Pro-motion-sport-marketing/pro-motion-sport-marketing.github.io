@@ -361,6 +361,16 @@
       document.head.appendChild(s);
     }
     function play() { cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }); }
+    /* Espid: se sube a la bola, se sienta, se cae y empieza a empujar */
+    function secuencia() {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { hvc.classList.add('empuja'); return; }
+      var c = hvc.classList;
+      c.add('sube');
+      setTimeout(function () { c.remove('sube'); c.add('sentado'); }, 1000);
+      setTimeout(function () { c.remove('sentado'); c.add('cae'); }, 2200);
+      setTimeout(function () { c.add('empuja'); c.remove('cae'); }, 3450);
+    }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) hvc.classList.add('rm');
     function alternar() { if (v.paused || v.ended) play(); else v.pause(); }
     $('.hv-play', hvc).addEventListener('click', play);
     v.addEventListener('click', function () { if (hvc.classList.contains('auto')) $('.hv-sonido', hvc).click(); else alternar(); });
@@ -374,7 +384,7 @@
     v.addEventListener('play', function () {
       hvc.classList.add('iniciado', 'corre'); hvc.classList.remove('fin');
       $('.hv-pp', hvc).setAttribute('aria-label', 'Pausar');
-      if (!cayo) { cayo = true; hvc.classList.add('cae'); setTimeout(function () { hvc.classList.add('empuja'); hvc.classList.remove('cae'); }, 1450); }
+      if (!cayo) { cayo = true; secuencia(); }
       cancelAnimationFrame(raf); bucle();
     });
     v.addEventListener('pause', function () { hvc.classList.remove('corre'); $('.hv-pp', hvc).setAttribute('aria-label', 'Reproducir'); pintar(); });

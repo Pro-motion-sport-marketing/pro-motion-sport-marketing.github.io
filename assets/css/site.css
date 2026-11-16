@@ -3543,3 +3543,13 @@ body.carro-abierto{overflow:hidden}
 .hero-video.auto .hv-sonido{display:flex}
 @keyframes hvLate{0%,100%{transform:none}50%{transform:scale(1.05)}}
 @media (prefers-reduced-motion:reduce){.hv-sonido{animation:none}}
+/* Espid: entrada (se sube), se sienta, se cae, empuja */
+.hv-sit{opacity:0}
+.hero-video.rm .hv-sit,.hero-video.sentado .hv-sit{opacity:1}
+.hero-video.sentado .hv-sit{animation:hvSienta .3s ease-out}
+.hero-video.cae .hv-sit{opacity:1;animation:hvCae .8s cubic-bezier(.5,0,.6,1) forwards}
+.hero-video.cae .hv-push{animation:hvLevanta .45s ease-out .8s forwards}
+.hero-video.empuja .hv-sit{opacity:0;animation:none}
+.hv-climb{position:absolute;max-width:none;width:auto;height:24px;left:-18px;bottom:2px;opacity:0}
+.hero-video.sube .hv-climb{animation:hvSube 1s steps(5,end) forwards}
+@keyframes hvSube{0%{opacity:0;transform:translateY(8px)}20%{opacity:1;transform:translateY(6px)}100%{opacity:1;transform:translateY(-4px)}}
