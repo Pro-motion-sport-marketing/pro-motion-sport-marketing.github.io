@@ -492,6 +492,38 @@
   })();
 
   /* ---------- ProMatch: registro ---------- */
+  /* ---------- ProMatch: más seguidores no es más encaje (ejemplo interactivo) ---------- */
+  var vs = $('#vs');
+  if (vs) (function () {
+    var M = JSON.parse(vs.dataset.marcas), cards = $$('.vs-p', vs), msg = $('.vs-msg', vs);
+    function contar(el, n) {
+      var de = +el.textContent || 0, t0 = performance.now();
+      (function paso(t) { var k = Math.min(1, (t - t0) / 600); el.textContent = Math.round(de + (n - de) * k); if (k < 1) requestAnimationFrame(paso); })(t0);
+    }
+    function ver(i) {
+      var m = M[i], enc = {};
+      $$('.vs-m', vs).forEach(function (b) { b.setAttribute('aria-pressed', +b.dataset.i === i); });
+      cards.forEach(function (c) {
+        var v = m[c.dataset.k], e = Math.round((v[0] + v[1] + v[2]) / 3);
+        enc[c.dataset.k] = e;
+        $$('.vs-dims em', c).forEach(function (em, x) { em.style.width = v[x] + '%'; });
+        $('.vs-venn', c).style.setProperty('--o', e / 100);
+        contar($('.vs-encaje b', c), e);
+      });
+      cards.forEach(function (c) { c.classList.toggle('gana', enc[c.dataset.k] === Math.max(enc.a, enc.b)); });
+      msg.textContent = m.m;
+    }
+    $$('.vs-m', vs).forEach(function (b) { b.addEventListener('click', function () { ver(+b.dataset.i); }); });
+    ver(0);
+  })();
+  /* ---------- ProMatch: metodología en pestañas ---------- */
+  var tabs = $('#pmx-tabs');
+  if (tabs) $$('[role=tab]', tabs).forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('[role=tab]', tabs).forEach(function (x) { x.setAttribute('aria-selected', x === b); });
+      $$('.pmx-panel', tabs).forEach(function (p) { p.hidden = p.dataset.tab !== b.dataset.tab; if (!p.hidden) $$('.rv', p).forEach(function (r) { r.classList.add('in'); }); });
+    });
+  });
   /* ---------- ProMatch: cómo funciona ---------- */
   var crs = $('#pmx-crs');
   if (crs) (function () {
