@@ -3566,3 +3566,31 @@ body.carro-abierto{overflow:hidden}
 @keyframes hvLevanta2{0%{opacity:1;transform:translateY(2px) rotate(-30deg) scaleY(.75)}100%{opacity:1;transform:rotate(12deg)}}
 .hv-globo{bottom:38px}
 @media (prefers-reduced-motion:reduce){.hero-video.hv-empuja.hv-corre .hv-push{animation:none}}
+/* Portada: texto y video alineados arriba y abajo */
+.hero .chips .hero-conoce{margin:0;padding:11px 16px 10px 12px;gap:10px;border:2px solid var(--negro);box-shadow:none}
+.hero .chips .hero-conoce .hc-iso{width:15px;height:19px}
+.hero .chips .hero-conoce .hc-tx b{font-family:var(--clash);font-weight:600;font-size:15px;line-height:1.2}
+.hero .chips .hero-conoce:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:none}
+@media (min-width:980px){
+  .hero .wrap{align-items:center}
+  .hero-video{max-width:none}
+  .hero h1{margin-top:0}
+}
+@media (min-width:980px){
+  .hero .wrap{grid-template-columns:.84fr 1.16fr;gap:48px;align-items:stretch}
+  .hero-txt{display:flex;flex-direction:column;justify-content:space-between}
+  .hero-video{align-self:center}
+  .hero h1{font-size:clamp(42px,5vw,80px)}
+  .hero .lead{margin-top:18px}
+  .hero .chips{display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:10px;margin-top:22px}
+  .hero .chips .chip{font-size:clamp(12.5px,1.1vw,15px);justify-content:flex-start}
+}
+/* Espid sube por una escalera desde el botón de play hasta la bola */
+.hv-escalera{position:absolute;left:-20px;top:-19px;width:24px;height:28px;opacity:0;transition:opacity .3s;pointer-events:none}
+.hero-video.hv-sube .hv-escalera,.hero-video.hv-sentado .hv-escalera{opacity:1}
+.hv-climb{height:22px;left:-19px;bottom:-9px}
+.hero-video.hv-sube .hv-climb{animation:hvSube2 1.5s steps(6,end) forwards}
+@keyframes hvSube2{0%{opacity:0;transform:none}8%{opacity:1;transform:none}92%{opacity:1;transform:translate(11px,-24px)}100%{opacity:0;transform:translate(11px,-24px)}}
+@media (min-width:980px){.hero .chips{display:flex;flex-wrap:wrap}.hero .chips .chip{font-size:14px;padding:10px 13px 9px}}
+.hv-play{opacity:0;pointer-events:none}
+.hero-video.hv-manual:not(.hv-iniciado) .hv-play{opacity:1;pointer-events:auto}

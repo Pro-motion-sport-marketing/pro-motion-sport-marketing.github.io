@@ -366,11 +366,11 @@
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) { hvc.classList.add('hv-empuja'); return; }
       var c = hvc.classList;
       c.add('hv-sube');
-      setTimeout(function () { c.remove('hv-sube'); c.add('hv-sentado'); }, 1000);
-      setTimeout(function () { c.remove('hv-sentado'); c.add('hv-cae'); }, 2200);
-      setTimeout(function () { c.add('hv-empuja'); c.remove('hv-cae'); }, 3450);
+      setTimeout(function () { c.remove('hv-sube'); c.add('hv-sentado'); }, 1500);
+      setTimeout(function () { c.remove('hv-sentado'); c.add('hv-cae'); }, 2700);
+      setTimeout(function () { c.add('hv-empuja'); c.remove('hv-cae'); }, 3950);
     }
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) hvc.classList.add('hv-rm');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) hvc.classList.add('hv-rm', 'hv-manual');
     function alternar() { if (v.paused || v.ended) play(); else v.pause(); }
     $('.hv-play', hvc).addEventListener('click', play);
     v.addEventListener('click', function () { if (hvc.classList.contains('hv-auto')) $('.hv-sonido', hvc).click(); else alternar(); });
@@ -401,7 +401,7 @@
       v.muted = true; v.setAttribute('muted', ''); hvc.classList.add('hv-auto', 'hv-mudo'); $('.hv-son', hvc).setAttribute('aria-label', 'Activar sonido');
       new IntersectionObserver(function (es) {
         if (!hvc.classList.contains('hv-auto')) return;
-        if (es[0].isIntersecting) cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () { hvc.classList.remove('hv-auto', 'hv-mudo'); v.muted = false; }); });
+        if (es[0].isIntersecting) cargar(function () { var pr = v.play(); if (pr && pr.catch) pr.catch(function () { hvc.classList.remove('hv-auto', 'hv-mudo'); hvc.classList.add('hv-manual'); v.muted = false; }); });
         else v.pause();
       }, { threshold: .35 }).observe(hvc);
     }
