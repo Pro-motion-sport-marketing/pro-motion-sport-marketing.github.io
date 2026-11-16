@@ -3603,3 +3603,14 @@ body.carro-abierto{overflow:hidden}
   .hero-video{order:3;margin-top:22px}
   .hero-txt .chips{order:4;margin-top:22px}
 }
+/* El título se ajusta al ancho real de su columna: nunca invade el video */
+@media (min-width:980px){
+  .hero-txt{container-type:inline-size}
+  .hero .hero-txt h1{font-size:clamp(32px,11.6cqi,84px)}
+}
+@media (min-width:980px) and (max-width:1199px){
+  .hero .chips{gap:8px}
+  .hero .chips .chip{font-size:12px;padding:9px 10px 8px;gap:7px}
+  .hero .chips .chip i{width:9px;height:9px}
+  .hero .wrap{gap:36px}
+}
