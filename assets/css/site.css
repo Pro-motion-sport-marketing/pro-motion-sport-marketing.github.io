@@ -3908,3 +3908,33 @@ body.carro-abierto{overflow:hidden}
   .vs-m{font-size:13px;padding:8px 12px}
 }
 @media (max-width:560px){.pmx-pasos{grid-template-columns:1fr 1fr;gap:8px}.pmx-pasos li{padding:12px}.pmx-pasos h3{font-size:17px}.pmx-pasos p{font-size:13px}}
+/* Burbuja de seguidores: la cifra dentro con aire, la palabra afuera */
+.vs-seg{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px}
+.vs-seg>small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.vs-burbuja{padding:0 10px}
+.vs-burbuja b{font-size:min(22px,calc(var(--d) * .2))}
+@media (max-width:760px){
+  .vs-cab{flex-direction:row;align-items:center}
+  .vs-burbuja{--d:calc(60px + var(--r) * .25px);padding:0 6px}
+  .vs-burbuja b{font-size:min(16px,calc(var(--d) * .2))}
+  .vs-seg>small{font-size:9px}
+  .vs-cab>div{min-width:0}
+}
+@media (max-width:760px){.vs-cab{flex-direction:column;align-items:flex-start}.vs-seg{align-items:center}}
+.vs-burbuja b{font-size:clamp(13px,calc(var(--d) * .16),19px)}
+@media (max-width:760px){.vs-burbuja b{font-size:clamp(11px,calc(var(--d) * .16),14px)}}
+@media (max-width:760px){.vs-seg{min-height:112px;justify-content:flex-end}}
+/* Proximidad y desbordes en celular (revisión 16 nov.) */
+@media (max-width:900px){
+  .dx-grid{grid-template-columns:minmax(0,1fr)}
+  .dx-lado{min-width:0}
+  .dx-vivo{flex:1 1 120px;min-width:0}
+  .dx-niveles{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .dx-ph h1 .box{white-space:normal}
+  .pmx-inf-pags .inf-p3{right:2%}
+  .pmx-inf-pags{overflow:hidden;padding-bottom:30px;height:280px}
+  .inf-lock{bottom:4px}
+}
+@media (max-width:560px){.dx-form .dg-top{flex-wrap:wrap;gap:8px}.dx-form .dg-paso-t{white-space:normal}}
