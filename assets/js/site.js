@@ -811,6 +811,11 @@
       Contenido: ['Tu contenido no tiene constancia', 'Publica con un plan semanal y entrena tu forma de hablar a cámara.'],
       Experiencia: ['Te falta evidencia comercial', 'Arma tu dossier y entrega informes a tus auspiciantes: así se renueva.']
     };
+    var OF = [
+      [['Consultoría 1 a 1', '1 hora para ordenar tu punto de partida y salir con un plan escrito.', 'USD 35', '../servicios/#estrategia'], ['Perfil comercial y media kit', 'Tu trayectoria traducida a un documento que una marca puede evaluar.', 'A cotizar', '../servicios/#perfil']],
+      [['Perfil comercial y media kit', 'Lo que ofreces, a quién y con qué evidencia, listo para presentar.', 'A cotizar', '../servicios/#perfil'], ['Sesión intensiva', '2 horas para definir narrativa, oferta y guion.', 'USD 70', '../servicios/#estrategia']],
+      [['Gestión de comunicación digital', 'Estrategia, producción, publicación e informe, mes a mes.', 'Desde USD 260 al mes', '../servicios/#gestion'], ['Informe de resultados para auspiciantes', 'Exposición real de cada marca para renovar con datos.', 'Incluido en la gestión', '../servicios/#informe']]
+    ];
     function resultado() {
       var dep = uno('deporte').toLowerCase(), r = calc();
       var a = T.filter(function (t) { return t.k.some(function (k) { return dep.indexOf(k) > -1; }); })[0] || T[T.length - 1];
@@ -823,17 +828,20 @@
         '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + k + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
         '<div class="dg-grid"><div><span class="lbl">Tu arquetipo comercial</span><h4>' + a.a + '</h4><p>' + a.v + '</p></div><div><span class="lbl">Industrias compatibles</span><p>' + a.o + '</p><span class="lbl">Idea de activación</span><p>' + a.act + '</p></div></div>' +
         '<span class="lbl">Tus 3 brechas principales</span><ol class="dg-brechas">' + brechas.map(function (k) { return '<li><b>' + ACC[k][0] + '</b><span>' + ACC[k][1] + '</span></li>'; }).join('') + '</ol>' +
-        '<div class="dg-cta"><h4>Esto es un prediagnóstico</h4><p>Para un diagnóstico completo y a profundidad, con tus objetivos, tus intereses y todo tu ecosistema actual, nos encantaría ayudarte de forma personalizada.</p><button type="button" class="btn rojo lg" data-dg-wa>Enviar mi prediagnóstico por WhatsApp <span class="chev">»</span></button><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
+        '<span class="lbl dx-of-t">Oferta recomendada para tu situación</span><div class="dx-of">' + OF[r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0].map(function (o, i) { return '<a class="dx-of-c' + (i ? '' : ' prin') + '" href="' + o[3] + '"><span class="lbl">' + (i ? 'Complemento' : 'Recomendado') + '</span><b>' + o[0] + '</b><p>' + o[1] + '</p><em>' + o[2] + '</em></a>'; }).join('') + '</div><p class="dg-nota">Valores referenciales: cada proyecto cambia según sus necesidades y se cotiza a medida.</p>' +
+        '<div class="dg-cta dx-aud"><span class="lbl">Siguiente nivel</span><h4>Este es tu diagnóstico inicial</h4><p>Para conocer a fondo tus fortalezas, oportunidades y capacidades reales como deportista, recomendamos la <b>Auditoría ProMatch</b>: revisa tu contenido y tu información real y te entrega tu <b>Commercial Readiness Score</b> (8 categorías), el <b>Evidence Confidence Score</b>, tu nivel de <b>integración de marcas</b> del 0 al 5, tus <b>13 capacidades comerciales</b> y los <b>sectores compatibles</b>.</p><button type="button" class="btn rojo lg" data-dg-wa>Enviar mi diagnóstico por WhatsApp <span class="chev">»</span></button><a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
         '<p class="dg-nota">Resultado orientativo, calculado con tus respuestas. El diagnóstico completo lo hace un estratega de Pro Motion.</p></div>';
       $('[data-dg-wa]', res).onclick = function () {
         var L = function (t, x) { return x ? '\n' + t + ': ' + x : ''; };
-        var msg = 'Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Hice el prediagnóstico de Pro Academy y quiero el diagnóstico completo.\n' +
+        var msg = 'Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. ' : '') + 'Hice el diagnóstico inicial de Pro Motion como deportista.\n' +
           '\nPuntaje: ' + r.total + '/100 (' + nivel + ')' + Object.keys(r.D).map(function (k) { return '\n· ' + k + ': ' + r.D[k]; }).join('') +
           '\nArquetipo: ' + a.a +
           '\n\nMi perfil' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
           '\n\nMi comunidad' + L('Tamaño', uno('tam')) + L('Quiénes', v('quien').join(', ')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', v('off').join(', ')) +
           '\n\nLo que ofrezco' + L('Dossier', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', v('valores').join(', ')) +
-          '\n\nMis brechas: ' + brechas.map(function (k) { return ACC[k][0].toLowerCase(); }).join('; ') + '.';
+          '\n\nMis brechas: ' + brechas.map(function (k) { return ACC[k][0].toLowerCase(); }).join('; ') + '.' +
+          '\n\n*Oferta recomendada*\n' + OF[r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0].map(function (o) { return '• ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
+          '\n\n*Siguiente paso*\nEste es mi diagnóstico inicial. Quiero conocer con más profundidad mis fortalezas, oportunidades y capacidades reales con la Auditoría ProMatch (Commercial Readiness Score, Evidence Confidence Score, integración de marcas del 0 al 5, 13 capacidades comerciales y compatibilidad por sector).';
         abrirWA(msg);
       };
       $('[data-dg-otra]', res).onclick = function () { diag.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', diag).hidden = false; $('.dg-top', diag).hidden = false; mostrar(); diag.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
@@ -848,6 +856,116 @@
     diag.addEventListener('submit', function (e) { e.preventDefault(); });
     diag.addEventListener('input', function () { aviso.textContent = ''; });
     mostrar();
+  })();
+
+  /* ---------- Diagnóstico inicial: equipos, eventos y marcas ---------- */
+  var dxd = $('#dx-data');
+  if (dxd) (function () {
+    var DATA = JSON.parse(dxd.textContent), AUD = JSON.parse($('#dx-auditoria').textContent);
+    var AUD_TXT = AUD.replace(/<[^>]+>/g, '');
+    function abrir(k, mover) {
+      $$('.dx-op[data-dx]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.dx === k); });
+      $$('.dx-form').forEach(function (f) { f.hidden = f.dataset.perfil !== k; });
+      var f = $('.dx-form[data-perfil="' + k + '"]');
+      if (f && mover) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    $$('.dx-op[data-dx]').forEach(function (b) { b.addEventListener('click', function () { abrir(b.dataset.dx, true); history.replaceState(null, '', '#' + b.dataset.dx); }); });
+    $$('.dx-form').forEach(function (form) {
+      var P = DATA[form.dataset.perfil], paso = 1;
+      var pasos = $$('.dg-paso', form), sig = $('.dg-sig', form), atras = $('.dg-atras', form), aviso = $('.dg-aviso', form), res = $('.diag-res', form);
+      function v(n) { return new FormData(form).getAll(n).map(function (x) { return String(x).trim(); }).filter(Boolean); }
+      function preguntas() { return P.pasos.reduce(function (a, p) { return a.concat(p.q); }, []); }
+      function mostrar() {
+        pasos.forEach(function (f) { f.hidden = +f.dataset.p !== paso; });
+        $('.dg-paso-t b', form).textContent = paso;
+        $('.dg-barra i', form).style.width = (paso / 3 * 100) + '%';
+        atras.hidden = paso === 1;
+        sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Ver mi diagnóstico <span class="chev">»</span>';
+        aviso.textContent = '';
+      }
+      function calc() {
+        var D = {}, M = {};
+        Object.keys(P.dims).forEach(function (k) { D[k] = 0; M[k] = 0; });
+        preguntas().forEach(function (q) {
+          if (q.tipo === 'text') {
+            if (q.pts) Object.keys(q.pts).forEach(function (k) { M[k] += q.pts[k]; if (v(q.id).length) D[k] += q.pts[k]; });
+            return;
+          }
+          var elegidos = v(q.id);
+          // máximo posible: en radio la mejor opción; en casillas la suma
+          var tope = {};
+          q.o.forEach(function (o) { Object.keys(o.p).forEach(function (k) { tope[k] = q.tipo === 'radio' ? Math.max(tope[k] || 0, o.p[k]) : (tope[k] || 0) + o.p[k]; }); });
+          Object.keys(tope).forEach(function (k) { M[k] += tope[k]; });
+          q.o.forEach(function (o) { if (elegidos.indexOf(o.t) > -1) Object.keys(o.p).forEach(function (k) { D[k] += o.p[k]; }); });
+        });
+        var total = 0;
+        Object.keys(D).forEach(function (k) { D[k] = M[k] ? Math.min(100, Math.round(D[k] / Math.min(M[k], 100) * 100)) : 0; total += D[k] * P.dims[k] / 100; });
+        return { D: D, total: Math.round(total) };
+      }
+      function arquetipo() {
+        return P.arq.filter(function (a) {
+          if (!a.si) return true;
+          return Object.keys(a.si).some(function (q) { return v(q).some(function (x) { return a.si[q].indexOf(x) > -1; }); });
+        })[0];
+      }
+      function resultado() {
+        var r = calc(), a = arquetipo(), ni = r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0;
+        var orden = Object.keys(r.D).sort(function (x, y) { return r.D[x] - r.D[y]; });
+        var brechas = orden.slice(0, 3);
+        var fuertes = orden.slice().reverse().filter(function (k) { return r.D[k] >= 55; }).slice(0, 3);
+        var riesgos = P.riesgos.filter(function (g) { return Object.keys(g.todas).every(function (q) { return v(q).some(function (x) { return g.todas[q].indexOf(x) > -1; }); }); }).slice(0, 3);
+        var nivel = P.niveles[ni], oferta = P.oferta[ni];
+        var nombre = v('nombre')[0] || '';
+        var lista = function (arr) { return '<ul class="dx-l">' + arr.join('') + '</ul>'; };
+        res.innerHTML = '<div class="dg-res">' +
+          '<div class="dg-score"><div class="dg-num"><b>' + r.total + '</b><span>/100</span></div><div><span class="lbl">Estado actual · ' + P.n + '</span><h3>' + nivel + '</h3></div></div>' +
+          '<p class="dx-estado">' + P.estado[ni] + '</p>' +
+          '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + k + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
+          '<div class="dx-cuad">' +
+            '<div class="dx-c dx-ok"><span class="lbl">Ventajas</span>' + (fuertes.length ? lista(fuertes.map(function (k) { return '<li><b>' + k + '</b> ' + P.fz[k] + '</li>'; })) : '<p>Todavía no hay una dimensión fuerte. Tu mejor punto de partida es <b>' + orden[orden.length - 1].toLowerCase() + '</b>: ' + P.fz[orden[orden.length - 1]].charAt(0).toLowerCase() + P.fz[orden[orden.length - 1]].slice(1) + '</p>') + '</div>' +
+            '<div class="dx-c"><span class="lbl">Oportunidades · ' + a.a + '</span><p>' + a.v + '</p><p><b>' + (form.dataset.perfil === 'marca' ? 'Lo que te conviene: ' : 'Industrias compatibles: ') + '</b>' + a.o.replace(/^Te conviene: /, '') + '</p><p><b>Idea de activación:</b> ' + a.act + '</p></div>' +
+            '<div class="dx-c dx-risk"><span class="lbl">Riesgos y conflictos</span>' + lista((riesgos.length ? riesgos.map(function (g) { return '<li><b>' + g.t + '.</b> ' + g.d + '</li>'; }) : brechas.slice(0, 2).map(function (k) { return '<li><b>' + P.acc[k][0] + '.</b> ' + P.acc[k][1] + '</li>'; }))) + '</div>' +
+            '<div class="dx-c"><span class="lbl">Prioridades a 90 días</span><ol class="dx-l">' + brechas.map(function (k) { return '<li><b>' + P.acc[k][0] + '.</b> ' + P.acc[k][1] + '</li>'; }).join('') + '</ol></div>' +
+          '</div>' +
+          '<span class="lbl dx-of-t">Oferta recomendada para tu situación</span>' +
+          '<div class="dx-of">' + oferta.map(function (o, i) { return '<a class="dx-of-c' + (i ? '' : ' prin') + '" href="' + o.h + '"><span class="lbl">' + (i ? 'Complemento' : 'Recomendado') + '</span><b>' + o.n + '</b><p>' + o.d + '</p><em>' + o.r + '</em></a>'; }).join('') + '</div>' +
+          '<p class="dg-nota">Valores referenciales: cada proyecto cambia según sus necesidades y se cotiza a medida.</p>' +
+          '<div class="dg-cta dx-aud"><span class="lbl">Siguiente nivel</span><h4>Este es tu diagnóstico inicial</h4><p>' + AUD + '</p>' +
+          '<button type="button" class="btn rojo lg" data-dx-wa>Enviar mi diagnóstico por WhatsApp <span class="chev">»</span></button>' +
+          '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a>' +
+          '<button type="button" class="dg-atras" data-dx-otra>Volver a empezar</button></div>' +
+          '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparado está el proyecto y qué le falta.</p></div>';
+        $('[data-dx-wa]', res).onclick = function () {
+          var cont = v('contacto')[0];
+          var msg = 'Hola Daniel, ' + (cont ? 'soy ' + cont + '. ' : '') + 'Hice el diagnóstico inicial de Pro Motion como ' + P.quien + (nombre ? ' (' + nombre + ')' : '') + '.\n' +
+            '\n*Estado actual*\n• ' + r.total + '/100 · ' + nivel + Object.keys(r.D).map(function (k) { return '\n• ' + k + ': ' + r.D[k]; }).join('') +
+            '\n• Arquetipo: ' + a.a +
+            (fuertes.length ? '\n\n*Ventajas*\n' + fuertes.map(function (k) { return '• ' + k; }).join('\n') : '') +
+            '\n\n*Riesgos*\n' + (riesgos.length ? riesgos.map(function (g) { return '• ' + g.t; }) : brechas.slice(0, 2).map(function (k) { return '• ' + P.acc[k][0]; })).join('\n') +
+            '\n\n*Oferta recomendada*\n' + oferta.map(function (o) { return '• ' + o.n + ' (' + o.r + ')'; }).join('\n') +
+            P.pasos.map(function (p) {
+              var L = p.q.filter(function (q) { return q.id !== 'contacto' && v(q.id).length; }).map(function (q) { return '\n• ' + q.l.replace(/\?$/, '').replace(/^¿/, '') + ': ' + v(q.id).join(', '); });
+              return L.length ? '\n\n*' + p.t + '*' + L.join('') : '';
+            }).join('') +
+            '\n\n*Siguiente paso*\nEste es mi diagnóstico inicial. Quiero conocer con más profundidad mis fortalezas, oportunidades y capacidades reales con la Auditoría ProMatch (Commercial Readiness Score, Evidence Confidence Score, integración de marcas del 0 al 5, 13 capacidades comerciales y compatibilidad por sector).';
+          abrirWA(msg);
+        };
+        $('[data-dx-otra]', res).onclick = function () { form.reset(); res.innerHTML = ''; paso = 1; $('.dg-nav', form).hidden = false; $('.dg-top', form).hidden = false; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
+        res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      sig.addEventListener('click', function () {
+        var falta = P.pasos[paso - 1].q.filter(function (q) { return q.req && !v(q.id).length; });
+        if (falta.length) { aviso.textContent = 'Completa: ' + falta.map(function (q) { return q.l.toLowerCase(); }).join(' y ') + '.'; return; }
+        if (paso < 3) { paso++; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
+      });
+      atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
+      form.addEventListener('submit', function (e) { e.preventDefault(); });
+      form.addEventListener('input', function () { aviso.textContent = ''; });
+      mostrar();
+    });
+    var ini = (location.hash || '').slice(1) || new URLSearchParams(location.search).get('perfil');
+    if (DATA[ini]) abrir(ini, false);
   })();
 
   /* ---------- Academy: constructor de pitch en 3 pasos ---------- */
