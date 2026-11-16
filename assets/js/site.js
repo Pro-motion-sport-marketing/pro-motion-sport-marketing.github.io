@@ -497,7 +497,7 @@
   if (crs) (function () {
     var bs = $$('.pmx-bar', crs);
     function ver(b) { bs.forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
-      $('#pmx-det-t').textContent = b.dataset.t; $('#pmx-det-p').textContent = b.dataset.p; $('#pmx-det-s').textContent = 'Qué suma: ' + b.dataset.s; }
+      $('#pmx-det-t').textContent = b.dataset.t; $('#pmx-det-p').textContent = b.dataset.p; $('#pmx-det-s').textContent = b.dataset.nv ? 'En la auditoría de ejemplo: ' + b.dataset.nv.toLowerCase() + '.' : ''; }
     bs.forEach(function (b) { b.addEventListener('click', function () { ver(b); }); });
     ver(bs[1]);
   })();
@@ -507,7 +507,7 @@
     function ver(b) { bs.forEach(function (x) { x.classList.toggle('lleno', +x.dataset.n <= +b.dataset.n); x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
       $('#pmx-niv-t').textContent = b.dataset.n + ' · ' + b.dataset.t; $('#pmx-niv-p').textContent = b.dataset.p; }
     bs.forEach(function (b) { b.addEventListener('click', function () { ver(b); }); });
-    ver(bs[1]);
+    ver(bs[0]);
   })();
 
   /* ---------- ProMatch: registro con medidor ---------- */
