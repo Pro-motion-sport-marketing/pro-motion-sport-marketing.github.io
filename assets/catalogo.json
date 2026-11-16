@@ -7,6 +7,14 @@
   "precio": 15
  },
  {
+  "id": "auditoria-promatch",
+  "tipo": "Auditoría",
+  "n": "Auditoría ProMatch · precio de lanzamiento",
+  "d": "Commercial Readiness Score, Evidence Confidence Score, integración de marcas, 13 capacidades y sectores compatibles. Primeros 10 proyectos.",
+  "precio": 60,
+  "iva": true
+ },
+ {
   "id": "promatch-diagnostico",
   "tipo": "Diagnóstico",
   "n": "Diagnóstico ProMatch",
