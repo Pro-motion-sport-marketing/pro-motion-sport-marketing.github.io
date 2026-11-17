@@ -818,7 +818,7 @@
       $('.dg-paso-t b', diag).textContent = paso;
       $('.dg-barra i', diag).style.width = (paso / 3 * 100) + '%';
       atras.hidden = paso === 1;
-      sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Ver mi prediagnóstico <span class="chev">»</span>';
+      sig.innerHTML = paso < 3 ? 'Siguiente <span class="chev">»</span>' : 'Ver mi diagnóstico <span class="chev">»</span>';
       aviso.textContent = '';
     }
     function calc() {
@@ -837,43 +837,103 @@
       Object.keys(P).forEach(function (k) { total += D[k] * P[k] / 100; });
       return { D: D, total: Math.round(total) };
     }
-    var ACC = {
-      Identidad: ['Tu propuesta de valor no está clara', 'Define qué representas y qué gana una marca contigo, más allá de tus resultados.'],
-      Audiencia: ['Tu audiencia no está documentada', 'Mide quién te sigue (edades, ciudades, intereses): es lo primero que pregunta una marca.'],
-      Calendario: ['Tu calendario no se está aprovechando', 'Convierte tus fechas de competencia en un plan de contenido que una marca pueda activar.'],
-      Contenido: ['Tu contenido no tiene constancia', 'Publica con un plan semanal y entrena tu forma de hablar a cámara.'],
-      Experiencia: ['Te falta evidencia comercial', 'Arma tu dossier y entrega informes a tus auspiciantes: así se renueva.']
+    /* Lectura con el modelo Pro Motion: las 5 variables de ProMatch, las 4 capas de valor y el método en 7 pasos */
+    var NOM = { Identidad: 'Valores e identidad', Audiencia: 'Audiencia', Calendario: 'Territorio y calendario', Contenido: 'Contenido y vocería', Experiencia: 'Experiencia comercial' };
+    var FZ = {
+      Identidad: 'Tienes una identidad y valores que una marca puede hacer suyos.',
+      Audiencia: 'Tu comunidad tiene tamaño y un perfil reconocible.',
+      Calendario: 'Tu calendario le da a una marca momentos concretos para activar.',
+      Contenido: 'Publicas con constancia y te comunicas bien: hay con qué mostrar a la marca.',
+      Experiencia: 'Ya trabajaste con marcas y tienes material para demostrarlo.'
     };
+    var ACC = {
+      Identidad: ['Ordena tu propuesta de valor', 'Define qué representas y qué gana una marca contigo, más allá de tus resultados.', 'Ordenar'],
+      Audiencia: ['Conoce y documenta a tu audiencia', 'Revisa en tus estadísticas la edad, la ciudad y el género de quienes te siguen: es lo primero que pregunta una marca.', 'Identificar'],
+      Calendario: ['Convierte tu calendario en momentos de marca', 'Cada competencia tiene un antes, un durante y un después que una marca puede activar.', 'Crear'],
+      Contenido: ['Gana constancia y vocería', 'Publica con un plan semanal y entrena tu forma de hablar a cámara.', 'Crear'],
+      Experiencia: ['Construye evidencia comercial', 'Arma tu perfil comercial y entrega un informe a cada auspiciante: así se renueva.', 'Probar']
+    };
+    var SOSTENER = [['Negocia con datos', 'Lleva a cada reunión tu audiencia real y tus resultados con marcas.', 'Negociar'], ['Mide cada activación', 'Entrega a cada marca un informe con lo que recibió.', 'Medir'], ['Sostén y renueva', 'Planifica la temporada siguiente con tus auspiciantes antes de que termine la actual.', 'Sostener']];
+    var METODO = ['Identificar', 'Ordenar', 'Crear', 'Probar', 'Medir', 'Negociar', 'Sostener'];
+    var ETAPAS = [
+      ['Etapa 1 · Ordenar la base', 'Tienes talento y algo que contar, pero todavía no está traducido a algo que una marca pueda entender, activar y medir. Antes de salir a buscar auspicios, toca ordenar quién eres, a quién llegas y qué ofreces.', 1],
+      ['Etapa 2 · Crear y probar', 'Ya tienes bases: identidad, comunidad o calendario. Falta convertirlas en contenido constante y en una propuesta con evidencia, y probarla con una primera marca o activación.', 3],
+      ['Etapa 3 · Listo para negociar', 'Tu proyecto ya habla el idioma de las marcas. El siguiente paso es negociar con datos, cumplir lo que prometes y medir para renovar.', 5]
+    ];
     var OF = [
       [['Consultoría 1 a 1', '1 hora para ordenar tu punto de partida y salir con un plan escrito.', 'USD 35', '../servicios/#estrategia'], ['Perfil comercial y media kit', 'Tu trayectoria traducida a un documento que una marca puede evaluar.', 'A cotizar', '../servicios/#perfil']],
       [['Perfil comercial y media kit', 'Lo que ofreces, a quién y con qué evidencia, listo para presentar.', 'A cotizar', '../servicios/#perfil'], ['Sesión intensiva', '2 horas para definir narrativa, oferta y guion.', 'USD 70', '../servicios/#estrategia']],
       [['Gestión de comunicación digital', 'Estrategia, producción, publicación e informe, mes a mes.', 'Desde USD 260 al mes', '../servicios/#gestion'], ['Informe de resultados para auspiciantes', 'Exposición real de cada marca para renovar con datos.', 'Incluido en la gestión', '../servicios/#informe']]
     ];
-    function resultado() {
-      var dep = uno('deporte').toLowerCase(), r = calc();
+    function lista(arr) { arr = arr.map(function (x) { return x.toLowerCase(); }); return arr.length < 2 ? arr.join('') : arr.slice(0, -1).join(', ') + ' y ' + arr[arr.length - 1]; }
+    function lectura() {
+      var r = calc(), ni = r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0, E = ETAPAS[ni];
+      var dep = uno('deporte').toLowerCase();
       var a = T.filter(function (t) { return t.k.some(function (k) { return dep.indexOf(k) > -1; }); })[0] || T[T.length - 1];
       var orden = Object.keys(r.D).sort(function (x, y) { return r.D[x] - r.D[y]; });
-      if (uno('dossier') === 'No' && orden.indexOf('Experiencia') > 2) { orden.splice(orden.indexOf('Experiencia'), 1); orden.unshift('Experiencia'); }
-      var brechas = orden.slice(0, 3);
-      var nivel = r.total >= 70 ? 'Listo para negociar con marcas' : r.total >= 45 ? 'Con bases, pero aún no listo' : 'Etapa de construcción';
-      res.innerHTML = '<div class="dg-res">' +
-        '<div class="dg-score"><div class="dg-num"><b>' + r.total + '</b><span>/100</span></div><div><span class="lbl">Preparación comercial</span><h3>' + nivel + '</h3></div></div>' +
-        '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + k + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
-        '<div class="dg-grid"><div><span class="lbl">Tu arquetipo comercial</span><h4>' + a.a + '</h4><p>' + a.v + '</p></div><div><span class="lbl">Industrias compatibles</span><p>' + a.o + '</p><span class="lbl">Idea de activación</span><p>' + a.act + '</p></div></div>' +
-        '<span class="lbl">Tus 3 brechas principales</span><ol class="dg-brechas">' + brechas.map(function (k) { return '<li><b>' + ACC[k][0] + '</b><span>' + ACC[k][1] + '</span></li>'; }).join('') + '</ol>' +
-        '<span class="lbl dx-of-t">Oferta recomendada para tu situación</span><div class="dx-of">' + OF[r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0].map(function (o, i) { return '<a class="dx-of-c' + (i ? '' : ' prin') + '" href="' + o[3] + '"><span class="lbl">' + (i ? 'Complemento' : 'Recomendado') + '</span><b>' + o[0] + '</b><p>' + o[1] + '</p><em>' + o[2] + '</em></a>'; }).join('') + '</div><p class="dg-nota">Valores referenciales: cada proyecto cambia según sus necesidades y se cotiza a medida.</p>' +
-        '<div class="dg-cta dx-aud"><span class="lbl">Dos caminos</span><h4>Tu diagnóstico está completo. ¿Qué sigue?</h4><p><b>Para ejecutar tu plan</b>, habla con un asesor de Pro Motion: revisamos tu diagnóstico contigo y definimos los primeros pasos. <b>Si quieres ir más a fondo</b>, la <b>Auditoría ProMatch</b>: revisa tu contenido y tu información real y te entrega tu <b>Commercial Readiness Score</b> (8 categorías), el <b>Evidence Confidence Score</b>, tu nivel de <b>integración de marcas</b> del 0 al 5, tus <b>13 capacidades comerciales</b> y los <b>sectores compatibles</b>.</p>' + '<div class="dx-aud-precio"><span class="dx-cupo">Lanzamiento · solo 10 proyectos</span><b>USD 60 <small>+ IVA</small></b><span>Precio por tiempo limitado para los primeros 10 proyectos que usen esta herramienta.</span></div>' + '<div class="dx-cta-btns">' + '<button type="button" class="btn crema" data-carrito="auditoria-promatch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>Quiero la Auditoría ProMatch completa</button>' + '<button type="button" class="btn rojo lg" data-dg-wa>Quiero ejecutar mi plan con un asesor <span class="chev">»</span></button></div><a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
-        '<p class="dg-nota">Resultado orientativo, calculado con tus respuestas. El diagnóstico completo lo hace un estratega de Pro Motion.</p></div>';
+      var fuertes = orden.slice().reverse().filter(function (k) { return r.D[k] >= 60; }).slice(0, 3);
+      var debiles = orden.filter(function (k) { return r.D[k] < 60; });
+      if (uno('dossier') === 'No' && debiles.indexOf('Experiencia') > 0) { debiles.splice(debiles.indexOf('Experiencia'), 1); debiles.unshift('Experiencia'); }
+      var prios = debiles.slice(0, 3).map(function (k) { return ACC[k]; });
+      if (!prios.length) prios = SOSTENER;
+      var quien = v('quien').filter(function (x) { return x !== 'No lo sé'; }), off = v('off').filter(function (x) { return x !== 'Ninguna' && x !== 'No lo sé'; });
+      var capas = [
+        ['Personal y narrativa', 'Tu historia y lo que representas', !!(v('valores').length || uno('logro'))],
+        ['Social y comunitaria', 'La comunidad que te rodea, dentro y fuera de redes', !!(off.length || quien.length)],
+        ['Temporal', 'Tus fechas de competencia como momentos de marca', !!(uno('comp') && uno('comp') !== 'No lo sé')],
+        ['Constante', 'Tu presencia semana a semana, entre competencias', ['1 o 2 por semana', '3 o más por semana'].indexOf(uno('frec')) > -1]
+      ];
+      var R = [];
+      if (uno('dossier') === 'No') R.push(['Sin perfil comercial', 'Si una marca se interesa hoy, no tiene qué evaluar.']);
+      if (uno('ausp') === 'Sí, sin entregar resultados') R.push(['Auspicios sin informe', 'Si la marca no ve lo que recibió, la renovación queda en el aire.']);
+      if (uno('tam') === 'No lo sé' || v('quien').indexOf('No lo sé') > -1 || uno('donde') === 'No lo sé') R.push(['No conoces a tu audiencia', 'Es lo primero que pregunta una marca y hoy no tendrías la respuesta.']);
+      if (uno('frec') === 'Casi no publico') R.push(['Desapareces entre competencias', 'Una marca necesita presencia constante, no solo el día de la carrera.']);
+      if (uno('cam') === 'Me cuesta') R.push(['Te cuesta hablar a cámara', 'Limita la vocería, que es lo que más piden las marcas.']);
+      if (!v('valores').length) R.push(['Sin valores definidos', 'Sin algo que representes, es difícil diferenciarte de otros deportistas.']);
+      if (!off.length) R.push(['Poca comunidad fuera de redes', 'Reduce las opciones de activaciones presenciales.']);
+      R = R.slice(0, 3);
+      var donde = { 'Mi ciudad': 'en tu ciudad', 'Varias ciudades': 'en varias ciudades', 'Mi país': 'en todo el país', 'Varios países': 'en varios países' }[uno('donde')] || '';
+      var perd = [];
+      if (quien.length) perd.push('Llegar a ' + lista(quien) + (donde ? ' ' + donde : '') + '.');
+      if (uno('comp') && uno('comp') !== 'No lo sé') perd.push('Estar presente en ' + uno('comp') + ' competencias al año.');
+      if (v('valores').length) perd.push('Contar una historia de ' + lista(v('valores').map(function (x) { return x === 'Otro' && uno('valores_otro') ? uno('valores_otro') : x; })) + '.');
+      return { r: r, ni: ni, E: E, a: a, fuertes: fuertes, prios: prios, capas: capas, R: R, perd: perd, of: OF[ni] };
+    }
+    function anilloDep(el, n) { if (!el) return; $('.fg', el).style.strokeDashoffset = 100 - n; $('b', el).textContent = n; }
+    function resultado() {
+      var L0 = lectura(), r = L0.r, a = L0.a, nivel = L0.E[0];
+      var ul = function (arr) { return '<ul class="dx-l">' + arr.join('') + '</ul>'; };
+      res.innerHTML = '<div class="dg-res dep-res">' +
+        '<div class="dg-score"><div class="dx-ring grande"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52" pathLength="100"/></svg><b>0</b><small>/100</small></div><div><span class="lbl">Estado actual · Deportista</span><h3>' + nivel + '</h3></div><img class="dx-res-esc" src="../assets/escenas/tool-diagnostico.webp" alt=""></div>' +
+        '<p class="dx-estado">' + L0.E[1] + '</p>' +
+        '<ol class="dep-metodo" aria-label="Tu punto en el método Pro Motion">' + METODO.map(function (m, i) { return '<li class="' + (i < L0.E[2] ? 'hecho' : i === L0.E[2] ? 'aqui' : '') + '">' + m + '</li>'; }).join('') + '</ol>' +
+        '<div class="dg-dims">' + Object.keys(r.D).map(function (k) { return '<div class="dg-dim"><span>' + NOM[k] + '</span><i><em style="width:' + r.D[k] + '%"></em></i><b>' + r.D[k] + '</b></div>'; }).join('') + '</div>' +
+        '<div class="dx-perderia"><span class="lbl">¿Qué perdería una marca si no existieras?</span>' + (L0.perd.length ? '<p>Hoy perdería la posibilidad de:</p><ul class="dx-l">' + L0.perd.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '<p>Todavía no hay una respuesta clara. Encontrarla es tu primer trabajo.</p>') + '</div>' +
+        '<div class="dx-cuad">' +
+          '<div class="dx-c dx-ok"><span class="lbl">Ventajas</span>' + (L0.fuertes.length ? ul(L0.fuertes.map(function (k) { return '<li><b>' + NOM[k] + '.</b> ' + FZ[k] + '</li>'; })) : '<p>Aún no hay una variable fuerte. Tu mejor punto de partida es <b>' + NOM[Object.keys(r.D).sort(function (x, y) { return r.D[y] - r.D[x]; })[0]].toLowerCase() + '</b>.</p>') + '</div>' +
+          '<div class="dx-c"><span class="lbl">Oportunidades · ' + a.a + '</span><p>' + a.v + '</p><p><b>Industrias compatibles:</b> ' + a.o + '</p><p><b>Idea de activación:</b> ' + a.act + '</p></div>' +
+          '<div class="dx-c dx-risk"><span class="lbl">Riesgos y conflictos</span>' + (L0.R.length ? ul(L0.R.map(function (x) { return '<li><b>' + x[0] + '.</b> ' + x[1] + '</li>'; })) : '<p>Con tus respuestas no vemos riesgos fuertes. El riesgo ahora es estancarte: mide y renueva.</p>') + '</div>' +
+          '<div class="dx-c"><span class="lbl">Prioridades a 90 días</span><ol class="dx-l">' + L0.prios.map(function (p) { return '<li><b>' + p[0] + '.</b> ' + p[1] + ' <em class="dep-paso">' + p[2] + '</em></li>'; }).join('') + '</ol></div>' +
+        '</div>' +
+        '<span class="lbl">Tus capas de valor</span><ul class="dep-capas">' + L0.capas.map(function (c) { return '<li class="' + (c[2] ? 'on' : '') + '"><b>' + c[0] + '</b><span>' + c[1] + '</span><em>' + (c[2] ? 'Activa' : 'Por desarrollar') + '</em></li>'; }).join('') + '</ul>' +
+        '<span class="lbl dx-of-t">Oferta recomendada para tu situación</span><div class="dx-of">' + L0.of.map(function (o, i) { return '<a class="dx-of-c' + (i ? '' : ' prin') + '" href="' + o[3] + '"><span class="lbl">' + (i ? 'Complemento' : 'Recomendado') + '</span><b>' + o[0] + '</b><p>' + o[1] + '</p><em>' + o[2] + '</em></a>'; }).join('') + '</div><p class="dg-nota">Valores referenciales: cada proyecto cambia según sus necesidades y se cotiza a medida.</p>' +
+        '<div class="dg-cta dx-aud"><span class="lbl">Dos caminos</span><h4>Tu diagnóstico está completo. ¿Qué sigue?</h4><p><b>Para ejecutar tu plan</b>, habla con un asesor de Pro Motion: revisamos tu diagnóstico contigo y definimos los primeros pasos. <b>Si quieres ir más a fondo</b>, la <b>Auditoría ProMatch</b> revisa tu contenido real y te entrega tu <b>Commercial Readiness Score</b> (8 categorías), el <b>Evidence Confidence Score</b>, tu nivel de <b>integración de marcas</b> del 0 al 5, tus <b>13 capacidades comerciales</b> y los <b>sectores compatibles</b>.</p>' +
+        '<div class="dx-aud-precio"><span class="dx-cupo">Lanzamiento · solo 10 proyectos</span><b>USD 60 <small>+ IVA</small></b><span>Precio por tiempo limitado para los primeros 10 proyectos que usen esta herramienta.</span></div>' +
+        '<div class="dx-cta-btns"><button type="button" class="btn crema" data-carrito="auditoria-promatch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>Quiero la Auditoría ProMatch completa</button><button type="button" class="btn rojo lg" data-dg-wa>Quiero ejecutar mi plan con un asesor <span class="chev">»</span></button></div>' +
+        '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
+        '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparado está tu proyecto y qué le falta.</p></div>';
+      setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
       $('[data-dg-wa]', res).onclick = function () {
-        var L = function (t, x) { return x ? '\n' + t + ': ' + x : ''; };
+        var L = function (t, x) { return x ? '\n• ' + t + ': ' + x : ''; };
         var msg = 'Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. Hice' : 'hice') + ' el diagnóstico de Pro Motion como deportista y quiero ejecutar mi plan con un asesor.\n' +
-          '\nPuntaje: ' + r.total + '/100 (' + nivel + ')' + Object.keys(r.D).map(function (k) { return '\n· ' + k + ': ' + r.D[k]; }).join('') +
-          '\nArquetipo: ' + a.a +
-          '\n\nMi perfil' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
-          '\n\nMi comunidad' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
-          '\n\nLo que ofrezco' + L('Dossier', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
-          '\n\nMis brechas: ' + brechas.map(function (k) { return ACC[k][0].toLowerCase(); }).join('; ') + '.' +
-          '\n\n*Oferta recomendada*\n' + OF[r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0].map(function (o) { return '• ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
+          '\n*Estado actual*\n• ' + r.total + '/100 · ' + nivel + Object.keys(r.D).map(function (k) { return '\n• ' + NOM[k] + ': ' + r.D[k]; }).join('') + '\n• Arquetipo: ' + a.a +
+          '\n\n*Capas de valor activas*\n' + (L0.capas.filter(function (c) { return c[2]; }).map(function (c) { return '• ' + c[0]; }).join('\n') || '• Ninguna todavía') +
+          '\n\n*Riesgos*\n' + (L0.R.map(function (x) { return '• ' + x[0]; }).join('\n') || '• Sin riesgos fuertes') +
+          '\n\n*Prioridades a 90 días*\n' + L0.prios.map(function (p, i) { return (i + 1) + '. ' + p[0]; }).join('\n') +
+          '\n\n*Oferta recomendada*\n' + L0.of.map(function (o) { return '• ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
+          '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
+          '\n\n*Mi comunidad*' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
+          '\n\n*Lo que ofrezco*' + L('Perfil comercial', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
           '\n\n*Siguiente paso*\nQuiero conversar con un asesor para poner en marcha la oferta recomendada. Si conviene, también quiero saber más de la Auditoría ProMatch.';
         abrirWA(msg);
       };
@@ -957,7 +1017,7 @@
       function resultado() {
         var r = calc(), a = arquetipo(), ni = r.total >= 70 ? 2 : r.total >= 45 ? 1 : 0;
         var orden = Object.keys(r.D).sort(function (x, y) { return r.D[x] - r.D[y]; });
-        var brechas = orden.slice(0, 3);
+        var brechas = orden.filter(function (k) { return r.D[k] < 55; }).slice(0, 3);
         var fuertes = orden.slice().reverse().filter(function (k) { return r.D[k] >= 55; }).slice(0, 3);
         var riesgos = P.riesgos.filter(function (g) { return Object.keys(g.todas).every(function (q) { return v(q).some(function (x) { return g.todas[q].indexOf(x) > -1; }); }); }).slice(0, 3);
         var nivel = P.niveles[ni], oferta = P.oferta[ni];
@@ -971,7 +1031,7 @@
             '<div class="dx-c dx-ok"><span class="lbl">Ventajas</span>' + (fuertes.length ? lista(fuertes.map(function (k) { return '<li><b>' + k + '</b> ' + P.fz[k] + '</li>'; })) : '<p>Todavía no hay una dimensión fuerte. Tu mejor punto de partida es <b>' + orden[orden.length - 1].toLowerCase() + '</b>: ' + P.fz[orden[orden.length - 1]].charAt(0).toLowerCase() + P.fz[orden[orden.length - 1]].slice(1) + '</p>') + '</div>' +
             '<div class="dx-c"><span class="lbl">Oportunidades · ' + a.a + '</span><p>' + a.v + '</p><p><b>' + (form.dataset.perfil === 'marca' ? 'Lo que te conviene: ' : 'Industrias compatibles: ') + '</b>' + a.o.replace(/^Te conviene: /, '') + '</p><p><b>Idea de activación:</b> ' + a.act + '</p></div>' +
             '<div class="dx-c dx-risk"><span class="lbl">Riesgos y conflictos</span>' + lista((riesgos.length ? riesgos.map(function (g) { return '<li><b>' + g.t + '.</b> ' + g.d + '</li>'; }) : brechas.slice(0, 2).map(function (k) { return '<li><b>' + P.acc[k][0] + '.</b> ' + P.acc[k][1] + '</li>'; }))) + '</div>' +
-            '<div class="dx-c"><span class="lbl">Prioridades a 90 días</span><ol class="dx-l">' + brechas.map(function (k) { return '<li><b>' + P.acc[k][0] + '.</b> ' + P.acc[k][1] + '</li>'; }).join('') + '</ol></div>' +
+            '<div class="dx-c"><span class="lbl">Prioridades a 90 días</span>' + (brechas.length ? '<ol class="dx-l">' + brechas.map(function (k) { return '<li><b>' + P.acc[k][0] + '.</b> ' + P.acc[k][1] + '</li>'; }).join('') + '</ol>' : '<p>Tus variables están en buen nivel. La prioridad ahora es medir cada acción y sostener lo que funciona.</p>') + '</div>' +
           '</div>' +
           '<span class="lbl dx-of-t">Oferta recomendada para tu situación</span>' +
           '<div class="dx-of">' + oferta.map(function (o, i) { return '<a class="dx-of-c' + (i ? '' : ' prin') + '" href="' + o.h + '"><span class="lbl">' + (i ? 'Complemento' : 'Recomendado') + '</span><b>' + o.n + '</b><p>' + o.d + '</p><em>' + o.r + '</em></a>'; }).join('') + '</div>' +

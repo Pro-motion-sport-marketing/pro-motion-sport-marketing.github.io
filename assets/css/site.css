@@ -3978,3 +3978,26 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .b-ayuda{display:block;font-size:13.5px;line-height:1.4;opacity:.7;margin-top:2px;max-width:62ch}
 .b-otro{margin-top:10px;width:100%;max-width:420px}
 .dx-cta-btns [data-dg-wa],.dx-cta-btns [data-dx-wa]{order:-1}
+/* Diagnóstico de deportista: método, pregunta clave y capas de valor */
+.dep-metodo{list-style:none;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:14px 0 18px;counter-reset:m}
+.dep-metodo li{counter-increment:m;font-size:12px;font-weight:600;text-align:center;padding:8px 4px 7px;border:2px solid rgba(28,28,28,.25);background:#fff;opacity:.6;line-height:1.15}
+.dep-metodo li::before{content:counter(m);display:block;font-family:var(--epic);font-size:15px;color:var(--rojo)}
+.dep-metodo li.hecho{opacity:1;border-color:var(--negro)}
+.dep-metodo li.aqui{opacity:1;background:var(--rojo);border-color:var(--rojo);color:#fff}
+.dep-metodo li.aqui::before{color:#fff}
+.dx-perderia{background:var(--negro);color:var(--crema);padding:18px 20px;margin:18px 0 6px}
+.dx-perderia .lbl{display:block;color:var(--rojo-vivo);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.dx-perderia p{font-size:17px;line-height:1.45;margin-top:6px}
+.dep-paso{display:inline-block;font-style:normal;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rojo);border:1.5px solid var(--rojo);border-radius:99px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+.dep-capas{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 22px}
+.dep-capas li{border:2px dashed rgba(28,28,28,.35);padding:12px;display:flex;flex-direction:column;gap:4px;background:#fff}
+.dep-capas li.on{border:2px solid var(--negro);background:var(--crema)}
+.dep-capas b{font-size:14px}
+.dep-capas span{font-size:13px;line-height:1.35;opacity:.8}
+.dep-capas em{font-style:normal;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-top:auto;color:var(--gris)}
+.dep-capas li.on em{color:var(--rojo)}
+@media (max-width:700px){.dep-metodo{grid-template-columns:repeat(4,minmax(0,1fr))}.dep-capas{grid-template-columns:1fr 1fr}}
+.dx-perderia .dx-l{margin-top:6px;font-size:16px}
+/* Menú del celular: cerrado no debe asomarse cuando la barra superior se oculta */
+.menu-movil{transform:translateY(calc(-100% - 90px));visibility:hidden;transition:transform .45s var(--golpe),visibility 0s linear .45s}
+.menu-abierto .menu-movil{transform:none;visibility:visible;transition:transform .45s var(--golpe),visibility 0s}
