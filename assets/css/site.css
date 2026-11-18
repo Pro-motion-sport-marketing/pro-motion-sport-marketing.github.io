@@ -4029,6 +4029,15 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .ln-hero .ln-logo{margin-top:-34px;position:relative}
 .ln-logo{width:250px;height:auto;margin:0 auto}
 .ln-kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;opacity:.75;margin-top:12px}
+.ln-web{position:relative;display:flex;align-items:flex-start;max-width:340px;margin:10px auto 6px;text-align:left}
+.ln-web-card{position:relative;flex:1;display:flex;flex-direction:column;gap:4px;margin-top:46px;padding:16px 16px 14px;background:var(--hueso);color:var(--grafito);border:2.5px solid var(--grafito);border-radius:14px;box-shadow:5px 5px 0 var(--berry);transition:transform .15s,box-shadow .15s}
+.ln-web:hover .ln-web-card{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--berry)}
+.ln-web-tag{position:absolute;left:12px;top:-15px;font-style:normal;font-family:var(--mk);font-size:16px;color:var(--hueso);background:var(--berry);padding:4px 10px 3px;border-radius:6px;transform:rotate(-4deg);animation:ln-flota 3s ease-in-out infinite}
+.ln-web-card small{font-size:13px;opacity:.75;margin-top:6px}
+.ln-web-card b{font-family:var(--epic);font-size:17px;line-height:1.1;white-space:nowrap;padding-top:.12em}
+.ln-web-ir{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--berry)}
+.ln-web-ir svg{width:16px;height:16px}
+.ln-web img{flex:none;width:80px;height:auto;margin-left:-16px;position:relative}
 .ln-tag{font-family:var(--epic);font-weight:800;text-transform:uppercase;font-size:27px;line-height:1.12;margin:20px auto 0;max-width:360px;padding-top:.12em}
 .ln-tag span{display:inline-block;background:var(--berry);color:var(--hueso);padding:3px 10px 0;transform:rotate(-2deg);margin-top:4px}
 /* episodio sobre resplandor rojo */

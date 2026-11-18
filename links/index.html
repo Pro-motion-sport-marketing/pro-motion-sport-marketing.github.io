@@ -15,7 +15,7 @@
 <link rel="icon" href="../assets/brand/favicon.svg?v=3"><link rel="apple-touch-icon" href="../assets/brand/favicon.svg?v=3">
 <link rel="preload" href="../assets/fonts/GCEpicPro-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=163">
+<link rel="stylesheet" href="../assets/css/site.css?v=164">
 <meta name="robots" content="noindex"><meta name="theme-color" content="#121212"><style>header.top,footer.pie,.wa-flot,.menu-movil{display:none!important}body{background:#121212}</style>
 </head>
 <body>
@@ -38,6 +38,10 @@
     <img class="ln-hero-f" src="../assets/links/portada-360.webp" alt="Daniel Espinoza graba con una cámara 360 el paso de un buggy de rally frente al público" width="1200" height="800" fetchpriority="high">
     <img class="ln-logo" src="../assets/brand/logo-blanco.png?v=3" alt="Pro Motion Sport Marketing" width="900" height="183">
     <p class="ln-kicker">Cuenca · Ecuador</p>
+    <a class="ln-web" href="../index.html?utm_source=instagram&utm_medium=bio&utm_campaign=links">
+      <span class="ln-web-card"><em class="ln-web-tag">¡Nueva web!</em><small>¿Listo? Acá te espero.</small><b>www.promotionec.com</b><span class="ln-web-ir">Entrar <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      <img src="../assets/img/espid_lean.webp?v=2" alt="" width="498" height="900">
+    </a>
     <h1 class="ln-tag">Un auspicio no se pide, <span>se negocia.</span></h1>
   </header>
 
@@ -89,7 +93,7 @@
   <footer class="ln-pie">
     <a class="ln-osado" href="#" data-wa="Hola Daniel, vengo de tu página de enlaces. Quiero crear oportunidades para mi proyecto." aria-label="Escríbenos por WhatsApp">
       <span class="ln-osado-globo">¿Creamos la tuya? <b>Escríbenos »</b></span>
-      <img src="../assets/img/espid_gafas.webp?v=2" alt="Espid sentado sobre el círculo rojo, bajándose las gafas" width="430" height="900" loading="lazy">
+      <img src="../assets/img/espid_gafas.webp?v=3" alt="Espid sentado sobre el círculo rojo, bajándose las gafas" width="430" height="900" loading="lazy">
     </a>
     <p class="ln-destaca">No esperamos oportunidades. <span>Las creamos.</span></p>
     <nav class="ln-redes" aria-label="Redes sociales">
@@ -106,7 +110,7 @@
     <img src="../assets/img/espid_present.webp?v=2" alt="" width="459" height="900">
   </button>
 </main>
-<script type="application/json" id="ln-guia">{"hero": ["../assets/img/espid_present.webp?v=2", ["¡Hola! Soy Espid. Te muestro todo en un minuto.", "Tócame cuando quieras otra pista."]], "podcast": ["../assets/img/espid_binoculars.webp?v=2", ["Este episodio está buenísimo. Dale play.", "Pablo entrena 5 Ironmans sin ver. Sí, sin ver."]], "dx": ["../assets/img/espid_point.webp?v=2", ["Empieza aquí: 3 pasos y te digo en qué estado está tu proyecto.", "Es gratis y el resultado es tuyo."]], "perfil": ["../assets/img/espid_lean.webp?v=2", ["Elige tu camino, yo te espero aquí.", "¿Deportista, marca o evento?"]], "trabajo": ["../assets/img/espid_bino_sit.webp?v=2", ["Todo esto ya está publicado. Mira las reproducciones.", "Desliza, hay más."]], "aprende": ["../assets/img/espid_calc.webp?v=2", ["Lo gratis también se aprovecha.", "La guía tiene el capítulo 1 libre."]]}</script>
+<script type="application/json" id="ln-guia">{"hero": ["../assets/img/espid_present.webp?v=2", ["Soy Espid. Te acompaño mientras bajas.", "Tócame cuando quieras otra pista."]], "podcast": ["../assets/img/espid_binoculars.webp?v=2", ["Este episodio está buenísimo. Dale play.", "Pablo entrena 5 Ironmans sin ver. Sí, sin ver."]], "dx": ["../assets/img/espid_point.webp?v=2", ["Empieza aquí: 3 pasos y te digo en qué estado está tu proyecto.", "Es gratis y el resultado es tuyo."]], "perfil": ["../assets/img/espid_lean.webp?v=2", ["Elige tu camino, yo te espero aquí.", "¿Deportista, marca o evento?"]], "trabajo": ["../assets/img/espid_bino_sit.webp?v=2", ["Todo esto ya está publicado. Mira las reproducciones.", "Desliza, hay más."]], "aprende": ["../assets/img/espid_calc.webp?v=2", ["Lo gratis también se aprovecha.", "La guía tiene el capítulo 1 libre."]]}</script>
 <script>
 (function(){
   var v=document.querySelector('.ln-video');
@@ -139,10 +143,11 @@
   if('IntersectionObserver' in window){
     var io2=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting && e.target.dataset.guia!==actual) decir(e.target.dataset.guia); });},{rootMargin:'-45% 0px -45% 0px'});
     document.querySelectorAll('[data-guia]').forEach(function(s){io2.observe(s);});
-    var io3=new IntersectionObserver(function(es){ btn.classList.toggle('fuera', es[0].isIntersecting); },{threshold:.15});
-    io3.observe(document.querySelector('.ln-pie'));
+    var vis={};
+    var io3=new IntersectionObserver(function(es){ es.forEach(function(e){ vis[e.target.className]=e.isIntersecting; }); btn.classList.toggle('fuera', Object.keys(vis).some(function(k){return vis[k];})); },{threshold:.15});
+    io3.observe(document.querySelector('.ln-pie')); io3.observe(document.querySelector('.ln-web'));
   }
-  setTimeout(function(){ if(!actual) decir('hero'); },900);
+  
 })();
 </script>
 
