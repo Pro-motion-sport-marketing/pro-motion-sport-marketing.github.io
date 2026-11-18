@@ -4029,6 +4029,8 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .ln-hero .ln-logo{margin-top:-34px;position:relative}
 .ln-logo{width:250px;height:auto;margin:0 auto}
 .ln-kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;opacity:.75;margin-top:12px}
+.ln-banderas{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;list-style:none;margin:14px auto 0;padding:0}
+.ln-banderas img{display:block;width:24px;height:18px;border-radius:3px;box-shadow:0 0 0 1px rgba(255,250,245,.25)}
 .ln-tag{font-family:var(--epic);font-weight:800;text-transform:uppercase;font-size:27px;line-height:1.12;margin:20px auto 0;max-width:360px;padding-top:.12em}
 .ln-tag span{display:inline-block;background:var(--berry);color:var(--hueso);padding:3px 10px 0;transform:rotate(-2deg);margin-top:4px}
 /* episodio sobre resplandor rojo */
@@ -4118,18 +4120,15 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .ln-vacante b{display:block;font-family:var(--mk);font-size:20px;margin-top:2px}
 .ln-vacante:hover::before{background:var(--berry)}
 /* cierre: péndulo "Destaca, siempre" */
-.ln-pie{padding:0 18px 120px;text-align:center;color:var(--hueso);background:var(--grafito)}
-.ln-cuna{display:flex;justify-content:center;height:150px}
-.ln-cuna i{position:relative;width:34px;height:150px;transform-origin:50% 0}
-.ln-cuna i::before{content:"";position:absolute;left:50%;top:0;width:1.5px;height:116px;background:rgba(255,250,245,.55)}
-.ln-cuna i::after{content:"";position:absolute;left:0;bottom:0;width:34px;height:34px;border-radius:50%;background:var(--creme)}
-.ln-cuna i:last-child::after{background:var(--berry)}
-.ln-cuna i:first-child{animation:ln-izq 1.6s ease-in-out infinite}
-.ln-cuna i:last-child{animation:ln-der 1.6s ease-in-out infinite}
-@keyframes ln-izq{0%,50%,100%{transform:rotate(0)}25%{transform:rotate(28deg)}}
-@keyframes ln-der{0%,50%,100%{transform:rotate(0)}75%{transform:rotate(-28deg)}}
-.ln-destaca{font-family:var(--epic);text-transform:uppercase;font-size:26px;color:var(--berry);margin-top:20px;padding-top:.12em}
-.ln-destaca span{display:block;font-family:var(--mk);text-transform:none;font-size:20px;color:var(--hueso);margin-top:2px}
+.ln-pie{padding:34px 18px 40px;text-align:center;color:var(--hueso);background:var(--grafito)}
+.ln-osado{position:relative;display:block;width:190px;margin:56px auto 0}
+.ln-osado img{display:block;width:100%;height:auto;transform-origin:50% 100%;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ln-osado:hover img{transform:rotate(-3deg) scale(1.03)}
+.ln-osado-globo{position:absolute;left:108px;top:-44px;width:max-content;max-width:150px;padding:9px 12px;background:var(--hueso);color:var(--grafito);border:2.5px solid var(--grafito);border-radius:14px 14px 14px 4px;font-size:13px;font-weight:600;line-height:1.3;text-align:left;box-shadow:3px 3px 0 var(--berry);animation:ln-flota 3s ease-in-out infinite}
+.ln-osado-globo b{display:block;color:var(--berry)}
+@keyframes ln-flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.ln-destaca{font-family:var(--epic);text-transform:uppercase;font-size:24px;line-height:1.1;margin-top:26px;padding-top:.12em}
+.ln-destaca span{display:block;font-family:var(--mk);text-transform:none;font-size:30px;color:var(--berry);margin-top:6px}
 .ln-redes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
 .ln-redes a{font-size:14px;font-weight:600;padding:8px 15px;border-radius:99px;border:2px solid rgba(255,250,245,.6)}
 .ln-redes a:hover{background:var(--hueso);color:var(--grafito)}
@@ -4141,6 +4140,8 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 @keyframes ln-salta{0%{transform:translateY(0) scale(1,1)}25%{transform:translateY(4px) scale(1.08,.9)}60%{transform:translateY(-16px) scale(.96,1.05)}100%{transform:translateY(0) scale(1,1)}}
 .ln-globo{position:absolute;right:46px;bottom:56px;width:max-content;max-width:190px;padding:10px 13px;background:var(--hueso);color:var(--grafito);border:2.5px solid var(--grafito);border-radius:14px 14px 4px 14px;font-family:var(--clash);font-size:13.5px;font-weight:600;line-height:1.3;text-align:left;box-shadow:3px 3px 0 var(--berry);opacity:0;transform:translateY(6px) scale(.92);transform-origin:100% 100%;transition:opacity .25s,transform .25s;pointer-events:none}
 .ln-espid.habla .ln-globo{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.ln-aguja,.ln-etapas i,.ln-cuna i,.ln-sl img,.ln-espid.salta img{animation:none}}
+.ln-espid{transition:opacity .3s,transform .3s}
+.ln-espid.fuera{opacity:0;transform:translateY(30px);pointer-events:none}
+@media (prefers-reduced-motion:reduce){.ln-aguja,.ln-etapas i,.ln-sl img,.ln-espid.salta img,.ln-osado-globo{animation:none}}
 @media (max-width:380px){.ln-tag{font-size:23px}.ln-dx-txt b{font-size:21px}}
 @media (min-width:600px){body .ln{margin-top:24px;margin-bottom:24px;border-radius:22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}.ln-tr{flex-basis:44%}}
