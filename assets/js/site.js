@@ -1074,8 +1074,11 @@
       form.addEventListener('input', function () { aviso.textContent = ''; });
       mostrar(); vivo();
     });
-    var ini = (location.hash || '').slice(1) || new URLSearchParams(location.search).get('perfil');
-    if (DATA[ini] || ini === 'deportista') abrir(ini, false);
+    /* Enlaces directos por perfil (para campañas): #deportista, #equipo, #evento, #marca y sus alias */
+    var ALIAS = { atleta: 'deportista', piloto: 'deportista', club: 'equipo', escuela: 'equipo', academia: 'equipo', organizador: 'evento', eventos: 'evento', marcas: 'marca', empresa: 'marca' };
+    var ini = ((location.hash || '').slice(1) || new URLSearchParams(location.search).get('perfil') || '').toLowerCase();
+    ini = ALIAS[ini] || ini;
+    if (DATA[ini] || ini === 'deportista') { abrir(ini, false); setTimeout(function () { abrir(ini, true); }, 350); }
   })();
 
   /* ---------- Academy: constructor de pitch en 3 pasos ---------- */
