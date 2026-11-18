@@ -4048,21 +4048,22 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .ln-papel::after{content:"";position:absolute;inset:0;z-index:-1;background:url(../links/marca/papel.webp) center/cover;mix-blend-mode:multiply;opacity:.1}
 .ln-dx{position:relative;display:flex;flex-direction:column;background:var(--berry);color:var(--hueso);border:3px solid var(--grafito);border-radius:16px;overflow:hidden;box-shadow:7px 7px 0 var(--grafito);transition:transform .15s,box-shadow .15s}
 .ln-dx:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--grafito)}
-.ln-dx-vis{position:relative;display:block;height:160px;background:var(--grafito);border-bottom:3px solid var(--grafito)}
-.ln .ln-gauge{position:absolute;left:18px;top:16px;width:56%;max-width:220px;height:auto;overflow:visible}
-.ln-gauge path{fill:none;stroke-width:16;stroke-linecap:round}
+.ln-dx-vis{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:22px 8px 0 22px;background:var(--grafito);border-bottom:3px solid var(--grafito)}
+.ln-medidor{display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;max-width:200px;padding-bottom:20px}
+.ln .ln-gauge{display:block;width:100%;height:auto;overflow:visible}
+.ln-gauge path{fill:none;stroke-width:14;stroke-linecap:round}
 .ln-gauge .g1{stroke:rgba(255,250,245,.25)}.ln-gauge .g2{stroke:var(--creme)}.ln-gauge .g3{stroke:var(--berry)}
 .ln-aguja{transform-origin:100px 100px;animation:ln-aguja 6s cubic-bezier(.6,0,.3,1) infinite}
 .ln-aguja path{stroke:var(--hueso);stroke-width:5}
 .ln-aguja circle{fill:var(--berry);stroke:var(--hueso);stroke-width:3}
 @keyframes ln-aguja{0%,6%{transform:rotate(-62deg)}22%,34%{transform:rotate(-58deg)}48%,60%{transform:rotate(0)}74%,90%{transform:rotate(60deg)}100%{transform:rotate(-62deg)}}
-.ln-etapas{position:absolute;left:18px;bottom:8px;width:56%;max-width:220px;height:16px;text-align:center}
-.ln-etapas i{position:absolute;inset:0;font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hueso);opacity:0;animation:ln-etapa 6s infinite}
+.ln-etapas{position:relative;display:block;width:100%;height:14px;text-align:center}
+.ln-etapas i{position:absolute;inset:0;font-style:normal;font-size:11px;white-space:nowrap;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--hueso);opacity:0;animation:ln-etapa 6s infinite}
 .ln-etapas i:nth-child(1){animation-name:ln-e1}.ln-etapas i:nth-child(2){animation-name:ln-e2}.ln-etapas i:nth-child(3){animation-name:ln-e3;color:#ff6b78}
 @keyframes ln-e1{0%,36%{opacity:1}40%,100%{opacity:0}}
 @keyframes ln-e2{0%,40%{opacity:0}46%,62%{opacity:1}66%,100%{opacity:0}}
 @keyframes ln-e3{0%,68%{opacity:0}74%,94%{opacity:1}98%,100%{opacity:0}}
-.ln-dx-vis img{position:absolute;right:6px;bottom:-4px;height:142px;width:auto}
+.ln-dx-vis img{display:block;height:150px;width:auto;margin-bottom:-3px;flex:none}
 .ln-dx-txt{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px}
 .ln-dx-txt small{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
 .ln-dx-txt b{font-family:var(--epic);font-size:25px;line-height:1.04;text-transform:uppercase;padding-top:.12em}
