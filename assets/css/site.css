@@ -4024,9 +4024,9 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .ln a{color:inherit;text-decoration:none}
 .ln svg{width:20px;height:20px;flex:none}
 /* portada: video real de fondo */
-.ln-hero{position:relative;isolation:isolate;text-align:center;color:var(--hueso);padding:120px 22px 44px;min-height:470px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
-.ln-hero-v{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.05)}
-.ln-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,18,18,.35) 0%,rgba(18,18,18,.55) 45%,rgba(18,18,18,.96) 100%)}
+.ln-hero{position:relative;isolation:isolate;text-align:center;color:var(--hueso);padding:0 22px 42px;background:var(--grafito)}
+.ln-hero-f{display:block;width:calc(100% + 44px);max-width:none;margin:0 -22px;height:auto;aspect-ratio:3/2;object-fit:cover;-webkit-mask:linear-gradient(#000 62%,transparent);mask:linear-gradient(#000 62%,transparent)}
+.ln-hero .ln-logo{margin-top:-34px;position:relative}
 .ln-logo{width:250px;height:auto;margin:0 auto}
 .ln-kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;opacity:.75;margin-top:12px}
 .ln-tag{font-family:var(--epic);font-weight:800;text-transform:uppercase;font-size:27px;line-height:1.12;margin:20px auto 0;max-width:360px;padding-top:.12em}
