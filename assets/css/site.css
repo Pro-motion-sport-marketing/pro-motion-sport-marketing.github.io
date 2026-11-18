@@ -4001,3 +4001,19 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 /* Menú del celular: cerrado no debe asomarse cuando la barra superior se oculta */
 .menu-movil{transform:translateY(calc(-100% - 90px));visibility:hidden;transition:transform .45s var(--golpe),visibility 0s linear .45s}
 .menu-abierto .menu-movil{transform:none;visibility:visible;transition:transform .45s var(--golpe),visibility 0s}
+/* Diagnosticador: empezar en la primera pantalla */
+.dx-top{padding:clamp(28px,4vw,48px) 0 clamp(40px,5vw,64px)}
+.dx-top-cab{max-width:820px}
+.dx-top h1{font-size:clamp(32px,4.4vw,58px);margin-top:8px}
+.dx-top h1 .box{white-space:nowrap}
+.dx-sellos{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+.dx-sellos li{font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:99px;background:#fff;border:1.5px solid var(--negro)}
+.dx-sellos li::before{content:"✓ ";color:var(--rojo);font-weight:800}
+.dx-elige{font-size:clamp(17px,1.6vw,20px);margin:22px 0 12px}
+.dx-top .dx-ops{margin-top:0}
+.dx-top .dx-op-vis{height:clamp(80px,9vw,120px)}
+.dx-top .dx-forms{margin-top:22px}
+.dx-leer{margin-top:26px;font-size:15px}
+.dx-leer a{color:var(--rojo);font-weight:600}
+@media (max-width:560px){.dx-top h1 .box{white-space:normal}.dx-top .dx-ops{grid-template-columns:1fr 1fr;gap:8px}.dx-top .dx-op{padding:10px}.dx-top .dx-op span{display:none}.dx-top .dx-op b{font-size:15px}.dx-top .dx-op i{font-size:13px}}
+@media (max-width:560px){.dx-sellos{gap:6px;margin-top:12px}.dx-sellos li{font-size:12px;padding:4px 9px}.dx-sellos li:nth-child(3){display:none}.dx-elige{margin:16px 0 10px}}
