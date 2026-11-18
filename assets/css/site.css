@@ -4136,6 +4136,10 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 @keyframes ln-flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .ln-destaca{font-family:var(--epic);text-transform:uppercase;font-size:24px;line-height:1.1;margin-top:26px;padding-top:.12em}
 .ln-destaca span{display:block;font-family:var(--mk);text-transform:none;font-size:30px;color:var(--berry);margin-top:6px}
+.ln-mail{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:28px;padding:12px 18px;border:2px solid rgba(255,250,245,.6);border-radius:14px;max-width:100%}
+.ln-mail small{font-size:12px;opacity:.7}
+.ln-mail b{font-size:15px;font-weight:700;word-break:break-all}
+.ln-mail:hover{background:var(--hueso);color:var(--grafito)}
 .ln-redes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
 .ln-redes a{font-size:14px;font-weight:600;padding:8px 15px;border-radius:99px;border:2px solid rgba(255,250,245,.6)}
 .ln-redes a:hover{background:var(--hueso);color:var(--grafito)}
