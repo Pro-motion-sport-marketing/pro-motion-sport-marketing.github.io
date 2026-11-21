@@ -4207,3 +4207,8 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .dx-top .b-chips span{border:0;position:relative;background:#FFFAF5;padding:9px 16px 8px}
 .dx-top .b-chips span::after{content:"";position:absolute;inset:-5px;pointer-events:none;border:9px solid transparent;border-image:url(../marca26/marco.webp) 16% 8% 16% 8% / 9px stretch}
 .dx-top .b-chips input:checked+span{background:var(--negro);color:var(--crema)}
+/* pasos del diagnosticador: escenas de Espid y el perezoso a color */
+.dx-pasos li{padding:26px 24px 24px}
+.dx-pvis{height:clamp(170px,17vw,210px);margin-bottom:16px}
+.dx-pvis img{filter:none;height:100%;width:auto;max-width:100%;object-fit:contain;object-position:left bottom}
+@media (max-width:900px){.dx-pvis{height:200px}}
