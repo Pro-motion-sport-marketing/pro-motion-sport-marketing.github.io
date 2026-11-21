@@ -4156,3 +4156,54 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 @media (prefers-reduced-motion:reduce){.ln-aguja,.ln-etapas i,.ln-sl img,.ln-espid.salta img,.ln-osado-globo{animation:none}}
 @media (max-width:380px){.ln-tag{font-size:23px}.ln-dx-txt b{font-size:21px}}
 @media (min-width:600px){body .ln{margin-top:24px;margin-bottom:24px;border-radius:22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}.ln-tr{flex-basis:44%}}
+
+/* ---------- Diagnosticador · línea gráfica Manual 2026 (piezas reales de Containers Chalk/Sketch) ---------- */
+.dx-pq{background:var(--crema) url(../marca26/tx-crema.webp) center/cover;background-blend-mode:multiply}
+.dx-ruta{background:var(--negro) url(../marca26/tx-negro.webp) center/cover;background-blend-mode:screen}
+/* marco dibujado a mano, reutilizable */
+.dx-rec li,.dx-op,.dx-nv,.dx-c,.dx-of-c,.dx-pasos li,.dx-sellos li{border:0;position:relative;z-index:0}
+.dx-rec li::before,.dx-op::before,.dx-nv::before,.dx-c::before,.dx-of-c::before,.dx-pasos li::before,.dx-sellos li::after{content:"";position:absolute;inset:-7px;z-index:1;pointer-events:none;border:14px solid transparent;border-image:url(../marca26/marco.webp) 16% 8% 16% 8% / 14px stretch}
+.dx-pasos li::before{border-image-source:url(../marca26/marco-crema.webp);opacity:.75}
+.dx-rec li,.dx-c,.dx-of-c,.dx-nv{background:#FFFAF5}
+.dx-rec li:last-child,.dx-of-c.prin,.dx-nv.on{background:var(--negro)}
+.dx-ok{background:var(--crema)}
+.dx-rec{gap:22px 18px}
+.dx-rec li{padding:20px 18px 22px;gap:8px}
+.dx-rec li:nth-child(odd){transform:rotate(-.6deg)}
+.dx-rec li:nth-child(even){transform:rotate(.5deg)}
+.dx-rec li i,.dx-pn{border-radius:0;width:52px;height:52px;-webkit-mask:url(../marca26/mancha.webp) center/100% 100% no-repeat;mask:url(../marca26/mancha.webp) center/100% 100% no-repeat}
+.dx-pn{width:40px;height:40px}
+.dx-ops{gap:18px}
+.dx-niveles{gap:20px}
+.dx-pasos{gap:24px}
+.dx-sellos{gap:12px}
+.dx-sellos li{border-radius:0;background:#FFFAF5;padding:7px 14px 6px}
+.dx-sellos li::after{inset:-5px;border-width:9px;border-image-width:9px}
+.dx-sellos li:nth-child(odd){transform:rotate(-1.2deg)}
+.dx-sellos li:nth-child(even){transform:rotate(1deg)}
+/* síntomas: globo de contorno (sin elegir) y globo de tiza (elegido) */
+.dx-burs{gap:4px 14px}
+.dx-bur{background:none;border:0;border-radius:0;z-index:0;font-size:14.5px;line-height:1.15;text-transform:uppercase;letter-spacing:.02em;color:var(--rojo);padding:1.1em 1.5em 2.35em 2.2em}
+.dx-bur::after{display:none}
+.dx-bur::before{content:"";position:absolute;inset:0;z-index:-1;border-style:solid;border-color:transparent;border-width:0 3.84em 0 1.17em;border-image:url(../marca26/globo-contorno.webp) 0 36% 0 11% fill / 0 3.84em 0 1.17em stretch}
+.dx-bur[aria-pressed="true"]{background:none;color:var(--crema)}
+.dx-bur[aria-pressed="true"]::before{border-width:0 2.98em 0 .75em;border-image:url(../marca26/globo-tiza.webp) 0 28% 0 7% fill / 0 2.98em 0 .75em stretch}
+@media (max-width:560px){.dx-bur{font-size:13px;padding:1.1em 1.4em 2.35em 2.1em}}
+/* causa: panel de tiza con la cola hacia las frases + etiqueta roja del manual */
+.dx-causa{background:none;z-index:0;padding:74px 34px 34px 58px}
+.dx-causa::before{content:"";display:block;position:absolute;left:0;top:0;right:0;bottom:0;z-index:-1;border-style:solid;border-color:transparent;border-width:70px 30px 30px 60px;border-image:url(../marca26/panel-tiza.webp) 24% 8% 10% 13% fill / 70px 30px 30px 60px stretch}
+@media (max-width:900px){.dx-causa::before{display:block}}
+.dx-causa .lbl{display:inline-block;position:relative;z-index:0;font-family:"Malevice",var(--epic);font-weight:700;font-size:19px;line-height:1.12;height:1.12em;letter-spacing:.02em;color:#FFF3E6;padding:0 .9em;margin:0 0 16px .4em;transform:rotate(-2.5deg);white-space:nowrap}
+.dx-causa .lbl::before{content:"";position:absolute;z-index:-1;top:-.334em;bottom:-.576em;left:-.451em;right:-.576em;border-style:solid;border-color:transparent;border-width:0 1.276em 0 .918em;border-image:url(../marca26/etiqueta.webp) 0 12.9% 0 9.3% fill / 0 1.276em 0 .918em stretch}
+@media (max-width:420px){.dx-causa{padding:70px 22px 30px 44px}.dx-causa .lbl{font-size:16px}}
+/* consejo de Espid en la lectura en vivo: globo de tiza crema */
+.dx-tip .globo.dx-tip-g{background:none;border-radius:0;color:var(--negro);z-index:0;padding:14px 18px 38px 16px}
+.dx-tip .globo.dx-tip-g::after{display:none}
+.dx-tip .globo.dx-tip-g::before{content:"";position:absolute;inset:0;z-index:-1;border-style:solid;border-color:transparent;border-width:12px 62px 36px 14px;border-image:url(../marca26/globo-tiza-crema.webp) 10% 28% 30% 7% fill / 12px 62px 36px 14px stretch}
+/* formulario del diagnosticador: caja y casillas con marco a mano */
+.dx-top .panel.dg{border:0;z-index:0}
+.dx-top .panel.dg::after{content:"";position:absolute;inset:-8px;z-index:1;pointer-events:none;border:18px solid transparent;border-image:url(../marca26/marco.webp) 16% 8% 16% 8% / 18px stretch}
+.dx-top .b-chips{gap:12px 14px;margin-top:8px}
+.dx-top .b-chips span{border:0;position:relative;background:#FFFAF5;padding:9px 16px 8px}
+.dx-top .b-chips span::after{content:"";position:absolute;inset:-5px;pointer-events:none;border:9px solid transparent;border-image:url(../marca26/marco.webp) 16% 8% 16% 8% / 9px stretch}
+.dx-top .b-chips input:checked+span{background:var(--negro);color:var(--crema)}
