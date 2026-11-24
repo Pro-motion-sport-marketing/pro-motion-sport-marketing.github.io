@@ -921,7 +921,7 @@
         '<div class="dx-aud-precio"><span class="dx-cupo">Lanzamiento · solo 10 proyectos</span><b>USD 60 <small>+ IVA</small></b><span>Precio por tiempo limitado para los primeros 10 proyectos que usen esta herramienta.</span></div>' +
         '<div class="dx-cta-btns"><button type="button" class="btn crema" data-carrito="auditoria-promatch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>Quiero la Auditoría ProMatch completa</button><button type="button" class="btn rojo lg" data-dg-wa>Quiero ejecutar mi plan con un asesor <span class="chev">»</span></button></div>' +
         '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
-        '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparado está tu proyecto y qué le falta.</p></div>';
+        '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está tu propuesta comercial y qué le falta, no cuánto vale tu deporte ni tu trayectoria.</p></div>';
       setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
       $('[data-dg-wa]', res).onclick = function () {
         var L = function (t, x) { return x ? '\n• ' + t + ': ' + x : ''; };
@@ -1042,7 +1042,7 @@
           '<button type="button" class="btn rojo lg" data-dx-wa>Quiero ejecutar mi plan con un asesor <span class="chev">»</span></button></div>' +
           '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a>' +
           '<button type="button" class="dg-atras" data-dx-otra>Volver a empezar</button></div>' +
-          '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparado está el proyecto y qué le falta.</p></div>';
+          '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está la propuesta comercial y qué le falta, no el valor del proyecto en sí.</p></div>';
         $('[data-dx-wa]', res).onclick = function () {
           var cont = v('contacto')[0];
           var msg = 'Hola Daniel, ' + (cont ? 'soy ' + cont + '. Hice' : 'hice') + ' el diagnóstico de Pro Motion como ' + P.quien + (nombre ? ' (' + nombre + ')' : '') + ' y quiero ejecutar mi plan con un asesor.\n' +

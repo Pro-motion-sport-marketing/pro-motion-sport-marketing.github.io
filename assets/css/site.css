@@ -4212,3 +4212,17 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .dx-pvis{height:clamp(170px,17vw,210px);margin-bottom:16px}
 .dx-pvis img{filter:none;height:100%;width:auto;max-width:100%;object-fit:contain;object-position:left bottom}
 @media (max-width:900px){.dx-pvis{height:200px}}
+
+/* Conócenos · En qué creemos (principios de la tesis del valor del deporte) */
+.princ-cab{margin-top:64px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.princ-tag{display:inline-block;font-family:'Malevice',var(--clash);font-size:20px;line-height:1;color:var(--crema);padding:9px 20px 11px;background:url(../marca26/etiqueta.webp) center/100% 100% no-repeat;transform:rotate(-2deg)}
+.princ-cab h3{font-size:clamp(28px,3.4vw,44px);line-height:1;text-transform:uppercase}
+.princ{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:22px 18px;grid-template-columns:1fr;counter-reset:pr}
+@media (min-width:640px){.princ{grid-template-columns:repeat(2,minmax(0,1fr))}.princ li:last-child{grid-column:1/-1}}
+@media (min-width:1100px){.princ{grid-template-columns:repeat(5,minmax(0,1fr))}.princ li:last-child{grid-column:auto}}
+.princ li{position:relative;z-index:0;padding:20px 20px 22px;background:#fff8ee;counter-increment:pr}
+.princ li::before{content:"";position:absolute;inset:-7px;z-index:1;pointer-events:none;border:14px solid transparent;border-image:url(../marca26/marco.webp) 16% 8% 16% 8% / 14px stretch}
+.princ li::after{content:"0" counter(pr);display:block;position:absolute;top:16px;left:20px;font-family:var(--epic);font-size:26px;line-height:1;color:var(--rojo)}
+.princ b{display:block;font-family:var(--clash);font-weight:700;text-transform:uppercase;font-size:17px;line-height:1.12;margin-top:32px}
+.princ p{font-size:15px;line-height:1.45;margin-top:10px}
+.princ-nota{margin-top:22px;max-width:760px}
