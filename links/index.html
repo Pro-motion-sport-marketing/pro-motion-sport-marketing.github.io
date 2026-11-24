@@ -116,7 +116,15 @@
 (function(){
   var v=document.querySelector('.ln-video');
   if(v) v.addEventListener('click',function(){
-    var id=v.dataset.yt; v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" title="OX Podcast" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    var id=v.dataset.yt; v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin)+'" title="OX Podcast" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>';
+    /* Si YouTube no deja reproducir aquí (p. ej. error 153 en el navegador de Instagram), abrir el video en YouTube */
+    var f=v.querySelector('iframe'), ido=false;
+    f.addEventListener('load',function(){try{f.contentWindow.postMessage('{"event":"listening","id":1,"channel":"widget"}','*');}catch(e){}});
+    window.addEventListener('message',function(e){
+      if(ido||e.source!==f.contentWindow||!/youtube/.test(e.origin)) return;
+      var d; try{d=JSON.parse(e.data);}catch(x){return;}
+      if(d&&d.event==='onError'){ido=true; location.href='https://www.youtube.com/watch?v='+id;}
+    });
   },{once:true});
 
   /* Reels: solo se reproduce el que está a la vista */
