@@ -24,7 +24,7 @@
     var idP = dxPost(base).then(function (x) { return x.id || ''; });
     function conContacto(c) {
       return idP.then(function (id) {
-        var m = { id: id, nombre: c.nombre, canal: c.canal, contacto: c.contacto, acepta: true, proyecto: d.proyecto, ciudad: d.ciudad, respuestas: d.respuestas, resumen: d.resumen };
+        var m = { id: id, nombre: c.nombre, canal: c.canal, contacto: c.contacto, acepta: true, proyecto: d.proyecto, ciudad: d.ciudad, respuestas: d.respuestas, resumen: d.resumen, detalle: d.detalle };
         for (var k in base) m[k] = base[k];
         return dxPost(m);
       });
@@ -66,12 +66,13 @@
       var c = { nombre: nombre, canal: canal, contacto: cont };
       try { localStorage.setItem('pm_dx_c', JSON.stringify(c)); } catch (e) {}
       if (canal === 'whatsapp') abrirWA('Hola Daniel, soy ' + nombre + '. Hice el diagnóstico de Pro Motion como ' + d.quien + ' y obtuve ' + d.total + '/100 (' + d.nivel + '). Quiero recibir por aquí las sugerencias para profundizarlo.');
-      conContacto(c);
+      var envio = conContacto(c);
       box.classList.remove('dx-cerrado');
       var ok = document.createElement('p'); ok.className = 'dx-gate-listo';
       ok.innerHTML = '<b>Listo, ' + dxEsc(nombre.split(' ')[0]) + '.</b> Aquí tienes tu diagnóstico completo. ' + (canal === 'whatsapp' ? 'Envíanos el mensaje que se abrió en WhatsApp y seguimos por ahí.' : 'Te escribiremos a ' + dxEsc(cont) + ' con sugerencias para profundizarlo.');
       g.parentNode.replaceChild(ok, g);
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (canal === 'correo') envio.then(function (x) { if (x && x.correo) ok.innerHTML = '<b>Listo, ' + dxEsc(nombre.split(' ')[0]) + '.</b> Aquí tienes tu diagnóstico completo. También te lo enviamos a ' + dxEsc(cont) + ' (si no lo ves, revisa la carpeta de spam).'; });
     });
   }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -992,6 +993,7 @@
       setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
       var dimsDep = {}; Object.keys(r.D).forEach(function (k) { dimsDep[NOM[k]] = r.D[k]; });
       dxGate(res, { perfil: 'deportista', quien: 'deportista', total: r.total, nivel: nivel, dims: dimsDep, proyecto: uno('deporte'), ciudad: uno('ciudad'), respuestas: dxResp(diag),
+        detalle: { estado: L0.E[1], arq: [a.a, a.v, a.o, a.act], ventajas: L0.fuertes.map(function (k) { return [NOM[k], FZ[k]]; }), riesgos: L0.R.map(function (x) { return [x[0], x[1]]; }), prios: L0.prios.map(function (p) { return [p[0], p[1]]; }), oferta: L0.of.map(function (o) { return [o[0], o[1], o[2]]; }) },
         resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + L0.prios.map(function (p) { return p[0]; }).join('; ') + '\nRiesgos: ' + (L0.R.map(function (x) { return x[0]; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + L0.of.map(function (o) { return o[0]; }).join('; ') });
       $('[data-dg-wa]', res).onclick = function () {
         var L = function (t, x) { return x ? '\n• ' + t + ': ' + x : ''; };
@@ -1132,6 +1134,7 @@
         form.classList.add('dx-hecho');
         setTimeout(function () { anillo($('.dg-res .dx-ring', res), r.total); }, 250);
         dxGate(res, { perfil: form.dataset.perfil, quien: P.quien, total: r.total, nivel: nivel, dims: r.D, proyecto: nombre, ciudad: (v('ciudad')[0] || ''), nombreSug: (v('contacto')[0] || '').split(',')[0], respuestas: dxResp(form),
+          detalle: { estado: P.estado[ni], arq: [a.a, a.v, a.o.replace(/^Te conviene: /, ''), a.act || ''], ventajas: fuertes.map(function (k) { return [k, P.fz[k]]; }), riesgos: (riesgos.length ? riesgos.map(function (g) { return [g.t, g.d]; }) : brechas.slice(0, 2).map(function (k) { return [P.acc[k][0], P.acc[k][1]]; })), prios: brechas.map(function (k) { return [P.acc[k][0], P.acc[k][1]]; }), oferta: oferta.map(function (o) { return [o.n, o.d, o.r]; }) },
           resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + brechas.map(function (k) { return P.acc[k][0]; }).join('; ') + '\nRiesgos: ' + (riesgos.map(function (g) { return g.t; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + oferta.map(function (o) { return o.n; }).join('; ') });
         pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
         res.scrollIntoView({ behavior: 'smooth', block: 'start' });

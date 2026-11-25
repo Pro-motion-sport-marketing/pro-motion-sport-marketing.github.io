@@ -8,6 +8,7 @@
 //   PAYPHONE_TOKEN    Token de la app "Pro Motion Web" en Payphone Developer
 //   PAYPHONE_STORE_ID StoreID de la misma app
 //   ADMIN_CLAVE       Contraseña de las páginas privadas /admin/accesos/ y /admin/diagnosticos/
+// Correo (binding EMAIL, Cloudflare Email Service): envía el diagnóstico completo desde info@promotionec.com.
 // Base de datos D1 (binding DB, "promotion-diagnosticos"): guarda cada diagnóstico terminado.
 // - /api/dx/guardar        → registra un diagnóstico (anónimo) y luego el contacto, si la persona lo deja y acepta.
 // - /api/admin/diagnosticos → lista para Daniel (pide ADMIN_CLAVE).
@@ -21,7 +22,7 @@ const PRODUCTO_GUIA = 'guia-oferta';
 const POR_ID = Object.fromEntries(CATALOGO.map((p) => [p.id, p]));
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const url = new URL(req.url);
     try {
       if (url.pathname === '/api/pago/crear' && req.method === 'POST') return await crear(req, env, url);
@@ -250,6 +251,11 @@ async function dxGuardar(req, env) {
     const r = await env.DB.prepare('UPDATE diagnosticos SET actualizado=?, nombre=?, canal=?, contacto=?, acepta=1, proyecto=?, ciudad=?, respuestas=?, resumen=?, total=?, nivel=?, dims=? WHERE id=?')
       .bind(ahora, txt(b.nombre, 80), canal, contacto, txt(b.proyecto, 120), txt(b.ciudad, 80), jsonCorto(b.respuestas, 12000), txt(b.resumen, 4000), total, txt(b.nivel, 60), jsonCorto(b.dims, 1500), id).run();
     if (!r.meta || !r.meta.changes) return json({ error: 'Diagnóstico no encontrado' }, 404);
+    const detalle = dxDetalle(b.detalle);
+    await env.DB.prepare('UPDATE diagnosticos SET detalle=? WHERE id=?').bind(detalle ? JSON.stringify(detalle) : null, id).run();
+    let correo = false;
+    if (canal === 'correo') correo = await dxCorreo(env, { id, perfil, total, nivel: txt(b.nivel, 60), dims: b.dims, nombre: txt(b.nombre, 80), contacto, detalle });
+    return json({ ok: true, id, correo });
   }
   return json({ ok: true, id });
 }
@@ -262,4 +268,74 @@ async function dxLista(req, env) {
   const filas = await env.DB.prepare('SELECT id, creado, perfil, total, nivel, dims, proyecto, ciudad, nombre, canal, contacto, acepta, respuestas, resumen, correo_enviado, pais FROM diagnosticos ORDER BY creado DESC LIMIT 2000').all();
   const tot = await env.DB.prepare('SELECT COUNT(*) AS n, SUM(CASE WHEN contacto IS NOT NULL THEN 1 ELSE 0 END) AS c FROM diagnosticos').first();
   return json({ total: tot.n || 0, conContacto: tot.c || 0, filas: filas.results || [] });
+}
+
+// ---------- Diagnosticador: correo con el diagnóstico completo ----------
+const REMITENTE = { email: 'info@promotionec.com', name: 'Pro Motion Sport Marketing' };
+const esc = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const sinHtml = (t, n) => txt(String(t == null ? '' : t).replace(/<[^>]*>/g, ''), n);
+// Solo texto plano, con tamaños acotados: lo que llega del navegador nunca se inserta como HTML.
+function dxDetalle(d) {
+  if (!d || typeof d !== 'object') return null;
+  const pares = (a, n) => (Array.isArray(a) ? a : []).slice(0, n).map((x) => (Array.isArray(x) ? x : [x]).slice(0, 3).map((y) => sinHtml(y, 320)));
+  return { estado: sinHtml(d.estado, 500), arq: (Array.isArray(d.arq) ? d.arq : []).slice(0, 4).map((y) => sinHtml(y, 400)), ventajas: pares(d.ventajas, 4), riesgos: pares(d.riesgos, 4), prios: pares(d.prios, 4), oferta: pares(d.oferta, 3) };
+}
+function dxDims(dims) {
+  const o = {}; if (!dims || typeof dims !== 'object') return o;
+  Object.keys(dims).slice(0, 10).forEach((k) => { o[sinHtml(k, 40)] = Math.max(0, Math.min(100, Math.round(Number(dims[k]) || 0))); });
+  return o;
+}
+async function dxCorreo(env, d) {
+  if (!env.EMAIL) return false;
+  try {
+    // Freno contra abuso: un correo por dirección al día y un tope general por hora.
+    const dia = new Date(Date.now() - 864e5).toISOString(), hora = new Date(Date.now() - 36e5).toISOString();
+    const ya = await env.DB.prepare('SELECT (SELECT COUNT(*) FROM diagnosticos WHERE correo_enviado=1 AND contacto=? AND actualizado>?) AS mismo, (SELECT COUNT(*) FROM diagnosticos WHERE correo_enviado=1 AND actualizado>?) AS todos').bind(d.contacto, dia, hora).first();
+    if (ya && (ya.mismo >= 1 || ya.todos >= 60)) return false;
+    const m = dxMensaje(d);
+    await env.EMAIL.send({ from: REMITENTE, replyTo: REMITENTE.email, to: d.contacto, subject: m.asunto, html: m.html, text: m.texto });
+    await env.DB.prepare('UPDATE diagnosticos SET correo_enviado=1 WHERE id=?').bind(d.id).run();
+    return true;
+  } catch (e) {
+    console.log('correo dx', e && e.code, e && e.message);
+    return false;
+  }
+}
+function dxMensaje(d) {
+  const nombre = (d.nombre || '').split(' ')[0], D = d.detalle || {}, dims = dxDims(d.dims);
+  const R = '#E61E32', N = '#121212', C = '#FFEEDE';
+  const lista = (a) => (a || []).filter((x) => x[0]).map((x) => `<li style="margin:0 0 8px"><b>${esc(x[0])}${/[.!?]$/.test(x[0]) ? '' : '.'}</b> ${esc(x[1] || '')}${x[2] ? ` <span style="color:${R};font-weight:600">${esc(x[2])}</span>` : ''}</li>`).join('');
+  const bloque = (t, cuerpo) => (cuerpo ? `<tr><td style="padding:22px 28px 0"><p style="margin:0 0 8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${R};font-weight:700">${t}</p>${cuerpo}</td></tr>` : '');
+  const ul = (a) => { const l = lista(a); return l ? `<ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.5;color:${N}">${l}</ul>` : ''; };
+  const barras = Object.keys(dims).map((k) => `<tr><td style="padding:4px 10px 4px 0;font-size:14px;color:${N};white-space:nowrap">${esc(k)}</td><td width="100%" style="padding:4px 0"><div style="background:#eadfce;height:8px"><div style="background:${R};height:8px;width:${dims[k]}%"></div></div></td><td style="padding:4px 0 4px 10px;font-size:14px;font-weight:700;color:${N}">${dims[k]}</td></tr>`).join('');
+  const arq = D.arq || [];
+  const arqHtml = arq[0] ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:${N}"><b>${esc(arq[0])}.</b> ${esc(arq[1] || '')}</p>` + (arq[2] ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:${N}"><b>Dónde encajas mejor:</b> ${esc(arq[2])}</p>` : '') + (arq[3] ? `<p style="margin:0;font-size:15px;line-height:1.5;color:${N}"><b>Idea de activación:</b> ${esc(arq[3])}</p>` : '') : '';
+  const waTxt = encodeURIComponent(`Hola Daniel, soy ${d.nombre || ''}. Recibí mi diagnóstico de Pro Motion (${d.total}/100) y quiero conversar sobre cómo profundizarlo.`);
+  const html = `<!doctype html><html lang="es"><body style="margin:0;background:#f3ece1;font-family:Arial,Helvetica,sans-serif">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3ece1"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fffaf5">
+<tr><td style="background:${N};padding:26px 28px"><img src="https://promotionec.com/assets/brand/logo-blanco.png" width="150" alt="Pro Motion Sport Marketing" style="display:block;border:0"></td></tr>
+<tr><td style="padding:28px 28px 0"><p style="margin:0;font-size:16px;line-height:1.5;color:${N}">Hola${nombre ? ' ' + esc(nombre) : ''}, aquí está tu diagnóstico completo.</p></td></tr>
+<tr><td style="padding:18px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C}"><tr><td style="padding:18px 20px"><span style="font-size:44px;font-weight:800;color:${R};line-height:1">${d.total}</span><span style="font-size:16px;color:${N}"> / 100</span><p style="margin:6px 0 0;font-size:17px;font-weight:700;color:${N}">${esc(d.nivel)}</p>${D.estado ? `<p style="margin:8px 0 0;font-size:15px;line-height:1.5;color:${N}">${esc(D.estado)}</p>` : ''}</td></tr></table></td></tr>
+${bloque('Tus dimensiones', barras ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${barras}</table>` : '')}
+${bloque('Ventajas', ul(D.ventajas))}
+${bloque('Oportunidades', arqHtml)}
+${bloque('Riesgos y conflictos', ul(D.riesgos))}
+${bloque('Prioridades a 90 días', ul(D.prios))}
+${bloque('Oferta recomendada para tu situación', ul(D.oferta))}
+<tr><td style="padding:26px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${N}"><tr><td style="padding:22px 22px 24px">
+<p style="margin:0 0 8px;font-size:19px;font-weight:800;color:${C};text-transform:uppercase">¿Quieres profundizarlo?</p>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.5;color:${C}">Este diagnóstico sale solo de tus respuestas. En la Auditoría ProMatch revisamos tu contenido real, categoría por categoría, y te entregamos un informe con evidencia y un plan. Si prefieres empezar conversando, escríbenos.</p>
+<a href="https://wa.me/593984678812?text=${waTxt}" style="display:inline-block;background:${R};color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:12px 18px;margin:0 8px 8px 0">Hablar con un asesor</a>
+<a href="https://promotionec.com/promatch/#como-funciona" style="display:inline-block;background:${C};color:${N};text-decoration:none;font-weight:700;font-size:15px;padding:12px 18px;margin:0 0 8px">Ver la Auditoría ProMatch</a>
+</td></tr></table></td></tr>
+<tr><td style="padding:22px 28px 28px"><p style="margin:0;font-size:12.5px;line-height:1.5;color:#6f665c">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está tu propuesta comercial, no cuánto vale tu deporte ni tu trayectoria.<br><br>Recibes este correo porque lo pediste al terminar el Diagnosticador en promotionec.com. Si no quieres que te escribamos, responde a este mensaje y te quitamos de la lista. <a href="https://promotionec.com/privacidad/" style="color:#6f665c">Política de privacidad</a>.</p></td></tr>
+</table></td></tr></table></body></html>`;
+  const tl = (t, a) => { const l = (a || []).filter((x) => x[0]).map((x) => `- ${x[0]}: ${x[1] || ''}${x[2] ? ' (' + x[2] + ')' : ''}`).join('\n'); return l ? `\n\n${t}\n${l}` : ''; };
+  const texto = `Hola${nombre ? ' ' + nombre : ''}, aquí está tu diagnóstico completo de Pro Motion.\n\n${d.total}/100 · ${d.nivel}${D.estado ? '\n' + D.estado : ''}` +
+    (Object.keys(dims).length ? '\n\nTus dimensiones\n' + Object.keys(dims).map((k) => `- ${k}: ${dims[k]}`).join('\n') : '') +
+    tl('Ventajas', D.ventajas) + (arq[0] ? `\n\nOportunidades\n${arq[0]}. ${arq[1] || ''}${arq[2] ? '\nDónde encajas mejor: ' + arq[2] : ''}${arq[3] ? '\nIdea de activación: ' + arq[3] : ''}` : '') +
+    tl('Riesgos y conflictos', D.riesgos) + tl('Prioridades a 90 días', D.prios) + tl('Oferta recomendada', D.oferta) +
+    `\n\n¿Quieres profundizarlo? Escríbenos: https://wa.me/593984678812\nAuditoría ProMatch: https://promotionec.com/promatch/#como-funciona\n\nResultado orientativo, calculado solo con tus respuestas. No garantiza auspicios.\nSi no quieres que te escribamos, responde a este mensaje. Privacidad: https://promotionec.com/privacidad/`;
+  return { asunto: `Tu diagnóstico Pro Motion: ${d.total}/100 · ${d.nivel}`.slice(0, 140), html, texto };
 }
