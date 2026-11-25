@@ -325,7 +325,7 @@ ${bloque('Prioridades a 90 días', ul(D.prios))}
 ${bloque('Oferta recomendada para tu situación', ul(D.oferta))}
 <tr><td style="padding:26px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${N}"><tr><td style="padding:22px 22px 24px">
 <p style="margin:0 0 8px;font-size:19px;font-weight:800;color:${C};text-transform:uppercase">¿Quieres profundizarlo?</p>
-<p style="margin:0 0 16px;font-size:15px;line-height:1.5;color:${C}">Este diagnóstico sale solo de tus respuestas. En la Auditoría ProMatch revisamos tu contenido real, categoría por categoría, y te entregamos un informe con evidencia y un plan. Si prefieres empezar conversando, escríbenos.</p>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.5;color:${C}">Este diagnóstico sale solo de tus respuestas. En la Auditoría ProMatch revisamos tu contenido real, categoría por categoría, y te entregamos un informe con evidencia. El objetivo no es solo que sepas en qué punto está hoy tu proyecto comercial deportivo: es que ganes seguridad y tengas una herramienta para respaldar lo que dices cuando hables con posibles auspiciantes. Y si necesitas ayuda para ponerlo en marcha, conversamos.</p>
 <a href="https://wa.me/593984678812?text=${waTxt}" style="display:inline-block;background:${R};color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;padding:12px 18px;margin:0 8px 8px 0">Hablar con un asesor</a>
 <a href="https://promotionec.com/promatch/#como-funciona" style="display:inline-block;background:${C};color:${N};text-decoration:none;font-weight:700;font-size:15px;padding:12px 18px;margin:0 0 8px">Ver la Auditoría ProMatch</a>
 </td></tr></table></td></tr>
@@ -336,6 +336,6 @@ ${bloque('Oferta recomendada para tu situación', ul(D.oferta))}
     (Object.keys(dims).length ? '\n\nTus dimensiones\n' + Object.keys(dims).map((k) => `- ${k}: ${dims[k]}`).join('\n') : '') +
     tl('Ventajas', D.ventajas) + (arq[0] ? `\n\nOportunidades\n${arq[0]}. ${arq[1] || ''}${arq[2] ? '\nDónde encajas mejor: ' + arq[2] : ''}${arq[3] ? '\nIdea de activación: ' + arq[3] : ''}` : '') +
     tl('Riesgos y conflictos', D.riesgos) + tl('Prioridades a 90 días', D.prios) + tl('Oferta recomendada', D.oferta) +
-    `\n\n¿Quieres profundizarlo? Escríbenos: https://wa.me/593984678812\nAuditoría ProMatch: https://promotionec.com/promatch/#como-funciona\n\nResultado orientativo, calculado solo con tus respuestas. No garantiza auspicios.\nSi no quieres que te escribamos, responde a este mensaje. Privacidad: https://promotionec.com/privacidad/`;
+    `\n\n¿Quieres profundizarlo? En la Auditoría ProMatch revisamos tu contenido real y te entregamos un informe con evidencia: para que sepas dónde está tu proyecto, ganes seguridad y tengas con qué respaldarte ante posibles auspiciantes.\\nEscríbenos: https://wa.me/593984678812\nAuditoría ProMatch: https://promotionec.com/promatch/#como-funciona\n\nResultado orientativo, calculado solo con tus respuestas. No garantiza auspicios.\nSi no quieres que te escribamos, responde a este mensaje. Privacidad: https://promotionec.com/privacidad/`;
   return { asunto: `Tu diagnóstico Pro Motion: ${d.total}/100 · ${d.nivel}`.slice(0, 140), html, texto };
 }
