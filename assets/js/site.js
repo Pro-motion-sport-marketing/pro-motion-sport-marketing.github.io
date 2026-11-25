@@ -7,6 +7,73 @@
   function waLink(t) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); }
   window.PM = { waLink: waLink };
   function abrirWA(t) { window.open(waLink(t), '_blank', 'noopener'); }
+
+  /* ---------- Diagnosticador: resumen gratis + diagnóstico completo a cambio del contacto ---------- */
+  function dxEsc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function dxResp(form) {
+    var o = {}; new FormData(form).forEach(function (val, k) { val = String(val).trim(); if (!val || k.indexOf('_gx_') === 0) return; o[k] = o[k] ? o[k] + ' | ' + val : val; });
+    return o;
+  }
+  function dxPost(d) {
+    return fetch('/api/dx/guardar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+      .then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; });
+  }
+  function dxGate(res, d) {
+    var box = res.querySelector('.dg-res'); if (!box) return;
+    var base = { perfil: d.perfil, total: d.total, nivel: d.nivel, dims: d.dims };
+    var idP = dxPost(base).then(function (x) { return x.id || ''; });
+    function conContacto(c) {
+      return idP.then(function (id) {
+        var m = { id: id, nombre: c.nombre, canal: c.canal, contacto: c.contacto, acepta: true, proyecto: d.proyecto, ciudad: d.ciudad, respuestas: d.respuestas, resumen: d.resumen };
+        for (var k in base) m[k] = base[k];
+        return dxPost(m);
+      });
+    }
+    var prev = null; try { prev = JSON.parse(localStorage.getItem('pm_dx_c') || 'null'); } catch (e) {}
+    if (prev && prev.contacto) { conContacto(prev); return; }
+    box.classList.add('dx-cerrado');
+    var g = document.createElement('div'); g.className = 'dx-gate';
+    g.innerHTML = '<span class="lbl">Falta un paso</span>' +
+      '<h4>Desbloquea tu diagnóstico completo</h4>' +
+      '<p>Ya tienes tu puntaje. El diagnóstico completo incluye tus <b>ventajas, riesgos, prioridades a 90 días y la oferta recomendada</b>. Dinos a dónde escribirte y lo ves aquí mismo, al instante.</p>' +
+      '<div class="dx-gate-f">' +
+        '<label>Tu nombre<input type="text" name="_gx_nombre" maxlength="80" autocomplete="name" placeholder="Ej.: Ana Pérez"></label>' +
+        '<div class="dx-gate-canal" role="radiogroup" aria-label="¿Por dónde te escribimos?">' +
+          '<button type="button" role="radio" aria-checked="true" data-c="correo">Por correo</button>' +
+          '<button type="button" role="radio" aria-checked="false" data-c="whatsapp">Por WhatsApp</button></div>' +
+        '<label><span data-gx-l>Tu correo</span><input type="email" name="_gx_contacto" maxlength="120" autocomplete="email" inputmode="email" placeholder="tucorreo@ejemplo.com"></label>' +
+        '<label class="dx-gate-ok"><input type="checkbox" name="_gx_ok"><span>Acepto que Pro Motion me escriba por este medio con mi diagnóstico y sugerencias para profundizarlo. <a href="/privacidad/" target="_blank" rel="noopener">Política de privacidad</a>.</span></label>' +
+        '<button type="button" class="btn rojo lg" data-gx-ir>Ver mi diagnóstico completo <span class="chev">»</span></button>' +
+        '<p class="dx-gate-av" aria-live="polite"></p>' +
+      '</div>';
+    var ancla = box.querySelector('.dg-dims'); ancla.parentNode.insertBefore(g, ancla.nextSibling);
+    var canal = 'correo', inC = g.querySelector('[name=_gx_contacto]'), inN = g.querySelector('[name=_gx_nombre]'), av = g.querySelector('.dx-gate-av');
+    if (d.nombreSug) inN.value = d.nombreSug;
+    $$('.dx-gate-canal button', g).forEach(function (b) { b.addEventListener('click', function () {
+      canal = b.dataset.c;
+      $$('.dx-gate-canal button', g).forEach(function (x) { x.setAttribute('aria-checked', x === b); });
+      var w = canal === 'whatsapp';
+      g.querySelector('[data-gx-l]').textContent = w ? 'Tu WhatsApp' : 'Tu correo';
+      inC.type = w ? 'tel' : 'email'; inC.setAttribute('inputmode', w ? 'tel' : 'email'); inC.autocomplete = w ? 'tel' : 'email';
+      inC.placeholder = w ? 'Ej.: 099 123 4567' : 'tucorreo@ejemplo.com'; inC.value = ''; av.textContent = '';
+    }); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); g.querySelector('[data-gx-ir]').click(); } });
+    g.querySelector('[data-gx-ir]').addEventListener('click', function () {
+      var nombre = inN.value.trim(), cont = inC.value.trim();
+      if (!nombre) { av.textContent = 'Escribe tu nombre.'; inN.focus(); return; }
+      if (canal === 'correo' ? !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(cont) : cont.replace(/\D/g, '').length < 8) { av.textContent = canal === 'correo' ? 'Revisa tu correo: parece incompleto.' : 'Revisa tu número de WhatsApp.'; inC.focus(); return; }
+      if (!g.querySelector('[name=_gx_ok]').checked) { av.textContent = 'Marca la casilla para poder escribirte.'; return; }
+      var c = { nombre: nombre, canal: canal, contacto: cont };
+      try { localStorage.setItem('pm_dx_c', JSON.stringify(c)); } catch (e) {}
+      if (canal === 'whatsapp') abrirWA('Hola Daniel, soy ' + nombre + '. Hice el diagnóstico de Pro Motion como ' + d.quien + ' y obtuve ' + d.total + '/100 (' + d.nivel + '). Quiero recibir por aquí las sugerencias para profundizarlo.');
+      conContacto(c);
+      box.classList.remove('dx-cerrado');
+      var ok = document.createElement('p'); ok.className = 'dx-gate-listo';
+      ok.innerHTML = '<b>Listo, ' + dxEsc(nombre.split(' ')[0]) + '.</b> Aquí tienes tu diagnóstico completo. ' + (canal === 'whatsapp' ? 'Envíanos el mensaje que se abrió en WhatsApp y seguimos por ahí.' : 'Te escribiremos a ' + dxEsc(cont) + ' con sugerencias para profundizarlo.');
+      g.parentNode.replaceChild(ok, g);
+      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   /* ---------- WhatsApp ---------- */
@@ -923,6 +990,9 @@
         '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
         '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está tu propuesta comercial y qué le falta, no cuánto vale tu deporte ni tu trayectoria.</p></div>';
       setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
+      var dimsDep = {}; Object.keys(r.D).forEach(function (k) { dimsDep[NOM[k]] = r.D[k]; });
+      dxGate(res, { perfil: 'deportista', quien: 'deportista', total: r.total, nivel: nivel, dims: dimsDep, proyecto: uno('deporte'), ciudad: uno('ciudad'), respuestas: dxResp(diag),
+        resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + L0.prios.map(function (p) { return p[0]; }).join('; ') + '\nRiesgos: ' + (L0.R.map(function (x) { return x[0]; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + L0.of.map(function (o) { return o[0]; }).join('; ') });
       $('[data-dg-wa]', res).onclick = function () {
         var L = function (t, x) { return x ? '\n• ' + t + ': ' + x : ''; };
         var msg = 'Hola Daniel, ' + (uno('nombre') ? 'soy ' + uno('nombre') + '. Hice' : 'hice') + ' el diagnóstico de Pro Motion como deportista y quiero ejecutar mi plan con un asesor.\n' +
@@ -1061,6 +1131,8 @@
         $('[data-dx-otra]', res).onclick = function () { form.reset(); form.classList.remove('dx-hecho'); res.innerHTML = ''; vivo(); paso = 1; $('.dg-nav', form).hidden = false; $('.dg-top', form).hidden = false; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
         form.classList.add('dx-hecho');
         setTimeout(function () { anillo($('.dg-res .dx-ring', res), r.total); }, 250);
+        dxGate(res, { perfil: form.dataset.perfil, quien: P.quien, total: r.total, nivel: nivel, dims: r.D, proyecto: nombre, ciudad: (v('ciudad')[0] || ''), nombreSug: (v('contacto')[0] || '').split(',')[0], respuestas: dxResp(form),
+          resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + brechas.map(function (k) { return P.acc[k][0]; }).join('; ') + '\nRiesgos: ' + (riesgos.map(function (g) { return g.t; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + oferta.map(function (o) { return o.n; }).join('; ') });
         pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
         res.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }

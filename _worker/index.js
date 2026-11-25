@@ -7,7 +7,10 @@
 // Secretos (Cloudflare → Workers → promotionec → Settings → Variables and Secrets):
 //   PAYPHONE_TOKEN    Token de la app "Pro Motion Web" en Payphone Developer
 //   PAYPHONE_STORE_ID StoreID de la misma app
-//   ADMIN_CLAVE       Contraseña de la página privada /admin/accesos/ (enlaces para pagos por transferencia)
+//   ADMIN_CLAVE       Contraseña de las páginas privadas /admin/accesos/ y /admin/diagnosticos/
+// Base de datos D1 (binding DB, "promotion-diagnosticos"): guarda cada diagnóstico terminado.
+// - /api/dx/guardar        → registra un diagnóstico (anónimo) y luego el contacto, si la persona lo deja y acepta.
+// - /api/admin/diagnosticos → lista para Daniel (pide ADMIN_CLAVE).
 // Mientras PAYPHONE_TOKEN no exista, la guía sigue abierta y el carrito cotiza por WhatsApp.
 
 import CATALOGO from '../assets/catalogo.json';
@@ -24,6 +27,8 @@ export default {
       if (url.pathname === '/api/pago/crear' && req.method === 'POST') return await crear(req, env, url);
       if (url.pathname === '/api/pago/confirmar' && req.method === 'POST') return await confirmar(req, env);
       if (url.pathname === '/api/admin/acceso' && req.method === 'POST') return await accesoManual(req, env);
+      if (url.pathname === '/api/dx/guardar' && req.method === 'POST') return await dxGuardar(req, env);
+      if (url.pathname === '/api/admin/diagnosticos' && req.method === 'POST') return await dxLista(req, env);
       if (url.pathname.startsWith('/api/')) return json({ error: 'No encontrado' }, 404);
       if (url.pathname === GUIA || url.pathname === GUIA + 'index.html') return await guia(req, env, url);
     } catch (e) {
@@ -199,13 +204,62 @@ function vistaPrevia(html) {
 async function accesoManual(req, env) {
   if (!env.ADMIN_CLAVE || !(env.ACCESO_SECRET || env.PAYPHONE_TOKEN)) return json({ error: 'Falta configurar ADMIN_CLAVE en Cloudflare.' }, 503);
   let body; try { body = await req.json(); } catch { return json({ error: 'JSON inválido' }, 400); }
-  const dada = String(body.clave || '');
-  // comparación en tiempo constante
-  const a = await firma(env, 'admin:' + dada), b = await firma(env, 'admin:' + env.ADMIN_CLAVE);
-  let d = a.length ^ b.length; for (let i = 0; i < Math.min(a.length, b.length); i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  if (d !== 0) { await new Promise((r) => setTimeout(r, 800)); return json({ error: 'Clave incorrecta' }, 401); }
+  if (!(await claveOk(env, body.clave))) { await new Promise((r) => setTimeout(r, 800)); return json({ error: 'Clave incorrecta' }, 401); }
   const nota = String(body.nota || '').normalize('NFD').replace(/[^\w]+/g, '').slice(0, 20) || 'cliente';
   const txid = 'PMG-T-' + nota + '-' + Date.now().toString(36);
   const acceso = await crearAcceso(env, txid);
   return json({ url: GUIA + '?acceso=' + encodeURIComponent(acceso) });
+}
+
+// comparación de la clave de administración en tiempo constante
+async function claveOk(env, clave) {
+  const a = await firma(env, 'admin:' + String(clave || '')), b = await firma(env, 'admin:' + env.ADMIN_CLAVE);
+  let d = a.length ^ b.length; for (let i = 0; i < Math.min(a.length, b.length); i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return d === 0;
+}
+
+// ---------- Diagnosticador: registro de resultados ----------
+const DX_PERFILES = ['deportista', 'equipo', 'evento', 'marca'];
+const txt = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u0008\u000B-\u001F]/g, ' ').trim().slice(0, n);
+function jsonCorto(v, n) { try { const s = JSON.stringify(v == null ? null : v); return s.length <= n ? s : null; } catch { return null; } }
+
+async function dxGuardar(req, env) {
+  if (!env.DB) return json({ error: 'Registro no disponible' }, 503);
+  const crudo = await req.text();
+  if (crudo.length > 24000) return json({ error: 'Demasiado grande' }, 413);
+  let b; try { b = JSON.parse(crudo); } catch { return json({ error: 'JSON inválido' }, 400); }
+  const perfil = txt(b.perfil, 20);
+  if (!DX_PERFILES.includes(perfil)) return json({ error: 'Perfil inválido' }, 400);
+  const total = Math.max(0, Math.min(100, Math.round(Number(b.total) || 0)));
+  const ahora = new Date().toISOString();
+  let id = /^[0-9a-f-]{36}$/.test(String(b.id || '')) ? String(b.id) : '';
+
+  // 1) Sin contacto: solo el resultado, sin datos personales.
+  if (!id) {
+    id = crypto.randomUUID();
+    await env.DB.prepare('INSERT INTO diagnosticos (id, creado, perfil, total, nivel, dims, pais) VALUES (?,?,?,?,?,?,?)')
+      .bind(id, ahora, perfil, total, txt(b.nivel, 60), jsonCorto(b.dims, 1500), txt(req.cf && req.cf.country, 4)).run();
+  }
+  // 2) Con contacto: solo si la persona aceptó que le escribamos.
+  if (b.contacto !== undefined) {
+    if (b.acepta !== true) return json({ error: 'Falta aceptar el contacto' }, 400);
+    const canal = b.canal === 'whatsapp' ? 'whatsapp' : 'correo';
+    let contacto = txt(b.contacto, 120);
+    if (canal === 'correo') { if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contacto)) return json({ error: 'Correo inválido' }, 400); contacto = contacto.toLowerCase(); }
+    else { contacto = contacto.replace(/[^\d+]/g, ''); if (contacto.replace(/\D/g, '').length < 8) return json({ error: 'Número inválido' }, 400); }
+    const r = await env.DB.prepare('UPDATE diagnosticos SET actualizado=?, nombre=?, canal=?, contacto=?, acepta=1, proyecto=?, ciudad=?, respuestas=?, resumen=?, total=?, nivel=?, dims=? WHERE id=?')
+      .bind(ahora, txt(b.nombre, 80), canal, contacto, txt(b.proyecto, 120), txt(b.ciudad, 80), jsonCorto(b.respuestas, 12000), txt(b.resumen, 4000), total, txt(b.nivel, 60), jsonCorto(b.dims, 1500), id).run();
+    if (!r.meta || !r.meta.changes) return json({ error: 'Diagnóstico no encontrado' }, 404);
+  }
+  return json({ ok: true, id });
+}
+
+async function dxLista(req, env) {
+  if (!env.ADMIN_CLAVE || !(env.ACCESO_SECRET || env.PAYPHONE_TOKEN)) return json({ error: 'Falta configurar ADMIN_CLAVE en Cloudflare.' }, 503);
+  if (!env.DB) return json({ error: 'Base de datos no disponible' }, 503);
+  let body; try { body = await req.json(); } catch { return json({ error: 'JSON inválido' }, 400); }
+  if (!(await claveOk(env, body.clave))) { await new Promise((r) => setTimeout(r, 800)); return json({ error: 'Clave incorrecta' }, 401); }
+  const filas = await env.DB.prepare('SELECT id, creado, perfil, total, nivel, dims, proyecto, ciudad, nombre, canal, contacto, acepta, respuestas, resumen, correo_enviado, pais FROM diagnosticos ORDER BY creado DESC LIMIT 2000').all();
+  const tot = await env.DB.prepare('SELECT COUNT(*) AS n, SUM(CASE WHEN contacto IS NOT NULL THEN 1 ELSE 0 END) AS c FROM diagnosticos').first();
+  return json({ total: tot.n || 0, conContacto: tot.c || 0, filas: filas.results || [] });
 }

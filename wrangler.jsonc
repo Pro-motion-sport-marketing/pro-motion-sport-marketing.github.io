@@ -9,6 +9,9 @@
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*", "/guias/de-deportista-a-oferta-comercial", "/guias/de-deportista-a-oferta-comercial/", "/guias/de-deportista-a-oferta-comercial/index.html"]
   },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "promotion-diagnosticos", "database_id": "92b3dc7d-2cc2-47a8-8308-98aaaf415d81" }
+  ],
   "routes": [
     { "pattern": "promotionec.com", "custom_domain": true },
     { "pattern": "www.promotionec.com", "custom_domain": true }
