@@ -38,6 +38,21 @@
   function dxInc() { return '<div class="dx-inc"><span class="lbl">¿Y el incentivo tributario?</span><p>' + DX_INC + '</p><p><b>El incentivo acelera una decisión. No la reemplaza.</b></p></div>'; }
   function dxBrecha(D, nom) { var k = Object.keys(D).sort(function (x, y) { return D[y] - D[x]; }), a = k[0], b = k[k.length - 1], n = D[a] - D[b], N = function (x) { return (nom ? nom[x] : x).toLowerCase(); };
     return ['Tu punto más fuerte es ' + N(a) + ' (' + D[a] + ') y el más débil, ' + N(b) + ' (' + D[b] + ')', n >= 30 ? 'Hay ' + n + ' puntos de distancia entre ambos. Conviene apoyarte en lo primero para resolver lo segundo: es más rápido que empezar de cero.' : 'Solo hay ' + n + ' puntos entre ambos: el proyecto está parejo, así que avanzar depende de subir todo un escalón y no de arreglar un solo frente.']; }
+  /* Precio y aviso según el país: Ecuador = USD 60 + IVA e incentivo tributario; otros países = USD 70, sin incentivo ni carrito. */
+  function dxEc(p) { return !p || p === 'Ecuador'; }
+  function dxAud(ec) { return [DX_AUD[0], DX_AUD[1], ec ? DX_AUD[2] : 'USD 70 (primeros 10 proyectos)']; }
+  function dxPais(res, pais, quien) {
+    if (dxEc(pais)) return;
+    $$('.dx-inc', res).forEach(function (x) { x.hidden = true; x.innerHTML = ''; });
+    $$('.dx-aud-precio b', res).forEach(function (x) { x.textContent = 'USD 70'; });
+    $$('.dx-of-c.uno em', res).forEach(function (x) { x.textContent = 'USD 70 (primeros 10 proyectos)'; });
+    $$('[data-carrito="auditoria-promatch"]', res).forEach(function (b) {
+      var n = document.createElement('button'); n.type = 'button'; n.className = 'btn crema'; n.textContent = 'Quiero la Auditoría ProMatch completa';
+      n.onclick = function () { abrirWA('Hola Daniel, hice el diagnóstico de Pro Motion como ' + quien + ' desde ' + pais + ' y quiero la Auditoría ProMatch (USD 70). ¿Cómo hago el pago?'); };
+      b.parentNode.replaceChild(n, b);
+    });
+  }
+  document.addEventListener('change', function (e) { var t = e.target; if (!t || t.name !== 'pais' || !t.form) return; var n = t.form.querySelector('.dx-inc-n'); if (n) n.hidden = t.value !== 'Ecuador'; });
   function dxSinHtml(t) { return String(t).replace(/<[^>]*>/g, ''); }
   function dxGate(res, d) {
     var box = res.querySelector('.dg-res'); if (!box) return;
@@ -1066,9 +1081,10 @@
         '<a class="dx-mas" href="../promatch/#como-funciona">Ver cómo funciona la Auditoría ProMatch »</a><a class="dx-mas dx-casos" href="../deportistas/#fichas">Quiero ver casos de deportistas con mejor puntaje »</a><button type="button" class="dg-atras" data-dg-otra>Volver a empezar</button></div>' +
         dxInc() + '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está tu propuesta comercial y qué le falta, no cuánto vale tu deporte ni tu trayectoria.</p></div>';
       setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
+      dxPais(res, uno('pais'), 'deportista');
       var dimsDep = {}; Object.keys(r.D).forEach(function (k) { dimsDep[NOM[k]] = r.D[k]; });
       dxGate(res, { perfil: 'deportista', quien: 'deportista', total: r.total, nivel: nivel, dims: dimsDep, proyecto: uno('deporte'), ciudad: [uno('ciudad'), uno('pais')].filter(Boolean).join(', '), respuestas: dxResp(diag),
-        detalle: { estado: L0.E[1], arq: [a.a, a.v, a.o, a.act], ventajas: L0.fuertes.map(function (k) { return [NOM[k], FZ[k]]; }), riesgos: L0.R, prios: L0.prios.map(function (p) { return [p[0], p[1]]; }), oferta: [DX_AUD].concat(L0.of.map(function (o) { return ['Después, si hace falta: ' + o[0], o[1], o[2]]; })), lecturas: L0.LE, plan: L0.plan, porque: L0.porque.map(dxSinHtml), voz: L0.voz, etapa: L0.ni },
+        detalle: { estado: L0.E[1], arq: [a.a, a.v, a.o, a.act], ventajas: L0.fuertes.map(function (k) { return [NOM[k], FZ[k]]; }), riesgos: L0.R, prios: L0.prios.map(function (p) { return [p[0], p[1]]; }), ec: dxEc(uno('pais')), oferta: [dxAud(dxEc(uno('pais')))].concat(L0.of.map(function (o) { return ['Después, si hace falta: ' + o[0], o[1], o[2]]; })), lecturas: L0.LE, plan: L0.plan, porque: L0.porque.map(dxSinHtml), voz: L0.voz, etapa: L0.ni },
         resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + L0.prios.map(function (p) { return p[0]; }).join('; ') + '\nRiesgos: ' + (L0.R.map(function (x) { return x[0]; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + L0.of.map(function (o) { return o[0]; }).join('; ') });
       $('[data-dg-wa]', res).onclick = function () {
         var L = function (t, x) { return x ? '\n• ' + t + ': ' + x : ''; };
@@ -1077,7 +1093,7 @@
           '\n\n*Capas de valor activas*\n' + (L0.capas.filter(function (c) { return c[2]; }).map(function (c) { return '• ' + c[0]; }).join('\n') || '• Ninguna todavía') +
           '\n\n*Riesgos*\n' + (L0.R.map(function (x) { return '• ' + x[0]; }).join('\n') || '• Sin riesgos fuertes') +
           '\n\n*Prioridades a 90 días*\n' + L0.prios.map(function (p, i) { return (i + 1) + '. ' + p[0]; }).join('\n') +
-          '\n\n*Siguiente paso sugerido*\n• Auditoría ProMatch (USD 60 + IVA)\n' + L0.of.map(function (o) { return '• Después: ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
+          '\n\n*Siguiente paso sugerido*\n• Auditoría ProMatch (' + (dxEc(uno('pais')) ? 'USD 60 + IVA' : 'USD 70') + ')\n' + L0.of.map(function (o) { return '• Después: ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
           '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('País', uno('pais')) + L('Edad', uno('edad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
           '\n\n*Mi comunidad*' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
           '\n\n*Lo que ofrezco*' + L('Perfil comercial', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
@@ -1199,6 +1215,7 @@
           '<a class="dx-mas dx-casos" href="../deportistas/#fichas">Ver deportistas con un puntaje ProMatch alto »</a>' +
           '<button type="button" class="dg-atras" data-dx-otra>Volver a empezar</button></div>' +
           (esMarca ? '' : dxInc()) + '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está la propuesta comercial y qué le falta, no el valor del proyecto en sí.</p></div>';
+        dxPais(res, v('pais')[0], P.quien);
         $('[data-dx-wa]', res).onclick = function () {
           var cont = v('contacto')[0];
           var msg = 'Hola Daniel, ' + (cont ? 'soy ' + cont + '. Hice' : 'hice') + ' el diagnóstico de Pro Motion como ' + P.quien + (nombre ? ' (' + nombre + ')' : '') + ' y quiero ejecutar mi plan con un asesor.\n' +
@@ -1218,7 +1235,7 @@
         form.classList.add('dx-hecho');
         setTimeout(function () { anillo($('.dg-res .dx-ring', res), r.total); }, 250);
         dxGate(res, { perfil: form.dataset.perfil, quien: P.quien, total: r.total, nivel: nivel, dims: r.D, proyecto: nombre, ciudad: [v('ciudad')[0], v('pais')[0]].filter(Boolean).join(', '), nombreSug: (v('contacto')[0] || '').split(',')[0], respuestas: dxResp(form),
-          detalle: { estado: P.estado[ni], arq: [a.a, a.v, a.o.replace(/^Te conviene: /, ''), a.act || ''], ventajas: fuertes.map(function (k) { return [k, P.fz[k]]; }), riesgos: (riesgos.length ? riesgos.map(function (g) { return [g.t, g.d, g.f || '']; }) : brechas.slice(0, 2).map(function (k) { return [P.acc[k][0], P.acc[k][1]]; })), prios: brechas.map(function (k) { return [P.acc[k][0], P.acc[k][1]]; }), oferta: (esMarca ? [] : [DX_AUD]).concat(oferta.map(function (o) { return [(esMarca ? '' : 'Después, si hace falta: ') + o.n, o.d, o.r]; })), lecturas: LE, plan: plan, porque: porque.map(dxSinHtml), voz: voz, etapa: ni },
+          detalle: { estado: P.estado[ni], arq: [a.a, a.v, a.o.replace(/^Te conviene: /, ''), a.act || ''], ventajas: fuertes.map(function (k) { return [k, P.fz[k]]; }), riesgos: (riesgos.length ? riesgos.map(function (g) { return [g.t, g.d, g.f || '']; }) : brechas.slice(0, 2).map(function (k) { return [P.acc[k][0], P.acc[k][1]]; })), prios: brechas.map(function (k) { return [P.acc[k][0], P.acc[k][1]]; }), ec: dxEc(v('pais')[0]), oferta: (esMarca ? [] : [dxAud(dxEc(v('pais')[0]))]).concat(oferta.map(function (o) { return [(esMarca ? '' : 'Después, si hace falta: ') + o.n, o.d, o.r]; })), lecturas: LE, plan: plan, porque: porque.map(dxSinHtml), voz: voz, etapa: ni },
           resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + brechas.map(function (k) { return P.acc[k][0]; }).join('; ') + '\nRiesgos: ' + (riesgos.map(function (g) { return g.t; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + oferta.map(function (o) { return o.n; }).join('; ') });
         pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
         res.scrollIntoView({ behavior: 'smooth', block: 'start' });

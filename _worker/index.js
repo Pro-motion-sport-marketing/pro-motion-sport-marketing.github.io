@@ -279,7 +279,7 @@ function dxDetalle(d) {
   if (!d || typeof d !== 'object') return null;
   const pares = (a, n) => (Array.isArray(a) ? a : []).slice(0, n).map((x) => (Array.isArray(x) ? x : [x]).slice(0, 3).map((y) => sinHtml(y, 320)));
   return { estado: sinHtml(d.estado, 500), arq: (Array.isArray(d.arq) ? d.arq : []).slice(0, 4).map((y) => sinHtml(y, 400)), ventajas: pares(d.ventajas, 4), riesgos: pares(d.riesgos, 4), prios: pares(d.prios, 4), oferta: pares(d.oferta, 4),
-    lecturas: pares(d.lecturas, 4), voz: (Array.isArray(d.voz) ? d.voz : []).slice(0, 5).map((y) => sinHtml(y, 420)), porque: (Array.isArray(d.porque) ? d.porque : []).slice(0, 2).map((y) => sinHtml(y, 1300)),
+    ec: d.ec === true, lecturas: pares(d.lecturas, 4), voz: (Array.isArray(d.voz) ? d.voz : []).slice(0, 5).map((y) => sinHtml(y, 420)), porque: (Array.isArray(d.porque) ? d.porque : []).slice(0, 2).map((y) => sinHtml(y, 1300)),
     plan: (Array.isArray(d.plan) ? d.plan : []).slice(0, 3).map((x) => (Array.isArray(x) ? x : []).slice(0, 6).map((y) => sinHtml(y, 360))) };
 }
 function dxDims(dims) {
@@ -354,7 +354,7 @@ ${bloque('oportunidades', arqHtml)}
 ${bloque('riesgos', riesgosHtml)}
 ${planHtml ? bloque('plan', planHtml, 'Para los próximos 90 días, en este orden. Cada prioridad con su porqué, tres pasos que puedes dar por tu cuenta y la señal de que ya está hecha.') : bloque('prioridades', ul(D.prios, true), 'Para los próximos 90 días, en este orden.')}
 ${bloque(porque.length ? 'siguiente' : 'oferta', porque.map((t) => P(esc(t))).join('') + ofertaHtml + `<p style="margin:4px 0 0;font-size:13px;color:#6f665c">Valores referenciales: cada proyecto se cotiza a medida. Con el plan de arriba también puedes avanzar por tu cuenta.</p>`)}
-${d.perfil === 'marca' ? '' : `<tr><td style="padding:26px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${N}"><tr><td style="padding:14px 16px"><p style="margin:0 0 6px;font-size:11px;letter-spacing:2.5px;color:${R};text-transform:uppercase;font-weight:700">¿Y el incentivo tributario?</p><p style="margin:0 0 6px;font-size:14.5px;line-height:1.5;color:${N}">${INC}</p><p style="margin:0;font-size:14.5px;font-weight:700;color:${N}">El incentivo acelera una decisión. No la reemplaza.</p></td></tr></table></td></tr>`}
+${d.perfil === 'marca' || !D.ec ? '' : `<tr><td style="padding:26px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:2px dashed ${N}"><tr><td style="padding:14px 16px"><p style="margin:0 0 6px;font-size:11px;letter-spacing:2.5px;color:${R};text-transform:uppercase;font-weight:700">¿Y el incentivo tributario?</p><p style="margin:0 0 6px;font-size:14.5px;line-height:1.5;color:${N}">${INC}</p><p style="margin:0;font-size:14.5px;font-weight:700;color:${N}">El incentivo acelera una decisión. No la reemplaza.</p></td></tr></table></td></tr>`}
 <tr><td style="padding:30px 0 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${N}"><tr><td style="padding:26px 28px 28px">
 ${tag('profundizar')}
 <p style="margin:6px 0 18px;font-size:15px;line-height:1.55;color:${C}">Este diagnóstico sale solo de tus respuestas. En la Auditoría ProMatch revisamos tu contenido real, categoría por categoría, y te entregamos un informe con evidencia. El objetivo no es solo que sepas en qué punto está hoy tu proyecto comercial deportivo: es que ganes seguridad y tengas una herramienta para respaldar lo que dices cuando hables con posibles auspiciantes. Y si necesitas ayuda para ponerlo en marcha, conversamos.</p>
@@ -372,7 +372,7 @@ ${tag('profundizar')}
     tl('Riesgos y conflictos', (D.riesgos || []).map((x) => [x[0], (x[1] || '') + (x[2] ? ' Cómo se resuelve: ' + x[2] : '')])) +
     (plan.length ? '\n\nTu plan, paso a paso' + plan.map((x, i) => `\n\n${i + 1}. ${x[0]}\n${x[1] || ''}\n${x.slice(2, 5).filter(Boolean).map((y) => '   - ' + y).join('\n')}${x[5] ? '\n   Listo cuando: ' + x[5] : ''}`).join('') : tl('Prioridades a 90 días', D.prios)) +
     (porque.length ? '\n\nTu siguiente paso, y por qué\n' + porque.join('\n\n') : '') + tl(porque.length ? 'Opciones' : 'Oferta sugerida', D.oferta) +
-    (d.perfil === 'marca' ? '' : '\n\n¿Y el incentivo tributario?\n' + INC) +
+    (d.perfil === 'marca' || !D.ec ? '' : '\n\n¿Y el incentivo tributario?\n' + INC) +
     `\n\n¿Quieres profundizarlo? En la Auditoría ProMatch revisamos tu contenido real y te entregamos un informe con evidencia: para que sepas dónde está tu proyecto, ganes seguridad y tengas con qué respaldarte ante posibles auspiciantes.\nEscríbenos: https://wa.me/593984678812\nAuditoría ProMatch: https://promotionec.com/promatch/#como-funciona\nCasos de deportistas con mejor puntaje: https://promotionec.com/deportistas/#fichas\n\nResultado orientativo, calculado solo con tus respuestas. No garantiza auspicios.\nSi no quieres que te escribamos, responde a este mensaje. Privacidad: https://promotionec.com/privacidad/`;
   return { asunto: `Tu diagnóstico Pro Motion: ${d.total}/100 · ${d.nivel}`.slice(0, 140), html, texto };
 }
