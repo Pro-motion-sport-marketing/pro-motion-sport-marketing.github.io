@@ -33,9 +33,9 @@
     if (prev && prev.contacto) { conContacto(prev); return; }
     box.classList.add('dx-cerrado');
     var g = document.createElement('div'); g.className = 'dx-gate';
-    g.innerHTML = '<span class="lbl">Falta un paso</span>' +
-      '<h4>Desbloquea tu diagnóstico completo</h4>' +
-      '<p>Ya tienes tu puntaje. El diagnóstico completo incluye tus <b>ventajas, riesgos, prioridades a 90 días y la oferta recomendada</b>. Dinos a dónde escribirte y lo ves aquí mismo, al instante.</p>' +
+    g.innerHTML = '<span class="lbl">Hay más</span>' +
+      '<h4>Mira tu diagnóstico completo</h4>' +
+      '<p>Ya viste tu puntaje, tus ventajas y tu prioridad número uno. En el diagnóstico completo analizamos además tus <b>oportunidades, tus riesgos, el resto de tus prioridades a 90 días y la oferta sugerida para tu situación</b>. Dinos si prefieres correo o WhatsApp y lo ves aquí mismo, al instante.</p>' +
       '<div class="dx-gate-f">' +
         '<label>Tu nombre<input type="text" name="_gx_nombre" maxlength="80" autocomplete="name" placeholder="Ej.: Ana Pérez"></label>' +
         '<div class="dx-gate-canal" role="radiogroup" aria-label="¿Por dónde te escribimos?">' +
@@ -47,6 +47,12 @@
         '<p class="dx-gate-av" aria-live="polite"></p>' +
       '</div>';
     var ancla = box.querySelector('.dg-dims'); ancla.parentNode.insertBefore(g, ancla.nextSibling);
+    // Adelanto gratis: las ventajas y la prioridad número uno se ven antes de pedir el contacto.
+    var gratis = document.createElement('div'); gratis.className = 'dx-cuad dx-gratis';
+    var vOk = box.querySelector('.dx-cuad .dx-ok'), cP = box.querySelector('.dx-cuad .dx-c:last-child'), p1 = cP && (cP.querySelector('ol li') || cP.querySelector('p'));
+    if (vOk) gratis.appendChild(vOk.cloneNode(true));
+    if (p1) { var c1 = document.createElement('div'); c1.className = 'dx-c dx-uno'; c1.innerHTML = '<span class="lbl">Tu prioridad número uno</span><p>' + p1.innerHTML + '</p>'; gratis.appendChild(c1); }
+    if (gratis.children.length) g.parentNode.insertBefore(gratis, g);
     var canal = 'correo', inC = g.querySelector('[name=_gx_contacto]'), inN = g.querySelector('[name=_gx_nombre]'), av = g.querySelector('.dx-gate-av');
     if (d.nombreSug) inN.value = d.nombreSug;
     $$('.dx-gate-canal button', g).forEach(function (b) { b.addEventListener('click', function () {
@@ -70,7 +76,7 @@
       box.classList.remove('dx-cerrado');
       var ok = document.createElement('p'); ok.className = 'dx-gate-listo';
       ok.innerHTML = '<b>Listo, ' + dxEsc(nombre.split(' ')[0]) + '.</b> Aquí tienes tu diagnóstico completo. ' + (canal === 'whatsapp' ? 'Envíanos el mensaje que se abrió en WhatsApp y seguimos por ahí.' : 'Te escribiremos a ' + dxEsc(cont) + ' con sugerencias para profundizarlo.');
-      g.parentNode.replaceChild(ok, g);
+      g.parentNode.replaceChild(ok, g); if (gratis.parentNode) gratis.parentNode.removeChild(gratis);
       ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
       if (canal === 'correo') envio.then(function (x) { if (x && x.correo) ok.innerHTML = '<b>Listo, ' + dxEsc(nombre.split(' ')[0]) + '.</b> Aquí tienes tu diagnóstico completo. También te lo enviamos a ' + dxEsc(cont) + ' (si no lo ves, revisa la carpeta de spam).'; });
     });
