@@ -278,7 +278,9 @@ const sinHtml = (t, n) => txt(String(t == null ? '' : t).replace(/<[^>]*>/g, '')
 function dxDetalle(d) {
   if (!d || typeof d !== 'object') return null;
   const pares = (a, n) => (Array.isArray(a) ? a : []).slice(0, n).map((x) => (Array.isArray(x) ? x : [x]).slice(0, 3).map((y) => sinHtml(y, 320)));
-  return { estado: sinHtml(d.estado, 500), arq: (Array.isArray(d.arq) ? d.arq : []).slice(0, 4).map((y) => sinHtml(y, 400)), ventajas: pares(d.ventajas, 4), riesgos: pares(d.riesgos, 4), prios: pares(d.prios, 4), oferta: pares(d.oferta, 3) };
+  return { estado: sinHtml(d.estado, 500), arq: (Array.isArray(d.arq) ? d.arq : []).slice(0, 4).map((y) => sinHtml(y, 400)), ventajas: pares(d.ventajas, 4), riesgos: pares(d.riesgos, 4), prios: pares(d.prios, 4), oferta: pares(d.oferta, 4),
+    lecturas: pares(d.lecturas, 4), voz: (Array.isArray(d.voz) ? d.voz : []).slice(0, 5).map((y) => sinHtml(y, 420)), porque: (Array.isArray(d.porque) ? d.porque : []).slice(0, 2).map((y) => sinHtml(y, 1300)),
+    plan: (Array.isArray(d.plan) ? d.plan : []).slice(0, 3).map((x) => (Array.isArray(x) ? x : []).slice(0, 6).map((y) => sinHtml(y, 360))) };
 }
 function dxDims(dims) {
   const o = {}; if (!dims || typeof dims !== 'object') return o;
@@ -308,16 +310,32 @@ function dxMensaje(d) {
   const etapa = d.total >= 70 ? 3 : d.total >= 45 ? 2 : 1;
   const lista = (a) => (a || []).filter((x) => x[0]).map((x) => `<li style="margin:0 0 9px"><b>${esc(x[0])}${/[.!?]$/.test(x[0]) ? '' : '.'}</b> ${esc(x[1] || '')}${x[2] ? ` <span style="color:${R};font-weight:700">${esc(x[2])}</span>` : ''}</li>`).join('');
   // Título de sección: la etiqueta roja del manual, como imagen (ancho real / 2 para pantallas nítidas).
-  const TAGS = { dimensiones: [535, 'Tus dimensiones'], ventajas: [341, 'Ventajas'], oportunidades: [494, 'Oportunidades'], riesgos: [648, 'Riesgos y conflictos'], prioridades: [643, 'Tus prioridades'], oferta: [523, 'Oferta sugerida'], profundizar: [741, '¿Quieres profundizarlo?'] };
+  const TAGS = { dimensiones: [535, 'Tus dimensiones'], ventajas: [341, 'Ventajas'], oportunidades: [494, 'Oportunidades'], riesgos: [648, 'Riesgos y conflictos'], prioridades: [513, 'Tus prioridades'], oferta: [523, 'Oferta sugerida'], lectura: [494, 'Lo que leemos'], plan: [604, 'Tu plan paso a paso'], siguiente: [549, 'Tu siguiente paso'], profundizar: [741, '¿Quieres profundizarlo?'] };
   const tag = (k) => `<img src="${A}tag-${k}.png" width="${Math.round(TAGS[k][0] / 2.3)}" alt="${TAGS[k][1]}" style="display:block;border:0;max-width:86%;height:auto;margin:0 0 10px -8px;font:700 15px ${F};color:${R};text-transform:uppercase">`;
   const bloque = (k, cuerpo, nota) => (cuerpo ? `<tr><td style="padding:26px 28px 0">${tag(k)}${nota ? `<p style="margin:0 0 8px;font-size:13px;color:#6f665c">${nota}</p>` : ''}${cuerpo}</td></tr>` : '');
   const ul = (a, ord) => { const l = lista(a); return l ? `<${ord ? 'ol' : 'ul'} style="margin:0;padding-left:20px;font-size:15px;line-height:1.5;color:${N}">${l}</${ord ? 'ol' : 'ul'}>` : ''; };
   const barras = Object.keys(dims).map((k) => `<tr><td style="padding:5px 10px 5px 0;font-size:14px;color:${N};white-space:nowrap">${esc(k)}</td><td width="100%" style="padding:5px 0"><div style="background:#eadfce;height:9px"><div style="background:${R};height:9px;width:${dims[k]}%"></div></div></td><td style="padding:5px 0 5px 10px;font-size:14px;font-weight:700;color:${N}">${dims[k]}</td></tr>`).join('');
+  const P = (t, m) => `<p style="margin:${m || '0 0 10px'};font-size:15px;line-height:1.55;color:${N}">${t}</p>`;
+  // Riesgos: el tercer dato es cómo se resuelve.
+  const riesgosHtml = (() => { const l = (D.riesgos || []).filter((x) => x[0]).map((x) => `<li style="margin:0 0 11px"><b>${esc(x[0])}.</b> ${esc(x[1] || '')}${x[2] ? `<br><span style="font-size:14px;color:#4a433b"><b>Cómo se resuelve:</b> ${esc(x[2])}</span>` : ''}</li>`).join(''); return l ? `<ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.5;color:${N}">${l}</ul>` : ''; })();
+  // Plan: cada prioridad con su porqué, tres pasos y la señal de que está hecha.
+  const plan = (D.plan || []).filter((x) => x[0]);
+  const planHtml = plan.map((x, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;border-top:2px solid ${N}"><tr>
+<td width="46" valign="top" style="padding:14px 0 0"><div style="width:34px;height:34px;line-height:34px;border-radius:17px;background:${R};color:#ffffff;font-size:17px;font-weight:800;text-align:center">${i + 1}</div></td>
+<td valign="top" style="padding:14px 0 0"><p style="margin:0 0 6px;font-size:17px;font-weight:800;line-height:1.25;color:${N}">${esc(x[0])}</p>${P(esc(x[1] || ''), '0 0 8px')}
+<ol style="margin:0 0 10px;padding-left:20px;font-size:15px;line-height:1.5;color:${N}">${x.slice(2, 5).filter(Boolean).map((y) => `<li style="margin:0 0 7px">${esc(y)}</li>`).join('')}</ol>
+${x[5] ? `<p style="margin:0;background:${C};padding:8px 12px;font-size:14px;line-height:1.45;color:${N}"><b>Listo cuando:</b> ${esc(x[5])}</p>` : ''}</td></tr></table>`).join('');
+  const porque = (D.porque || []).filter(Boolean);
+  const ofertaHtml = (D.oferta || []).filter((x) => x[0]).map((x, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 10px;background:${i || !porque.length ? '#ffffff' : N};border:2px solid ${N}"><tr><td style="padding:14px 16px"><p style="margin:0 0 4px;font-size:16px;font-weight:800;line-height:1.3;color:${i || !porque.length ? N : '#ffffff'}">${esc(x[0])}</p><p style="margin:0 0 6px;font-size:14.5px;line-height:1.5;color:${i || !porque.length ? N : C}">${esc(x[1] || '')}</p>${x[2] ? `<p style="margin:0;font-size:15px;font-weight:800;color:${i || !porque.length ? R : '#ffffff'}">${esc(x[2])}</p>` : ''}</td></tr></table>`).join('');
+  const voz = (D.voz || []).filter(Boolean);
+  const vozHtml = voz.length ? `<tr><td style="padding:26px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td width="104" valign="bottom" style="padding:0 14px 0 0"><img src="${A}jabali-${etapa}.png" width="104" alt="Jabalí empresario" style="display:block;border:0;width:104px;height:auto"></td>
+<td valign="middle" style="background:#ffffff;border:2px solid ${N};border-radius:18px;padding:16px 18px"><p style="margin:0 0 8px;font-size:11px;letter-spacing:2.5px;color:${R};text-transform:uppercase;font-weight:700">Así te vería hoy una marca</p>${voz.map((t, i) => `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:${N}${i ? '' : ';font-weight:700'}">${esc(t)}</p>`).join('')}<p style="margin:4px 0 0;font-size:12px;line-height:1.4;color:#6f665c">Lectura simulada a partir de tus respuestas, no la opinión de una marca real.</p></td></tr></table></td></tr>` : '';
   const arq = D.arq || [];
   const arqHtml = arq[0] ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:${N}"><b>${esc(arq[0])}.</b> ${esc(arq[1] || '')}</p>` + (arq[2] ? `<p style="margin:0 0 8px;font-size:15px;line-height:1.5;color:${N}"><b>Dónde encajas mejor:</b> ${esc(arq[2])}</p>` : '') + (arq[3] ? `<p style="margin:0;font-size:15px;line-height:1.5;color:${N}"><b>Idea de activación:</b> ${esc(arq[3])}</p>` : '') : '';
   const waTxt = encodeURIComponent(`Hola Daniel, soy ${d.nombre || ''}. Recibí mi diagnóstico de Pro Motion (${d.total}/100) y quiero conversar sobre cómo profundizarlo.`);
   const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>Tu diagnóstico Pro Motion</title></head><body style="margin:0;background:#efe6d9;font-family:${F}">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0">${d.total}/100 · ${esc(d.nivel)}. Tus ventajas, oportunidades, riesgos, prioridades y la oferta sugerida.</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">${d.total}/100 · ${esc(d.nivel)}. Lo que leemos en tus respuestas, tu plan paso a paso y tu siguiente paso.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#efe6d9"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:${H}">
 <tr><td style="background:${N};padding:22px 28px"><img src="https://promotionec.com/assets/brand/logo-blanco.png" width="140" alt="Pro Motion Sport Marketing" style="display:block;border:0;color:#fff"></td></tr>
@@ -328,11 +346,13 @@ function dxMensaje(d) {
 <td valign="middle" style="padding:18px 20px"><p style="margin:0;font-size:11px;letter-spacing:3px;color:${C};text-transform:uppercase">Estado actual</p><p style="margin:4px 0 0;font-size:20px;font-weight:800;color:#ffffff;text-transform:uppercase;line-height:1.15">${esc(d.nivel)}</p></td></tr></table>
 ${D.estado ? `<p style="margin:14px 0 0;font-size:15px;line-height:1.5;color:${N}">${esc(D.estado)}</p>` : ''}</td></tr>
 ${bloque('dimensiones', barras ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${barras}</table>` : '')}
+${vozHtml}
+${bloque('lectura', ul(D.lecturas), 'Lo que vemos al cruzar tus respuestas.')}
 ${bloque('ventajas', ul(D.ventajas))}
 ${bloque('oportunidades', arqHtml)}
-${bloque('riesgos', ul(D.riesgos))}
-${bloque('prioridades', ul(D.prios, true), 'Para los próximos 90 días, en este orden.')}
-${bloque('oferta', ul(D.oferta), 'Valores referenciales: cada proyecto se cotiza a medida.')}
+${bloque('riesgos', riesgosHtml)}
+${planHtml ? bloque('plan', planHtml, 'Para los próximos 90 días, en este orden. Cada prioridad con su porqué, tres pasos que puedes dar por tu cuenta y la señal de que ya está hecha.') : bloque('prioridades', ul(D.prios, true), 'Para los próximos 90 días, en este orden.')}
+${bloque(porque.length ? 'siguiente' : 'oferta', porque.map((t) => P(esc(t))).join('') + ofertaHtml + `<p style="margin:4px 0 0;font-size:13px;color:#6f665c">Valores referenciales: cada proyecto se cotiza a medida. Con el plan de arriba también puedes avanzar por tu cuenta.</p>`)}
 <tr><td style="padding:30px 0 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${N}"><tr><td style="padding:26px 28px 28px">
 ${tag('profundizar')}
 <p style="margin:6px 0 18px;font-size:15px;line-height:1.55;color:${C}">Este diagnóstico sale solo de tus respuestas. En la Auditoría ProMatch revisamos tu contenido real, categoría por categoría, y te entregamos un informe con evidencia. El objetivo no es solo que sepas en qué punto está hoy tu proyecto comercial deportivo: es que ganes seguridad y tengas una herramienta para respaldar lo que dices cuando hables con posibles auspiciantes. Y si necesitas ayuda para ponerlo en marcha, conversamos.</p>
@@ -345,8 +365,10 @@ ${tag('profundizar')}
   const tl = (t, a) => { const l = (a || []).filter((x) => x[0]).map((x) => `- ${x[0]}: ${x[1] || ''}${x[2] ? ' (' + x[2] + ')' : ''}`).join('\n'); return l ? `\n\n${t}\n${l}` : ''; };
   const texto = `Hola${nombre ? ' ' + nombre : ''}, aquí está tu diagnóstico completo de Pro Motion.\n\n${d.total}/100 · ${d.nivel}${D.estado ? '\n' + D.estado : ''}` +
     (Object.keys(dims).length ? '\n\nTus dimensiones\n' + Object.keys(dims).map((k) => `- ${k}: ${dims[k]}`).join('\n') : '') +
-    tl('Ventajas', D.ventajas) + (arq[0] ? `\n\nOportunidades\n${arq[0]}. ${arq[1] || ''}${arq[2] ? '\nDónde encajas mejor: ' + arq[2] : ''}${arq[3] ? '\nIdea de activación: ' + arq[3] : ''}` : '') +
-    tl('Riesgos y conflictos', D.riesgos) + tl('Prioridades a 90 días', D.prios) + tl('Oferta sugerida', D.oferta) +
+    (voz.length ? '\n\nAsí te vería hoy una marca\n' + voz.join(' ') : '') + tl('Lo que leemos en tus respuestas', D.lecturas) + tl('Ventajas', D.ventajas) + (arq[0] ? `\n\nOportunidades\n${arq[0]}. ${arq[1] || ''}${arq[2] ? '\nDónde encajas mejor: ' + arq[2] : ''}${arq[3] ? '\nIdea de activación: ' + arq[3] : ''}` : '') +
+    tl('Riesgos y conflictos', (D.riesgos || []).map((x) => [x[0], (x[1] || '') + (x[2] ? ' Cómo se resuelve: ' + x[2] : '')])) +
+    (plan.length ? '\n\nTu plan, paso a paso' + plan.map((x, i) => `\n\n${i + 1}. ${x[0]}\n${x[1] || ''}\n${x.slice(2, 5).filter(Boolean).map((y) => '   - ' + y).join('\n')}${x[5] ? '\n   Listo cuando: ' + x[5] : ''}`).join('') : tl('Prioridades a 90 días', D.prios)) +
+    (porque.length ? '\n\nTu siguiente paso, y por qué\n' + porque.join('\n\n') : '') + tl(porque.length ? 'Opciones' : 'Oferta sugerida', D.oferta) +
     `\n\n¿Quieres profundizarlo? En la Auditoría ProMatch revisamos tu contenido real y te entregamos un informe con evidencia: para que sepas dónde está tu proyecto, ganes seguridad y tengas con qué respaldarte ante posibles auspiciantes.\nEscríbenos: https://wa.me/593984678812\nAuditoría ProMatch: https://promotionec.com/promatch/#como-funciona\n\nResultado orientativo, calculado solo con tus respuestas. No garantiza auspicios.\nSi no quieres que te escribamos, responde a este mensaje. Privacidad: https://promotionec.com/privacidad/`;
   return { asunto: `Tu diagnóstico Pro Motion: ${d.total}/100 · ${d.nivel}`.slice(0, 140), html, texto };
 }
