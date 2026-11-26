@@ -4297,3 +4297,9 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .dxa-tabla tr.anon td{color:#8a8178}
 .dxa-det{white-space:pre-wrap;font-size:13px;line-height:1.45;background:#fff8ef;padding:10px;margin-top:6px;max-width:520px}
 .dxa-tabla button{font:inherit;font-size:13px;background:none;border:0;color:var(--rojo);text-decoration:underline;cursor:pointer;padding:0}
+/* Diagnosticador · síntomas con personajes: el perezoso duda bajo los globos; Espid, sentado sobre la explicación */
+.dx-sint-izq{display:flex;flex-direction:column;align-items:flex-start}
+.dx-sint-dep{width:170px;height:auto;margin:2px 0 0 18px}
+.dx-causas{position:relative;margin-top:120px}
+.dx-sint-esp{position:absolute;right:40px;bottom:calc(100% - 84px);width:128px;height:auto;z-index:2;pointer-events:none}
+@media (max-width:900px){.dx-sint-dep{width:120px;margin-left:8px}.dx-causas{margin-top:100px}.dx-sint-esp{width:100px;right:22px;bottom:calc(100% - 68px)}}
