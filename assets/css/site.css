@@ -4299,7 +4299,7 @@ h1.epic,h2.epic,h3.epic{padding-top:.12em}
 .dxa-tabla button{font:inherit;font-size:13px;background:none;border:0;color:var(--rojo);text-decoration:underline;cursor:pointer;padding:0}
 /* Diagnosticador · síntomas con personajes: el perezoso duda bajo los globos; Espid, sentado sobre la explicación */
 .dx-sint-izq{display:flex;flex-direction:column;align-items:flex-start}
-.dx-sint-dep{width:170px;height:auto;margin:2px 0 0 18px}
+.dx-sint-dep{width:170px;height:auto;align-self:flex-end;margin:-58px 34px 0 0}
 .dx-causas{position:relative;margin-top:110px}
 .dx-sint-esp{position:absolute;left:-30px;bottom:calc(100% - 70px);width:300px;transform:rotate(4deg);transform-origin:20% 80%;height:auto;z-index:2;pointer-events:none}
-@media (max-width:900px){.dx-sint-dep{width:120px;margin-left:8px}.dx-causas{margin-top:96px}.dx-sint-esp{width:230px;left:-12px;bottom:calc(100% - 58px)}}
+@media (max-width:900px){.dx-sint-dep{width:120px;margin:-6px 14px 0 0}.dx-causas{margin-top:96px}.dx-sint-esp{width:230px;left:-12px;bottom:calc(100% - 58px)}}
