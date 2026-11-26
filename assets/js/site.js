@@ -82,7 +82,7 @@
       var w = canal === 'whatsapp';
       g.querySelector('[data-gx-l]').textContent = w ? 'Tu WhatsApp' : 'Tu correo';
       inC.type = w ? 'tel' : 'email'; inC.setAttribute('inputmode', w ? 'tel' : 'email'); inC.autocomplete = w ? 'tel' : 'email';
-      inC.placeholder = w ? 'Ej.: 099 123 4567' : 'tucorreo@ejemplo.com'; inC.value = ''; av.textContent = '';
+      inC.placeholder = w ? 'Ej.: 099 123 4567 (fuera de Ecuador, con código de país)' : 'tucorreo@ejemplo.com'; inC.value = ''; av.textContent = '';
     }); });
     g.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); g.querySelector('[data-gx-ir]').click(); } });
     g.querySelector('[data-gx-ir]').addEventListener('click', function () {
@@ -1065,7 +1065,7 @@
         dxInc() + '<p class="dg-nota">Resultado orientativo, calculado solo con tus respuestas. No garantiza auspicios: mide qué tan preparada está tu propuesta comercial y qué le falta, no cuánto vale tu deporte ni tu trayectoria.</p></div>';
       setTimeout(function () { anilloDep($('.dx-ring', res), r.total); }, 250);
       var dimsDep = {}; Object.keys(r.D).forEach(function (k) { dimsDep[NOM[k]] = r.D[k]; });
-      dxGate(res, { perfil: 'deportista', quien: 'deportista', total: r.total, nivel: nivel, dims: dimsDep, proyecto: uno('deporte'), ciudad: uno('ciudad'), respuestas: dxResp(diag),
+      dxGate(res, { perfil: 'deportista', quien: 'deportista', total: r.total, nivel: nivel, dims: dimsDep, proyecto: uno('deporte'), ciudad: [uno('ciudad'), uno('pais')].filter(Boolean).join(', '), respuestas: dxResp(diag),
         detalle: { estado: L0.E[1], arq: [a.a, a.v, a.o, a.act], ventajas: L0.fuertes.map(function (k) { return [NOM[k], FZ[k]]; }), riesgos: L0.R, prios: L0.prios.map(function (p) { return [p[0], p[1]]; }), oferta: [DX_AUD].concat(L0.of.map(function (o) { return ['Después, si hace falta: ' + o[0], o[1], o[2]]; })), lecturas: L0.LE, plan: L0.plan, porque: L0.porque.map(dxSinHtml), voz: L0.voz, etapa: L0.ni },
         resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + L0.prios.map(function (p) { return p[0]; }).join('; ') + '\nRiesgos: ' + (L0.R.map(function (x) { return x[0]; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + L0.of.map(function (o) { return o[0]; }).join('; ') });
       $('[data-dg-wa]', res).onclick = function () {
@@ -1076,7 +1076,7 @@
           '\n\n*Riesgos*\n' + (L0.R.map(function (x) { return '• ' + x[0]; }).join('\n') || '• Sin riesgos fuertes') +
           '\n\n*Prioridades a 90 días*\n' + L0.prios.map(function (p, i) { return (i + 1) + '. ' + p[0]; }).join('\n') +
           '\n\n*Siguiente paso sugerido*\n• Auditoría ProMatch (USD 60 + IVA)\n' + L0.of.map(function (o) { return '• Después: ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
-          '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
+          '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('País', uno('pais')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
           '\n\n*Mi comunidad*' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
           '\n\n*Lo que ofrezco*' + L('Perfil comercial', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
           '\n\n*Siguiente paso*\nQuiero conversar con un asesor para poner en marcha la oferta recomendada. Si conviene, también quiero saber más de la Auditoría ProMatch.';
@@ -1087,7 +1087,7 @@
       res.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     sig.addEventListener('click', function () {
-      if (paso === 1 && (!uno('deporte') || !uno('etapa'))) { aviso.textContent = 'Escribe tu disciplina y elige tu etapa.'; return; }
+      if (paso === 1 && (!uno('deporte') || !uno('etapa') || !uno('pais'))) { aviso.textContent = 'Escribe tu disciplina y elige tu país y tu etapa.'; return; }
       if (paso < 3) { paso++; mostrar(); diag.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
     });
     atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
@@ -1214,7 +1214,7 @@
         $('[data-dx-otra]', res).onclick = function () { form.reset(); form.classList.remove('dx-hecho'); res.innerHTML = ''; vivo(); paso = 1; $('.dg-nav', form).hidden = false; $('.dg-top', form).hidden = false; mostrar(); form.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
         form.classList.add('dx-hecho');
         setTimeout(function () { anillo($('.dg-res .dx-ring', res), r.total); }, 250);
-        dxGate(res, { perfil: form.dataset.perfil, quien: P.quien, total: r.total, nivel: nivel, dims: r.D, proyecto: nombre, ciudad: (v('ciudad')[0] || ''), nombreSug: (v('contacto')[0] || '').split(',')[0], respuestas: dxResp(form),
+        dxGate(res, { perfil: form.dataset.perfil, quien: P.quien, total: r.total, nivel: nivel, dims: r.D, proyecto: nombre, ciudad: [v('ciudad')[0], v('pais')[0]].filter(Boolean).join(', '), nombreSug: (v('contacto')[0] || '').split(',')[0], respuestas: dxResp(form),
           detalle: { estado: P.estado[ni], arq: [a.a, a.v, a.o.replace(/^Te conviene: /, ''), a.act || ''], ventajas: fuertes.map(function (k) { return [k, P.fz[k]]; }), riesgos: (riesgos.length ? riesgos.map(function (g) { return [g.t, g.d, g.f || '']; }) : brechas.slice(0, 2).map(function (k) { return [P.acc[k][0], P.acc[k][1]]; })), prios: brechas.map(function (k) { return [P.acc[k][0], P.acc[k][1]]; }), oferta: (esMarca ? [] : [DX_AUD]).concat(oferta.map(function (o) { return [(esMarca ? '' : 'Después, si hace falta: ') + o.n, o.d, o.r]; })), lecturas: LE, plan: plan, porque: porque.map(dxSinHtml), voz: voz, etapa: ni },
           resumen: 'Arquetipo: ' + a.a + '\nPrioridades: ' + brechas.map(function (k) { return P.acc[k][0]; }).join('; ') + '\nRiesgos: ' + (riesgos.map(function (g) { return g.t; }).join('; ') || 'sin riesgos fuertes') + '\nOferta: ' + oferta.map(function (o) { return o.n; }).join('; ') });
         pasos.forEach(function (f) { f.hidden = true; }); $('.dg-nav', form).hidden = true; $('.dg-top', form).hidden = true;
