@@ -1009,6 +1009,8 @@
       if (ausp === 'Sí, sin entregar resultados') LE.push(['Ya confiaron en ti una vez', 'Lo que falta es cerrar el ciclo: un informe convierte un apoyo puntual en una relación que se puede renovar.']);
       if (off.length >= 2) LE.push(['Tienes comunidad fuera de redes', 'Estás cerca de ' + lista(off.map(function (x) { return /^Otr[ao]$/.test(x) && uno('off_otro') ? uno('off_otro') : x; })) + '. Eso abre activaciones presenciales, que muchas marcas valoran más que una publicación.']);
       if (uno('donde') === 'Mi ciudad') LE.push(['Tu comunidad está en ' + (uno('ciudad') || 'tu ciudad'), 'Tu primera marca probablemente también. Los negocios locales suelen valorar la cercanía más que el número de seguidores.']);
+      var edadN = +uno('edad');
+      if (edadN >= 8 && edadN < 18) LE.unshift(['Eres menor de edad', 'Cualquier acuerdo con una marca lo conversa y lo firma tu representante legal. Inclúyelo desde la primera reunión: a una marca seria le da tranquilidad, no le estorba.']);
       if (et === 0) LE.push(['Estás en formación', 'Hoy tu valor es de proyección. Te sirve más una marca que te acompañe en el proceso que una que busque resultados inmediatos.']);
       if (uno('alcance') === 'Internacional') LE.push(['Compites fuera del país', 'Eso le da a una marca una historia de representación que pocas propuestas pueden ofrecer.']);
       LE = LE.slice(0, 4); if (LE.length < 3) LE.push(dxBrecha(r.D, NOM));
@@ -1076,7 +1078,7 @@
           '\n\n*Riesgos*\n' + (L0.R.map(function (x) { return '• ' + x[0]; }).join('\n') || '• Sin riesgos fuertes') +
           '\n\n*Prioridades a 90 días*\n' + L0.prios.map(function (p, i) { return (i + 1) + '. ' + p[0]; }).join('\n') +
           '\n\n*Siguiente paso sugerido*\n• Auditoría ProMatch (USD 60 + IVA)\n' + L0.of.map(function (o) { return '• Después: ' + o[0] + ' (' + o[2] + ')'; }).join('\n') +
-          '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('País', uno('pais')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
+          '\n\n*Mi perfil*' + L('Disciplina', uno('deporte')) + L('Ciudad', uno('ciudad')) + L('País', uno('pais')) + L('Edad', uno('edad')) + L('Etapa', uno('etapa')) + L('Competencias al año', uno('comp')) + L('Alcance', uno('alcance')) + L('Logro reciente', uno('logro')) +
           '\n\n*Mi comunidad*' + L('Tamaño', uno('tam')) + L('Quiénes', conOtro('quien')) + L('Dónde', uno('donde')) + L('Red principal', uno('red')) + L('Publico', uno('frec')) + L('Fuera de redes', conOtro('off')) +
           '\n\n*Lo que ofrezco*' + L('Perfil comercial', uno('dossier')) + L('Auspicios', uno('ausp')) + L('Contenido', uno('prod')) + L('A cámara', uno('cam')) + L('Valores', conOtro('valores')) +
           '\n\n*Siguiente paso*\nQuiero conversar con un asesor para poner en marcha la oferta recomendada. Si conviene, también quiero saber más de la Auditoría ProMatch.';
@@ -1087,12 +1089,13 @@
       res.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     sig.addEventListener('click', function () {
-      if (paso === 1 && (!uno('deporte') || !uno('etapa') || !uno('pais'))) { aviso.textContent = 'Escribe tu disciplina y elige tu país y tu etapa.'; return; }
+      var ed = +uno('edad');
+      if (paso === 1 && (!uno('deporte') || !uno('etapa') || !uno('pais') || !(ed >= 8 && ed <= 90))) { aviso.textContent = 'Escribe tu disciplina y tu edad, y elige tu país y tu etapa.'; return; }
       if (paso < 3) { paso++; mostrar(); diag.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else resultado();
     });
     atras.addEventListener('click', function () { if (paso > 1) { paso--; mostrar(); } });
     diag.addEventListener('submit', function (e) { e.preventDefault(); });
-    diag.addEventListener('input', function () { aviso.textContent = ''; });
+    diag.addEventListener('input', function () { aviso.textContent = ''; var m = $('[data-menor]', diag), e = +uno('edad'); if (m) m.hidden = !(e >= 8 && e < 18); });
     mostrar();
   })();
 
